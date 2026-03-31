@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FoneSquare - Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #E63946;
+  --primary-dark: #C62828;
+  --primary-light: #FFCDD2;
+  --success: #2ECC71;
+  --success-bg: #E8F8F0;
+  --text-primary: #1A1A2E;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-input: #F3F4F6;
+  --border: #E5E7EB;
+  --border-focus: #E63946;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --transition: all 0.2s ease;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #F0F2F5;
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 24px;
+  overflow-x: auto;
+}
+
+.phone-frame {
+  width: 375px;
+  min-width: 375px;
+  height: 812px;
+  background: var(--bg-primary);
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.05);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: #1A1A2E;
+  border-radius: 0 0 18px 18px;
+  z-index: 100;
+}
+
+.status-bar {
+  height: 44px;
+  padding: 12px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 50;
+}
+
+.status-bar .time {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.status-bar .icons {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.status-bar .icons span {
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.screen-content {
+  height: calc(100% - 44px);
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======================== */
+/* Screen 1: Login          */
+/* ======================== */
+
+.login-screen .hero-section {
+  padding: 32px 24px 24px;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+}
+
+.logo-text {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.logo-tagline {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.login-form {
+  padding: 8px 24px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.country-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  min-height: 52px;
+}
+
+.country-selector:hover, .country-selector:focus-within {
+  border-color: var(--border-focus);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.country-flag {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.country-info {
+  flex: 1;
+  text-align: left;
+}
+
+.country-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.country-code {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.country-arrow {
+  color: var(--text-muted);
+  font-size: 18px;
+  transition: var(--transition);
+}
+
+.phone-input-group {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+  min-height: 52px;
+}
+
+.phone-input-group:focus-within {
+  border-color: var(--border-focus);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px 0 16px;
+  border-right: 1.5px solid var(--border);
+  background: rgba(0,0,0,0.02);
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 90px;
+}
+
+.phone-prefix .flag { font-size: 18px; }
+
+.phone-prefix .code {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.phone-prefix .arrow {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.phone-input-group input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0 16px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.phone-input-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider span {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.alt-login-methods {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.alt-login-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 12px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: inherit;
+  min-height: 48px;
+}
+
+.alt-login-btn:hover {
+  border-color: var(--text-muted);
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.alt-login-btn:active { transform: scale(0.98); }
+
+.alt-login-btn .icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.alt-login-btn.whatsapp { }
+.alt-login-btn.whatsapp .icon { color: #25D366; }
+.alt-login-btn.email .icon { color: var(--text-secondary); }
+
+.primary-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  letter-spacing: 0.3px;
+  font-family: inherit;
+  min-height: 52px;
+  margin-top: auto;
+}
+
+.primary-btn:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 4px 16px rgba(230, 57, 70, 0.35);
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.terms-text {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+
+.terms-text a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ======================== */
+/* Screen 2: OTP            */
+/* ======================== */
+
+.otp-screen .screen-content { padding-top: 0; }
+
+.back-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px 8px 16px;
+  min-height: 44px;
+}
+
+.back-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+  font-size: 20px;
+  color: var(--text-primary);
+}
+
+.back-btn:hover { background: var(--bg-input); }
+
+.back-header .title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 40px;
+}
+
+.otp-hero {
+  padding: 20px 24px 0;
+  text-align: center;
+}
+
+.otp-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--primary-light), #FFF0F0);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
+}
+
+.otp-hero h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.otp-hero p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.otp-hero .phone-highlight {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.otp-inputs {
+  display: flex;
+  gap: 10px;
+  padding: 32px 40px;
+  justify-content: center;
+}
+
+.otp-inputs input {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+  caret-color: var(--primary);
+}
+
+.otp-inputs input:focus {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.otp-inputs input.filled {
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+
+.resend-section {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.resend-section p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.resend-section .timer {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.resend-section .resend-link {
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.otp-submit {
+  padding: 0 24px;
+  margin-top: 32px;
+}
+
+/* ======================== */
+/* Screen 3: Register Info  */
+/* ======================== */
+
+.register-screen .screen-content { padding-top: 0; }
+
+.register-hero {
+  padding: 16px 24px 24px;
+}
+
+.register-hero .step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.step-dot {
+  width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: var(--transition);
+}
+
+.step-dot.active { background: var(--primary); }
+.step-dot.done { background: var(--success); }
+
+.register-hero h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.register-hero p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.register-form {
+  padding: 0 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+  min-height: 52px;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.input-field::placeholder { color: var(--text-muted); }
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .input-field { padding-left: 44px; }
+
+.input-with-icon .field-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.input-with-icon .field-action {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.id-type-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.id-type-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  font-family: inherit;
+}
+
+.id-type-btn.active {
+  border-color: var(--primary);
+  background: #FFF0F0;
+  color: var(--primary);
+}
+
+.upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 4px;
+}
+
+.upload-zone:hover {
+  border-color: var(--primary);
+  background: #FFF8F8;
+}
+
+.upload-zone .upload-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.upload-zone .upload-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.upload-zone .upload-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.register-footer {
+  padding: 16px 24px 28px;
+  margin-top: auto;
+}
+
+/* ======================== */
+/* Language Switcher         */
+/* ======================== */
+
+.lang-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 24px 0;
+}
+
+.lang-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: white;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.lang-btn.active {
+  background: var(--text-primary);
+  color: white;
+  border-color: var(--text-primary);
+}
+
+.lang-btn:hover:not(.active) {
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+/* ======================== */
+/* Country Dropdown Modal    */
+/* ======================== */
+
+.country-dropdown {
+  display: none;
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 230px;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  max-height: 320px;
+  overflow: hidden;
+}
+
+.country-dropdown.open { display: block; }
+
+.country-dropdown .search-wrap {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.country-dropdown .search-wrap input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  background: var(--bg-input) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239CA3AF' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.44.856a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") no-repeat 12px center;
+}
+
+.country-list {
+  overflow-y: auto;
+  max-height: 260px;
+  padding: 4px 0;
+}
+
+.country-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.country-item:hover { background: var(--bg-secondary); }
+
+.country-item .ci-flag { font-size: 22px; }
+.country-item .ci-name { flex: 1; font-size: 14px; font-weight: 500; }
+.country-item .ci-code { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+.country-item.selected {
+  background: #FFF0F0;
+}
+
+.country-item.selected .ci-name { color: var(--primary); font-weight: 600; }
+
+/* ======================== */
+/* Backdrop overlay          */
+/* ======================== */
+
+.backdrop {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 150;
+  border-radius: 40px;
+}
+
+.backdrop.open { display: block; }
+
+/* ======================== */
+/* Toast notification        */
+/* ======================== */
+
+.toast {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--text-primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 300;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ======================== */
+/* Titles between frames     */
+/* ======================== */
+
+.frame-label {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.frame-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.flow-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 24px;
+  padding-top: 380px;
+  flex-shrink: 0;
+}
+
+/* ======================== */
+/* Responsive               */
+/* ======================== */
+
+@media (max-width: 1200px) {
+  body {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .phone-frame {
+    width: 100%;
+    min-width: unset;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  body {
+    padding: 0;
+    background: white;
+  }
+  .phone-frame::before { display: none; }
+  .flow-arrow, .frame-label { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Screen 1: Login ========== -->
+<div class="frame-wrapper">
+  <div class="phone-frame login-screen" id="loginScreen">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons">
+        <span>📶</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="screen-content">
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="fil">Filipino</button>
+        <button class="lang-btn" data-lang="ar">عربي</button>
+      </div>
+
+      <div class="login-hero hero-section">
+        <div class="logo-container">
+          <div class="logo-icon">FS</div>
+          <span class="logo-text">FoneSquare</span>
+        </div>
+        <p class="logo-tagline" data-i18n="tagline">Global B2B Marketplace for Certified Devices</p>
+      </div>
+
+      <div class="login-form">
+        <div class="form-group">
+          <label class="form-label" data-i18n="country_region">Country / Region</label>
+          <div class="country-selector" id="countrySelector" onclick="toggleCountryDropdown()">
+            <span class="country-flag">🇭🇰</span>
+            <div class="country-info">
+              <div class="country-name" id="selectedCountryName">Hong Kong</div>
+              <div class="country-code" id="selectedCountryCode">+852</div>
+            </div>
+            <span class="country-arrow">▾</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="phone_number">Phone Number</label>
+          <div class="phone-input-group">
+            <div class="phone-prefix" onclick="toggleCountryDropdown()">
+              <span class="flag" id="prefixFlag">🇭🇰</span>
+              <span class="code" id="prefixCode">+852</span>
+              <span class="arrow">▾</span>
+            </div>
+            <input
+              type="tel"
+              id="phoneInput"
+              placeholder="Enter phone number"
+              data-i18n-placeholder="enter_phone"
+              autocomplete="tel"
+              inputmode="numeric"
+            >
+          </div>
+        </div>
+
+        <div class="divider"><span data-i18n="or">or</span></div>
+
+        <div class="alt-login-methods">
+          <button class="alt-login-btn whatsapp" onclick="showToast('WhatsApp login coming soon')">
+            <span class="icon">💬</span>
+            <span>WhatsApp</span>
+          </button>
+          <button class="alt-login-btn email" onclick="showToast('Switching to email login')">
+            <span class="icon">✉️</span>
+            <span>Email</span>
+          </button>
+        </div>
+
+        <button class="primary-btn" id="loginBtn" onclick="goToOtp()" data-i18n="login_signup">
+          LOGIN / SIGN UP
+        </button>
+
+        <p class="terms-text" data-i18n="terms">
+          By continuing, you agree to our
+          <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="backdrop" id="loginBackdrop" onclick="toggleCountryDropdown()"></div>
+    <div class="country-dropdown" id="countryDropdown">
+      <div class="search-wrap">
+        <input type="text" placeholder="Search country..." oninput="filterCountries(this.value)">
+      </div>
+      <div class="country-list" id="countryList"></div>
+    </div>
+    <div class="toast" id="loginToast"></div>
+  </div>
+  <div class="frame-label">1 · Login</div>
+</div>
+
+<div class="flow-arrow">→</div>
+
+<!-- ========== Screen 2: OTP Verification ========== -->
+<div class="frame-wrapper">
+  <div class="phone-frame otp-screen">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons">
+        <span>📶</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="screen-content">
+      <div class="back-header">
+        <button class="back-btn" onclick="showToast('Back to login')">←</button>
+        <span class="title" data-i18n="verify">Verification</span>
+      </div>
+
+      <div class="otp-hero">
+        <div class="otp-icon">🔐</div>
+        <h2 data-i18n="verify_title">Enter Verification Code</h2>
+        <p data-i18n="verify_desc">
+          We sent a 6-digit code to<br>
+          <span class="phone-highlight">+852 9123 ****</span>
+        </p>
+      </div>
+
+      <div class="otp-inputs" id="otpInputs">
+        <input type="text" maxlength="1" inputmode="numeric" class="filled" value="4">
+        <input type="text" maxlength="1" inputmode="numeric" class="filled" value="7">
+        <input type="text" maxlength="1" inputmode="numeric" class="filled" value="2">
+        <input type="text" maxlength="1" inputmode="numeric" value="">
+        <input type="text" maxlength="1" inputmode="numeric" value="">
+        <input type="text" maxlength="1" inputmode="numeric" value="">
+      </div>
+
+      <div class="resend-section">
+        <p data-i18n="resend">Didn't receive the code? Resend in <span class="timer">00:42</span></p>
+      </div>
+
+      <div class="otp-submit">
+        <button class="primary-btn" disabled data-i18n="verify_btn">VERIFY & CONTINUE</button>
+      </div>
+
+      <div class="divider" style="margin: 24px 24px;"><span>sent via</span></div>
+
+      <div class="alt-login-methods" style="padding: 0 24px;">
+        <button class="alt-login-btn" style="opacity:0.6;">
+          <span class="icon">📱</span>
+          <span>SMS</span>
+        </button>
+        <button class="alt-login-btn whatsapp">
+          <span class="icon">💬</span>
+          <span>WhatsApp</span>
+        </button>
+      </div>
+    </div>
+    <div class="toast" id="otpToast"></div>
+  </div>
+  <div class="frame-label">2 · OTP Verify</div>
+</div>
+
+<div class="flow-arrow">→</div>
+
+<!-- ========== Screen 3: Personal Info ========== -->
+<div class="frame-wrapper">
+  <div class="phone-frame register-screen">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons">
+        <span>📶</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="screen-content">
+      <div class="back-header">
+        <button class="back-btn">←</button>
+        <span class="title" data-i18n="register">Registration</span>
+      </div>
+
+      <div class="register-hero">
+        <div class="step-indicator">
+          <div class="step-dot done"></div>
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+        </div>
+        <h2 data-i18n="personal_info_title">Personal Information</h2>
+        <p data-i18n="personal_info_desc">Complete your profile to start trading</p>
+      </div>
+
+      <div class="register-form">
+        <div class="form-group">
+          <label class="form-label" data-i18n="full_name">Full Name (as on ID)</label>
+          <div class="input-with-icon">
+            <span class="field-icon">👤</span>
+            <input class="input-field" type="text" placeholder="Enter your legal name" data-i18n-placeholder="enter_name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="nationality">Nationality</label>
+          <div class="country-selector" style="cursor:pointer;">
+            <span class="country-flag">🇭🇰</span>
+            <div class="country-info">
+              <div class="country-name">Hong Kong SAR</div>
+            </div>
+            <span class="country-arrow">▾</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="id_type">ID Type</label>
+          <div class="id-type-selector">
+            <button class="id-type-btn active">🪪 HKID</button>
+            <button class="id-type-btn">📘 Passport</button>
+          </div>
+          <div class="input-with-icon">
+            <span class="field-icon">🔢</span>
+            <input class="input-field" type="text" placeholder="e.g. A1234567" data-i18n-placeholder="enter_id">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="upload_id">Upload ID Document</label>
+          <div class="upload-zone">
+            <div class="upload-icon">📤</div>
+            <div class="upload-text" data-i18n="upload_text">Tap to upload or take a photo</div>
+            <div class="upload-hint" data-i18n="upload_hint">JPG, PNG or PDF · Max 10MB</div>
+          </div>
+        </div>
+
+        <div class="register-footer">
+          <button class="primary-btn" data-i18n="continue_verify">CONTINUE & VERIFY</button>
+          <p class="terms-text" data-i18n="verify_note">
+            Your information will be verified against
+            <a href="#">OFAC</a>, <a href="#">UN</a> &
+            <a href="#">EU</a> sanctions lists
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-label">3 · Personal Info</div>
+</div>
+
+<script>
+const countries = [
+  { flag: '🇭🇰', name: 'Hong Kong', code: '+852', digits: 8 },
+  { flag: '🇵🇭', name: 'Philippines', code: '+63', digits: 10 },
+  { flag: '🇦🇪', name: 'United Arab Emirates', code: '+971', digits: 9 },
+  { flag: '🇸🇦', name: 'Saudi Arabia', code: '+966', digits: 9 },
+  { flag: '🇲🇾', name: 'Malaysia', code: '+60', digits: 10 },
+  { flag: '🇮🇩', name: 'Indonesia', code: '+62', digits: 12 },
+  { flag: '🇨🇳', name: 'China Mainland', code: '+86', digits: 11 },
+  { flag: '🇮🇳', name: 'India', code: '+91', digits: 10 },
+  { flag: '🇳🇬', name: 'Nigeria', code: '+234', digits: 10 },
+  { flag: '🇰🇪', name: 'Kenya', code: '+254', digits: 9 },
+  { flag: '🇬🇧', name: 'United Kingdom', code: '+44', digits: 10 },
+  { flag: '🇺🇸', name: 'United States', code: '+1', digits: 10 },
+];
+
+let selectedCountry = countries[0];
+let dropdownOpen = false;
+
+function renderCountryList(filter = '') {
+  const list = document.getElementById('countryList');
+  const filtered = countries.filter(c =>
+    c.name.toLowerCase().includes(filter.toLowerCase()) ||
+    c.code.includes(filter)
+  );
+  list.innerHTML = filtered.map(c => `
+    <div class="country-item ${c.code === selectedCountry.code ? 'selected' : ''}"
+         onclick="selectCountry('${c.code}')">
+      <span class="ci-flag">${c.flag}</span>
+      <span class="ci-name">${c.name}</span>
+      <span class="ci-code">${c.code}</span>
+    </div>
+  `).join('');
+}
+
+function toggleCountryDropdown() {
+  dropdownOpen = !dropdownOpen;
+  document.getElementById('countryDropdown').classList.toggle('open', dropdownOpen);
+  document.getElementById('loginBackdrop').classList.toggle('open', dropdownOpen);
+  if (dropdownOpen) renderCountryList();
+}
+
+function filterCountries(val) { renderCountryList(val); }
+
+function selectCountry(code) {
+  selectedCountry = countries.find(c => c.code === code);
+  document.getElementById('selectedCountryName').textContent = selectedCountry.name;
+  document.getElementById('selectedCountryCode').textContent = selectedCountry.code;
+  document.getElementById('prefixFlag').textContent = selectedCountry.flag;
+  document.getElementById('prefixCode').textContent = selectedCountry.code;
+  document.getElementById('phoneInput').placeholder = '0'.repeat(selectedCountry.digits);
+  toggleCountryDropdown();
+}
+
+function goToOtp() {
+  const phone = document.getElementById('phoneInput').value;
+  if (!phone || phone.length < 4) {
+    showToast('Please enter a valid phone number');
+    return;
+  }
+  showToast('OTP sent successfully ✓');
+}
+
+function showToast(msg) {
+  const toast = document.querySelector('.toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+const i18n = {
+  en: {
+    tagline: 'Global B2B Marketplace for Certified Devices',
+    country_region: 'Country / Region',
+    phone_number: 'Phone Number',
+    enter_phone: 'Enter phone number',
+    or: 'or',
+    login_signup: 'LOGIN / SIGN UP',
+    terms: 'By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>',
+    verify: 'Verification',
+    verify_title: 'Enter Verification Code',
+    verify_desc: 'We sent a 6-digit code to<br><span class="phone-highlight">+852 9123 ****</span>',
+    resend: 'Didn\'t receive the code? Resend in <span class="timer">00:42</span>',
+    verify_btn: 'VERIFY & CONTINUE',
+    register: 'Registration',
+    personal_info_title: 'Personal Information',
+    personal_info_desc: 'Complete your profile to start trading',
+    full_name: 'Full Name (as on ID)',
+    enter_name: 'Enter your legal name',
+    nationality: 'Nationality',
+    id_type: 'ID Type',
+    enter_id: 'e.g. A1234567',
+    upload_id: 'Upload ID Document',
+    upload_text: 'Tap to upload or take a photo',
+    upload_hint: 'JPG, PNG or PDF · Max 10MB',
+    continue_verify: 'CONTINUE & VERIFY',
+    verify_note: 'Your information will be verified against <a href="#">OFAC</a>, <a href="#">UN</a> & <a href="#">EU</a> sanctions lists',
+  },
+  zh: {
+    tagline: '全球二手设备 B2B 认证交易平台',
+    country_region: '国家 / 地区',
+    phone_number: '手机号码',
+    enter_phone: '请输入手机号',
+    or: '或',
+    login_signup: '登录 / 注册',
+    terms: '继续即表示您同意我们的<a href="#">服务条款</a>和<a href="#">隐私政策</a>',
+    verify: '验证',
+    verify_title: '输入验证码',
+    verify_desc: '我们已发送 6 位验证码至<br><span class="phone-highlight">+852 9123 ****</span>',
+    resend: '未收到验证码？<span class="timer">00:42</span> 后重新发送',
+    verify_btn: '验证并继续',
+    register: '注册信息',
+    personal_info_title: '个人信息',
+    personal_info_desc: '完善资料以开始交易',
+    full_name: '姓名（与证件一致）',
+    enter_name: '请输入您的法定姓名',
+    nationality: '国籍',
+    id_type: '证件类型',
+    enter_id: '例如 A1234567',
+    upload_id: '上传身份证件',
+    upload_text: '点击上传或拍照',
+    upload_hint: 'JPG、PNG 或 PDF · 最大 10MB',
+    continue_verify: '继续并验证',
+    verify_note: '您的信息将接受 <a href="#">OFAC</a>、<a href="#">UN</a> 和 <a href="#">EU</a> 制裁名单校验',
+  },
+  fil: {
+    tagline: 'Global B2B Marketplace para sa Certified na Device',
+    country_region: 'Bansa / Rehiyon',
+    phone_number: 'Numero ng Telepono',
+    enter_phone: 'Ilagay ang numero ng telepono',
+    or: 'o',
+    login_signup: 'MAG-LOGIN / MAG-SIGN UP',
+    terms: 'Sa pagpapatuloy, sumasang-ayon ka sa <a href="#">Terms of Service</a> at <a href="#">Privacy Policy</a>',
+    verify: 'Pag-verify',
+    verify_title: 'Ilagay ang Verification Code',
+    verify_desc: 'Nagpadala kami ng 6-digit code sa<br><span class="phone-highlight">+852 9123 ****</span>',
+    resend: 'Hindi natanggap? Mag-resend sa <span class="timer">00:42</span>',
+    verify_btn: 'I-VERIFY AT MAGPATULOY',
+    register: 'Pagpaparehistro',
+    personal_info_title: 'Personal na Impormasyon',
+    personal_info_desc: 'Kumpletuhin ang profile mo',
+    full_name: 'Buong Pangalan (tulad sa ID)',
+    enter_name: 'Ilagay ang legal name',
+    nationality: 'Nasyonalidad',
+    id_type: 'Uri ng ID',
+    enter_id: 'hal. A1234567',
+    upload_id: 'I-upload ang ID Document',
+    upload_text: 'Tap para mag-upload o kumuha ng litrato',
+    upload_hint: 'JPG, PNG o PDF · Max 10MB',
+    continue_verify: 'MAGPATULOY AT I-VERIFY',
+    verify_note: 'Ive-verify ang info mo laban sa <a href="#">OFAC</a>, <a href="#">UN</a> at <a href="#">EU</a> sanctions',
+  },
+  ar: {
+    tagline: 'السوق العالمي B2B للأجهزة المعتمدة المستعملة',
+    country_region: 'البلد / المنطقة',
+    phone_number: 'رقم الهاتف',
+    enter_phone: 'أدخل رقم الهاتف',
+    or: 'أو',
+    login_signup: 'تسجيل الدخول / التسجيل',
+    terms: 'بالمتابعة، أنت توافق على <a href="#">شروط الخدمة</a> و <a href="#">سياسة الخصوصية</a>',
+    verify: 'التحقق',
+    verify_title: 'أدخل رمز التحقق',
+    verify_desc: 'أرسلنا رمزًا مكونًا من 6 أرقام إلى<br><span class="phone-highlight">+852 9123 ****</span>',
+    resend: 'لم تستلم الرمز؟ إعادة الإرسال خلال <span class="timer">00:42</span>',
+    verify_btn: 'تحقق واستمر',
+    register: 'التسجيل',
+    personal_info_title: 'المعلومات الشخصية',
+    personal_info_desc: 'أكمل ملفك الشخصي لبدء التداول',
+    full_name: 'الاسم الكامل (كما في الهوية)',
+    enter_name: 'أدخل اسمك القانوني',
+    nationality: 'الجنسية',
+    id_type: 'نوع الهوية',
+    enter_id: 'مثال: A1234567',
+    upload_id: 'تحميل وثيقة الهوية',
+    upload_text: 'اضغط للتحميل أو التقاط صورة',
+    upload_hint: 'JPG أو PNG أو PDF · حد أقصى 10MB',
+    continue_verify: 'استمر وتحقق',
+    verify_note: 'سيتم التحقق من معلوماتك مقابل قوائم العقوبات <a href="#">OFAC</a> و <a href="#">UN</a> و <a href="#">EU</a>',
+  }
+};
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.dataset.lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const isRTL = lang === 'ar';
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (i18n[lang] && i18n[lang][key]) {
+        el.innerHTML = i18n[lang][key];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (i18n[lang] && i18n[lang][key]) {
+        el.placeholder = i18n[lang][key];
+      }
+    });
+  });
+});
+
+// OTP input auto-focus
+document.querySelectorAll('#otpInputs input').forEach((input, idx, inputs) => {
+  input.addEventListener('input', (e) => {
+    if (e.target.value && idx < inputs.length - 1) {
+      inputs[idx + 1].focus();
+    }
+    if (e.target.value) e.target.classList.add('filled');
+    else e.target.classList.remove('filled');
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+      inputs[idx - 1].focus();
+    }
+  });
+});
+
+// ID type selector
+document.querySelectorAll('.id-type-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.id-type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+renderCountryList();
+</script>
+</body>
+</html>

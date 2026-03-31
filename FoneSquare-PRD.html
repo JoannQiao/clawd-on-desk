@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoneSquare APP PRD v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand: #E63946;
+  --brand-light: #FFF0F1;
+  --brand-dark: #C62828;
+  --blue: #2563EB;
+  --blue-light: #EFF6FF;
+  --green: #16A34A;
+  --green-light: #F0FDF4;
+  --orange: #EA580C;
+  --orange-light: #FFF7ED;
+  --purple: #7C3AED;
+  --purple-light: #F5F3FF;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  --sidebar-w: 280px;
+  --header-h: 56px;
+}
+
+html { font-size: 14px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
+  color: var(--gray-800);
+  background: var(--gray-50);
+  line-height: 1.7;
+}
+
+/* ====== HEADER ====== */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 100;
+  gap: 16px;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--gray-900);
+}
+
+.header-logo .icon {
+  width: 28px; height: 28px;
+  background: var(--brand);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.header-meta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+.header-meta .badge {
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.badge-draft { background: var(--orange-light); color: var(--orange); }
+.badge-review { background: var(--blue-light); color: var(--blue); }
+.badge-approved { background: var(--green-light); color: var(--green); }
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-w);
+  background: white;
+  border-right: 1px solid var(--gray-200);
+  overflow-y: auto;
+  padding: 16px 0;
+  z-index: 90;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
+
+.nav-section {
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+
+.nav-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gray-400);
+  padding: 8px 12px 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  color: var(--gray-600);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.nav-item:hover { background: var(--gray-100); color: var(--gray-900); }
+
+.nav-item.active {
+  background: var(--brand-light);
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-item .nav-num {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--gray-400);
+  font-weight: 500;
+}
+
+.nav-sub {
+  padding-left: 20px;
+}
+
+.nav-sub .nav-item {
+  font-size: 12.5px;
+  padding: 6px 12px;
+}
+
+/* ====== MAIN ====== */
+.main {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--header-h);
+  padding: 32px 48px 80px;
+  max-width: 960px;
+}
+
+/* ====== CONTENT ELEMENTS ====== */
+.page-section {
+  margin-bottom: 48px;
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.section-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.section-header .section-tag {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+h3 .h3-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin: 16px 0 8px;
+}
+
+p, li { font-size: 13.5px; color: var(--gray-700); }
+
+ul, ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+li { margin-bottom: 4px; }
+
+/* Info box */
+.info-box {
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  display: flex;
+  gap: 10px;
+}
+
+.info-box .ib-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.info-box.info { background: var(--blue-light); color: var(--blue); border-left: 3px solid var(--blue); }
+.info-box.warning { background: var(--orange-light); color: var(--orange); border-left: 3px solid var(--orange); }
+.info-box.success { background: var(--green-light); color: var(--green); border-left: 3px solid var(--green); }
+.info-box.danger { background: var(--brand-light); color: var(--brand); border-left: 3px solid var(--brand); }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+th {
+  background: var(--gray-100);
+  font-weight: 600;
+  color: var(--gray-700);
+  text-align: left;
+  padding: 10px 14px;
+  border: 1px solid var(--gray-200);
+  font-size: 12px;
+}
+
+td {
+  padding: 10px 14px;
+  border: 1px solid var(--gray-200);
+  vertical-align: top;
+  color: var(--gray-700);
+}
+
+tr:hover td { background: var(--gray-50); }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tag-p0 { background: #FEE2E2; color: #DC2626; }
+.tag-p1 { background: #FEF3C7; color: #D97706; }
+.tag-p2 { background: #DBEAFE; color: #2563EB; }
+.tag-required { background: #FEE2E2; color: #DC2626; }
+.tag-optional { background: var(--gray-100); color: var(--gray-500); }
+.tag-new { background: #D1FAE5; color: #059669; }
+.tag-ios { background: #E0E7FF; color: #4F46E5; }
+.tag-android { background: #D1FAE5; color: #059669; }
+
+/* Flow diagram */
+.flow-diagram {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+  justify-content: center;
+}
+
+.flow-node {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  border: 1.5px solid;
+}
+
+.flow-start { background: var(--green-light); color: var(--green); border-color: var(--green); border-radius: 99px; }
+.flow-action { background: white; color: var(--gray-700); border-color: var(--gray-300); }
+.flow-decision { background: var(--orange-light); color: var(--orange); border-color: var(--orange); transform: rotate(0deg); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); padding: 20px 28px; }
+.flow-system { background: var(--blue-light); color: var(--blue); border-color: var(--blue); }
+.flow-end { background: var(--brand-light); color: var(--brand); border-color: var(--brand); border-radius: 99px; }
+.flow-arrow-r { color: var(--gray-400); font-size: 16px; }
+.flow-arrow-d { color: var(--gray-400); font-size: 16px; text-align: center; display: block; margin: 4px auto; }
+
+/* Wireframe placeholder */
+.wireframe-block {
+  background: white;
+  border: 2px dashed var(--gray-300);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  color: var(--gray-400);
+  margin: 16px 0;
+  font-size: 13px;
+}
+
+.wireframe-block .wf-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--gray-500);
+}
+
+/* Spec annotation */
+.spec-group {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.spec-group-title {
+  background: var(--gray-100);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-700);
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spec-row {
+  display: flex;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 13px;
+}
+
+.spec-row:last-child { border-bottom: none; }
+
+.spec-label {
+  width: 160px;
+  padding: 10px 16px;
+  color: var(--gray-500);
+  font-weight: 500;
+  flex-shrink: 0;
+  background: var(--gray-50);
+}
+
+.spec-value {
+  flex: 1;
+  padding: 10px 16px;
+  color: var(--gray-800);
+}
+
+.spec-value code {
+  background: var(--gray-100);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'SF Mono', Menlo, monospace;
+  color: var(--brand);
+}
+
+/* Version history */
+.version-timeline {
+  border-left: 2px solid var(--gray-200);
+  margin-left: 12px;
+  padding-left: 24px;
+}
+
+.version-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.version-item::before {
+  content: '';
+  position: absolute;
+  left: -31px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: 2px solid white;
+}
+
+.version-item .vi-date {
+  font-size: 12px;
+  color: var(--gray-400);
+  font-weight: 500;
+}
+
+.version-item .vi-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin: 2px 0;
+}
+
+.version-item .vi-desc {
+  font-size: 12.5px;
+  color: var(--gray-500);
+}
+
+/* TOC inside content */
+.mini-toc {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+
+.mini-toc-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.mini-toc a {
+  display: block;
+  padding: 4px 0;
+  font-size: 13px;
+  color: var(--gray-600);
+  text-decoration: none;
+}
+
+.mini-toc a:hover { color: var(--brand); }
+
+/* Phone mockup inline */
+.mockup-row {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.mockup-card {
+  min-width: 200px;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mockup-card .mc-header {
+  padding: 8px 12px;
+  background: var(--gray-100);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-align: center;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.mockup-card .mc-body {
+  padding: 16px;
+  min-height: 120px;
+  font-size: 12px;
+  color: var(--gray-600);
+}
+
+.mockup-card .mc-body .mc-field {
+  background: var(--gray-100);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 6px 0;
+  font-size: 11.5px;
+  color: var(--gray-400);
+}
+
+.mockup-card .mc-body .mc-btn {
+  background: var(--brand);
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.mockup-card .mc-body .mc-divider {
+  text-align: center;
+  font-size: 10px;
+  color: var(--gray-400);
+  margin: 10px 0;
+}
+
+.mc-alt-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.mc-alt-btn {
+  flex: 1;
+  background: var(--gray-100);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray-600);
+  font-weight: 600;
+}
+
+/* Print styles */
+@media print {
+  .sidebar, .header { display: none; }
+  .main { margin: 0; padding: 20px; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+  <div class="header-logo">
+    <div class="icon">FS</div>
+    FoneSquare APP PRD
+  </div>
+  <span style="font-size:12px;color:var(--gray-400);">v1.0 · 2025-05-30</span>
+  <div class="header-meta">
+    <span class="badge badge-review">评审中</span>
+    <span>产品经理：PM</span>
+    <span>最后更新：2025-05-30</span>
+  </div>
+</header>
+
+<!-- ====== SIDEBAR ====== -->
+<nav class="sidebar">
+  <div class="nav-section">
+    <div class="nav-section-title">文档概览</div>
+    <a class="nav-item active" href="#overview"><span class="nav-icon">📋</span> 项目概述</a>
+    <a class="nav-item" href="#version"><span class="nav-icon">📝</span> 版本记录</a>
+    <a class="nav-item" href="#terms"><span class="nav-icon">📖</span> 名词解释</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">业务架构</div>
+    <a class="nav-item" href="#user-layer"><span class="nav-icon">👥</span> 用户分层 <span class="nav-num">2.1</span></a>
+    <a class="nav-item" href="#biz-flow"><span class="nav-icon">🔄</span> 业务流程 <span class="nav-num">2.2</span></a>
+    <a class="nav-item" href="#info-arch"><span class="nav-icon">🏗️</span> 信息架构 <span class="nav-num">2.3</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">功能模块</div>
+    <a class="nav-item" href="#mod-login"><span class="nav-icon">🔐</span> 登录/注册 <span class="nav-num">3.1</span></a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#login-phone"><span class="nav-icon"></span> 手机号登录</a>
+      <a class="nav-item" href="#login-whatsapp"><span class="nav-icon"></span> WhatsApp登录</a>
+      <a class="nav-item" href="#login-email"><span class="nav-icon"></span> 邮箱登录</a>
+      <a class="nav-item" href="#login-otp"><span class="nav-icon"></span> OTP验证</a>
+    </div>
+    <a class="nav-item" href="#mod-kyc"><span class="nav-icon">🛡️</span> 实名认证/KYC <span class="nav-num">3.2</span></a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#kyc-personal"><span class="nav-icon"></span> 个人认证</a>
+      <a class="nav-item" href="#kyc-business"><span class="nav-icon"></span> 企业认证</a>
+      <a class="nav-item" href="#kyc-sanctions"><span class="nav-icon"></span> 制裁名单校验</a>
+    </div>
+    <a class="nav-item" href="#mod-product"><span class="nav-icon">📱</span> 商品浏览 <span class="nav-num">3.3</span></a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#prod-list"><span class="nav-icon"></span> 商品列表页</a>
+      <a class="nav-item" href="#prod-detail"><span class="nav-icon"></span> 商品详情页</a>
+      <a class="nav-item" href="#prod-inventory"><span class="nav-icon"></span> 库存逻辑</a>
+    </div>
+    <a class="nav-item" href="#mod-order"><span class="nav-icon">🛒</span> 下单/交易 <span class="nav-num">3.4</span></a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#order-create"><span class="nav-icon"></span> 创建订单</a>
+      <a class="nav-item" href="#order-pay"><span class="nav-icon"></span> 支付方式</a>
+      <a class="nav-item" href="#order-status"><span class="nav-icon"></span> 订单状态流转</a>
+      <a class="nav-item" href="#order-limit"><span class="nav-icon"></span> 下单限额</a>
+    </div>
+    <a class="nav-item" href="#mod-account"><span class="nav-icon">👤</span> 账户管理 <span class="nav-num">3.5</span></a>
+    <a class="nav-item" href="#mod-i18n"><span class="nav-icon">🌍</span> 多语言/I18N <span class="nav-num">3.6</span></a>
+    <a class="nav-item" href="#mod-quality"><span class="nav-icon">✅</span> 质检报告 <span class="nav-num">3.7</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">非功能需求</div>
+    <a class="nav-item" href="#nfr-security"><span class="nav-icon">🔒</span> 安全与合规</a>
+    <a class="nav-item" href="#nfr-perf"><span class="nav-icon">⚡</span> 性能要求</a>
+    <a class="nav-item" href="#nfr-appstore"><span class="nav-icon">📲</span> 应用市场上架</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">附录</div>
+    <a class="nav-item" href="#appendix-compete"><span class="nav-icon">📊</span> 竞品分析</a>
+    <a class="nav-item" href="#appendix-gtm"><span class="nav-icon">🚀</span> GTM策略</a>
+  </div>
+</nav>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main class="main">
+
+<!-- ==================== 1. 项目概述 ==================== -->
+<section class="page-section" id="overview">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--brand-light);">📋</div>
+    <h2>1. 项目概述</h2>
+    <span class="section-tag" style="background:var(--blue-light);color:var(--blue);">Platform 1.0</span>
+  </div>
+
+  <h3>1.1 产品定义</h3>
+  <div class="spec-group">
+    <div class="spec-group-title">📌 基本信息</div>
+    <div class="spec-row"><div class="spec-label">产品名称</div><div class="spec-value"><strong>FoneSquare</strong> — Global B2B Marketplace for Secondhand Devices</div></div>
+    <div class="spec-row"><div class="spec-label">产品形态</div><div class="spec-value">移动端 APP（iOS + Android）</div></div>
+    <div class="spec-row"><div class="spec-label">目标市场</div><div class="spec-value">香港（主）、菲律宾、中东海湾六国（阿联酋/沙特为主）、马来西亚</div></div>
+    <div class="spec-row"><div class="spec-label">目标用户</div><div class="spec-value">海外二手手机 B2B 买家（经销商、批发商、零售商）</div></div>
+    <div class="spec-row"><div class="spec-label">语言支持</div><div class="spec-value">English、简体中文、繁体中文、Filipino、Arabic（RTL）</div></div>
+    <div class="spec-row"><div class="spec-label">核心价值</div><div class="spec-value">
+      <strong>多</strong>（Sourcing Hub）— 实时展示在库+在途库存<br>
+      <strong>好</strong>（High Quality）— 标准化质检报告+认证体系<br>
+      <strong>省</strong>（Price Competitive）— 后续版本通过营销活动体现
+    </div></div>
+  </div>
+
+  <h3>1.2 项目背景</h3>
+  <p>当前二手手机跨境交易存在严重的信息不对称问题：</p>
+  <ul>
+    <li><strong>买家痛点</strong>：跨境差旅频次低、决策者与验货人分离、对销售个人依赖强</li>
+    <li><strong>卖家痛点</strong>：线下沟通效率低、销售人力有限、无法规模化触达腰尾部客户</li>
+    <li><strong>行业痛点</strong>：商品信息非标准化、信用体系缺失、跨境结算成本高</li>
+  </ul>
+
+  <h3>1.3 本期目标</h3>
+  <div class="info-box info">
+    <span class="ib-icon">🎯</span>
+    <div>
+      <strong>Platform 1.0 核心目标：</strong>实现买家线上自助查货、散货自助下单、统货联系销售确认。以香港仓库为主，覆盖在库库存和在途库存，支持中/英/菲三语（建议增加阿拉伯语）。
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 版本记录 ==================== -->
+<section class="page-section" id="version">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">📝</div>
+    <h2>版本记录</h2>
+  </div>
+  <div class="version-timeline">
+    <div class="version-item">
+      <div class="vi-date">2025-05-30</div>
+      <div class="vi-title">v1.0 PRD 初稿</div>
+      <div class="vi-desc">完成登录注册、KYC认证、商品浏览、下单交易、账户管理、I18N、质检报告共7个功能模块定义</div>
+    </div>
+    <div class="version-item">
+      <div class="vi-date">2025-06-06（计划）</div>
+      <div class="vi-title">v1.0 PRD 评审</div>
+      <div class="vi-desc">技术评审 + UED评审</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 名词解释 ==================== -->
+<section class="page-section" id="terms">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--purple-light);">📖</div>
+    <h2>名词解释</h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:140px;">术语</th><th>英文</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><strong>在库库存</strong></td><td>IN_STOCK</td><td>已到达海外仓库、库存状态=已入库的商品</td></tr>
+      <tr><td><strong>在途库存</strong></td><td>IN_TRANSIT</td><td>承运商已发货但尚未进入海外仓库的商品</td></tr>
+      <tr><td><strong>APP可售库存</strong></td><td>APP_VISIBLE</td><td>销售从总库存中标记供APP展示/售卖的数量（含在库+在途）</td></tr>
+      <tr><td><strong>统货</strong></td><td>Bulk/Wholesale</td><td>按型号+内存+等级批量采购，不指定具体IMEI</td></tr>
+      <tr><td><strong>散货</strong></td><td>Cherry Pick</td><td>单台选购，可查看具体IMEI和质检报告</td></tr>
+      <tr><td><strong>海外等级</strong></td><td>Overseas Grade</td><td>海外仓二次质检后的等级标准（A/B/C/D）</td></tr>
+      <tr><td><strong>KYC</strong></td><td>Know Your Customer</td><td>用户身份认证，包含个人认证和企业认证</td></tr>
+      <tr><td><strong>OFAC</strong></td><td>Office of Foreign Assets Control</td><td>美国财政部海外资产控制办公室，维护制裁名单</td></tr>
+      <tr><td><strong>PO单</strong></td><td>Purchase Order</td><td>采购订单编号</td></tr>
+      <tr><td><strong>IMEI</strong></td><td>International Mobile Equipment Identity</td><td>国际移动设备识别码，手机唯一标识</td></tr>
+      <tr><td><strong>T/T</strong></td><td>Telegraphic Transfer</td><td>电汇支付方式</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 2.1 用户分层 ==================== -->
+<section class="page-section" id="user-layer">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--blue-light);">👥</div>
+    <h2>2.1 用户分层</h2>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th style="width:80px;">层级</th><th style="width:100px;">画像</th><th>APP定位</th><th>核心行为变化</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-p0">头部</span></td>
+        <td>大型批发商<br>月GMV &gt; 40万</td>
+        <td><strong>自助查货平台</strong></td>
+        <td>BEFORE：线上问销售"有哪些货"→沟通成本高<br>AFTER：APP看货 → 联系销售确认数量和报价 → 销售代客创单</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-p1">腰部</span></td>
+        <td>中型经销商<br>月GMV 5-40万</td>
+        <td><strong>自助查货+下单</strong></td>
+        <td>BEFORE：线上询问，等待较长时间<br>AFTER：统货→联系销售；散货→APP直接下单</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-p2">尾部</span></td>
+        <td>小型零售商<br>月GMV &lt; 5万</td>
+        <td><strong>自助下单平台</strong></td>
+        <td>BEFORE：必须到现场逐台试机<br>AFTER：线上查看质检报告 → 一口价下单 → 在线支付 → 物流自提</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 2.2 业务流程 ==================== -->
+<section class="page-section" id="biz-flow">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">🔄</div>
+    <h2>2.2 核心业务流程</h2>
+  </div>
+
+  <h3>买家端主流程</h3>
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-node flow-start">下载APP</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">手机号/WhatsApp/<br>邮箱注册</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">OTP验证</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">制裁名单<br>自动校验</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">浏览商品</div>
+    </div>
+    <span class="flow-arrow-d">↓</span>
+    <div class="flow-row">
+      <div class="flow-node flow-action">查看质检报告</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">创建订单<br>（散货直接/统货联系销售）</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">库存锁定<br>RESERVED</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">在线支付/<br>T/T转账</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">财务确认<br>收款</div>
+    </div>
+    <span class="flow-arrow-d">↓</span>
+    <div class="flow-row">
+      <div class="flow-node flow-system">仓库生成<br>出库单</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">确认出库</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">物流配送/<br>买家自提</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-end">交易完成</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2.3 信息架构 ==================== -->
+<section class="page-section" id="info-arch">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--purple-light);">🏗️</div>
+    <h2>2.3 APP信息架构</h2>
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-node flow-system" style="font-size:14px;padding:14px 24px;"><strong>FoneSquare APP</strong></div>
+    </div>
+    <span class="flow-arrow-d">↓</span>
+    <div class="flow-row" style="gap:16px;">
+      <div class="flow-node flow-action">🏠 首页<br><small>商品列表/搜索/筛选</small></div>
+      <div class="flow-node flow-action">📱 商品<br><small>详情/质检/下单</small></div>
+      <div class="flow-node flow-action">🛒 订单<br><small>列表/详情/状态</small></div>
+      <div class="flow-node flow-action">👤 我的<br><small>账户/认证/设置</small></div>
+    </div>
+  </div>
+
+  <h4>Tab Bar 结构</h4>
+  <table>
+    <thead><tr><th>Tab</th><th>页面名称</th><th>功能说明</th><th>登录要求</th></tr></thead>
+    <tbody>
+      <tr><td>Tab 1</td><td>Home / 首页</td><td>商品列表（分统货/散货Tab）、搜索、筛选、Banner</td><td>未登录可浏览，但价格模糊</td></tr>
+      <tr><td>Tab 2</td><td>Orders / 订单</td><td>我的订单列表、订单详情、物流追踪</td><td>需登录</td></tr>
+      <tr><td>Tab 3</td><td>My Center / 我的</td><td>个人信息、企业认证、银行信息、偏好设置、语言切换</td><td>需登录</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 3.1 登录/注册 ==================== -->
+<section class="page-section" id="mod-login">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--brand-light);">🔐</div>
+    <h2>3.1 登录/注册</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <div class="info-box info">
+    <span class="ib-icon">💡</span>
+    <div>
+      <strong>设计原则</strong>：采用「渐进式注册」策略，用户 30 秒内完成注册即可浏览商品，个人认证和企业认证在首次下单前完成。
+    </div>
+  </div>
+
+  <h3 id="login-phone">3.1.1 手机号+OTP登录 <span class="h3-badge tag-p0">P0</span></h3>
+
+  <div class="mockup-row">
+    <div class="mockup-card">
+      <div class="mc-header">Screen 1 · 登录首页</div>
+      <div class="mc-body">
+        <div style="text-align:center;margin-bottom:12px;">
+          <div style="display:inline-flex;align-items:center;gap:6px;">
+            <div style="width:24px;height:24px;background:#E63946;border-radius:5px;color:white;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:800;">FS</div>
+            <strong style="font-size:15px;">FoneSquare</strong>
+          </div>
+          <div style="font-size:10px;color:var(--gray-400);margin-top:2px;">Global B2B Marketplace</div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;">COUNTRY / REGION</div>
+        <div class="mc-field">🇭🇰 Hong Kong &nbsp;&nbsp;▾</div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;margin-top:10px;">PHONE NUMBER</div>
+        <div class="mc-field">🇭🇰 +852 ▾ &nbsp;| &nbsp;Enter phone number</div>
+        <div class="mc-divider">—— or ——</div>
+        <div class="mc-alt-btns">
+          <div class="mc-alt-btn">💬 WhatsApp</div>
+          <div class="mc-alt-btn">✉️ Email</div>
+        </div>
+        <div class="mc-btn">LOGIN / SIGN UP</div>
+      </div>
+    </div>
+    <div class="mockup-card">
+      <div class="mc-header">Screen 2 · OTP验证</div>
+      <div class="mc-body">
+        <div style="text-align:center;margin-bottom:10px;">🔐</div>
+        <div style="text-align:center;font-weight:700;font-size:14px;margin-bottom:6px;">Enter Verification Code</div>
+        <div style="text-align:center;font-size:10px;color:var(--gray-500);margin-bottom:14px;">We sent a 6-digit code to<br><strong>+852 9123 ****</strong></div>
+        <div style="display:flex;gap:6px;justify-content:center;margin-bottom:10px;">
+          <div style="width:32px;height:38px;background:#D1FAE5;border:1.5px solid #16A34A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">4</div>
+          <div style="width:32px;height:38px;background:#D1FAE5;border:1.5px solid #16A34A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">7</div>
+          <div style="width:32px;height:38px;background:#D1FAE5;border:1.5px solid #16A34A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">2</div>
+          <div style="width:32px;height:38px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:6px;"></div>
+          <div style="width:32px;height:38px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:6px;"></div>
+          <div style="width:32px;height:38px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:6px;"></div>
+        </div>
+        <div style="text-align:center;font-size:10px;color:var(--gray-400);">Resend in 00:42</div>
+        <div class="mc-btn" style="opacity:0.5;margin-top:16px;">VERIFY & CONTINUE</div>
+      </div>
+    </div>
+    <div class="mockup-card">
+      <div class="mc-header">Screen 3 · 注册成功</div>
+      <div class="mc-body" style="text-align:center;">
+        <div style="font-size:48px;margin:16px 0;">✅</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:6px;">Welcome!</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-bottom:16px;">Your account has been created.<br>Complete your profile to start trading.</div>
+        <div class="mc-btn">COMPLETE PROFILE</div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:8px;cursor:pointer;">Skip for now →</div>
+      </div>
+    </div>
+  </div>
+
+  <h4>字段规格</h4>
+  <table>
+    <thead><tr><th>字段</th><th>类型</th><th>必填</th><th>校验规则</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>国家/地区</td><td>下拉选择</td>
+        <td><span class="tag tag-required">必填</span></td>
+        <td>默认根据SIM卡/IP自动识别</td>
+        <td>选择后联动区号和证件类型</td>
+      </tr>
+      <tr>
+        <td>手机号</td><td>数字输入</td>
+        <td><span class="tag tag-required">必填</span></td>
+        <td>根据国家校验位数：HK=8位，PH=10位，UAE=9位</td>
+        <td>自动去除空格和特殊字符</td>
+      </tr>
+      <tr>
+        <td>OTP验证码</td><td>6位数字</td>
+        <td><span class="tag tag-required">必填</span></td>
+        <td>5分钟有效期；同一号码60秒内仅发送一次</td>
+        <td>支持SMS和WhatsApp双通道</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>国际区号对照</h4>
+  <table>
+    <thead><tr><th>国家</th><th>区号</th><th>手机号位数</th><th>OTP通道</th><th>优先级</th></tr></thead>
+    <tbody>
+      <tr><td>🇭🇰 Hong Kong</td><td>+852</td><td>8位</td><td>Twilio</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>🇵🇭 Philippines</td><td>+63</td><td>10位</td><td>Twilio</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>🇦🇪 UAE</td><td>+971</td><td>9位</td><td>MessageBird</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>🇸🇦 Saudi Arabia</td><td>+966</td><td>9位</td><td>MessageBird</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>🇲🇾 Malaysia</td><td>+60</td><td>9-10位</td><td>Twilio</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>🇨🇳 China</td><td>+86</td><td>11位</td><td>阿里云国际</td><td><span class="tag tag-p1">P1</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="login-whatsapp">3.1.2 WhatsApp登录 <span class="h3-badge tag-p1">P1</span></h3>
+  <div class="spec-group">
+    <div class="spec-group-title">📌 WhatsApp OTP 规格</div>
+    <div class="spec-row"><div class="spec-label">实现方式</div><div class="spec-value">WhatsApp Business API → 发送 OTP 模板消息</div></div>
+    <div class="spec-row"><div class="spec-label">接入方</div><div class="spec-value">Twilio WhatsApp 或 MessageBird WhatsApp</div></div>
+    <div class="spec-row"><div class="spec-label">消息模板</div><div class="spec-value"><code>Your FoneSquare verification code is {{1}}. Valid for 5 minutes.</code></div></div>
+    <div class="spec-row"><div class="spec-label">模板审核</div><div class="spec-value">需提前通过 Meta Business 审核（约3-5个工作日）</div></div>
+    <div class="spec-row"><div class="spec-label">后续能力</div><div class="spec-value">登录后关联 WhatsApp 通知：订单状态变更、库存到货提醒、支付确认</div></div>
+  </div>
+
+  <h3 id="login-email">3.1.3 邮箱登录 <span class="h3-badge tag-p0">P0</span></h3>
+  <table>
+    <thead><tr><th>字段</th><th>校验规则</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>邮箱地址</td><td>标准email格式校验；不区分大小写</td><td>企业邮箱和个人邮箱均可</td></tr>
+      <tr><td>密码</td><td>8-20位，包含字母+数字</td><td>首次注册时设置</td></tr>
+      <tr><td>邮箱OTP</td><td>6位验证码，5分钟有效</td><td>首次注册时通过邮箱验证</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="login-otp">3.1.4 OTP验证通用规则</h3>
+  <div class="spec-group">
+    <div class="spec-group-title">⚙️ OTP 通用配置</div>
+    <div class="spec-row"><div class="spec-label">验证码位数</div><div class="spec-value">6位纯数字</div></div>
+    <div class="spec-row"><div class="spec-label">有效期</div><div class="spec-value">5分钟</div></div>
+    <div class="spec-row"><div class="spec-label">重发间隔</div><div class="spec-value">60秒倒计时</div></div>
+    <div class="spec-row"><div class="spec-label">错误限制</div><div class="spec-value">连续错误5次后锁定30分钟</div></div>
+    <div class="spec-row"><div class="spec-label">防刷策略</div><div class="spec-value">同一号码/IP 每小时最多10次请求</div></div>
+    <div class="spec-row"><div class="spec-label">多通道降级</div><div class="spec-value">SMS发送30秒无回执 → 自动切换备用通道 → 语音验证码兜底</div></div>
+  </div>
+</section>
+
+<!-- ==================== 3.2 KYC认证 ==================== -->
+<section class="page-section" id="mod-kyc">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--orange-light);">🛡️</div>
+    <h2>3.2 实名认证 / KYC</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <div class="info-box warning">
+    <span class="ib-icon">⚠️</span>
+    <div>
+      <strong>合规要求</strong>：由于涉及跨境B2B交易和多国制裁合规（OFAC/UN/EU），所有用户在首次下单前必须完成个人身份认证。T/T支付还需额外上传证件照片进行真实性校验。
+    </div>
+  </div>
+
+  <h3 id="kyc-personal">3.2.1 个人认证</h3>
+
+  <h4>认证字段</h4>
+  <table>
+    <thead><tr><th>字段</th><th>必填</th><th>可修改</th><th>校验方式</th></tr></thead>
+    <tbody>
+      <tr><td>姓名</td><td><span class="tag tag-required">必填</span></td><td>❌ 不可修改</td><td>与证件OCR比对</td></tr>
+      <tr><td>国籍</td><td><span class="tag tag-required">必填</span></td><td>❌ 不可修改</td><td>联动证件类型展示</td></tr>
+      <tr><td>证件类型</td><td><span class="tag tag-required">必填</span></td><td>❌ 不可修改</td><td>根据国籍动态展示</td></tr>
+      <tr><td>证件号码</td><td><span class="tag tag-required">必填</span></td><td>❌ 不可修改</td><td>格式校验 + 制裁名单比对</td></tr>
+      <tr><td>证件照片</td><td><span class="tag tag-optional">选填*</span></td><td>可重新上传</td><td>OCR + 人工审核<br><small>*首次T/T支付时必须上传</small></td></tr>
+      <tr><td>邮箱</td><td><span class="tag tag-optional">选填</span></td><td>✅ 可修改</td><td>格式校验</td></tr>
+      <tr><td>手机号</td><td><span class="tag tag-required">必填</span></td><td>✅ 可修改（需验证）</td><td>OTP验证</td></tr>
+    </tbody>
+  </table>
+
+  <h4>多国证件类型对照</h4>
+  <table>
+    <thead><tr><th>国籍</th><th>可选证件类型</th><th>证件号格式</th></tr></thead>
+    <tbody>
+      <tr><td>🇭🇰 Hong Kong</td><td>HKID（香港身份证）/ Passport</td><td>HKID: X000000(0) 格式</td></tr>
+      <tr><td>🇦🇪 UAE</td><td>Emirates ID / Passport</td><td>Emirates ID: 784-XXXX-XXXXXXX-X</td></tr>
+      <tr><td>🇸🇦 Saudi Arabia</td><td>National ID / Iqama / Passport</td><td>National ID: 10位数字</td></tr>
+      <tr><td>🇵🇭 Philippines</td><td>Philippine ID / Passport / Driver's License</td><td>多种格式</td></tr>
+      <tr><td>🇲🇾 Malaysia</td><td>MyKad / Passport</td><td>MyKad: 12位数字</td></tr>
+      <tr><td>🇨🇳 China</td><td>身份证 / Passport</td><td>身份证: 18位</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="kyc-business">3.2.2 企业认证</h3>
+  <div class="info-box info">
+    <span class="ib-icon">ℹ️</span>
+    <div>注册时<strong>非必填</strong>，但完成企业认证后可提升下单额度至更高等级。当用户选择T/T支付时，如已填写企业信息，将自动进行企业风险校验。</div>
+  </div>
+
+  <table>
+    <thead><tr><th>字段</th><th>必填</th><th>可修改</th><th>校验方式</th></tr></thead>
+    <tbody>
+      <tr><td>注册国家/城市</td><td><span class="tag tag-required">必填</span></td><td>❌</td><td>—</td></tr>
+      <tr><td>企业名称</td><td><span class="tag tag-required">必填</span></td><td>❌ 填写后不可更改</td><td>企查查国际版 / 邓白氏</td></tr>
+      <tr><td>企业注册ID</td><td><span class="tag tag-required">必填</span></td><td>❌ 填写后不可更改</td><td>格式校验 + 工商信息真实性</td></tr>
+      <tr><td>企业注册地址</td><td><span class="tag tag-required">必填</span></td><td>✅ 可修改</td><td>与工商登记信息比对</td></tr>
+      <tr><td>公司注册证明</td><td><span class="tag tag-required">必填</span></td><td>可重新上传</td><td>人工审核</td></tr>
+      <tr><td>企业收货地址</td><td><span class="tag tag-optional">选填</span></td><td>✅</td><td>针对迪拜客户</td></tr>
+      <tr><td>电讯执照</td><td><span class="tag tag-optional">条件必填</span></td><td>可重新上传</td><td>仅针对🇭🇰香港公司，校验通讯事务管理局</td></tr>
+    </tbody>
+  </table>
+
+  <h4>企业信息校验来源</h4>
+  <table>
+    <thead><tr><th>国家/地区</th><th>校验来源</th><th>校验字段</th></tr></thead>
+    <tbody>
+      <tr><td>🇭🇰 香港</td><td>GovHK 一站通（基于登记证号码）</td><td>企业名称、注册地址、注册号码</td></tr>
+      <tr><td>🇦🇪 阿联酋</td><td>邓白氏 / 人工审核</td><td>企业名称、DED License</td></tr>
+      <tr><td>🇸🇦 沙特</td><td>MCI.gov.sa</td><td>Commercial Registration</td></tr>
+      <tr><td>🇵🇭 菲律宾</td><td>邓白氏 / 人工审核</td><td>SEC/DTI Registration</td></tr>
+      <tr><td>🇲🇾 马来西亚</td><td>SSM MyCoID</td><td>企业名称、SSM 号码</td></tr>
+      <tr><td>通用（付费）</td><td>邓白氏 D&B</td><td>全球企业信息+风险评级</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="kyc-sanctions">3.2.3 制裁名单校验</h3>
+  <table>
+    <thead><tr><th>名单来源</th><th>校验项</th><th>数据更新频率</th><th>命中处理</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>OFAC SDN List</td>
+        <td>姓名（含别名）、护照号、企业名称、注册地址</td>
+        <td>每日同步</td>
+        <td rowspan="4">
+          <strong>个人命中</strong>：注册时拦截，禁止注册<br>
+          <strong>企业命中</strong>：下单时拦截，禁止该账户下单
+        </td>
+      </tr>
+      <tr><td>OFAC Consolidated List</td><td>同上</td><td>每日同步</td></tr>
+      <tr><td>联合国安理会制裁名单</td><td>姓名（含别名）、企业名称、注册地址</td><td>每周同步</td></tr>
+      <tr><td>欧盟制裁名单</td><td>姓名（含别名）、护照号、企业名称、注册地址</td><td>每周同步</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box danger">
+    <span class="ib-icon">🚨</span>
+    <div>
+      <strong>关键设计：阿拉伯语姓名模糊匹配</strong><br>
+      阿拉伯语姓名在罗马化时有多种拼写变体（如 محمد → Mohammed / Mohammad / Muhammad / Mohamed），建议使用专业 Sanctions Screening 服务（如 Dow Jones Risk & Compliance、Refinitiv World-Check）而非自行做字符串匹配。
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3.3 商品浏览 ==================== -->
+<section class="page-section" id="mod-product">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">📱</div>
+    <h2>3.3 商品浏览</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <h3 id="prod-list">3.3.1 商品列表页</h3>
+
+  <h4>页面结构</h4>
+  <table>
+    <thead><tr><th>区域</th><th>内容</th><th>交互</th></tr></thead>
+    <tbody>
+      <tr><td>顶部导航</td><td>卖场切换（Hong Kong / Dubai）+ 搜索入口</td><td>点击切换卖场，库存数据实时刷新</td></tr>
+      <tr><td>Tab切换</td><td>GENERAL（统货）/ INDIVIDUAL（散货）/ INVENTORY（库存）/ POPULAR（热门）</td><td>横向Tab滑动</td></tr>
+      <tr><td>商品卡片</td><td>型号名称、内存、等级、价格（USD/HKD）、库存数量、Certified标签</td><td>点击进入详情页</td></tr>
+      <tr><td>底部筛选栏</td><td>品牌、型号、内存、等级、价格区间</td><td>支持多选筛选和排序</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box info">
+    <span class="ib-icon">👁️</span>
+    <div>
+      <strong>未登录状态</strong>：可浏览商品列表和基本信息，但价格显示为模糊状态（如 $***），引导文案：「Sign in to see prices」
+    </div>
+  </div>
+
+  <h3 id="prod-detail">3.3.2 商品详情页</h3>
+  <table>
+    <thead><tr><th>信息区域</th><th>展示内容</th><th>数据来源</th></tr></thead>
+    <tbody>
+      <tr><td>头部信息</td><td>型号名称、内存、颜色、价格、库存状态标签（In Stock / In Transit）</td><td>库存系统</td></tr>
+      <tr><td>质检报告</td><td>海外等级、质检照片、电池健康度、屏幕/边框/功能评分</td><td>质检系统</td></tr>
+      <tr><td>数量选择</td><td>统货：输入数量；散货：选择具体IMEI</td><td>—</td></tr>
+      <tr><td>操作按钮</td><td>统货→「Contact Sales」；散货→「Buy Now」</td><td>—</td></tr>
+      <tr><td>相关推荐</td><td>同型号不同内存/等级推荐</td><td>推荐算法</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="prod-inventory">3.3.3 库存逻辑</h3>
+  <table>
+    <thead><tr><th>库存类型</th><th>英文标识</th><th>定义</th><th>APP展示</th></tr></thead>
+    <tbody>
+      <tr><td>在库库存</td><td><code>IN_STOCK</code></td><td>已到达海外仓库，状态=已入库</td><td>✅ 展示，标签「In Stock」绿色</td></tr>
+      <tr><td>在途库存</td><td><code>IN_TRANSIT</code></td><td>承运商已发货，尚未入库</td><td>✅ 展示，标签「In Transit」橙色</td></tr>
+      <tr><td>APP可售库存</td><td><code>APP_VISIBLE</code></td><td>销售标记供APP售卖的数量</td><td>✅ 仅展示此范围内的库存</td></tr>
+      <tr><td>销售专用库存</td><td><code>SALES_ONLY</code></td><td>仅供销售后台线下使用</td><td>❌ 不在APP展示</td></tr>
+      <tr><td>已锁定库存</td><td><code>RESERVED</code></td><td>用户下单后锁定，locked_until=now+Xh</td><td>❌ 从可购数量中扣除</td></tr>
+    </tbody>
+  </table>
+
+  <div class="spec-group">
+    <div class="spec-group-title">🔒 锁定逻辑</div>
+    <div class="spec-row"><div class="spec-label">锁定触发</div><div class="spec-value">用户创建订单时，对被分配的库存做 RESERVED 标记</div></div>
+    <div class="spec-row"><div class="spec-label">锁定时效</div><div class="spec-value"><code>locked_until = now + 48h</code>（可配置）</div></div>
+    <div class="spec-row"><div class="spec-label">自动释放</div><div class="spec-value">锁定时间内未收到「确认收款」消息 → 自动取消锁定，释放库存</div></div>
+    <div class="spec-row"><div class="spec-label">区分创单</div><div class="spec-value">在库库存和在途库存<strong>分别创单</strong>，不混合在同一笔订单中</div></div>
+  </div>
+</section>
+
+<!-- ==================== 3.4 下单/交易 ==================== -->
+<section class="page-section" id="mod-order">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--purple-light);">🛒</div>
+    <h2>3.4 下单 / 交易</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <h3 id="order-create">3.4.1 创建订单</h3>
+  <table>
+    <thead><tr><th>场景</th><th>用户操作</th><th>系统处理</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>统货下单</strong><br>（批量采购）</td>
+        <td>选择型号+内存+等级+数量 → 点击「Contact Sales」</td>
+        <td>生成询盘单 → 通知对应销售 → 销售代客创单 → 锁定库存</td>
+      </tr>
+      <tr>
+        <td><strong>散货下单</strong><br>（单台选购）</td>
+        <td>选择具体IMEI → 查看质检报告 → 点击「Buy Now」→ 确认订单信息</td>
+        <td>创建订单 → 锁定指定IMEI → 48h内付款否则解除锁定</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="order-pay">3.4.2 支付方式</h3>
+  <table>
+    <thead><tr><th>支付方式</th><th>适用市场</th><th>阶段</th><th>前置条件</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>T/T电汇（USD/HKD）</td>
+        <td>全球</td>
+        <td><span class="tag tag-p0">1.0</span></td>
+        <td>需上传证件照片 + 银行信息校验</td>
+      </tr>
+      <tr>
+        <td>本地T/T（PHP/MYR）</td>
+        <td>菲律宾/马来</td>
+        <td><span class="tag tag-p0">1.0</span></td>
+        <td>通过万里汇本地账户收款</td>
+      </tr>
+      <tr>
+        <td>线上刷卡（Visa/Master）</td>
+        <td>全球</td>
+        <td><span class="tag tag-p1">2.0</span></td>
+        <td>接入万里汇线上支付</td>
+      </tr>
+      <tr>
+        <td>钱包充值+托管</td>
+        <td>全球</td>
+        <td><span class="tag tag-p2">3.0</span></td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="order-status">3.4.3 订单状态流转</h3>
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-node flow-start">创建订单</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">待付款<br><small>PENDING_PAYMENT</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">财务确认收款<br><small>PAYMENT_CONFIRMED</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">待出库<br><small>PENDING_SHIPMENT</small></div>
+    </div>
+    <span class="flow-arrow-d">↓</span>
+    <div class="flow-row">
+      <div class="flow-node flow-action">已出库<br><small>SHIPPED</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">配送中/待自提<br><small>IN_DELIVERY</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-end">已完成<br><small>COMPLETED</small></div>
+    </div>
+    <div style="margin-top:12px;text-align:center;font-size:12px;color:var(--gray-400);">
+      异常分支：PENDING_PAYMENT 超时48h → <span style="color:var(--brand);">CANCELLED（自动取消）</span> → 释放库存
+    </div>
+  </div>
+
+  <h3 id="order-limit">3.4.4 下单限额</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>用户类型</th><th>前置条件</th>
+        <th>日限额<br>≤1万</th><th>1-5万</th><th>5-10万</th><th>10-40万</th><th>&gt;40万</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3"><strong>个人买家</strong><br><small>仅完成个人认证</small></td>
+        <td>完成注册</td><td>✅</td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr><td>累计完成订单 ≥ X 元</td><td>✅</td><td>✅</td><td></td><td></td><td></td></tr>
+      <tr><td>累计完成订单 ≥ XX 元</td><td>✅</td><td>✅</td><td>✅</td><td></td><td></td></tr>
+      <tr>
+        <td rowspan="3"><strong>企业买家</strong><br><small>完成个人+企业认证</small></td>
+        <td>完成注册</td><td>✅</td><td>✅</td><td></td><td></td><td></td>
+      </tr>
+      <tr><td>累计完成订单 ≥ X 元</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td></td></tr>
+      <tr><td>累计完成订单 ≥ XX 元</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box info">
+    <span class="ib-icon">💡</span>
+    <div>限额策略支持 <strong>by 用户 × by 卖场</strong> 维度独立配置，具体阈值（X元/XX元）由运营后台设置。</div>
+  </div>
+</section>
+
+<!-- ==================== 3.5 账户管理 ==================== -->
+<section class="page-section" id="mod-account">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--blue-light);">👤</div>
+    <h2>3.5 账户管理</h2>
+    <span class="section-tag tag-p0">P0</span>
+  </div>
+
+  <h4>My Center 页面结构</h4>
+  <table>
+    <thead><tr><th>模块</th><th>功能</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>头像/姓名</td><td>展示用户头像、认证状态标签</td><td>个人认证✅ / 企业认证✅</td></tr>
+      <tr><td>My Orders</td><td>订单快捷入口（待付款/待发货/已完成数量角标）</td><td>—</td></tr>
+      <tr><td>Personal Information</td><td>查看/编辑个人信息</td><td>姓名、国籍、证件号不可修改</td></tr>
+      <tr><td>Business Information</td><td>查看/编辑企业信息</td><td>企业名称、注册ID不可修改</td></tr>
+      <tr><td>Bank Information</td><td>管理银行打款信息</td><td>暂不线上校验，做信息收集</td></tr>
+      <tr><td>Preferences</td><td>语言设置、推送通知设置、卖场偏好</td><td>—</td></tr>
+      <tr><td>Contact Sales</td><td>联系专属销售</td><td>跳转WhatsApp/拨打电话</td></tr>
+      <tr><td>About</td><td>关于FoneSquare、隐私政策、服务条款</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h4>银行信息（注册时非必填）</h4>
+  <table>
+    <thead><tr><th>字段</th><th>必填</th><th>校验</th></tr></thead>
+    <tbody>
+      <tr><td>银行名称</td><td><span class="tag tag-required">必填</span></td><td>—</td></tr>
+      <tr><td>银行账户</td><td><span class="tag tag-required">必填</span></td><td>暂由财务线下核验</td></tr>
+      <tr><td>账户持有人/公司名称</td><td><span class="tag tag-required">必填</span></td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 3.6 多语言/I18N ==================== -->
+<section class="page-section" id="mod-i18n">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">🌍</div>
+    <h2>3.6 多语言 / I18N 规范</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <h3>3.6.1 语言版本与优先级</h3>
+  <table>
+    <thead><tr><th>优先级</th><th>语言</th><th>覆盖市场</th><th>阶段</th><th>特殊要求</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>English</td><td>全球通用</td><td>1.0</td><td>—</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>简体中文</td><td>大陆采购商、内部运营</td><td>1.0</td><td>—</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>繁体中文</td><td>香港本地买家</td><td>1.0</td><td>—</td></tr>
+      <tr><td><span class="tag tag-p0">P0</span></td><td>Arabic 阿拉伯语</td><td>中东海湾六国</td><td>1.0（建议提前）</td><td>⚠️ <strong>RTL布局</strong>：全局镜像</td></tr>
+      <tr><td><span class="tag tag-p1">P1</span></td><td>Filipino</td><td>菲律宾</td><td>1.0</td><td>—</td></tr>
+      <tr><td><span class="tag tag-p2">P2</span></td><td>Bahasa Indonesia/Malay</td><td>印尼、马来西亚</td><td>2.0</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.6.2 RTL（从右到左）布局要求</h3>
+  <div class="info-box danger">
+    <span class="ib-icon">🚨</span>
+    <div>
+      <strong>架构级影响</strong>：阿拉伯语 RTL 布局需要从设计和开发架构层面支持，涵盖以下方面：
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>维度</th><th>LTR（英文/中文）</th><th>RTL（阿拉伯语）</th><th>技术要求</th></tr></thead>
+    <tbody>
+      <tr><td>导航方向</td><td>← 返回在左侧</td><td>→ 返回在右侧</td><td>使用 <code>leading/trailing</code> 替代 <code>left/right</code></td></tr>
+      <tr><td>文本对齐</td><td>左对齐</td><td>右对齐</td><td>CSS: <code>text-align: start</code></td></tr>
+      <tr><td>列表/卡片</td><td>从左到右排列</td><td>从右到左排列</td><td>Flex: <code>direction: row</code> 自动适配</td></tr>
+      <tr><td>进度条</td><td>从左到右填充</td><td>从右到左填充</td><td>根据 <code>dir</code> 属性翻转</td></tr>
+      <tr><td>图标</td><td>箭头朝右表示前进</td><td>箭头朝左表示前进</td><td>部分图标需镜像，对勾/时钟等不需要</td></tr>
+      <tr><td>混合文本</td><td>—</td><td>阿拉伯语中嵌入英文型号名</td><td>BiDi 双向文本处理</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.6.3 本地化格式规范</h3>
+  <table>
+    <thead><tr><th>维度</th><th>英文</th><th>中文</th><th>阿拉伯语</th><th>菲律宾语</th></tr></thead>
+    <tbody>
+      <tr><td>日期</td><td>MM/DD/YYYY</td><td>YYYY年MM月DD日</td><td>DD/MM/YYYY</td><td>MM/DD/YYYY</td></tr>
+      <tr><td>货币</td><td>$1,000.00</td><td>¥1,000.00</td><td>د.إ ١٬٠٠٠٫٠٠</td><td>₱1,000.00</td></tr>
+      <tr><td>数字分隔</td><td>1,000.00</td><td>1,000.00</td><td>١٬٠٠٠٫٠٠</td><td>1,000.00</td></tr>
+      <tr><td>电话格式</td><td>+852 9123 4567</td><td>+852 9123 4567</td><td>+971 50 123 4567</td><td>+63 917 123 4567</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.6.4 文化适配</h3>
+  <table>
+    <thead><tr><th>维度</th><th>中东市场</th><th>东南亚市场</th><th>香港市场</th></tr></thead>
+    <tbody>
+      <tr><td>色彩</td><td>绿色=圣洁；避免大面积红色</td><td>暖色调接受度高</td><td>国际化风格</td></tr>
+      <tr><td>素材</td><td>避免猪/酒精意象；注意着装</td><td>多元族裔素材</td><td>中性商务风格</td></tr>
+      <tr><td>工作日</td><td>周日~周四；周五周六休息</td><td>周一~周五</td><td>周一~周五</td></tr>
+      <tr><td>营销节日</td><td>斋月 Ramadan、开斋节 Eid</td><td>圣诞节、黑五</td><td>农历新年、双十一</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box warning">
+    <span class="ib-icon">⚠️</span>
+    <div>
+      <strong>锁货时效注意</strong>：48h锁货规则需考虑不同地区工作日差异——迪拜周五周六休息，若用户周四下单，48h横跨周末可能影响支付体验。建议按「工作时间」计算或提供延期申请。
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3.7 质检报告 ==================== -->
+<section class="page-section" id="mod-quality">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--brand-light);">✅</div>
+    <h2>3.7 质检报告展示</h2>
+    <span class="section-tag tag-p0">P0</span>
+  </div>
+
+  <h4>质检展示项</h4>
+  <table>
+    <thead><tr><th>展示项</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>海外等级</td><td>A / B / C / D（对应 Flawless / Average / Below Average 等）</td></tr>
+      <tr><td>质检照片</td><td>统货：展示魔方照片（随机选取）；散货：展示该台实拍照片</td></tr>
+      <tr><td>电池健康度</td><td>百分比展示，如 Battery: 92%</td></tr>
+      <tr><td>屏幕显示</td><td>正常/轻微/明显问题</td></tr>
+      <tr><td>屏幕外观</td><td>划痕程度描述</td></tr>
+      <tr><td>边框背板</td><td>磕碰/掉漆程度描述</td></tr>
+      <tr><td>统一说明</td><td>功能正常、无拆修信息</td></tr>
+    </tbody>
+  </table>
+
+  <h4>统货 vs 散货数据差异</h4>
+  <table>
+    <thead><tr><th>数据项</th><th>统货</th><th>散货</th></tr></thead>
+    <tbody>
+      <tr><td>质检照片</td><td>随机选取某一物品的数据；优先展示实拍，再展示模仿照片</td><td>直接取该散货的实际数据</td></tr>
+      <tr><td>成色说明</td><td>取海外等级说明中的统一说明文案</td><td>直接取该散货的具体数据</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 非功能需求 ==================== -->
+<section class="page-section" id="nfr-security">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--brand-light);">🔒</div>
+    <h2>安全与合规</h2>
+  </div>
+  <table>
+    <thead><tr><th>维度</th><th>要求</th></tr></thead>
+    <tbody>
+      <tr><td>数据传输</td><td>全链路 HTTPS / TLS 1.3</td></tr>
+      <tr><td>敏感数据存储</td><td>身份证号、护照号、银行账号加密存储（AES-256）</td></tr>
+      <tr><td>隐私政策</td><td>多语言版本（EN/ZH/AR/FIL），符合各目标市场数据保护法规</td></tr>
+      <tr><td>中东数据合规</td><td>评估 UAE PDPL 数据本地化要求，必要时在中东部署独立节点</td></tr>
+      <tr><td>用户数据删除</td><td>支持用户请求删除个人数据（GDPR Right to Erasure）</td></tr>
+      <tr><td>会话安全</td><td>Token 有效期 30 天，支持多设备登录踢出</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page-section" id="nfr-perf">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--blue-light);">⚡</div>
+    <h2>性能要求</h2>
+  </div>
+  <table>
+    <thead><tr><th>指标</th><th>目标值</th></tr></thead>
+    <tbody>
+      <tr><td>APP 首屏加载</td><td>≤ 2 秒（4G网络）</td></tr>
+      <tr><td>商品列表加载</td><td>≤ 1 秒（首页50条）</td></tr>
+      <tr><td>OTP 发送延迟</td><td>≤ 5 秒（发送到用户手机）</td></tr>
+      <tr><td>制裁名单校验</td><td>≤ 3 秒（注册/下单环节）</td></tr>
+      <tr><td>APP 包体大小</td><td>≤ 50MB（首次下载）</td></tr>
+      <tr><td>支持系统版本</td><td>iOS 15+ / Android 10+</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page-section" id="nfr-appstore">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">📲</div>
+    <h2>应用市场上架</h2>
+  </div>
+  <table>
+    <thead><tr><th>平台</th><th>覆盖市场</th><th>阶段</th><th>关键要求</th></tr></thead>
+    <tbody>
+      <tr><td>Google Play</td><td>全球</td><td><span class="tag tag-p0">1.0</span></td><td>隐私政策 + 数据安全声明</td></tr>
+      <tr><td>Apple App Store</td><td>全球</td><td><span class="tag tag-p0">1.0</span></td><td>如提供第三方登录，必须同时提供 Apple 登录</td></tr>
+      <tr><td>Huawei AppGallery</td><td>中东（华为/荣耀无GMS）</td><td><span class="tag tag-p1">1.0</span></td><td>中东安卓补充渠道</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box info">
+    <span class="ib-icon">📌</span>
+    <div>
+      <strong>审核关键说明</strong>：FoneSquare 是<strong>实物商品B2B交易平台</strong>，可使用自有支付渠道（万里汇/T/T），不需要走Apple IAP分成。审核时需在备注中明确标注此定位。
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 竞品分析 ==================== -->
+<section class="page-section" id="appendix-compete">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--purple-light);">📊</div>
+    <h2>附录：竞品分析</h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:120px;">竞品</th><th>市场</th><th>销售模式</th><th>入驻机制</th><th>核心优势</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Northladder</strong><br><small>中东APP</small></td>
+        <td>海湾六国</td>
+        <td>实时竞价，价高者得</td>
+        <td>邀请制，买家提交申请后平台开通账号，无法自主注册</td>
+        <td>360°自动化质检、货到付款、平台自带物流</td>
+      </tr>
+      <tr>
+        <td><strong>CompAsia</strong><br><small>东南亚Web</small></td>
+        <td>东南亚</td>
+        <td>一口价（待确认）</td>
+        <td>邀请制，同上</td>
+        <td>32步质检、14天质保</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info-box success">
+    <span class="ib-icon">✅</span>
+    <div>
+      <strong>FoneSquare 差异化</strong>：比竞品更开放（自主注册+渐进式认证）、更本地化（阿拉伯语RTL+WhatsApp原生集成）、更透明（多语言质检报告+实拍图+等级体系）。
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GTM策略 ==================== -->
+<section class="page-section" id="appendix-gtm">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--orange-light);">🚀</div>
+    <h2>附录：GTM 策略</h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:120px;">阶段</th><th>时间</th><th>目标</th><th>策略</th><th>核心指标</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>内测期</strong></td>
+        <td>5.30-6.30</td>
+        <td>关键客户反馈，确认流程无问题</td>
+        <td>挑选10个合作程度高的客户，覆盖大中小B，销售1V1指导</td>
+        <td>Bug 数量、任务完成率</td>
+      </tr>
+      <tr>
+        <td><strong>引导期</strong></td>
+        <td>6.30-9.30</td>
+        <td>培养现存客户线上看货习惯</td>
+        <td>基于近3个月有交易客户：主动宣传邀请（熟客）、线上询盘引导（腰部）、线下购买引导（尾部）</td>
+        <td>下载率、线上浏览渗透率</td>
+      </tr>
+      <tr>
+        <td><strong>推广期</strong></td>
+        <td>9.30-12.30</td>
+        <td>培养线上下单习惯 + APP拉新</td>
+        <td>配合线上优惠券引导下单和新用户注册</td>
+        <td>线上下单数、线上下单占比</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<!-- Sidebar active state management -->
+<script>
+const navItems = document.querySelectorAll('.nav-item[href]');
+const sections = document.querySelectorAll('.page-section');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+    if (top <= 100) current = section.id;
+  });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+navItems.forEach(item => {
+  item.addEventListener('click', (e) => {
+    navItems.forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

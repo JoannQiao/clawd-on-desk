@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoneSquare PRD v1.0 — 登录注册 / KYC / 商家管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand: #E63946; --brand-light: #FFF0F1; --brand-dark: #C62828;
+  --blue: #2563EB; --blue-light: #EFF6FF;
+  --green: #16A34A; --green-light: #F0FDF4;
+  --orange: #EA580C; --orange-light: #FFF7ED;
+  --purple: #7C3AED; --purple-light: #F5F3FF;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-600: #4B5563; --gray-700: #374151;
+  --gray-800: #1F2937; --gray-900: #111827;
+  --sidebar-w: 280px; --header-h: 56px;
+}
+html { font-size: 14px; scroll-behavior: smooth; }
+body { font-family: 'Noto Sans SC','Inter',-apple-system,sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.7; }
+
+.header { position:fixed; top:0; left:0; right:0; height:var(--header-h); background:white; border-bottom:1px solid var(--gray-200); display:flex; align-items:center; padding:0 24px; z-index:100; gap:16px; }
+.header-logo { display:flex; align-items:center; gap:8px; font-weight:700; font-size:16px; color:var(--gray-900); }
+.header-logo .icon { width:28px; height:28px; background:var(--brand); border-radius:6px; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:800; }
+.header-meta { margin-left:auto; display:flex; align-items:center; gap:20px; font-size:12px; color:var(--gray-500); }
+.badge { padding:3px 10px; border-radius:99px; font-weight:600; font-size:11px; }
+.badge-draft { background:var(--orange-light); color:var(--orange); }
+
+.sidebar { position:fixed; top:var(--header-h); left:0; bottom:0; width:var(--sidebar-w); background:white; border-right:1px solid var(--gray-200); overflow-y:auto; padding:16px 0; z-index:90; }
+.sidebar::-webkit-scrollbar { width:4px; }
+.sidebar::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:4px; }
+.nav-section { padding:0 12px; margin-bottom:8px; }
+.nav-section-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gray-400); padding:8px 12px 4px; }
+.nav-item { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; cursor:pointer; transition:all 0.15s; font-size:13px; color:var(--gray-600); text-decoration:none; line-height:1.4; }
+.nav-item:hover { background:var(--gray-100); color:var(--gray-900); }
+.nav-item.active { background:var(--brand-light); color:var(--brand); font-weight:600; }
+.nav-item .nav-icon { font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+.nav-item .nav-num { margin-left:auto; font-size:10px; color:var(--gray-400); font-weight:500; }
+.nav-sub { padding-left:20px; }
+.nav-sub .nav-item { font-size:12.5px; padding:6px 12px; }
+
+.main { margin-left:var(--sidebar-w); margin-top:var(--header-h); padding:32px 48px 80px; max-width:960px; }
+.page-section { margin-bottom:48px; scroll-margin-top:calc(var(--header-h) + 20px); }
+.section-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--gray-200); }
+.section-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.section-header h2 { font-size:20px; font-weight:700; color:var(--gray-900); }
+.section-header .section-tag { margin-left:auto; font-size:11px; font-weight:600; padding:3px 10px; border-radius:99px; }
+h3 { font-size:16px; font-weight:700; color:var(--gray-900); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+h3 .h3-badge { font-size:10px; padding:2px 8px; border-radius:99px; font-weight:600; }
+h4 { font-size:14px; font-weight:600; color:var(--gray-700); margin:16px 0 8px; }
+p, li { font-size:13.5px; color:var(--gray-700); }
+ul, ol { padding-left:20px; margin:8px 0; }
+li { margin-bottom:4px; }
+
+.info-box { padding:14px 16px; border-radius:10px; margin:12px 0; font-size:13px; line-height:1.6; display:flex; gap:10px; }
+.info-box .ib-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.info-box.info { background:var(--blue-light); color:var(--blue); border-left:3px solid var(--blue); }
+.info-box.warning { background:var(--orange-light); color:var(--orange); border-left:3px solid var(--orange); }
+.info-box.success { background:var(--green-light); color:var(--green); border-left:3px solid var(--green); }
+.info-box.danger { background:var(--brand-light); color:var(--brand); border-left:3px solid var(--brand); }
+
+table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+th { background:var(--gray-100); font-weight:600; color:var(--gray-700); text-align:left; padding:10px 14px; border:1px solid var(--gray-200); font-size:12px; }
+td { padding:10px 14px; border:1px solid var(--gray-200); vertical-align:top; color:var(--gray-700); }
+tr:hover td { background:var(--gray-50); }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; white-space:nowrap; }
+.tag-p0 { background:#FEE2E2; color:#DC2626; }
+.tag-p1 { background:#FEF3C7; color:#D97706; }
+.tag-p2 { background:#DBEAFE; color:#2563EB; }
+.tag-required { background:#FEE2E2; color:#DC2626; }
+.tag-optional { background:var(--gray-100); color:var(--gray-500); }
+.tag-new { background:#D1FAE5; color:#059669; }
+.tag-dep { background:#E0E7FF; color:#4F46E5; }
+
+.flow-diagram { background:white; border:1px solid var(--gray-200); border-radius:12px; padding:24px; margin:16px 0; overflow-x:auto; }
+.flow-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:8px 0; justify-content:center; }
+.flow-node { padding:10px 18px; border-radius:8px; font-size:12px; font-weight:600; text-align:center; white-space:nowrap; border:1.5px solid; }
+.flow-start { background:var(--green-light); color:var(--green); border-color:var(--green); border-radius:99px; }
+.flow-action { background:white; color:var(--gray-700); border-color:var(--gray-300); }
+.flow-system { background:var(--blue-light); color:var(--blue); border-color:var(--blue); }
+.flow-end { background:var(--brand-light); color:var(--brand); border-color:var(--brand); border-radius:99px; }
+.flow-gate { background:var(--orange-light); color:var(--orange); border-color:var(--orange); }
+.flow-arrow-r { color:var(--gray-400); font-size:16px; }
+.flow-arrow-d { color:var(--gray-400); font-size:16px; text-align:center; display:block; margin:4px auto; }
+
+.spec-group { background:white; border:1px solid var(--gray-200); border-radius:10px; margin:16px 0; overflow:hidden; }
+.spec-group-title { background:var(--gray-100); padding:10px 16px; font-size:13px; font-weight:700; color:var(--gray-700); border-bottom:1px solid var(--gray-200); display:flex; align-items:center; gap:8px; }
+.spec-row { display:flex; border-bottom:1px solid var(--gray-100); font-size:13px; }
+.spec-row:last-child { border-bottom:none; }
+.spec-label { width:160px; padding:10px 16px; color:var(--gray-500); font-weight:500; flex-shrink:0; background:var(--gray-50); }
+.spec-value { flex:1; padding:10px 16px; color:var(--gray-800); }
+.spec-value code { background:var(--gray-100); padding:1px 6px; border-radius:4px; font-size:12px; font-family:'SF Mono',Menlo,monospace; color:var(--brand); }
+
+.version-timeline { border-left:2px solid var(--gray-200); margin-left:12px; padding-left:24px; }
+.version-item { position:relative; margin-bottom:20px; }
+.version-item::before { content:''; position:absolute; left:-31px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--brand); border:2px solid white; }
+.version-item .vi-date { font-size:12px; color:var(--gray-400); font-weight:500; }
+.version-item .vi-title { font-size:14px; font-weight:600; color:var(--gray-800); margin:2px 0; }
+.version-item .vi-desc { font-size:12.5px; color:var(--gray-500); }
+
+.mockup-row { display:flex; gap:16px; margin:16px 0; overflow-x:auto; padding-bottom:8px; }
+.mockup-card { min-width:200px; background:white; border:1px solid var(--gray-200); border-radius:12px; overflow:hidden; flex-shrink:0; }
+.mockup-card .mc-header { padding:8px 12px; background:var(--gray-100); font-size:11px; font-weight:600; color:var(--gray-500); text-align:center; border-bottom:1px solid var(--gray-200); }
+.mockup-card .mc-body { padding:16px; min-height:120px; font-size:12px; color:var(--gray-600); }
+.mockup-card .mc-body .mc-field { background:var(--gray-100); border-radius:6px; padding:8px 10px; margin:6px 0; font-size:11.5px; color:var(--gray-400); }
+.mockup-card .mc-body .mc-btn { background:var(--brand); color:white; border-radius:8px; padding:10px; text-align:center; font-size:12px; font-weight:700; margin-top:12px; }
+.mockup-card .mc-body .mc-divider { text-align:center; font-size:10px; color:var(--gray-400); margin:10px 0; }
+.mc-alt-btns { display:flex; gap:6px; }
+.mc-alt-btn { flex:1; background:var(--gray-100); border-radius:6px; padding:8px; text-align:center; font-size:11px; color:var(--gray-600); font-weight:600; }
+
+.wireframe-block { background:white; border:2px dashed var(--gray-300); border-radius:12px; padding:32px; text-align:center; color:var(--gray-400); margin:16px 0; font-size:13px; }
+.wireframe-block .wf-title { font-size:15px; font-weight:600; margin-bottom:8px; color:var(--gray-500); }
+
+.scope-tag { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:99px; font-size:11px; font-weight:600; }
+.scope-mine { background:#D1FAE5; color:#059669; }
+.scope-dep { background:#E0E7FF; color:#4F46E5; }
+.scope-out { background:var(--gray-100); color:var(--gray-500); }
+
+@media print { .sidebar,.header { display:none; } .main { margin:0; padding:20px; max-width:100%; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo"><div class="icon">FS</div> FoneSquare PRD</div>
+  <span style="font-size:12px;color:var(--gray-400);">v1.0 · 登录注册/KYC/商家管理</span>
+  <div class="header-meta">
+    <span class="badge badge-draft">草稿</span>
+    <span>产品经理：乔谦</span>
+    <span>最后更新：2026-03-31</span>
+  </div>
+</header>
+
+<nav class="sidebar">
+  <div class="nav-section">
+    <div class="nav-section-title">项目文档</div>
+    <a class="nav-item active" href="#ver-record"><span class="nav-icon">📅</span> 版本记录</a>
+    <a class="nav-item" href="#ver-desc"><span class="nav-icon">📋</span> 版本说明</a>
+    <a class="nav-item" href="#solution"><span class="nav-icon">💡</span> 解决方案</a>
+    <a class="nav-item" href="#other-req"><span class="nav-icon">📎</span> 其它需求</a>
+    <a class="nav-item" href="#qa"><span class="nav-icon">❓</span> Q&A</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">APP原型</div>
+    <a class="nav-item" href="#app-login"><span class="nav-icon">🔐</span> 登录/注册</a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#login-entry"><span class="nav-icon"></span> 登录首页</a>
+      <a class="nav-item" href="#login-otp"><span class="nav-icon"></span> OTP验证</a>
+      <a class="nav-item" href="#login-register"><span class="nav-icon"></span> 个人信息补充</a>
+      <a class="nav-item" href="#login-rules"><span class="nav-icon"></span> 业务规则</a>
+    </div>
+    <a class="nav-item" href="#app-kyc"><span class="nav-icon">🛡️</span> 实名认证/KYC</a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#kyc-flow"><span class="nav-icon"></span> 认证流程</a>
+      <a class="nav-item" href="#kyc-personal"><span class="nav-icon"></span> 个人认证</a>
+      <a class="nav-item" href="#kyc-business"><span class="nav-icon"></span> 企业认证</a>
+      <a class="nav-item" href="#kyc-sanctions"><span class="nav-icon"></span> 制裁名单校验</a>
+    </div>
+    <a class="nav-item" href="#app-permission"><span class="nav-icon">🔑</span> 权限与浏览控制</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Web原型</div>
+    <a class="nav-item" href="#web-merchant"><span class="nav-icon">🏢</span> 商家管理后台</a>
+    <div class="nav-sub">
+      <a class="nav-item" href="#web-user-list"><span class="nav-icon"></span> 用户列表</a>
+      <a class="nav-item" href="#web-kyc-audit"><span class="nav-icon"></span> KYC审核</a>
+      <a class="nav-item" href="#web-sanctions"><span class="nav-icon"></span> 制裁名单管理</a>
+      <a class="nav-item" href="#web-config"><span class="nav-icon"></span> 系统配置</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ==================== 版本记录 ==================== -->
+<section class="page-section" id="ver-record">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">📅</div>
+    <h2>版本记录</h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:140px;">日期</th><th>内容</th><th style="width:100px;">更新人</th></tr></thead>
+    <tbody>
+      <tr><td>2026-03-31</td><td>新建：登录注册、KYC实名认证、商家管理后台 PRD 初稿</td><td>乔谦</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 版本说明 ==================== -->
+<section class="page-section" id="ver-desc">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--blue-light);">📋</div>
+    <h2>版本说明</h2>
+  </div>
+  <div class="spec-group">
+    <div class="spec-group-title">📌 项目概述</div>
+    <div class="spec-row"><div class="spec-label">项目负责人</div><div class="spec-value">乔谦</div></div>
+    <div class="spec-row"><div class="spec-label">项目背景</div><div class="spec-value">FoneSquare 海外B2B二手手机交易平台 v1.0 — 用户体系与身份认证模块</div></div>
+    <div class="spec-row"><div class="spec-label">需求部门</div><div class="spec-value">产品部</div></div>
+    <div class="spec-row"><div class="spec-label">期望发布日期</div><div class="spec-value">2026年Q2</div></div>
+    <div class="spec-row"><div class="spec-label">产品名称</div><div class="spec-value"><strong>FoneSquare</strong> — Global B2B Marketplace for Secondhand Devices</div></div>
+    <div class="spec-row"><div class="spec-label">产品形态</div><div class="spec-value">移动端 APP（iOS + Android）+ Web管理后台</div></div>
+    <div class="spec-row"><div class="spec-label">目标市场</div><div class="spec-value">香港（主）、菲律宾、中东海湾六国（阿联酋/沙特为主）、马来西亚</div></div>
+    <div class="spec-row"><div class="spec-label">语言支持</div><div class="spec-value">English、简体中文、繁体中文、Filipino、Arabic（RTL）</div></div>
+  </div>
+
+  <h4>本期需求范围</h4>
+  <div class="info-box info">
+    <span class="ib-icon">🎯</span>
+    <div>
+      <strong>本PRD聚焦三个核心模块</strong>：<br>
+      ① 登录/注册（手机号、WhatsApp、邮箱、OTP）<br>
+      ② KYC实名认证（个人认证 + 企业认证 + 制裁名单校验）<br>
+      ③ Web端商家管理后台（用户管理、KYC审核、制裁名单管理）
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>模块</th><th>范围</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><span class="scope-tag scope-mine">✅ 本期负责</span></td><td>登录/注册</td><td>APP端多渠道登录、OTP验证、个人信息补充</td></tr>
+      <tr><td><span class="scope-tag scope-mine">✅ 本期负责</span></td><td>KYC实名认证</td><td>个人认证、企业认证、制裁名单校验</td></tr>
+      <tr><td><span class="scope-tag scope-mine">✅ 本期负责</span></td><td>商家管理后台</td><td>Web端用户管理、KYC审核、风控配置</td></tr>
+      <tr><td><span class="scope-tag scope-dep">🔗 依赖方</span></td><td>商品浏览</td><td>依赖本模块的用户状态和认证信息，控制浏览权限</td></tr>
+      <tr><td><span class="scope-tag scope-dep">🔗 依赖方</span></td><td>下单/交易</td><td>依赖本模块的KYC认证状态，作为下单前置条件</td></tr>
+      <tr><td><span class="scope-tag scope-out">— 不在范围</span></td><td>商品列表/详情页UI</td><td>由其他产品经理负责</td></tr>
+      <tr><td><span class="scope-tag scope-out">— 不在范围</span></td><td>订单/支付/物流</td><td>由其他产品经理负责</td></tr>
+    </tbody>
+  </table>
+
+  <h4>关联版本</h4>
+  <table>
+    <thead><tr><th>项目名称</th><th>项目链接</th><th>关联说明</th></tr></thead>
+    <tbody>
+      <tr><td>FoneSquare APP PRD v1.0（全量）</td><td>—</td><td>本文档为其子集，聚焦用户体系模块</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 解决方案 ==================== -->
+<section class="page-section" id="solution">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--purple-light);">💡</div>
+    <h2>解决方案</h2>
+  </div>
+
+  <h3>1、功能列表</h3>
+  <table>
+    <thead><tr><th>功能模块</th><th>任务点</th><th>负责部门</th><th>功能说明</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="4">APP — 登录/注册</td><td>手机号+OTP登录</td><td>前端+后端</td><td>多国区号支持，6位OTP验证码，多通道降级</td></tr>
+      <tr><td>WhatsApp登录</td><td>前端+后端</td><td>WhatsApp Business API发送OTP模板消息</td></tr>
+      <tr><td>邮箱+密码登录</td><td>前端+后端</td><td>标准邮箱注册+邮箱验证码</td></tr>
+      <tr><td>个人信息补充</td><td>前端+后端</td><td>注册后引导填写姓名、国籍等基础信息</td></tr>
+      <tr><td rowspan="3">APP — KYC认证</td><td>个人实名认证</td><td>前端+后端</td><td>证件OCR+制裁名单比对+人工审核</td></tr>
+      <tr><td>企业认证</td><td>前端+后端</td><td>营业执照上传+工商信息校验+人工审核</td></tr>
+      <tr><td>制裁名单校验</td><td>后端+风控</td><td>OFAC/UN/EU制裁名单自动比对</td></tr>
+      <tr><td rowspan="4">Web — 商家管理后台</td><td>用户列表管理</td><td>前端+后端</td><td>查看/搜索/筛选所有注册用户</td></tr>
+      <tr><td>KYC审核工作台</td><td>前端+后端</td><td>审核个人/企业认证申请，通过/驳回</td></tr>
+      <tr><td>制裁名单管理</td><td>后端+风控</td><td>制裁名单同步状态、命中记录查询</td></tr>
+      <tr><td>系统配置</td><td>后端</td><td>OTP配置、认证阈值、限额规则</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2、业务流程图</h3>
+  <h4>用户注册→认证→下单 全流程</h4>
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-node flow-start">下载APP</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">选择登录方式<br><small>手机/WhatsApp/邮箱</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">发送OTP</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">输入OTP验证</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">制裁名单<br>自动校验</div>
+    </div>
+    <span class="flow-arrow-d">↓ 校验通过</span>
+    <div class="flow-row">
+      <div class="flow-node flow-action">补充个人信息<br><small>姓名/国籍（可跳过）</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-gate">注册完成<br><small>身份=游客→注册用户</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">浏览首页<br><small>可查看商品详情+价格</small></div>
+    </div>
+    <span class="flow-arrow-d">↓ 点击下单</span>
+    <div class="flow-row">
+      <div class="flow-node flow-gate">检查KYC状态</div>
+      <span class="flow-arrow-r">→ 未认证</span>
+      <div class="flow-node flow-action">引导完成<br>个人实名认证</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">后台审核<br><small>OCR+人工</small></div>
+      <span class="flow-arrow-r">→ 通过</span>
+      <div class="flow-node flow-end">可下单</div>
+    </div>
+    <div style="margin-top:12px;text-align:center;font-size:12px;color:var(--gray-400);">
+      制裁名单命中 → <span style="color:var(--brand);">注册拦截，禁止使用</span> &nbsp;|&nbsp;
+      KYC审核驳回 → <span style="color:var(--orange);">可重新提交</span>
+    </div>
+  </div>
+
+  <h4>用户身份权限分层</h4>
+  <table>
+    <thead><tr><th>身份状态</th><th>浏览首页</th><th>查看商品详情</th><th>查看价格</th><th>下单</th><th>提升路径</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>游客</strong><br><small>未登录</small></td>
+        <td>✅ 可浏览</td><td>❌ 不可查看</td><td>❌ 价格模糊</td><td>❌</td>
+        <td>→ 注册/登录</td>
+      </tr>
+      <tr>
+        <td><strong>注册用户</strong><br><small>已登录，未KYC</small></td>
+        <td>✅ 可浏览</td><td>✅ 可查看</td><td>✅ 可查看</td><td>❌</td>
+        <td>→ 完成KYC认证</td>
+      </tr>
+      <tr>
+        <td><strong>认证用户</strong><br><small>已登录，KYC通过</small></td>
+        <td>✅ 可浏览</td><td>✅ 可查看</td><td>✅ 可查看</td><td>✅ 可下单</td>
+        <td>→ 企业认证可提额</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 其它需求 ==================== -->
+<section class="page-section" id="other-req">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--orange-light);">📎</div>
+    <h2>其它需求</h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:50px;">序号</th><th style="width:160px;">类别</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>数据需求</td><td>
+        ① 注册转化漏斗：启动APP → 选择登录方式 → 发送OTP → 验证成功 → 完成注册<br>
+        ② KYC转化率：注册用户 → 发起认证 → 提交材料 → 审核通过<br>
+        ③ 登录方式分布：按手机号/WhatsApp/邮箱统计注册用户占比<br>
+        ④ 各国/地区注册用户数量分布
+      </td></tr>
+      <tr><td>2</td><td>兼容需求</td><td>iOS 15+ / Android 10+；Web后台支持 Chrome 100+ / Safari 16+ / Edge 100+</td></tr>
+      <tr><td>3</td><td>性能需求</td><td>
+        OTP发送延迟 ≤ 5秒；制裁名单校验 ≤ 3秒；KYC OCR识别 ≤ 8秒；登录页首屏加载 ≤ 2秒
+      </td></tr>
+      <tr><td>4</td><td>风控需求</td><td>
+        ① OTP防刷：同号码60秒限发1次，同IP每小时≤10次<br>
+        ② 连续错误5次锁定30分钟<br>
+        ③ 制裁名单命中即拦截注册<br>
+        ④ KYC材料伪造检测（OCR可信度评分）
+      </td></tr>
+      <tr><td>5</td><td>权限需求</td><td>
+        Web后台角色：超级管理员 / KYC审核员 / 风控专员 / 客服（只读）
+      </td></tr>
+      <tr><td>6</td><td>新手引导</td><td>首次注册完成后引导弹窗："Complete your profile to start trading" → 跳转个人信息页或KYC认证页</td></tr>
+      <tr><td>7</td><td>历史数据处理方案</td><td>v1.0为全新系统，无历史数据迁移</td></tr>
+      <tr><td>8</td><td>降级方案</td><td>OTP多通道降级：SMS → WhatsApp → 语音验证码；制裁名单API不可用时允许注册但标记待复查</td></tr>
+      <tr><td>9</td><td>关联需求</td><td>
+        商品浏览模块需读取用户登录状态（控制详情页/价格可见性）；<br>
+        下单模块需读取KYC认证状态（控制下单权限）
+      </td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== Q&A ==================== -->
+<section class="page-section" id="qa">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--gray-100);">❓</div>
+    <h2>Q&A</h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:40%;">Q</th><th style="width:40%;">A</th><th style="width:80px;">确认人</th><th style="width:100px;">确认时间</th></tr></thead>
+    <tbody>
+      <tr><td>试单卡用户到期后是否自动降级为普通用户？</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Apple登录是否为App Store审核必须项？如是，需在1.0版本支持</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>KYC审核SLA是多少？（建议24小时内）</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>企业认证是否需要视频面签环节？</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>阿拉伯语姓名模糊匹配是自研还是使用第三方制裁筛查服务？</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- ==================== APP原型 — 登录/注册 ==================== -->
+<!-- ============================================================ -->
+<section class="page-section" id="app-login">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--brand-light);">🔐</div>
+    <h2>APP原型 — 登录/注册</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <div class="info-box info">
+    <span class="ib-icon">💡</span>
+    <div><strong>设计原则</strong>：采用「渐进式注册」，用户 30 秒内完成注册即可浏览商品详情和价格。个人认证和企业认证在首次下单前引导完成。</div>
+  </div>
+
+  <h3 id="login-entry">登录首页</h3>
+  <div class="mockup-row">
+    <div class="mockup-card" style="min-width:220px;">
+      <div class="mc-header">Screen 1 · 登录首页</div>
+      <div class="mc-body">
+        <div style="text-align:center;margin-bottom:12px;">
+          <div style="display:inline-flex;align-items:center;gap:6px;">
+            <div style="width:24px;height:24px;background:#E63946;border-radius:5px;color:white;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:800;">FS</div>
+            <strong style="font-size:15px;">FoneSquare</strong>
+          </div>
+          <div style="font-size:10px;color:var(--gray-400);margin-top:2px;">Global B2B Marketplace</div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;">COUNTRY / REGION</div>
+        <div class="mc-field">🇭🇰 Hong Kong &nbsp;&nbsp;▾</div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;margin-top:10px;">PHONE NUMBER</div>
+        <div class="mc-field">🇭🇰 +852 ▾ &nbsp;| &nbsp;Enter phone number</div>
+        <div class="mc-divider">—— or ——</div>
+        <div class="mc-alt-btns">
+          <div class="mc-alt-btn">💬 WhatsApp</div>
+          <div class="mc-alt-btn">✉️ Email</div>
+        </div>
+        <div class="mc-btn">LOGIN / SIGN UP</div>
+        <div style="text-align:center;font-size:9px;color:var(--gray-400);margin-top:8px;">
+          By continuing, you agree to our<br>Terms of Service & Privacy Policy
+        </div>
+      </div>
+    </div>
+    <div class="mockup-card" style="min-width:220px;">
+      <div class="mc-header">Screen 2 · OTP验证</div>
+      <div class="mc-body">
+        <div style="text-align:center;margin-bottom:10px;">🔐</div>
+        <div style="text-align:center;font-weight:700;font-size:14px;margin-bottom:6px;">Enter Verification Code</div>
+        <div style="text-align:center;font-size:10px;color:var(--gray-500);margin-bottom:14px;">We sent a 6-digit code to<br><strong>+852 9123 ****</strong></div>
+        <div style="display:flex;gap:6px;justify-content:center;margin-bottom:10px;">
+          <div style="width:32px;height:38px;background:#D1FAE5;border:1.5px solid #16A34A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">4</div>
+          <div style="width:32px;height:38px;background:#D1FAE5;border:1.5px solid #16A34A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">7</div>
+          <div style="width:32px;height:38px;background:#D1FAE5;border:1.5px solid #16A34A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">2</div>
+          <div style="width:32px;height:38px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:6px;"></div>
+          <div style="width:32px;height:38px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:6px;"></div>
+          <div style="width:32px;height:38px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:6px;"></div>
+        </div>
+        <div style="text-align:center;font-size:10px;color:var(--gray-400);">Resend in 00:42</div>
+        <div class="mc-btn" style="opacity:0.5;margin-top:16px;">VERIFY</div>
+      </div>
+    </div>
+    <div class="mockup-card" style="min-width:220px;">
+      <div class="mc-header">Screen 3 · 个人信息补充</div>
+      <div class="mc-body">
+        <div style="text-align:center;font-size:48px;margin:8px 0;">👤</div>
+        <div style="text-align:center;font-weight:700;font-size:14px;margin-bottom:10px;">Complete Your Profile</div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;">FULL NAME *</div>
+        <div class="mc-field">Enter your name</div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;margin-top:8px;">NATIONALITY *</div>
+        <div class="mc-field">Select country ▾</div>
+        <div style="font-size:10px;color:var(--gray-500);margin-bottom:4px;margin-top:8px;">EMAIL (optional)</div>
+        <div class="mc-field">your@email.com</div>
+        <div class="mc-btn">SAVE & CONTINUE</div>
+        <div style="text-align:center;font-size:10px;color:var(--gray-400);margin-top:8px;cursor:pointer;">Skip for now →</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 id="login-otp">OTP验证规格</h3>
+  <div class="spec-group">
+    <div class="spec-group-title">⚙️ OTP 通用配置</div>
+    <div class="spec-row"><div class="spec-label">验证码位数</div><div class="spec-value">6位纯数字</div></div>
+    <div class="spec-row"><div class="spec-label">有效期</div><div class="spec-value">5分钟</div></div>
+    <div class="spec-row"><div class="spec-label">重发间隔</div><div class="spec-value">60秒倒计时</div></div>
+    <div class="spec-row"><div class="spec-label">错误限制</div><div class="spec-value">连续错误5次后锁定30分钟</div></div>
+    <div class="spec-row"><div class="spec-label">防刷策略</div><div class="spec-value">同一号码/IP 每小时最多10次请求</div></div>
+    <div class="spec-row"><div class="spec-label">多通道降级</div><div class="spec-value">SMS → WhatsApp消息 → 语音验证码（30秒无回执自动切换）</div></div>
+  </div>
+
+  <h4>国际区号与OTP通道对照</h4>
+  <table>
+    <thead><tr><th>国家</th><th>区号</th><th>手机号位数</th><th>OTP通道</th><th>优先级</th></tr></thead>
+    <tbody>
+      <tr><td>🇭🇰 Hong Kong</td><td>+852</td><td>8位</td><td>Twilio SMS</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>🇵🇭 Philippines</td><td>+63</td><td>10位</td><td>Twilio SMS</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>🇦🇪 UAE</td><td>+971</td><td>9位</td><td>MessageBird</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>🇸🇦 Saudi Arabia</td><td>+966</td><td>9位</td><td>MessageBird</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>🇲🇾 Malaysia</td><td>+60</td><td>9-10位</td><td>Twilio SMS</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>🇨🇳 China</td><td>+86</td><td>11位</td><td>阿里云国际SMS</td><td><span class="tag tag-p1">P1</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="login-register">WhatsApp与邮箱登录规格</h3>
+  <div class="spec-group">
+    <div class="spec-group-title">💬 WhatsApp登录 <span class="tag tag-p1" style="margin-left:8px;">P1</span></div>
+    <div class="spec-row"><div class="spec-label">实现方式</div><div class="spec-value">WhatsApp Business API → 发送 OTP 模板消息</div></div>
+    <div class="spec-row"><div class="spec-label">接入方</div><div class="spec-value">Twilio WhatsApp 或 MessageBird WhatsApp</div></div>
+    <div class="spec-row"><div class="spec-label">消息模板</div><div class="spec-value"><code>Your FoneSquare verification code is {{1}}. Valid for 5 minutes.</code></div></div>
+    <div class="spec-row"><div class="spec-label">模板审核</div><div class="spec-value">需提前通过 Meta Business 审核（约3-5个工作日）</div></div>
+  </div>
+  <div class="spec-group">
+    <div class="spec-group-title">✉️ 邮箱登录 <span class="tag tag-p0" style="margin-left:8px;">P0</span></div>
+    <div class="spec-row"><div class="spec-label">邮箱地址</div><div class="spec-value">标准email格式校验，不区分大小写，企业/个人邮箱均可</div></div>
+    <div class="spec-row"><div class="spec-label">密码</div><div class="spec-value">8-20位，包含字母+数字</div></div>
+    <div class="spec-row"><div class="spec-label">邮箱验证码</div><div class="spec-value">6位，5分钟有效，首次注册时发送</div></div>
+  </div>
+
+  <h3 id="login-rules">登录/注册业务规则汇总</h3>
+  <table>
+    <thead><tr><th style="width:80px;">规则ID</th><th>规则内容</th><th style="width:100px;">触发场景</th></tr></thead>
+    <tbody>
+      <tr><td>LR-01</td><td>手机号同时作为用户唯一标识（手机号登录场景），同一手机号登录即注册</td><td>手机号登录</td></tr>
+      <tr><td>LR-02</td><td>邮箱注册需先验证邮箱地址，验证通过后设置密码</td><td>邮箱登录</td></tr>
+      <tr><td>LR-03</td><td>同一用户可绑定多种登录方式（手机+邮箱+WhatsApp），关联到同一账号</td><td>账户设置</td></tr>
+      <tr><td>LR-04</td><td>国家/地区选择后联动：区号自动切换、证件类型列表、货币偏好</td><td>注册首页</td></tr>
+      <tr><td>LR-05</td><td>个人信息补充页面可跳过，但「姓名」和「国籍」在发起KYC时为必填</td><td>注册完成后</td></tr>
+      <tr><td>LR-06</td><td>注册完成后自动触发制裁名单校验（姓名+国籍），命中则拦截</td><td>注册完成</td></tr>
+      <tr><td>LR-07</td><td>Token有效期30天，支持多设备登录但同一设备仅保留最新会话</td><td>登录成功</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- ==================== APP原型 — KYC认证 ===================== -->
+<!-- ============================================================ -->
+<section class="page-section" id="app-kyc">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--orange-light);">🛡️</div>
+    <h2>APP原型 — 实名认证/KYC</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <div class="info-box warning">
+    <span class="ib-icon">⚠️</span>
+    <div><strong>合规要求</strong>：由于涉及跨境B2B交易和多国制裁合规（OFAC/UN/EU），所有用户在首次下单前必须完成个人身份认证。T/T支付还需额外上传证件照片。</div>
+  </div>
+
+  <h3 id="kyc-flow">KYC认证流程</h3>
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-node flow-start">用户点击下单</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-gate">检查KYC状态</div>
+    </div>
+    <span class="flow-arrow-d">↓ 未认证</span>
+    <div class="flow-row">
+      <div class="flow-node flow-action">引导进入<br>个人认证页</div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">填写个人信息<br><small>姓名/国籍/证件号</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-action">上传证件照片<br><small>OCR自动识别</small></div>
+      <span class="flow-arrow-r">→</span>
+      <div class="flow-node flow-system">制裁名单比对</div>
+    </div>
+    <span class="flow-arrow-d">↓ 未命中</span>
+    <div class="flow-row">
+      <div class="flow-node flow-system">后台人工审核</div>
+      <span class="flow-arrow-r">→ 通过</span>
+      <div class="flow-node flow-end">KYC认证完成<br><small>可下单</small></div>
+    </div>
+    <div style="margin-top:12px;text-align:center;font-size:12px;color:var(--gray-400);">
+      审核驳回 → <span style="color:var(--orange);">通知用户重新提交</span> &nbsp;|&nbsp;
+      制裁命中 → <span style="color:var(--brand);">账户冻结，禁止交易</span>
+    </div>
+  </div>
+
+  <h3 id="kyc-personal">个人认证</h3>
+  <h4>认证字段规格</h4>
+  <table>
+    <thead><tr><th>字段</th><th>类型</th><th>必填</th><th>可修改</th><th>校验方式</th></tr></thead>
+    <tbody>
+      <tr><td>姓名</td><td>文本</td><td><span class="tag tag-required">必填</span></td><td>❌ 认证后不可改</td><td>与证件OCR结果比对</td></tr>
+      <tr><td>国籍</td><td>下拉选择</td><td><span class="tag tag-required">必填</span></td><td>❌ 认证后不可改</td><td>联动证件类型展示</td></tr>
+      <tr><td>证件类型</td><td>下拉选择</td><td><span class="tag tag-required">必填</span></td><td>❌ 认证后不可改</td><td>根据国籍动态展示可选项</td></tr>
+      <tr><td>证件号码</td><td>文本</td><td><span class="tag tag-required">必填</span></td><td>❌ 认证后不可改</td><td>格式校验 + 制裁名单比对</td></tr>
+      <tr><td>证件正面照</td><td>图片上传</td><td><span class="tag tag-required">必填</span></td><td>可重新上传</td><td>OCR提取信息 + 人工审核</td></tr>
+      <tr><td>证件反面照</td><td>图片上传</td><td><span class="tag tag-optional">选填</span></td><td>可重新上传</td><td>部分证件需要正反两面</td></tr>
+      <tr><td>邮箱</td><td>文本</td><td><span class="tag tag-optional">选填</span></td><td>✅ 可修改</td><td>格式校验</td></tr>
+    </tbody>
+  </table>
+
+  <h4>多国证件类型对照</h4>
+  <table>
+    <thead><tr><th>国籍</th><th>可选证件类型</th><th>证件号格式</th></tr></thead>
+    <tbody>
+      <tr><td>🇭🇰 Hong Kong</td><td>HKID / Passport</td><td>HKID: X000000(0)</td></tr>
+      <tr><td>🇦🇪 UAE</td><td>Emirates ID / Passport</td><td>Emirates ID: 784-XXXX-XXXXXXX-X</td></tr>
+      <tr><td>🇸🇦 Saudi Arabia</td><td>National ID / Iqama / Passport</td><td>National ID: 10位数字</td></tr>
+      <tr><td>🇵🇭 Philippines</td><td>Philippine ID / Passport / Driver's License</td><td>多种格式</td></tr>
+      <tr><td>🇲🇾 Malaysia</td><td>MyKad / Passport</td><td>MyKad: 12位数字</td></tr>
+      <tr><td>🇨🇳 China</td><td>身份证 / Passport</td><td>身份证: 18位</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="kyc-business">企业认证</h3>
+  <div class="info-box info">
+    <span class="ib-icon">ℹ️</span>
+    <div>企业认证<strong>非必填</strong>，但完成后可提升下单额度。当用户选择T/T支付时，如已填写企业信息，将自动进行企业风险校验。</div>
+  </div>
+
+  <h4>企业认证字段</h4>
+  <table>
+    <thead><tr><th>字段</th><th>必填</th><th>可修改</th><th>校验方式</th></tr></thead>
+    <tbody>
+      <tr><td>注册国家/城市</td><td><span class="tag tag-required">必填</span></td><td>❌</td><td>—</td></tr>
+      <tr><td>企业名称</td><td><span class="tag tag-required">必填</span></td><td>❌ 提交后不可改</td><td>工商信息校验</td></tr>
+      <tr><td>企业注册ID</td><td><span class="tag tag-required">必填</span></td><td>❌ 提交后不可改</td><td>格式校验 + 真实性验证</td></tr>
+      <tr><td>企业注册地址</td><td><span class="tag tag-required">必填</span></td><td>✅ 可修改</td><td>与工商登记比对</td></tr>
+      <tr><td>公司注册证明</td><td><span class="tag tag-required">必填</span></td><td>可重新上传</td><td>人工审核</td></tr>
+      <tr><td>企业收货地址</td><td><span class="tag tag-optional">选填</span></td><td>✅</td><td>仅迪拜客户</td></tr>
+      <tr><td>电讯执照</td><td><span class="tag tag-optional">条件必填</span></td><td>可重新上传</td><td>仅🇭🇰香港公司</td></tr>
+    </tbody>
+  </table>
+
+  <h4>各国企业信息校验来源</h4>
+  <table>
+    <thead><tr><th>国家/地区</th><th>校验来源</th><th>校验字段</th></tr></thead>
+    <tbody>
+      <tr><td>🇭🇰 香港</td><td>GovHK 一站通</td><td>企业名称、注册地址、注册号码</td></tr>
+      <tr><td>🇦🇪 阿联酋</td><td>邓白氏 / 人工审核</td><td>企业名称、DED License</td></tr>
+      <tr><td>🇸🇦 沙特</td><td>MCI.gov.sa</td><td>Commercial Registration</td></tr>
+      <tr><td>🇵🇭 菲律宾</td><td>邓白氏 / 人工审核</td><td>SEC/DTI Registration</td></tr>
+      <tr><td>🇲🇾 马来西亚</td><td>SSM MyCoID</td><td>企业名称、SSM 号码</td></tr>
+      <tr><td>通用（付费）</td><td>邓白氏 D&B</td><td>全球企业信息+风险评级</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="kyc-sanctions">制裁名单校验</h3>
+  <table>
+    <thead><tr><th>名单来源</th><th>校验项</th><th>更新频率</th><th>命中处理</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>OFAC SDN List</td>
+        <td>姓名（含别名）、护照号、企业名称、注册地址</td>
+        <td>每日同步</td>
+        <td rowspan="4">
+          <strong>个人命中</strong>：注册时拦截，禁止注册<br>
+          <strong>企业命中</strong>：下单时拦截，禁止交易<br>
+          <strong>疑似命中</strong>：允许注册但标记，人工复查
+        </td>
+      </tr>
+      <tr><td>OFAC Consolidated List</td><td>同上</td><td>每日同步</td></tr>
+      <tr><td>联合国安理会制裁名单</td><td>姓名、企业名称、注册地址</td><td>每周同步</td></tr>
+      <tr><td>欧盟制裁名单</td><td>姓名、护照号、企业名称</td><td>每周同步</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box danger">
+    <span class="ib-icon">🚨</span>
+    <div>
+      <strong>阿拉伯语姓名模糊匹配</strong>：阿拉伯语姓名罗马化有多种拼写变体（如 محمد → Mohammed / Mohammad / Muhammad / Mohamed），建议使用专业制裁筛查服务（Dow Jones Risk & Compliance / Refinitiv World-Check）。
+    </div>
+  </div>
+</section>
+
+<!-- ==================== APP — 权限与浏览控制 ==================== -->
+<section class="page-section" id="app-permission">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--green-light);">🔑</div>
+    <h2>权限与浏览控制</h2>
+    <span class="section-tag tag-dep">依赖对接</span>
+  </div>
+
+  <div class="info-box warning">
+    <span class="ib-icon">🔗</span>
+    <div><strong>模块依赖说明</strong>：商品浏览和下单模块由其他产品经理负责，但需依赖本模块输出的用户身份状态和KYC认证状态。以下为对接接口约定。</div>
+  </div>
+
+  <h4>用户状态输出字段（供依赖方消费）</h4>
+  <table>
+    <thead><tr><th>字段</th><th>类型</th><th>说明</th><th>消费方</th></tr></thead>
+    <tbody>
+      <tr><td><code>is_logged_in</code></td><td>Boolean</td><td>用户是否已登录</td><td>商品浏览模块</td></tr>
+      <tr><td><code>user_status</code></td><td>Enum</td><td><code>GUEST</code> / <code>REGISTERED</code> / <code>KYC_PENDING</code> / <code>KYC_APPROVED</code> / <code>KYC_REJECTED</code> / <code>BLOCKED</code></td><td>全局</td></tr>
+      <tr><td><code>kyc_level</code></td><td>Enum</td><td><code>NONE</code> / <code>PERSONAL</code> / <code>BUSINESS</code></td><td>下单限额模块</td></tr>
+      <tr><td><code>nationality</code></td><td>String</td><td>用户国籍（ISO 3166-1 alpha-2）</td><td>商品/支付模块</td></tr>
+      <tr><td><code>sanctions_status</code></td><td>Enum</td><td><code>CLEAR</code> / <code>PENDING_REVIEW</code> / <code>BLOCKED</code></td><td>下单拦截</td></tr>
+    </tbody>
+  </table>
+
+  <h4>各状态下的页面行为约定</h4>
+  <table>
+    <thead><tr><th>页面/功能</th><th>GUEST</th><th>REGISTERED</th><th>KYC_APPROVED</th><th>BLOCKED</th></tr></thead>
+    <tbody>
+      <tr><td>首页商品列表</td><td>✅ 可浏览</td><td>✅ 可浏览</td><td>✅ 可浏览</td><td>❌ 禁止访问</td></tr>
+      <tr><td>商品详情页</td><td>❌ 弹窗引导登录</td><td>✅ 可查看</td><td>✅ 可查看</td><td>❌</td></tr>
+      <tr><td>商品价格</td><td>❌ 显示 $***</td><td>✅ 显示真实价格</td><td>✅ 显示真实价格</td><td>❌</td></tr>
+      <tr><td>下单按钮</td><td>❌ 引导登录</td><td>❌ 引导KYC认证</td><td>✅ 正常下单</td><td>❌</td></tr>
+      <tr><td>联系销售</td><td>❌ 引导登录</td><td>✅ 可联系</td><td>✅ 可联系</td><td>❌</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- ==================== Web原型 — 商家管理后台 ================== -->
+<!-- ============================================================ -->
+<section class="page-section" id="web-merchant">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--blue-light);">🏢</div>
+    <h2>Web原型 — 商家管理后台</h2>
+    <span class="section-tag tag-p0">P0 核心</span>
+  </div>
+
+  <div class="info-box info">
+    <span class="ib-icon">🖥️</span>
+    <div><strong>后台定位</strong>：FoneSquare 运营人员使用的 Web 管理后台，用于用户管理、KYC审核、制裁名单风控和系统配置。</div>
+  </div>
+
+  <h3 id="web-user-list">用户列表管理</h3>
+  <div class="wireframe-block">
+    <div class="wf-title">📋 用户列表页 — Web后台</div>
+    左侧导航栏 | 顶部筛选区（国家/认证状态/注册时间/搜索）| 用户列表表格 | 分页
+  </div>
+
+  <h4>用户列表字段</h4>
+  <table>
+    <thead><tr><th>列名</th><th>数据类型</th><th>说明</th><th>支持筛选</th><th>支持排序</th></tr></thead>
+    <tbody>
+      <tr><td>用户ID</td><td>String</td><td>系统自动生成</td><td>✅ 精确搜索</td><td>—</td></tr>
+      <tr><td>姓名</td><td>String</td><td>注册时填写或KYC提交</td><td>✅ 模糊搜索</td><td>—</td></tr>
+      <tr><td>手机号</td><td>String</td><td>含区号</td><td>✅ 精确搜索</td><td>—</td></tr>
+      <tr><td>邮箱</td><td>String</td><td>—</td><td>✅ 模糊搜索</td><td>—</td></tr>
+      <tr><td>国家/地区</td><td>Enum</td><td>注册时选择</td><td>✅ 下拉筛选</td><td>—</td></tr>
+      <tr><td>注册时间</td><td>DateTime</td><td>—</td><td>✅ 时间范围</td><td>✅ 升/降序</td></tr>
+      <tr><td>个人认证状态</td><td>Enum</td><td>未认证 / 审核中 / 已通过 / 已驳回</td><td>✅ 下拉筛选</td><td>—</td></tr>
+      <tr><td>企业认证状态</td><td>Enum</td><td>未认证 / 审核中 / 已通过 / 已驳回</td><td>✅ 下拉筛选</td><td>—</td></tr>
+      <tr><td>制裁状态</td><td>Enum</td><td>正常 / 待复查 / 已拦截</td><td>✅ 下拉筛选</td><td>—</td></tr>
+      <tr><td>最后登录</td><td>DateTime</td><td>—</td><td>—</td><td>✅ 升/降序</td></tr>
+      <tr><td>操作</td><td>—</td><td>查看详情 / 冻结 / 解冻</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h4>用户详情页信息</h4>
+  <table>
+    <thead><tr><th>信息区块</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>基本信息</td><td>姓名、手机号、邮箱、国籍、注册时间、最后登录时间、登录方式</td></tr>
+      <tr><td>个人认证信息</td><td>证件类型、证件号码、证件照片（可放大查看）、OCR识别结果、认证状态、审核记录</td></tr>
+      <tr><td>企业认证信息</td><td>企业名称、注册ID、注册地址、营业执照照片、电讯执照（如有）、认证状态、审核记录</td></tr>
+      <tr><td>制裁筛查记录</td><td>每次筛查时间、命中名单、命中详情、处理结果</td></tr>
+      <tr><td>操作日志</td><td>用户状态变更、审核操作、冻结/解冻记录（含操作人和时间）</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="web-kyc-audit">KYC审核工作台</h3>
+  <div class="wireframe-block">
+    <div class="wf-title">🛡️ KYC审核工作台 — Web后台</div>
+    待审核队列（按提交时间排序）| 审核详情面板 | 操作区（通过/驳回+原因）
+  </div>
+
+  <h4>审核队列列表</h4>
+  <table>
+    <thead><tr><th>列名</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>申请编号</td><td>系统自动生成</td></tr>
+      <tr><td>用户姓名</td><td>点击可跳转用户详情</td></tr>
+      <tr><td>认证类型</td><td>个人认证 / 企业认证</td></tr>
+      <tr><td>提交时间</td><td>—</td></tr>
+      <tr><td>等待时长</td><td>高亮超过SLA的申请（如 >24h 标红）</td></tr>
+      <tr><td>国家/地区</td><td>—</td></tr>
+      <tr><td>制裁预筛结果</td><td>✅通过 / ⚠️疑似 / ❌命中</td></tr>
+      <tr><td>操作</td><td>开始审核</td></tr>
+    </tbody>
+  </table>
+
+  <h4>审核操作</h4>
+  <div class="spec-group">
+    <div class="spec-group-title">✅ 通过</div>
+    <div class="spec-row"><div class="spec-label">操作</div><div class="spec-value">点击「通过」按钮</div></div>
+    <div class="spec-row"><div class="spec-label">系统行为</div><div class="spec-value">用户状态更新为 <code>KYC_APPROVED</code>，发送APP内推送 + WhatsApp通知</div></div>
+  </div>
+  <div class="spec-group">
+    <div class="spec-group-title">❌ 驳回</div>
+    <div class="spec-row"><div class="spec-label">操作</div><div class="spec-value">点击「驳回」按钮，必填驳回原因（下拉选择 + 自由文本补充）</div></div>
+    <div class="spec-row"><div class="spec-label">驳回原因预设</div><div class="spec-value">
+      · 证件照片模糊/不清晰<br>
+      · 证件信息与填写内容不一致<br>
+      · 证件已过期<br>
+      · 企业注册信息无法核实<br>
+      · 疑似伪造材料<br>
+      · 其他（需填写说明）
+    </div></div>
+    <div class="spec-row"><div class="spec-label">系统行为</div><div class="spec-value">用户状态更新为 <code>KYC_REJECTED</code>，发送通知含驳回原因，用户可重新提交</div></div>
+  </div>
+
+  <h3 id="web-sanctions">制裁名单管理</h3>
+  <table>
+    <thead><tr><th>功能</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>名单同步状态</td><td>展示各制裁名单最近同步时间、同步结果（成功/失败）、记录总数</td></tr>
+      <tr><td>手动触发同步</td><td>支持手动触发某个名单的即时同步</td></tr>
+      <tr><td>命中记录查询</td><td>展示所有命中记录（用户信息、命中名单、命中字段、处理状态）</td></tr>
+      <tr><td>人工复查</td><td>对「疑似命中」记录进行人工判定（确认拦截 / 判定误报放行）</td></tr>
+      <tr><td>拦截白名单</td><td>对已确认的误报用户加入白名单，后续自动跳过筛查</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="web-config">系统配置</h3>
+  <table>
+    <thead><tr><th>配置项</th><th>默认值</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>OTP有效期</td><td>5分钟</td><td>—</td></tr>
+      <tr><td>OTP重发间隔</td><td>60秒</td><td>—</td></tr>
+      <tr><td>OTP错误锁定次数</td><td>5次</td><td>—</td></tr>
+      <tr><td>OTP锁定时长</td><td>30分钟</td><td>—</td></tr>
+      <tr><td>同IP每小时OTP请求上限</td><td>10次</td><td>—</td></tr>
+      <tr><td>Token有效期</td><td>30天</td><td>—</td></tr>
+      <tr><td>KYC审核SLA</td><td>24小时</td><td>超过SLA的申请高亮提醒</td></tr>
+      <tr><td>制裁名单同步周期</td><td>OFAC:每日 / UN+EU:每周</td><td>可按名单分别配置</td></tr>
+      <tr><td>个人用户日下单限额</td><td>≤ 1万USD</td><td>可按用户等级动态调整</td></tr>
+      <tr><td>企业用户日下单限额</td><td>≤ 5万USD</td><td>可按用户等级动态调整</td></tr>
+    </tbody>
+  </table>
+
+  <h4>后台角色权限矩阵</h4>
+  <table>
+    <thead><tr><th>功能</th><th>超级管理员</th><th>KYC审核员</th><th>风控专员</th><th>客服（只读）</th></tr></thead>
+    <tbody>
+      <tr><td>用户列表查看</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>用户冻结/解冻</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td></tr>
+      <tr><td>KYC审核操作</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+      <tr><td>制裁名单管理</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td></tr>
+      <tr><td>制裁白名单管理</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td></tr>
+      <tr><td>系统配置修改</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+      <tr><td>操作日志查看</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<script>
+const navItems = document.querySelectorAll('.nav-item[href]');
+const sections = document.querySelectorAll('.page-section');
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+    if (top <= 100) current = section.id;
+  });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    navItems.forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
