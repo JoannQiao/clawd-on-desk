@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>FoneSquare 用户全流程泳道图</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;padding:10px}</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 1940" width="920"
+     font-family="-apple-system,BlinkMacSystemFont,PingFang SC,Microsoft YaHei,sans-serif">
+
+<!-- =========== DEFS =========== -->
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L8 5L0 9z" fill="#546E7A"/></marker>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L8 5L0 9z" fill="#E53935"/></marker>
+  <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L8 5L0 9z" fill="#43A047"/></marker>
+</defs>
+
+<!-- =========== GRID =========== -->
+<rect width="920" height="1940" fill="none" stroke="#CFD8DC" stroke-width="1.5" rx="3"/>
+<rect y="0" width="920" height="44" fill="#E8EAF6" rx="3"/><rect x="0" y="40" width="920" height="4" fill="#E8EAF6"/>
+<line x1="58" y1="0" x2="58" y2="1940" stroke="#CFD8DC"/>
+<line x1="370" y1="0" x2="370" y2="1940" stroke="#CFD8DC"/>
+<line x1="670" y1="0" x2="670" y2="1940" stroke="#CFD8DC"/>
+<line x1="0" y1="44" x2="920" y2="44" stroke="#9FA8DA" stroke-width="1.5"/>
+<line x1="0" y1="985" x2="920" y2="985" stroke="#9FA8DA" stroke-width="1.5"/>
+<line x1="0" y1="1500" x2="920" y2="1500" stroke="#9FA8DA" stroke-width="1.5"/>
+
+<!-- Column headers -->
+<text x="214" y="29" text-anchor="middle" font-size="13" fill="#283593" font-weight="700">FoneSquare APP</text>
+<text x="520" y="29" text-anchor="middle" font-size="13" fill="#283593" font-weight="700">服务后台</text>
+<text x="795" y="29" text-anchor="middle" font-size="13" fill="#283593" font-weight="700">风控安全</text>
+
+<!-- Section sidebars -->
+<rect x="1" y="45" width="56" height="939" fill="#F8F9FE"/>
+<text x="29" y="515" text-anchor="middle" font-size="13" fill="#5C6BC0" font-weight="700" transform="rotate(-90,29,515)">登录 / 注册</text>
+<rect x="1" y="986" width="56" height="513" fill="#FFFBEF"/>
+<text x="29" y="1242" text-anchor="middle" font-size="13" fill="#B8860B" font-weight="700" transform="rotate(-90,29,1242)">KYC 身份认证</text>
+<rect x="1" y="1501" width="56" height="438" fill="#F0F1F8"/>
+<text x="29" y="1720" text-anchor="middle" font-size="13" fill="#4A5899" font-weight="700" transform="rotate(-90,29,1720)">商家管理</text>
+
+
+<!-- ======================================================== -->
+<!-- =========  SECTION 1  登录/注册  ======================= -->
+<!-- ======================================================== -->
+
+<!-- 1 开始 -->
+<circle cx="214" cy="86" r="22" fill="#E8EAF6" stroke="#7B1FA2" stroke-width="2"/>
+<text x="214" y="91" text-anchor="middle" font-size="13" fill="#7B1FA2" font-weight="700">开始</text>
+<line x1="214" y1="108" x2="214" y2="130" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 2 下载APP -->
+<rect x="134" y="132" width="160" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="155" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">下载 APP</text>
+<line x1="214" y1="168" x2="214" y2="192" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 3 进入APP·获取Locale ★用户强调不能遗漏★ -->
+<rect x="104" y="194" width="220" height="50" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="215" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">进入 APP</text>
+<text x="214" y="234" text-anchor="middle" font-size="11" fill="#546E7A">获取用户 Locale（语言 · 区号 · 默认登录方式）</text>
+<line x1="214" y1="244" x2="214" y2="274" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- Annotation: 三种登录方式 -->
+<rect x="280" y="252" width="235" height="70" rx="5" fill="#FFFDE7" stroke="#FFD54F" stroke-width="1" stroke-dasharray="5,3"/>
+<text x="290" y="270" font-size="11" fill="#6D4C00" font-weight="600">A. 手机号+OTP（6位验证码, 60s倒计时）</text>
+<text x="290" y="288" font-size="11" fill="#6D4C00" font-weight="600">B. WhatsApp OTP（Business API 模板消息）</text>
+<text x="290" y="306" font-size="11" fill="#6D4C00" font-weight="600">C. 邮箱+密码（邮箱验证 + 密码设置）</text>
+
+<!-- 4 选择登录方式 -->
+<rect x="114" y="276" width="200" height="38" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="300" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">选择登录方式</text>
+
+<!-- Arrow 4→5 发送OTP horizontal -->
+<line x1="314" y1="295" x2="408" y2="295" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="361" y="288" text-anchor="middle" font-size="9" fill="#78909C">请求发送</text>
+
+<!-- 5 发送OTP (Backend) -->
+<rect x="410" y="270" width="220" height="52" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="291" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">发送 OTP / 验证邮件</text>
+<text x="520" y="308" text-anchor="middle" font-size="10" fill="#546E7A">京东云 SMS / WA API / 邮件服务</text>
+
+<!-- Arrow 4→6 down in APP -->
+<line x1="214" y1="314" x2="214" y2="356" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- Arrow 5→6 return (dashed) -->
+<path d="M520,322 L520,344 L304,344 L304,358" fill="none" stroke="#546E7A" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#a)"/>
+<text x="418" y="340" font-size="9" fill="#78909C">OTP 下发给用户</text>
+
+<!-- 6 验证OTP/密码 -->
+<rect x="124" y="358" width="180" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="381" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">验证 OTP / 密码</text>
+<line x1="214" y1="394" x2="214" y2="426" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 7 验证通过? diamond -->
+<polygon points="214,428 258,460 214,492 170,460" fill="#FFF9C4" stroke="#FBC02D" stroke-width="1.5"/>
+<text x="214" y="456" text-anchor="middle" font-size="11" fill="#6D4C00" font-weight="600">验证</text>
+<text x="214" y="469" text-anchor="middle" font-size="11" fill="#6D4C00" font-weight="600">通过?</text>
+
+<!-- 否 loop back -->
+<path d="M258,460 L332,460 L332,376 L304,376" fill="none" stroke="#E53935" stroke-width="1.3" marker-end="url(#ar)"/>
+<text x="342" y="425" font-size="10" fill="#E53935" font-weight="600">否（重试）</text>
+
+<!-- 是 down -->
+<line x1="214" y1="492" x2="214" y2="518" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="230" y="510" font-size="10" fill="#43A047" font-weight="600">是 ↓</text>
+
+<!-- 8a  A 手机号+OTP -->
+<rect x="80" y="520" width="240" height="38" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="200" y="536" text-anchor="middle" font-size="11" fill="#283593" font-weight="600">A. 手机号+OTP</text>
+<text x="200" y="551" text-anchor="middle" font-size="10" fill="#546E7A">个人信息补充（可跳过）</text>
+<line x1="320" y1="539" x2="408" y2="539" stroke="#546E7A" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="410" y="522" width="220" height="34" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="544" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">京东云国际短信服务</text>
+<line x1="200" y1="558" x2="200" y2="574" stroke="#546E7A" stroke-width="1.2" marker-end="url(#a)"/>
+
+<!-- 8b  B WhatsApp OTP -->
+<rect x="80" y="576" width="240" height="38" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="200" y="592" text-anchor="middle" font-size="11" fill="#283593" font-weight="600">B. WhatsApp OTP</text>
+<text x="200" y="607" text-anchor="middle" font-size="10" fill="#546E7A">个人信息补充（可跳过）</text>
+<line x1="320" y1="595" x2="408" y2="595" stroke="#546E7A" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="410" y="578" width="220" height="34" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="600" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">WA Business API 直连</text>
+<line x1="200" y1="614" x2="200" y2="630" stroke="#546E7A" stroke-width="1.2" marker-end="url(#a)"/>
+
+<!-- 8c  C 邮箱+密码 -->
+<rect x="80" y="632" width="240" height="38" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="200" y="648" text-anchor="middle" font-size="11" fill="#283593" font-weight="600">C. 邮箱+密码</text>
+<text x="200" y="663" text-anchor="middle" font-size="10" fill="#546E7A">邮箱验证 + 设置密码</text>
+<line x1="320" y1="651" x2="408" y2="651" stroke="#546E7A" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="410" y="634" width="220" height="34" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="650" text-anchor="middle" font-size="11" fill="#283593" font-weight="600">标准邮箱验证 + 密码哈希存储</text>
+
+<!-- converge to 个人信息 -->
+<line x1="200" y1="670" x2="200" y2="690" stroke="#546E7A" stroke-width="1.2"/>
+<line x1="200" y1="690" x2="214" y2="690" stroke="#546E7A" stroke-width="0"/>
+<line x1="214" y1="682" x2="214" y2="710" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 9 个人信息补充 -->
+<rect x="104" y="712" width="220" height="48" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="733" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">个人信息补充</text>
+<text x="214" y="750" text-anchor="middle" font-size="10" fill="#546E7A">姓名 · 国籍 — 可跳过（KYC时必填）</text>
+<line x1="214" y1="760" x2="214" y2="792" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 10 制裁名单预筛 diamond -->
+<polygon points="214,794 262,828 214,862 166,828" fill="#FFF9C4" stroke="#FBC02D" stroke-width="1.5"/>
+<text x="214" y="824" text-anchor="middle" font-size="10" fill="#6D4C00" font-weight="600">制裁名单</text>
+<text x="214" y="837" text-anchor="middle" font-size="10" fill="#6D4C00" font-weight="600">预筛</text>
+
+<!-- Arrow diamond → OFAC (right) -->
+<line x1="262" y1="828" x2="408" y2="828" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 11 OFAC (Backend) -->
+<rect x="410" y="808" width="220" height="40" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="833" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">调用 OFAC / UN / EU 制裁名单</text>
+<line x1="630" y1="828" x2="710" y2="828" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 12 风控判定 (Risk) -->
+<rect x="712" y="808" width="156" height="40" rx="5" fill="#D1C4E9" stroke="#9575CD" stroke-width="1.5"/>
+<text x="790" y="826" text-anchor="middle" font-size="11" fill="#4A148C" font-weight="600">风控判定</text>
+<text x="790" y="841" text-anchor="middle" font-size="10" fill="#7B1FA2">CLEAR / HIT / SUSPECT</text>
+
+<!-- Arrow: 命中 → 拦截 (from diamond left-down) -->
+<path d="M166,828 L100,828 L100,892 L118,892" fill="none" stroke="#E53935" stroke-width="1.3" marker-end="url(#ar)"/>
+<text x="86" y="864" font-size="10" fill="#E53935" font-weight="600">命中</text>
+
+<!-- 13 拦截注册 (left of APP column) -->
+<rect x="120" y="878" width="120" height="30" rx="5" fill="#FFCDD2" stroke="#EF5350" stroke-width="1.5"/>
+<text x="180" y="898" text-anchor="middle" font-size="11" fill="#C62828" font-weight="600">🚫 拦截注册</text>
+
+<!-- Arrow: CLEAR → JWT (Risk down to Backend) -->
+<path d="M790,848 L790,880 L632,880" fill="none" stroke="#43A047" stroke-width="1.5" marker-end="url(#ag)"/>
+<text x="720" y="874" font-size="10" fill="#43A047" font-weight="600">CLEAR</text>
+
+<!-- 14 签发JWT (Backend) -->
+<rect x="410" y="866" width="220" height="34" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="888" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">签发 JWT Token</text>
+
+<!-- Arrow: JWT → 登录成功 (left to APP) -->
+<path d="M410,883 L354,883 L354,940 L324,940" fill="none" stroke="#43A047" stroke-width="1.5" marker-end="url(#ag)"/>
+
+<!-- 15 登录/注册成功 -->
+<rect x="114" y="924" width="210" height="38" rx="5" fill="#C8E6C9" stroke="#66BB6A" stroke-width="1.5"/>
+<text x="219" y="949" text-anchor="middle" font-size="13" fill="#1B5E20" font-weight="600">✅ 登录/注册成功 · 进入首页</text>
+
+
+<!-- ======================================================== -->
+<!-- =========  SECTION 2  KYC 身份认证  ==================== -->
+<!-- ======================================================== -->
+
+<!-- 16 发起KYC -->
+<rect x="90" y="1018" width="248" height="48" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="1038" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">发起 KYC 认证</text>
+<text x="214" y="1056" text-anchor="middle" font-size="10" fill="#546E7A">个人实名认证 · 下单时触发或主动发起</text>
+<line x1="214" y1="1066" x2="214" y2="1090" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 17 拍照/上传 -->
+<rect x="114" y="1092" width="200" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="1115" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">📷 拍照 / 上传证件</text>
+<line x1="314" y1="1110" x2="408" y2="1110" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="361" y="1103" text-anchor="middle" font-size="9" fill="#78909C">提交证件</text>
+
+<!-- 18 OCR (Backend) -->
+<rect x="410" y="1090" width="220" height="42" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1108" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">OCR 识别 + 信息比对</text>
+<text x="520" y="1124" text-anchor="middle" font-size="10" fill="#546E7A">证件信息提取</text>
+<line x1="520" y1="1132" x2="520" y2="1160" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 19 制裁名单二次校验 (Backend) -->
+<rect x="410" y="1162" width="220" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1185" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">制裁名单二次校验</text>
+<line x1="630" y1="1180" x2="710" y2="1180" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 20 制裁名单API (Risk) -->
+<rect x="712" y="1162" width="156" height="36" rx="5" fill="#D1C4E9" stroke="#9575CD" stroke-width="1.5"/>
+<text x="790" y="1178" text-anchor="middle" font-size="11" fill="#4A148C" font-weight="600">制裁名单 API</text>
+<text x="790" y="1192" text-anchor="middle" font-size="10" fill="#7B1FA2">OFAC / UN / EU</text>
+
+<line x1="520" y1="1198" x2="520" y2="1228" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 21 创建审核工单 (Backend) -->
+<rect x="410" y="1230" width="220" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1253" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">创建审核工单 · 推送审核</text>
+<line x1="630" y1="1248" x2="710" y2="1248" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="670" y="1242" text-anchor="middle" font-size="9" fill="#78909C">推送</text>
+
+<!-- 22 审核人员 (Risk) -->
+<rect x="712" y="1226" width="156" height="44" rx="5" fill="#D1C4E9" stroke="#9575CD" stroke-width="1.5"/>
+<text x="790" y="1246" text-anchor="middle" font-size="11" fill="#4A148C" font-weight="600">🟣 审核人员</text>
+<text x="790" y="1262" text-anchor="middle" font-size="10" fill="#7B1FA2">✅ 通过 / ❌ 驳回</text>
+
+<!-- Arrow: 审核 → 审核结果 back left -->
+<path d="M712,1258 L680,1258 L680,1308 L632,1308" fill="none" stroke="#546E7A" stroke-width="1.3" marker-end="url(#a)"/>
+<text x="658" y="1290" font-size="9" fill="#78909C">审核结果</text>
+
+<line x1="520" y1="1266" x2="520" y2="1290" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 23 审核结果通知 (Backend) -->
+<rect x="410" y="1292" width="220" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1315" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">审核结果通知 · 更新KYC状态</text>
+<line x1="408" y1="1310" x2="338" y2="1310" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 24 收到KYC结果 (APP) -->
+<rect x="80" y="1290" width="258" height="48" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="209" y="1310" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">收到 KYC 审核结果</text>
+<text x="209" y="1328" text-anchor="middle" font-size="10" fill="#546E7A">✅ 通过 → 可下单 · ❌ 驳回 → 重新提交</text>
+
+<line x1="520" y1="1328" x2="520" y2="1366" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 通过后关联到额度 -->
+<path d="M209,1338 L209,1388 L408,1388" fill="none" stroke="#43A047" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#ag)"/>
+<text x="300" y="1382" font-size="9" fill="#43A047">通过后</text>
+
+<!-- 25 可下单·额度管理 (Backend) -->
+<rect x="410" y="1368" width="220" height="48" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1388" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">可下单 · 额度管理</text>
+<text x="520" y="1405" text-anchor="middle" font-size="10" fill="#546E7A">每人每日订单总金额限制: XXX</text>
+
+
+<!-- ======================================================== -->
+<!-- =========  SECTION 3  商家管理  ======================== -->
+<!-- ======================================================== -->
+
+<!-- 26 Web商家管理后台 (APP) -->
+<rect x="95" y="1530" width="238" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="1553" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">🖥 Web 商家管理后台</text>
+<line x1="333" y1="1548" x2="408" y2="1548" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 27 审核KYC信息 (Backend) -->
+<rect x="410" y="1528" width="220" height="42" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1546" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">审核 KYC 认证信息</text>
+<text x="520" y="1562" text-anchor="middle" font-size="10" fill="#546E7A">展示用户 KYC 申请资料</text>
+<line x1="630" y1="1549" x2="710" y2="1549" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 28 审核人员 (Risk) -->
+<rect x="712" y="1530" width="156" height="42" rx="5" fill="#D1C4E9" stroke="#9575CD" stroke-width="1.5"/>
+<text x="790" y="1548" text-anchor="middle" font-size="11" fill="#4A148C" font-weight="600">🟣 审核人员</text>
+<text x="790" y="1564" text-anchor="middle" font-size="10" fill="#7B1FA2">✅ 通过 / ❌ 驳回</text>
+<path d="M712,1562 L682,1562 L682,1580 L632,1580" fill="none" stroke="#546E7A" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#a)"/>
+<text x="660" y="1576" font-size="9" fill="#78909C">结果</text>
+
+<!-- 29 查询商户 (APP) -->
+<line x1="214" y1="1566" x2="214" y2="1600" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="134" y="1602" width="160" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="1625" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">查询商户</text>
+
+<!-- Arrow to diamond -->
+<line x1="214" y1="1638" x2="214" y2="1658" stroke="#546E7A" stroke-width="1.5"/>
+<line x1="214" y1="1658" x2="520" y2="1658" stroke="#546E7A" stroke-width="1"/>
+<line x1="520" y1="1658" x2="520" y2="1668" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 30 合规审核 diamond (Backend area) -->
+<polygon points="520,1670 566,1702 520,1734 474,1702" fill="#FFF9C4" stroke="#FBC02D" stroke-width="1.5"/>
+<text x="520" y="1698" text-anchor="middle" font-size="10" fill="#6D4C00" font-weight="600">合规</text>
+<text x="520" y="1711" text-anchor="middle" font-size="10" fill="#6D4C00" font-weight="600">审核?</text>
+
+<!-- 需审核 → 推送到审核人员 -->
+<path d="M566,1702 L640,1702 L640,1560 L710,1560" fill="none" stroke="#546E7A" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#a)"/>
+<text x="605" y="1696" font-size="9" fill="#78909C">需审核</text>
+
+<!-- 已通过 → 查看商户详情 -->
+<path d="M474,1702 L400,1702 L400,1762 L314,1762" fill="none" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="428" y="1744" font-size="10" fill="#43A047" font-weight="600">已通过</text>
+
+<!-- 31 查看商户详情 (APP) -->
+<rect x="114" y="1746" width="200" height="36" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="214" y="1769" text-anchor="middle" font-size="13" fill="#283593" font-weight="600">查看商户详情</text>
+
+<!-- 额度管理 -->
+<line x1="520" y1="1734" x2="520" y2="1766" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="410" y="1768" width="220" height="42" rx="5" fill="#E8EAF6" stroke="#9FA8DA" stroke-width="1.5"/>
+<text x="520" y="1786" text-anchor="middle" font-size="12" fill="#283593" font-weight="600">额度管理规则</text>
+<text x="520" y="1802" text-anchor="middle" font-size="10" fill="#546E7A">每人每日限额 · 单商家可编辑</text>
+
+<!-- 结束 -->
+<line x1="214" y1="1782" x2="214" y2="1840" stroke="#546E7A" stroke-width="1.5"/>
+<path d="M520,1810 L520,1830 L240,1830 L240,1850" fill="none" stroke="#546E7A" stroke-width="1.2"/>
+<line x1="214" y1="1840" x2="214" y2="1862" stroke="#546E7A" stroke-width="1.5" marker-end="url(#a)"/>
+<circle cx="214" cy="1884" r="22" fill="#E8EAF6" stroke="#7B1FA2" stroke-width="2"/>
+<text x="214" y="1889" text-anchor="middle" font-size="13" fill="#7B1FA2" font-weight="700">结束</text>
+
+</svg>
+</body>
+</html>

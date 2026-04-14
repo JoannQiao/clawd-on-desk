@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoneSquare - Personal Center & KYC Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --pri:#E63946;--pri-dk:#C62828;--pri-lt:#FFCDD2;
+  --ok:#2ECC71;--ok-dk:#1B8A4A;--ok-bg:#E8F8F0;
+  --warn:#F59E0B;--warn-bg:#FFFBEB;
+  --blue:#3B82F6;--blue-bg:#EFF6FF;
+  --t1:#1A1A2E;--t2:#6B7280;--t3:#9CA3AF;
+  --bg:#FFF;--bg2:#F8F9FA;--bgi:#F3F4F6;
+  --bd:#E5E7EB;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:9999px;
+}
+html{font-size:16px;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#E8EAED;color:var(--t1);line-height:1.5;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;
+}
+
+.nav-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center;}
+.nav-btn{
+  padding:6px 14px;border:1.5px solid var(--bd);border-radius:var(--r-full);
+  background:#fff;font-size:11px;font-weight:600;color:var(--t2);
+  cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;
+}
+.nav-btn:hover{border-color:var(--pri);color:var(--pri);}
+.nav-btn.active{background:var(--pri);color:#fff;border-color:var(--pri);}
+.nav-sep{color:var(--t3);font-size:10px;}
+
+.device{
+  width:390px;height:844px;border-radius:44px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.06);
+  position:relative;background:#000;flex-shrink:0;
+}
+.device::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:126px;height:34px;background:#000;border-radius:0 0 20px 20px;z-index:1000;
+}
+
+.screen{
+  position:absolute;inset:0;background:var(--bg);
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease, transform .3s ease;
+  transform:translateX(30px);z-index:1;
+}
+.screen.active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:10;}
+.screen.back{transform:translateX(-30px);}
+
+.sb{height:54px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:100;flex-shrink:0;}
+.sb .time{font-size:15px;font-weight:700;color:var(--t1);}
+.sb .ic{display:flex;gap:4px;align-items:center;}
+
+.hdr{display:flex;align-items:center;padding:4px 16px 4px 8px;min-height:44px;flex-shrink:0;}
+.hdr-back{
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:none;border:none;font-size:22px;color:var(--t1);
+  cursor:pointer;border-radius:50%;transition:background .15s;
+}
+.hdr-back:hover{background:var(--bgi);}
+.hdr .hdr-title{flex:1;text-align:center;font-size:16px;font-weight:600;}
+.hdr .hdr-right{
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:none;border:none;font-size:20px;cursor:pointer;
+  border-radius:50%;transition:background .15s;color:var(--t2);
+}
+.hdr .hdr-right:hover{background:var(--bgi);}
+
+.body{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+
+.profile-card{
+  display:flex;align-items:center;gap:14px;
+  padding:20px;margin:0 16px 16px;
+  background:linear-gradient(135deg,var(--pri) 0%,var(--pri-dk) 100%);
+  border-radius:var(--r-lg);color:#fff;
+  position:relative;overflow:hidden;
+}
+.profile-card::after{
+  content:'';position:absolute;top:-30px;right:-20px;
+  width:100px;height:100px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.profile-avatar{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:800;color:#fff;
+  border:2px solid rgba(255,255,255,.3);
+  flex-shrink:0;
+}
+.profile-info{flex:1;min-width:0;}
+.profile-info .pi-name{font-size:18px;font-weight:700;letter-spacing:-.2px;}
+.profile-info .pi-sub{font-size:12px;opacity:.7;margin-top:2px;}
+
+.kyc-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:var(--r-full);
+  font-size:11px;font-weight:600;margin-top:6px;
+}
+.kyc-badge.verified{background:rgba(46,204,113,.2);color:#2ECC71;}
+.kyc-badge.unverified{background:rgba(245,158,11,.2);color:#F59E0B;}
+.kyc-badge.restricted{background:rgba(220,38,38,.15);color:#DC2626;}
+
+.verify-banner{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;margin:0 16px 16px;
+  background:var(--warn-bg);border:1.5px solid #FBBF24;
+  border-radius:var(--r-md);cursor:pointer;transition:all .15s;
+}
+.verify-banner:hover{box-shadow:0 2px 10px rgba(245,158,11,.2);}
+.verify-banner .vb-icon{font-size:22px;flex-shrink:0;}
+.verify-banner .vb-text{flex:1;font-size:13px;font-weight:600;color:#92400E;}
+.verify-banner .vb-text span{display:block;font-size:11px;font-weight:400;color:#B45309;margin-top:2px;}
+.verify-banner .vb-arrow{font-size:16px;color:#D97706;}
+
+.verified-badge-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;margin:0 16px 16px;
+  background:var(--ok-bg);border:1.5px solid #A7F3D0;
+  border-radius:var(--r-md);
+}
+.verified-badge-bar .vbb-icon{font-size:20px;}
+.verified-badge-bar .vbb-text{font-size:13px;font-weight:600;color:var(--ok-dk);}
+
+.restricted-banner{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;margin:0 16px 16px;
+  background:#FEF2F2;border:1.5px solid #FECACA;
+  border-radius:var(--r-md);cursor:pointer;
+}
+.restricted-banner .rb-icon{font-size:22px;}
+.restricted-banner .rb-text{flex:1;font-size:13px;font-weight:600;color:#991B1B;}
+.restricted-banner .rb-text span{display:block;font-size:11px;font-weight:400;color:#B91C1C;margin-top:2px;}
+.restricted-banner .rb-arrow{font-size:16px;color:#DC2626;}
+
+.state-sim{
+  display:flex;gap:6px;padding:6px 12px;background:#F8FAFC;border-bottom:1px solid #E2E8F0;
+  justify-content:center;flex-wrap:wrap;
+}
+.state-sim-label{font-size:10px;color:#94A3B8;align-self:center;margin-right:4px;}
+.state-sim button{
+  font-size:10px;padding:3px 10px;border-radius:99px;
+  border:1px solid #CBD5E1;background:#fff;color:#475569;cursor:pointer;
+  transition:all .15s;
+}
+.state-sim button.active{background:#1E293B;color:#fff;border-color:#1E293B;}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;padding:0 20px;margin-bottom:12px;}
+.section-title h3{font-size:15px;font-weight:700;}
+.section-title .st-link{font-size:13px;color:var(--pri);font-weight:600;cursor:pointer;}
+
+.order-stats{display:flex;gap:0;padding:0 16px;margin-bottom:20px;}
+.order-stat{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:14px 0;cursor:pointer;transition:background .15s;
+  border-radius:var(--r-md);position:relative;
+}
+.order-stat:hover{background:var(--bgi);}
+.order-stat .os-count{font-size:22px;font-weight:800;color:var(--pri);line-height:1;margin-bottom:4px;}
+.order-stat .os-label{font-size:11px;color:var(--t2);font-weight:500;text-align:center;}
+.order-stat .os-dot{position:absolute;top:10px;right:calc(50% - 18px);width:6px;height:6px;border-radius:50%;background:var(--pri);}
+
+.menu-group{padding:0 16px;margin-bottom:16px;}
+.menu-group .mg-title{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:0 4px;margin-bottom:6px;}
+.menu-item{
+  display:flex;align-items:center;gap:12px;padding:14px 12px;
+  border-bottom:1px solid var(--bgi);cursor:pointer;transition:background .15s;border-radius:var(--r-sm);
+}
+.menu-item:last-child{border-bottom:none;}
+.menu-item:hover{background:var(--bgi);}
+.menu-item .mi-icon{width:36px;height:36px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.menu-item .mi-text{flex:1;font-size:14px;font-weight:500;}
+.menu-item .mi-sub{font-size:12px;color:var(--t3);margin-top:1px;}
+.menu-item .mi-arrow{font-size:14px;color:var(--bd);flex-shrink:0;}
+.menu-item .mi-val{font-size:13px;color:var(--t3);flex-shrink:0;margin-right:4px;}
+
+.tab-bar{height:56px;display:flex;border-top:1px solid var(--bd);background:#FBFBFB;flex-shrink:0;}
+.tab-bar .tb-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:10px;color:var(--t3);gap:2px;cursor:pointer;transition:color .15s;
+}
+.tab-bar .tb-item .tb-i{font-size:20px;line-height:1;}
+.tab-bar .tb-item.on{color:var(--pri);}
+.tab-bar .tb-item.on .tb-i{transform:scale(1.1);}
+
+.home-ind{height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.home-ind::after{content:'';width:52px;height:5px;background:var(--t1);border-radius:3px;opacity:.15;}
+
+.order-card{margin:0 16px 10px;padding:14px 16px;background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);cursor:pointer;transition:all .15s;}
+.order-card:hover{border-color:var(--pri);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.order-card .oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.order-card .oc-id{font-size:12px;font-weight:600;color:var(--t2);}
+.order-card .oc-status{font-size:11px;font-weight:600;padding:3px 8px;border-radius:var(--r-full);}
+.oc-status.pending{background:var(--warn-bg);color:#D97706;}
+.oc-status.pickup{background:var(--blue-bg);color:var(--blue);}
+.oc-status.service{background:#FEE2E2;color:#DC2626;}
+.oc-status.done{background:var(--ok-bg);color:var(--ok-dk);}
+.order-card .oc-product{display:flex;gap:10px;align-items:center;}
+.order-card .oc-thumb{width:52px;height:52px;border-radius:var(--r-sm);background:var(--bgi);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.order-card .oc-info{flex:1;min-width:0;}
+.order-card .oc-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.order-card .oc-price{font-size:14px;font-weight:700;color:var(--pri);margin-top:2px;}
+.order-card .oc-qty{font-size:11px;color:var(--t3);}
+
+.filter-tabs{display:flex;gap:6px;padding:0 16px;margin-bottom:14px;overflow-x:auto;}
+.filter-tab{
+  padding:7px 16px;border:1.5px solid var(--bd);border-radius:var(--r-full);
+  background:#fff;font-size:12px;font-weight:600;color:var(--t2);
+  cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap;
+}
+.filter-tab:hover{border-color:var(--pri);color:var(--pri);}
+.filter-tab.on{background:var(--pri);color:#fff;border-color:var(--pri);}
+
+.setting-section{padding:16px;padding-top:0;}
+.ss-divider{height:8px;background:var(--bgi);margin:0 -16px;}
+
+.logout-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:8px 16px 16px;padding:14px;
+  border:1.5px solid #FCA5A5;border-radius:var(--r-md);
+  background:#FFF5F5;cursor:pointer;
+  font-size:14px;font-weight:600;color:#DC2626;
+  font-family:inherit;transition:all .15s;
+}
+.logout-btn:hover{background:#FEE2E2;border-color:#DC2626;}
+
+.toast{
+  position:absolute;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(26,26,46,.9);color:#fff;padding:10px 24px;border-radius:var(--r-full);
+  font-size:13px;font-weight:500;opacity:0;transition:all .3s;z-index:2000;pointer-events:none;white-space:normal;max-width:300px;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.btn{
+  width:100%;padding:15px;background:var(--pri);color:#fff;border:none;
+  border-radius:var(--r-md);font-size:15px;font-weight:700;
+  cursor:pointer;transition:all .15s;font-family:inherit;letter-spacing:.3px;
+}
+.btn:hover{background:var(--pri-dk);}
+.btn:active{transform:scale(.98);}
+.btn.outline{background:#fff;color:var(--pri);border:1.5px solid var(--pri);}
+.btn.ghost{background:transparent;color:var(--t3);font-size:13px;font-weight:500;padding:10px;letter-spacing:0;}
+.btn+.btn{margin-top:10px;}
+
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;}
+.empty-state .es-icon{font-size:56px;margin-bottom:16px;opacity:.6;}
+.empty-state .es-title{font-size:16px;font-weight:700;margin-bottom:6px;}
+.empty-state .es-desc{font-size:13px;color:var(--t3);line-height:1.5;}
+
+.main-stage{display:flex;align-items:flex-start;gap:24px;}
+.notes-panel{width:380px;min-height:844px;background:#fff;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.04);display:flex;flex-direction:column;overflow:hidden;}
+.notes-hdr{display:flex;align-items:center;gap:10px;padding:16px 20px 12px;border-bottom:1px solid var(--bd);flex-shrink:0;}
+.notes-hdr .n-icon{width:32px;height:32px;border-radius:8px;background:var(--bgi);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.notes-hdr .n-title{flex:1;}
+.notes-hdr .n-title h3{font-size:14px;font-weight:700;margin-bottom:1px;}
+.notes-hdr .n-title .n-screen{font-size:11px;color:var(--t3);font-weight:500;}
+.notes-saved{font-size:10px;color:var(--ok);font-weight:600;opacity:0;transition:opacity .3s;white-space:nowrap;}
+.notes-saved.show{opacity:1;}
+.notes-body{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.note-card{display:none;flex-direction:column;flex:1;overflow:hidden;}
+.note-card.on{display:flex;}
+.note-edit{flex:1;padding:16px 20px;font-size:13px;font-family:'Inter',sans-serif;line-height:1.7;color:var(--t1);border:none;outline:none;resize:none;background:transparent;overflow-y:auto;}
+.note-edit::placeholder{color:var(--t3);}
+.note-edit:focus{background:#FAFBFC;}
+.notes-footer{padding:10px 20px 14px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.notes-footer .nf-tip{font-size:11px;color:var(--t3);flex:1;}
+.notes-footer .nf-btn{padding:6px 14px;border-radius:var(--r-full);border:1px solid var(--bd);background:#fff;font-size:11px;font-weight:600;color:var(--t2);cursor:pointer;font-family:inherit;transition:all .15s;}
+.notes-footer .nf-btn:hover{border-color:var(--pri);color:var(--pri);}
+.notes-footer .nf-btn.danger:hover{border-color:#EF4444;color:#EF4444;}
+
+@media (max-width:900px){.main-stage{flex-direction:column;align-items:center;}.notes-panel{width:390px;min-height:400px;}}
+.screen-map{margin-top:20px;text-align:center;font-size:12px;color:var(--t3);line-height:2;}
+.screen-map b{color:var(--t2);}
+
+.about-block{padding:20px;line-height:1.8;font-size:13px;color:var(--t2);}
+.about-block h2{font-size:18px;font-weight:800;color:var(--t1);margin-bottom:12px;}
+.about-block p{margin-bottom:12px;}
+.about-block .ver-tag{display:inline-block;padding:4px 12px;background:var(--bgi);border-radius:var(--r-full);font-size:12px;font-weight:600;color:var(--t2);margin-bottom:16px;}
+
+.lang-pick{display:flex;flex-direction:column;gap:2px;padding:0 16px 16px;}
+.lang-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-sm);cursor:pointer;transition:background .15s;font-size:14px;font-weight:500;}
+.lang-opt:hover{background:var(--bgi);}
+.lang-opt .lo-flag{font-size:20px;flex-shrink:0;}
+.lang-opt .lo-name{flex:1;}
+.lang-opt .lo-check{font-size:16px;color:var(--ok);display:none;}
+.lang-opt.on .lo-check{display:block;}
+
+/* profile form elements */
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;}
+.sec-hd{display:flex;align-items:center;gap:8px;margin:18px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--bd);}
+.sec-hd .sec-icon{font-size:16px;}
+.sec-hd .sec-title{font-size:14px;font-weight:700;color:var(--t1);}
+.sec-hd .sec-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;margin-left:auto;}
+.sec-tag.req{background:#FEE2E2;color:#DC2626;}
+.sec-tag.opt{background:#E0F2FE;color:#0284C7;}
+.region-row{display:flex;gap:6px;margin-bottom:14px;}
+.region-sel{flex:1;padding:10px 8px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-sm);font-size:12px;color:var(--t1);cursor:pointer;text-align:center;font-weight:500;transition:all .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.region-sel:hover{border-color:var(--pri);}
+.region-sel.empty{color:var(--t3);}
+.id-type-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.id-chip{flex:1;min-width:0;padding:9px 6px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-sm);cursor:pointer;text-align:center;font-size:11px;font-weight:600;color:var(--t2);transition:all .15s;font-family:inherit;line-height:1.3;word-break:break-word;}
+.id-chip:hover{border-color:var(--t3);}
+.id-chip.on{border-color:var(--pri);color:var(--pri);background:var(--pri-lt);font-weight:700;}
+.id-chip .id-emoji{display:block;font-size:18px;margin-bottom:3px;}
+.upload-pair{display:flex;gap:8px;margin-bottom:14px;}
+.upload-pair .doc-upload{flex:1;margin-bottom:0;}
+.doc-upload{border:2px dashed var(--bd);border-radius:var(--r-md);padding:16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bgi);margin-bottom:14px;position:relative;}
+.doc-upload:hover{border-color:var(--pri);background:#fff;}
+.doc-upload .du-icon{font-size:28px;margin-bottom:6px;}
+.doc-upload .du-label{font-size:12px;font-weight:600;color:var(--t1);}
+.doc-upload .du-hint{font-size:11px;color:var(--t3);margin-top:2px;}
+.doc-upload.has-img{border-style:solid;border-color:var(--pri);background:#fff;}
+.doc-upload.has-img .du-thumb{width:100%;height:80px;object-fit:cover;border-radius:6px;margin-bottom:6px;}
+.ocr-row{display:flex;gap:8px;margin-bottom:10px;}
+.ocr-field{flex:1;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-sm);padding:8px 10px;}
+.ocr-field .of-label{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.ocr-field .of-val{font-size:13px;font-weight:600;color:var(--t1);margin-top:2px;}
+.ocr-field .of-val.placeholder{color:var(--t3);font-weight:400;}
+.ocr-field .of-val.editable{cursor:text;border-bottom:1px dashed var(--bd);padding-bottom:1px;display:inline-block;}
+.ocr-field .of-val.editable:hover{border-color:var(--pri);}
+.ocr-field .of-edit{font-size:9px;color:var(--pri);margin-top:2px;cursor:pointer;}
+.ocr-banner{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:var(--r-sm);font-size:11px;margin:6px 0 12px;}
+.ocr-banner.ok{background:#edf7ed;color:#2e7d32;}
+.ocr-banner.pending{background:var(--bgi);color:var(--t3);}
+.collapse-toggle{display:flex;align-items:center;gap:8px;width:100%;padding:10px 0;cursor:pointer;background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--t2);}
+.collapse-toggle .ct-arrow{font-size:10px;transition:transform .2s;margin-left:auto;}
+.collapse-toggle.open .ct-arrow{transform:rotate(90deg);}
+.collapse-body{display:none;padding-bottom:8px;}
+.collapse-body.open{display:block;}
+.date-field{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);margin-bottom:14px;cursor:pointer;transition:all .15s;}
+.date-field:hover{border-color:var(--pri);}
+.date-field .df-icon{font-size:16px;}
+.date-field .df-val{flex:1;font-size:13px;font-weight:500;color:var(--t1);}
+.date-field .df-val.empty{color:var(--t3);}
+.date-field .df-arrow{font-size:10px;color:var(--t3);}
+.inp-wrap{position:relative;margin-bottom:16px;}
+.inp-wrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;}
+.inp-wrap .inp{width:100%;padding:13px 14px 13px 42px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);font-size:14px;color:var(--t1);font-family:inherit;outline:none;transition:border-color .15s;}
+.inp-wrap .inp:focus{border-color:var(--pri);background:#fff;}
+
+/* WhatsApp icon */
+.wa-cs-btn{
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:none;border:none;cursor:pointer;border-radius:50%;transition:background .15s;
+}
+.wa-cs-btn:hover{background:var(--bgi);}
+.wa-cs-btn svg{width:24px;height:24px;}
+</style>
+</head>
+<body>
+
+<!-- Quick Nav -->
+<div class="nav-bar" id="navBar">
+  <button class="nav-btn active" onclick="go('myCenter')">My Center</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('profile')">Profile</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('orders')">Orders</button>
+  <span class="nav-sep">|</span>
+  <button class="nav-btn" onclick="go('settings')">Settings</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('changePwd')">Change Pwd</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('langSelect')">Language</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('helpSupport')">Help</button>
+  <span class="nav-sep">|</span>
+  <button class="nav-btn" onclick="go('privacy')">Privacy</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('about')">About</button>
+</div>
+<div class="state-sim" id="stateSim">
+  <span class="state-sim-label">状态模拟：</span>
+  <button class="active" onclick="setAccountState('unverified')">Unverified</button>
+  <button onclick="setAccountState('verified')">Verified</button>
+  <button onclick="setAccountState('restricted')">Restricted</button>
+</div>
+
+<div class="main-stage">
+<div class="device" id="device">
+
+  <svg style="display:none">
+    <symbol id="sb-icons" viewBox="0 0 52 12">
+      <rect x="0" y="8" width="3" height="4" rx=".7" fill="currentColor"/>
+      <rect x="4" y="5.5" width="3" height="6.5" rx=".7" fill="currentColor"/>
+      <rect x="8" y="3" width="3" height="9" rx=".7" fill="currentColor"/>
+      <rect x="12" y="0" width="3" height="12" rx=".7" fill="currentColor" opacity=".25"/>
+      <path d="M24.5 3.5c2 0 3.7.9 4.8 2.3l.8-.9C28.8 3.3 26.8 2.3 24.5 2.3S20.2 3.3 18.9 4.9l.8.9C20.8 4.4 22.5 3.5 24.5 3.5Zm0 3c1 0 2 .5 2.6 1.2l.8-.8c-.9-.9-2-1.4-3.4-1.4s-2.5.5-3.4 1.4l.8.8C22.5 7 23.5 6.5 24.5 6.5Z" fill="currentColor"/>
+      <circle cx="24.5" cy="9.5" r="1.3" fill="currentColor"/>
+      <rect x="34" y="1.5" width="16" height="9" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
+      <rect x="50.5" y="4" width="1.5" height="4" rx=".5" fill="currentColor" opacity=".35"/>
+      <rect x="35.5" y="3" width="11" height="6" rx="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="wa-icon" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#25D366"/>
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.106-1.138l-.294-.176-2.862.852.852-2.862-.176-.294A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" fill="#25D366"/>
+    </symbol>
+  </svg>
+
+  <!-- ====== MY CENTER ====== -->
+  <div class="screen active" id="s-myCenter">
+    <div class="sb">
+      <span class="time">9:41</span>
+      <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
+    </div>
+    <div class="hdr" style="padding-right:8px;">
+      <span class="hdr-title" style="margin-right:0;text-align:left;padding-left:12px;">My Center</span>
+      <button class="wa-cs-btn" onclick="toast(t('toast.waSupport'))">
+        <svg viewBox="0 0 24 24"><use href="#wa-icon"/></svg>
+      </button>
+    </div>
+    <div class="body" style="padding-top:0;">
+      <div class="profile-card">
+        <div class="profile-avatar">J</div>
+        <div class="profile-info">
+          <div class="pi-name">Joann Qiao</div>
+          <div class="pi-sub">+852 9123 4567</div>
+          <div class="kyc-badge unverified" id="mcBadge">
+            <span id="mcBadgeIcon">⚠️</span><span id="mcBadgeText">Unverified</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="verify-banner" id="verifyBanner" onclick="go('profile')">
+        <span class="vb-icon">🛡️</span>
+        <div class="vb-text">
+          Complete Identity Verification
+          <span>Required before placing orders · Takes ~2 min</span>
+        </div>
+        <span class="vb-arrow">›</span>
+      </div>
+
+      <div class="verified-badge-bar" id="verifiedBar" style="display:none;">
+        <span class="vbb-icon">✅</span>
+        <span class="vbb-text">Identity Verified · KYC Complete</span>
+      </div>
+
+      <div class="restricted-banner" id="restrictedBanner" style="display:none;" onclick="toast(t('toast.waSupport'))">
+        <span class="rb-icon">🔒</span>
+        <div class="rb-text">
+          Account Restricted
+          <span>Contact support to resolve this issue</span>
+        </div>
+        <span class="rb-arrow">›</span>
+      </div>
+
+      <div class="section-title">
+        <h3>My Orders</h3>
+        <span class="st-link" onclick="go('orders')">View All ›</span>
+      </div>
+      <div class="order-stats">
+        <div class="order-stat" onclick="go('orders')">
+          <div class="os-dot"></div>
+          <div class="os-count">3</div>
+          <div class="os-label">Pending<br>Payment</div>
+        </div>
+        <div class="order-stat" onclick="go('orders')">
+          <div class="os-count">1</div>
+          <div class="os-label">Pending<br>Pickup</div>
+        </div>
+        <div class="order-stat" onclick="go('orders')">
+          <div class="os-count">2</div>
+          <div class="os-label">After-<br>Sales</div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="mg-title">Quick Actions</div>
+        <div class="menu-item" onclick="go('settings')">
+          <div class="mi-icon" style="background:var(--bgi);">⚙️</div>
+          <div>
+            <div class="mi-text">Settings</div>
+            <div class="mi-sub">Account, security, language</div>
+          </div>
+          <span class="mi-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="go('helpSupport')">
+          <div class="mi-icon" style="background:var(--blue-bg);">💬</div>
+          <div>
+            <div class="mi-text">Help & Support</div>
+            <div class="mi-sub">FAQ, contact us, feedback</div>
+          </div>
+          <span class="mi-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-bar">
+      <div class="tb-item"><span class="tb-i">🏠</span>Home</div>
+      <div class="tb-item"><span class="tb-i">🛒</span>Cart</div>
+      <div class="tb-item on"><span class="tb-i">👤</span>Me</div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== PROFILE (KYC) ====== -->
+  <div class="screen" id="s-profile">
+    <div class="sb">
+      <span class="time">9:42</span>
+      <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
+    </div>
+    <div class="hdr">
+      <button class="hdr-back" onclick="goBack()">‹</button>
+      <span class="hdr-title">Identity Verification</span>
+    </div>
+    <div class="body" style="overflow-y:auto;">
+      <div style="padding:8px 24px 12px;">
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:2px;">Complete Your Profile</h2>
+        <p style="font-size:13px;color:var(--t2);">Identity info for KYC verification</p>
+      </div>
+      <div style="padding:0 24px 24px;">
+
+        <div class="sec-hd">
+          <span class="sec-icon">📍</span>
+          <span class="sec-title">Country / Region</span>
+          <span class="sec-tag req">Required</span>
+        </div>
+        <div class="region-row">
+          <div class="region-sel">🇭🇰 Hong Kong</div>
+          <div class="region-sel empty">Province</div>
+          <div class="region-sel empty">City</div>
+        </div>
+
+        <div class="sec-hd">
+          <span class="sec-icon">🪪</span>
+          <span class="sec-title">Identity Verification</span>
+          <span class="sec-tag req">Required</span>
+        </div>
+
+        <label class="form-label">Select ID Type</label>
+        <div class="id-type-row">
+          <button class="id-chip on" onclick="pickIdType(this,'hkid')">
+            <span class="id-emoji">🪪</span>HK/Macau ID
+          </button>
+          <button class="id-chip" onclick="pickIdType(this,'passport')">
+            <span class="id-emoji">📘</span>Passport
+          </button>
+          <button class="id-chip" onclick="pickIdType(this,'cnid')">
+            <span class="id-emoji">🆔</span>CN Resident ID
+          </button>
+        </div>
+
+        <div id="idUpload-card">
+          <div class="upload-pair">
+            <div class="doc-upload has-img" onclick="toast(t('toast.cameraPicker'))">
+              <img class="du-thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='70' fill='%23e8e8e8'%3E%3Crect width='140' height='70' rx='6'/%3E%3Ctext x='70' y='40' text-anchor='middle' fill='%23999' font-size='11' font-family='system-ui'%3EFront%3C/text%3E%3C/svg%3E" alt="">
+              <div class="du-label" style="font-size:11px;">✅ Front</div>
+            </div>
+            <div class="doc-upload" onclick="toast(t('toast.cameraPicker'))">
+              <div class="du-icon" style="font-size:22px;">📷</div>
+              <div class="du-label" style="font-size:11px;">Back Side</div>
+              <div class="du-hint">JPG/PNG ≤10MB</div>
+            </div>
+          </div>
+        </div>
+        <div id="idUpload-passport" style="display:none;">
+          <div class="doc-upload" onclick="toast(t('toast.cameraPicker'))">
+            <div class="du-icon">📘</div>
+            <div class="du-label">Upload Info Page</div>
+            <div class="du-hint">Photo page with MRZ · JPG/PNG ≤10MB</div>
+          </div>
+        </div>
+
+        <div class="ocr-banner ok">
+          <span>✅</span> <b>OCR Recognized</b> — please review and correct if needed
+        </div>
+        <div class="ocr-row">
+          <div class="ocr-field">
+            <div class="of-label">Full Name</div>
+            <div class="of-val editable" contenteditable="true">Joann Qiao</div>
+            <div class="of-edit">✏️ tap to edit</div>
+          </div>
+          <div class="ocr-field">
+            <div class="of-label">ID Number</div>
+            <div class="of-val editable" contenteditable="true">A123456(7)</div>
+            <div class="of-edit">✏️ tap to edit</div>
+          </div>
+        </div>
+        <label class="form-label">ID Validity Period</label>
+        <div class="date-field" onclick="toast(t('toast.datePicker'))">
+          <span class="df-icon">📅</span>
+          <span class="df-val">2020-01-15</span>
+          <span style="color:var(--t3);margin:0 4px;">—</span>
+          <span class="df-val">2030-01-14</span>
+          <span class="df-arrow">▾</span>
+        </div>
+
+        <div class="sec-hd" style="margin-top:16px;">
+          <span class="sec-icon">✉️</span>
+          <span class="sec-title">Contact Email</span>
+          <span class="sec-tag opt">Optional</span>
+        </div>
+        <div class="inp-wrap">
+          <span class="ico">✉️</span>
+          <input class="inp" type="email" placeholder="For order notifications">
+        </div>
+
+        <div class="sec-hd" style="margin-top:16px;">
+          <span class="sec-icon">🏢</span>
+          <span class="sec-title">Business Information</span>
+          <span class="sec-tag opt">Optional</span>
+        </div>
+        <button class="collapse-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');">
+          <span>Add business license for enterprise account</span>
+          <span class="ct-arrow">›</span>
+        </button>
+        <div class="collapse-body">
+          <div class="doc-upload" onclick="toast(t('toast.cameraPicker'))">
+            <div class="du-icon">📄</div>
+            <div class="du-label">Upload Business License</div>
+            <div class="du-hint">JPG / PNG / PDF, max 20 MB</div>
+          </div>
+          <div class="ocr-banner pending">
+            <span>⏳</span> Upload license to auto-recognize
+          </div>
+          <div class="ocr-row">
+            <div class="ocr-field"><div class="of-label">License Type</div><div class="of-val placeholder">Auto-detect</div></div>
+            <div class="ocr-field"><div class="of-label">Reg. Number</div><div class="of-val placeholder">Auto-detect</div></div>
+          </div>
+          <div class="ocr-row">
+            <div class="ocr-field"><div class="of-label">Legal Rep / Director</div><div class="of-val placeholder">Auto-detect</div></div>
+            <div class="ocr-field"><div class="of-label">Business Address</div><div class="of-val placeholder">Auto-detect</div></div>
+          </div>
+          <label class="form-label">License Validity Period</label>
+          <div class="date-field" onclick="toast(t('toast.datePicker'))">
+            <span class="df-icon">📅</span>
+            <span class="df-val empty">Start date</span>
+            <span style="color:var(--t3);margin:0 4px;">—</span>
+            <span class="df-val empty">End date</span>
+            <span class="df-arrow">▾</span>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-bottom:20px;">
+          <button class="btn" onclick="completeProfile()">SUBMIT & CONTINUE</button>
+          <button class="btn ghost" onclick="goBack()">Skip for now →</button>
+        </div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== ORDER LIST ====== -->
+  <div class="screen" id="s-orders">
+    <div class="sb">
+      <span class="time">9:41</span>
+      <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
+    </div>
+    <div class="hdr">
+      <button class="hdr-back" onclick="goBack()">‹</button>
+      <span class="hdr-title">My Orders</span>
+    </div>
+    <div class="body">
+      <div class="filter-tabs">
+        <button class="filter-tab on">All</button>
+        <button class="filter-tab">Pending Pay</button>
+        <button class="filter-tab">Pickup</button>
+        <button class="filter-tab">After-Sales</button>
+        <button class="filter-tab">Completed</button>
+      </div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120301</span><span class="oc-status pending">Pending Payment</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">iPhone 15 Pro Max 256GB</div><div class="oc-price">HK$ 6,800 <span class="oc-qty">× 1</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120202</span><span class="oc-status pending">Pending Payment</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Samsung Galaxy S24 Ultra</div><div class="oc-price">HK$ 5,200 <span class="oc-qty">× 2</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120105</span><span class="oc-status pickup">Pending Pickup</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Google Pixel 8 Pro 128GB</div><div class="oc-price">HK$ 3,900 <span class="oc-qty">× 1</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024113020</span><span class="oc-status service">After-Sales</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">iPhone 14 128GB — Grade A</div><div class="oc-price">HK$ 3,400 <span class="oc-qty">× 1</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024112815</span><span class="oc-status done">Completed</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Xiaomi 14 256GB — Grade S</div><div class="oc-price">HK$ 2,100 <span class="oc-qty">× 3</span></div></div></div></div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== SETTINGS ====== -->
+  <div class="screen" id="s-settings">
+    <div class="sb">
+      <span class="time">9:41</span>
+      <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
+    </div>
+    <div class="hdr">
+      <button class="hdr-back" onclick="goBack()">‹</button>
+      <span class="hdr-title">Settings</span>
+    </div>
+    <div class="body">
+      <div class="setting-section" style="padding-top:8px;">
+        <div class="menu-item" onclick="go('profile')">
+          <div class="mi-icon" style="background:var(--warn-bg);">🛡️</div>
+          <div><div class="mi-text">Identity Verification</div><div class="mi-sub">Manage your KYC documents</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="go('changePwd')">
+          <div class="mi-icon" style="background:#EDE9FE;">🔒</div>
+          <div><div class="mi-text">Change Password</div><div class="mi-sub">Update your login password</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+      </div>
+      <div class="ss-divider"></div>
+      <div class="setting-section">
+        <div class="menu-item" onclick="go('langSelect')">
+          <div class="mi-icon" style="background:var(--blue-bg);">🌐</div>
+          <div class="mi-text">Language</div>
+          <span class="mi-val" id="curLang">English</span>
+          <span class="mi-arrow">›</span>
+        </div>
+      </div>
+      <div class="ss-divider"></div>
+      <div class="setting-section">
+        <div class="menu-item" onclick="go('privacy')">
+          <div class="mi-icon" style="background:var(--bgi);">📄</div>
+          <div class="mi-text">Privacy Policy</div>
+          <span class="mi-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="go('about')">
+          <div class="mi-icon" style="background:var(--bgi);">ℹ️</div>
+          <div><div class="mi-text">About FoneSquare</div><div class="mi-sub">Version 1.0.0</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+      </div>
+      <div class="ss-divider"></div>
+      <button class="logout-btn" onclick="toast(t('toast.loggedOut'))">🚪 Log Out</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== CHANGE PASSWORD ====== -->
+  <div class="screen" id="s-changePwd">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Change Password</span></div>
+    <div class="body" style="padding:20px;">
+      <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;">Current Password</label>
+      <div style="display:flex;align-items:center;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:20px;">
+        <span style="font-size:16px;margin-right:10px;">🔒</span>
+        <input type="password" placeholder="Enter current password" style="flex:1;border:none;background:transparent;outline:none;font-size:14px;font-family:inherit;" value="••••••••">
+        <button style="background:none;border:none;font-size:16px;cursor:pointer;">👁</button>
+      </div>
+      <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;">New Password</label>
+      <div style="display:flex;align-items:center;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px;">
+        <span style="font-size:16px;margin-right:10px;">🔑</span>
+        <input type="password" placeholder="At least 8 characters" style="flex:1;border:none;background:transparent;outline:none;font-size:14px;font-family:inherit;" value="••••••••••">
+        <button style="background:none;border:none;font-size:16px;cursor:pointer;">👁</button>
+      </div>
+      <div style="display:flex;gap:4px;margin-bottom:20px;">
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--ok);"></div>
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--ok);"></div>
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--ok);"></div>
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--bd);"></div>
+      </div>
+      <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;">Confirm New Password</label>
+      <div style="display:flex;align-items:center;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:6px;">
+        <span style="font-size:16px;margin-right:10px;">🔑</span>
+        <input type="password" placeholder="Re-enter new password" style="flex:1;border:none;background:transparent;outline:none;font-size:14px;font-family:inherit;" value="••••••••••">
+        <button style="background:none;border:none;font-size:16px;cursor:pointer;">👁</button>
+      </div>
+      <div id="cpHints" style="font-size:11px;color:var(--ok);font-weight:500;margin-bottom:24px;">✓ 8+ chars &nbsp; ✓ Number &nbsp; ✓ Letter</div>
+      <button class="btn" onclick="toast(t('changePwd.success'));goBack()">UPDATE PASSWORD</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== LANGUAGE ====== -->
+  <div class="screen" id="s-langSelect">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Language</span></div>
+    <div class="body">
+      <div class="lang-pick">
+        <div class="lang-opt on" onclick="pickLang(this,'English')"><span class="lo-flag">🇬🇧</span><span class="lo-name">English</span><span class="lo-check">✓</span></div>
+        <div class="lang-opt" onclick="pickLang(this,'简体中文')"><span class="lo-flag">🇨🇳</span><span class="lo-name">简体中文</span><span class="lo-check">✓</span></div>
+        <div class="lang-opt" onclick="pickLang(this,'Filipino')"><span class="lo-flag">🇵🇭</span><span class="lo-name">Filipino</span><span class="lo-check">✓</span></div>
+        <div class="lang-opt" onclick="pickLang(this,'العربية')"><span class="lo-flag">🇸🇦</span><span class="lo-name">العربية</span><span class="lo-check">✓</span></div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== HELP & SUPPORT ====== -->
+  <div class="screen" id="s-helpSupport">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Help & Support</span></div>
+    <div class="body">
+      <div style="padding:16px;">
+        <div class="menu-item" onclick="toast(t('toast.openWa'))">
+          <div class="mi-icon" style="background:#E8F8F0;"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#wa-icon"/></svg></div>
+          <div><div class="mi-text">WhatsApp Support</div><div class="mi-sub">Chat with us on WhatsApp</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="toast(t('toast.openEmail'))">
+          <div class="mi-icon" style="background:var(--blue-bg);">✉️</div>
+          <div><div class="mi-text">Email Support</div><div class="mi-sub">support@fonesquare.com</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+        <div class="menu-item">
+          <div class="mi-icon" style="background:var(--bgi);">❓</div>
+          <div><div class="mi-text">FAQ</div><div class="mi-sub">Frequently asked questions</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== PRIVACY POLICY ====== -->
+  <div class="screen" id="s-privacy">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Privacy Policy</span></div>
+    <div class="body">
+      <div class="about-block">
+        <h2>Privacy Policy</h2>
+        <p>FoneSquare ("we", "us", or "our") respects your privacy and is committed to protecting your personal data.</p>
+        <p><b>1. Data We Collect</b><br>We collect personal information you provide during registration: name, phone number, email, nationality, identity documents for KYC compliance.</p>
+        <p><b>2. How We Use Your Data</b><br>Account creation and login · Identity verification and sanctions screening · Order processing and delivery · Customer support · Compliance with legal obligations.</p>
+        <p><b>3. Data Sharing</b><br>We share data only with: JD Cloud (SMS delivery), WhatsApp Business API (OTP), risk control partners (sanctions screening), and as required by law.</p>
+        <p><b>4. Data Retention</b><br>Account data is retained for the life of your account + 3 years. KYC documents are retained per regulatory requirements (minimum 5 years).</p>
+        <p><b>5. Your Rights</b><br>You may request access, correction, or deletion of your data. Contact: privacy@fonesquare.com</p>
+        <p id="privLastUpdated" style="font-size:11px;color:var(--t3);margin-top:20px;">Last updated: April 2026 · Version 1.0</p>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== ABOUT ====== -->
+  <div class="screen" id="s-about">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">About</span></div>
+    <div class="body">
+      <div class="about-block" style="text-align:center;padding-top:40px;">
+        <div style="width:72px;height:72px;margin:0 auto 16px;background:linear-gradient(135deg,var(--pri),var(--pri-dk));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;">FS</div>
+        <h2 style="text-align:center;">FoneSquare</h2>
+        <span class="ver-tag">Version 1.0.0 (Build 2026.04)</span>
+        <p id="aboutDesc" style="text-align:left;">FoneSquare is a cross-border B2B platform for certified pre-owned mobile devices. We connect global dealers with quality inventory at the best prices.</p>
+        <p id="aboutCompanyInfo" style="text-align:left;"><b>Company:</b> FoneSquare Limited<br><b>Region:</b> Hong Kong SAR<br><b>Contact:</b> support@fonesquare.com</p>
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--bd);text-align:center;">
+          <div id="aboutCopyright" style="font-size:11px;color:var(--t3);">© 2026 FoneSquare. All rights reserved.</div>
+        </div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <div class="toast" id="appToast"></div>
+</div>
+
+<!-- ═══════════ NOTES PANEL ═══════════ -->
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-hdr">
+    <div class="n-icon">📝</div>
+    <div class="n-title">
+      <h3>Product Notes</h3>
+      <span class="n-screen" id="noteScreenLabel">My Center</span>
+    </div>
+    <span class="notes-saved" id="notesSaved">✓ Saved</span>
+  </div>
+  <div class="notes-body" id="notesBody"></div>
+  <div class="notes-footer">
+    <span class="nf-tip">Auto-save · Edit directly</span>
+    <button class="nf-btn" onclick="exportNotes()">Export</button>
+    <button class="nf-btn" onclick="resetToDefault()">Reset</button>
+    <button class="nf-btn danger" onclick="clearCurrentNote()">Clear</button>
+  </div>
+</div>
+</div>
+
+<div class="screen-map">
+  <b>👤 My Center:</b> My Center → Profile (KYC) / Orders / Settings<br>
+  <b>⚙️ Settings:</b> Settings → Change Pwd / Language / Privacy / About / Logout<br>
+  <b>💬 Help:</b> Help & Support → WhatsApp / Email / FAQ / Feedback
+</div>
+
+<script>
+const hist = [];
+let current = 'myCenter';
+let profileCompleted = false;
+let accountState = 'unverified'; // 'unverified' | 'verified' | 'restricted'
+
+const screenMeta = [
+  {id:'myCenter', label:'My Center'},
+  {id:'profile', label:'Profile — Identity Verification'},
+  {id:'orders', label:'My Orders'},
+  {id:'settings', label:'Settings'},
+  {id:'changePwd', label:'Change Password'},
+  {id:'langSelect', label:'Language'},
+  {id:'helpSupport', label:'Help & Support'},
+  {id:'privacy', label:'Privacy Policy'},
+  {id:'about', label:'About'},
+];
+
+function go(id) {
+  if (id === current) return;
+  const prev = document.getElementById('s-' + current);
+  const next = document.getElementById('s-' + id);
+  if (!next) return;
+  hist.push(current);
+  prev.classList.remove('active');
+  prev.classList.add('back');
+  setTimeout(() => prev.classList.remove('back'), 350);
+  next.classList.add('active');
+  current = id;
+  updateNav();
+  syncNote(id);
+}
+
+function goBack() {
+  if (hist.length === 0) return;
+  const prev = hist.pop();
+  const cur = document.getElementById('s-' + current);
+  const target = document.getElementById('s-' + prev);
+  cur.classList.remove('active');
+  cur.style.transform = 'translateX(30px)';
+  cur.style.opacity = '0';
+  setTimeout(() => { cur.style.transform = ''; cur.style.opacity = ''; }, 350);
+  target.classList.add('active');
+  current = prev;
+  updateNav();
+  syncNote(prev);
+}
+
+function updateNav() {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.nav-btn[onclick="go('${current}')"]`);
+  if (btn) btn.classList.add('active');
+}
+
+function toast(msg) {
+  const t = document.getElementById('appToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function pickLang(opt, name) {
+  if (name === 'English') {
+    setLocale('en');
+  } else if (name === '简体中文') {
+    setLocale('zh');
+  } else {
+    toast(name + t('toast.comingSoon'));
+    return;
+  }
+  toast(name + t('toast.langSelected'));
+}
+
+function pickIdType(chip, type) {
+  document.querySelectorAll('.id-chip').forEach(c => c.classList.remove('on'));
+  chip.classList.add('on');
+  const card = document.getElementById('idUpload-card');
+  const passport = document.getElementById('idUpload-passport');
+  if (type === 'passport') {
+    card.style.display = 'none';
+    passport.style.display = '';
+  } else {
+    card.style.display = '';
+    passport.style.display = 'none';
+  }
+}
+
+function completeProfile() {
+  profileCompleted = true;
+  setAccountState('verified');
+  toast(t('toast.profileSuccess'));
+  goBack();
+}
+
+function setAccountState(state) {
+  accountState = state;
+  if (state === 'verified') profileCompleted = true;
+
+  var badge = document.getElementById('mcBadge');
+  var badgeIcon = document.getElementById('mcBadgeIcon');
+  var badgeText = document.getElementById('mcBadgeText');
+  var verifyBanner = document.getElementById('verifyBanner');
+  var verifiedBar = document.getElementById('verifiedBar');
+  var restrictedBanner = document.getElementById('restrictedBanner');
+
+  verifyBanner.style.display = 'none';
+  verifiedBar.style.display = 'none';
+  restrictedBanner.style.display = 'none';
+
+  var icons = {unverified: '⚠️', verified: '✅', restricted: '🔒'};
+  badgeIcon.textContent = icons[state] || '⚠️';
+
+  if (state === 'unverified') {
+    profileCompleted = false;
+    badge.className = 'kyc-badge unverified';
+    badgeText.textContent = t('myCenter.unverified');
+    verifyBanner.style.display = '';
+  } else if (state === 'verified') {
+    badge.className = 'kyc-badge verified';
+    badgeText.textContent = t('myCenter.verified');
+    verifiedBar.style.display = '';
+  } else if (state === 'restricted') {
+    badge.className = 'kyc-badge restricted';
+    badgeText.textContent = t('myCenter.restricted');
+    restrictedBanner.style.display = '';
+  }
+
+  document.querySelectorAll('#stateSim button').forEach(function(b) {
+    b.classList.toggle('active', b.textContent.toLowerCase().indexOf(state) >= 0);
+  });
+}
+
+document.querySelectorAll('.filter-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+  });
+});
+
+/* ═══════════ NOTES ═══════════ */
+const STORAGE_KEY = 'fonesquare_kyc_notes_v3';
+
+const defaultNotes = {
+myCenter: `【My Center — 个人中心】
+
+■ 页面定位
+从底部Tab「Me」进入的核心枢纽页，聚合个人信息、KYC引导、订单概览和快捷入口。
+
+■ 页面结构
+1. 顶部栏
+   - 左侧：页面标题"My Center"
+   - 右侧：WhatsApp客服图标（绿色），点击唤起WhatsApp Business客服对话
+
+2. 个人信息卡片（红色渐变背景）
+   - 头像：取用户姓名首字母（如 Joann Qiao → "J"），MVP不支持上传头像
+   - 姓名：取自OCR识别结果或注册手机号
+   - 手机号：脱敏展示，如 +852 9123 ****
+   - KYC状态角标：未认证（黄色⚠️）/ 已认证（绿色✅）/ 账号受限（红色🔒）
+
+3. KYC引导横幅 / 已认证状态 / 账号受限
+   - 未认证：黄色警示横幅，点击跳转至Profile身份认证页
+   - 已认证：绿色✅状态条，不可点击
+   - 账号受限：红色🔒警告横幅，点击唤起WhatsApp客服对话
+     ▸ 触发条件：季度风控轮询命中制裁名单
+     ▸ 用户侧文案：Account Restricted / 账号受限（避免直接提及制裁）
+     ▸ 引导动作：联系客服解决
+   - 数据来源：user_profile表kyc_status字段
+
+4. 订单概览（My Orders）
+   - 三列统计：待支付 / 待取货 / 可售后
+   - 数量实时读取订单服务
+   - 点击任意列 → 跳转订单列表并自动筛选对应状态
+   - 待支付 > 0 时显示红点
+
+5. 快捷入口
+   - Settings → 设置页
+   - Help & Support → 帮助与支持页（WhatsApp、邮件、FAQ）
+
+6. 底部Tab栏
+   - Home / Cart / Me（当前高亮）
+   - MVP阶段仅Me页内可交互
+
+■ 账号受限状态下的页面行为
+- 个人信息卡片：角标变为红色🔒"Account Restricted"
+- KYC引导横幅区域：替换为红色警告横幅"Account Restricted"
+  ▸ 副标题："Contact support to resolve this issue"
+  ▸ 点击行为：唤起WhatsApp客服对话（与右上角WhatsApp按钮一致）
+- 订单概览：正常显示历史订单统计（不隐藏）
+- 快捷入口：正常可用
+- 下单限制：由商品详情页和下单按钮侧控制，非本页负责
+
+■ 状态流转
+- 未认证 → 已认证：用户完成KYC认证后自动切换
+- 已认证 → 受限：后端季度风控轮询命中制裁名单，服务端推送状态变更
+- 受限 → 已认证：客服人工审核确认误判后，后台解除限制
+
+■ 埋点事件
+- page_view: my_center
+- click: kyc_banner（未认证横幅）
+- click: restricted_banner（受限横幅 → WhatsApp客服）
+- click: order_stat_{type}
+- click: wa_support（WhatsApp图标）
+- click: menu_{item}`,
+
+profile: `【Profile — 身份认证】
+
+■ 页面定位
+独立KYC身份认证页。用户在此完成个人身份信息填写，可选补充企业信息。
+
+■ 页面结构
+1. 国家/地区（必填）
+   - 三级联动选择器：国家 → 省份/州 → 城市/区
+   - 选择地区后决定可用证件类型和合规要求
+
+2. 身份验证（必填）
+   - 证件类型切换：港澳居民身份证 / 护照 / 中国居民身份证
+   - 上传组件根据证件类型动态变化：
+     · 港澳身份证 / 中国身份证：正面 + 反面分别上传
+     · 护照：仅上传信息页
+   - OCR自动识别：姓名、证件号码
+   - OCR结果可直接编辑（contenteditable）
+   - 证件有效期：日期范围选择器
+
+3. 联系邮箱（选填）
+   - 用于订单通知
+
+4. 企业信息（选填，默认折叠）
+   - 营业执照上传 + OCR自动识别
+   - 识别字段：证照类型、注册号、法人/董事、企业地址
+   - 执照有效期
+
+5. 操作按钮
+   - SUBMIT & CONTINUE：提交后触发风控制裁名单校验，通过后返回个人中心
+   - Skip for now →：跳过认证，直接返回个人中心
+
+■ 业务规则
+- OCR置信度 < 60% → 拒绝，提示重新上传
+- 提交时自动校验制裁名单（OFAC/UN/EU），由中台风控提供API
+- 最多允许3次重新提交，超出需联系客服
+- 认证通过：更新kyc_status → APPROVED，个人中心显示已认证角标
+
+■ 账号受限状态下的行为
+- 受限用户访问Profile页：正常展示已提交的认证信息（只读，不可编辑）
+- 不允许重新提交KYC：按钮置灰 + Toast提示"账号受限，请联系客服"
+- 用户若通过Settings → Identity Verification进入，同样为只读状态
+
+■ 埋点事件
+- page_view: profile_kyc
+- click: id_type_{type}
+- click: upload_document
+- click: submit_profile（success/fail）
+- click: skip_profile`,
+
+orders: `【My Orders — 订单列表】
+
+■ 页面定位
+完整订单列表页，支持按状态筛选，提供所有用户订单的快速概览。
+
+■ 页面结构
+1. 筛选Tab：全部 / 待支付 / 待取货 / 售后 / 已完成
+2. 订单卡片：订单号 + 状态角标 + 商品缩略图 + 名称 + 价格 + 数量
+3. 空状态：插画 + 文案引导
+
+■ 业务规则
+- 分页：每页20条，上拉加载更多
+- 排序：创建时间倒序
+- 待支付超时：30分钟自动取消
+- 数据范围：仅当前用户的订单
+
+■ 账号受限状态下的行为
+- 历史订单列表：正常展示（用户有权查看自己的历史记录）
+- 待支付订单：可继续支付已有订单（不新增限制）
+- 新建订单：禁止（由商品详情页/下单按钮侧控制，非本页负责）
+- 售后服务：已有订单的售后正常可用
+
+■ 埋点事件
+- page_view: order_list
+- click: filter_tab_{status}
+- click: order_card（携带order_id）`,
+
+settings: `【Settings — 设置】
+
+■ 页面定位
+账户管理和应用配置的统一入口。
+
+■ 页面结构（分隔线分区）
+1. 账户与安全
+   - 🛡️ Identity Verification → 跳转本文件内的Profile身份认证页
+   - 🔒 Change Password → 修改密码页
+
+2. 偏好设置
+   - 🌐 Language → 语言选择（右侧显示当前语言值）
+
+3. 法律与信息
+   - 📄 Privacy Policy → 隐私政策页
+   - ℹ️ About FoneSquare → 关于页面（含版本号）
+
+4. 退出登录
+   - 红色危险按钮
+   - 清除本地token和缓存，跳转登录页
+
+■ 账号受限状态下的行为
+- Identity Verification：入口正常可见，进入后为只读状态（参见Profile说明）
+- Change Password：正常可用（受限≠密码问题）
+- Language / Privacy / About：正常可用
+- 退出登录：正常可用
+- 新增提示：设置页顶部可考虑增加红色提示条"账号受限，部分功能不可用"（待确认是否需要）
+
+■ 埋点事件
+- page_view: settings
+- click: setting_{item}
+- click: logout`,
+
+changePwd: `【Change Password — 修改密码】
+
+■ 页面定位
+已登录用户修改密码，需验证当前密码。
+
+■ 字段说明
+1. Current Password — 后端验证当前密码正确性
+2. New Password — 8-20位，需包含字母+数字，显示强度指示器（4格）
+3. Confirm Password — 实时校验与新密码是否一致
+
+■ 安全策略
+- 当前密码连续错误5次 → 锁定15分钟
+- 新密码不得与最近3次密码相同
+- 修改成功 → 其他设备token失效，需重新登录
+
+■ 埋点事件
+- page_view: change_password
+- click: update_password（success/fail）`,
+
+langSelect: `【Language — 语言选择】
+
+■ 支持语言
+- 🇬🇧 English（默认）
+- 🇨🇳 简体中文
+- 🇵🇭 Filipino（菲律宾语）
+- 🇸🇦 العربية（阿拉伯语，RTL布局）
+
+■ 交互说明
+- 当前选中项显示绿色 ✓
+- 点击即时切换，无需二次确认
+- Settings页语言显示值同步更新
+
+■ 技术方案
+- 偏好保存至用户profile + localStorage
+- 阿拉伯语需切换RTL文字方向
+- 每种语言对应独立i18n JSON文件`,
+
+helpSupport: `【Help & Support — 帮助与支持】
+
+■ 页面定位
+集中式客户支持入口，为用户提供多渠道帮助。
+
+■ 支持渠道
+1. WhatsApp Support
+   - 唤起WhatsApp Business客服对话
+   - 主要实时沟通渠道
+   - 按地区配置Business API号码
+
+2. Email Support
+   - 打开邮件客户端，预填收件人 support@fonesquare.com
+   - 用于非紧急咨询和文件提交
+
+3. FAQ
+   - 静态FAQ页面（MVP：硬编码；后续：CMS驱动）
+   - 分类：账户、KYC认证、订单、支付、售后
+
+■ 账号受限用户引导
+- 受限用户从My Center红色横幅点击 → 直接唤起WhatsApp客服
+- 受限用户主动进入Help页 → 所有渠道正常可用
+- FAQ中应包含"Why is my account restricted?"常见问题条目
+  ▸ 答复模板：因合规审核需要，您的账号暂时受限。请通过WhatsApp联系客服团队协助处理。
+- WhatsApp客服工单系统：受限用户发起会话时，预填消息模板（如"My account is restricted, ID: {user_id}"）
+
+■ 埋点事件
+- page_view: help_support
+- click: whatsapp_support
+- click: email_support
+- click: faq`,
+
+privacy: `【Privacy Policy — 隐私政策】
+
+■ 内容：数据收集、使用、共享、保留策略、用户权利
+■ 合规：PDPO（香港） + GDPR原则
+■ 纯展示页面，无交互功能
+■ 底部：最后更新日期 + 版本号`,
+
+about: `【About FoneSquare — 关于】
+
+■ 内容：Logo、应用名称、版本号、公司信息、版权声明
+■ 后续规划：检查更新、用户协议链接、开源许可证`
+};
+
+const isLocalDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const isGitHubPages = !isLocalDev;
+let allNotes = {};
+let currentNoteId = 'myCenter';
+
+function loadNotes() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) allNotes = JSON.parse(raw);
+  } catch (e) {}
+  for (const k in defaultNotes) {
+    if (!allNotes[k]) allNotes[k] = defaultNotes[k];
+  }
+}
+
+function saveNotes() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(allNotes));
+  const badge = document.getElementById('notesSaved');
+  badge.classList.add('show');
+  setTimeout(() => badge.classList.remove('show'), 1500);
+}
+
+function initNotesPanel() {
+  const body = document.getElementById('notesBody');
+  body.innerHTML = '';
+  screenMeta.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'note-card' + (i === 0 ? ' on' : '');
+    card.id = 'nc-' + s.id;
+    const ta = document.createElement('textarea');
+    ta.className = 'note-edit';
+    ta.placeholder = 'Enter product notes…';
+    ta.value = allNotes[s.id] || '';
+    if (isGitHubPages) {
+      ta.readOnly = true;
+      ta.style.cursor = 'default';
+    } else {
+      ta.addEventListener('input', () => { allNotes[s.id] = ta.value; saveNotes(); });
+    }
+    card.appendChild(ta);
+    body.appendChild(card);
+  });
+  if (isGitHubPages) {
+    document.querySelector('.notes-footer').style.display = 'none';
+  }
+}
+
+function syncNote(screenId) {
+  currentNoteId = screenId;
+  const meta = screenMeta.find(s => s.id === screenId);
+  if (!meta) return;
+  document.getElementById('noteScreenLabel').textContent = meta.label;
+  document.querySelectorAll('.note-card').forEach(c => c.classList.remove('on'));
+  const card = document.getElementById('nc-' + screenId);
+  if (card) card.classList.add('on');
+}
+
+function clearCurrentNote() {
+  if (!confirm(t('notes.confirmClear'))) return;
+  allNotes[currentNoteId] = '';
+  const card = document.getElementById('nc-' + currentNoteId);
+  if (card) card.querySelector('.note-edit').value = '';
+  saveNotes();
+}
+
+function exportNotes() {
+  let md = '# FoneSquare Personal Center & KYC — Product Notes\n\n';
+  screenMeta.forEach(s => {
+    md += '## ' + s.label + '\n\n';
+    md += (allNotes[s.id] || '(empty)') + '\n\n---\n\n';
+  });
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'fonesquare-kyc-notes.md'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetToDefault() {
+  if (!confirm(t('notes.confirmReset'))) return;
+  allNotes = { ...defaultNotes };
+  saveNotes();
+  initNotesPanel();
+  syncNote(currentNoteId);
+}
+
+/* ═══════════ i18n MODULE ═══════════ */
+const I18N_KEY = 'fonesquare_locale';
+let currentLocale = localStorage.getItem(I18N_KEY) || 'en';
+
+const i18n = {
+en: {
+  'myCenter.title': 'My Center',
+  'myCenter.unverified': 'Unverified',
+  'myCenter.verified': 'Verified',
+  'myCenter.restricted': 'Account Restricted',
+  'myCenter.verifyTitle': 'Complete Identity Verification',
+  'myCenter.verifyDesc': 'Required before placing orders · Takes ~2 min',
+  'myCenter.verifiedBar': 'Identity Verified · KYC Complete',
+  'myCenter.restrictedTitle': 'Account Restricted',
+  'myCenter.restrictedDesc': 'Contact support to resolve this issue',
+  'myCenter.orders': 'My Orders',
+  'myCenter.viewAll': 'View All ›',
+  'myCenter.pendingPay': 'Pending\nPayment',
+  'myCenter.pendingPickup': 'Pending\nPickup',
+  'myCenter.afterSales': 'After-\nSales',
+  'myCenter.quickActions': 'Quick Actions',
+  'myCenter.settings': 'Settings',
+  'myCenter.settingsDesc': 'Account, security, language',
+  'myCenter.help': 'Help & Support',
+  'myCenter.helpDesc': 'FAQ, contact us, feedback',
+  'tab.home': 'Home',
+  'tab.cart': 'Cart',
+  'tab.me': 'Me',
+  'profile.title': 'Identity Verification',
+  'profile.heading': 'Complete Your Profile',
+  'profile.desc': 'Identity info for KYC verification',
+  'profile.region': 'Country / Region',
+  'profile.required': 'Required',
+  'profile.province': 'Province',
+  'profile.city': 'City',
+  'profile.idVerify': 'Identity Verification',
+  'profile.selectId': 'Select ID Type',
+  'profile.hkid': 'HK/Macau ID',
+  'profile.passport': 'Passport',
+  'profile.cnid': 'CN Resident ID',
+  'profile.front': '✅ Front',
+  'profile.back': 'Back Side',
+  'profile.uploadHint': 'JPG/PNG ≤10MB',
+  'profile.uploadPassport': 'Upload Info Page',
+  'profile.passportHint': 'Photo page with MRZ · JPG/PNG ≤10MB',
+  'profile.ocrBanner': 'OCR Recognized',
+  'profile.ocrBannerDesc': '— please review and correct if needed',
+  'profile.fullName': 'Full Name',
+  'profile.idNumber': 'ID Number',
+  'profile.tapEdit': '✏️ tap to edit',
+  'profile.validity': 'ID Validity Period',
+  'profile.contactEmail': 'Contact Email',
+  'profile.optional': 'Optional',
+  'profile.emailPlaceholder': 'For order notifications',
+  'profile.bizInfo': 'Business Information',
+  'profile.bizCollapse': 'Add business license for enterprise account',
+  'profile.bizUpload': 'Upload Business License',
+  'profile.bizHint': 'JPG / PNG / PDF, max 20 MB',
+  'profile.bizOcrPending': 'Upload license to auto-recognize',
+  'profile.licenseType': 'License Type',
+  'profile.regNumber': 'Reg. Number',
+  'profile.legalRep': 'Legal Rep / Director',
+  'profile.bizAddress': 'Business Address',
+  'profile.autoDetect': 'Auto-detect',
+  'profile.licenseValidity': 'License Validity Period',
+  'profile.startDate': 'Start date',
+  'profile.endDate': 'End date',
+  'profile.submit': 'SUBMIT & CONTINUE',
+  'profile.skip': 'Skip for now →',
+  'orders.title': 'My Orders',
+  'orders.all': 'All',
+  'orders.pendingPay': 'Pending Pay',
+  'orders.pickup': 'Pickup',
+  'orders.afterSales': 'After-Sales',
+  'orders.completed': 'Completed',
+  'orders.statusPending': 'Pending Payment',
+  'orders.statusPickup': 'Pending Pickup',
+  'orders.statusAfterSales': 'After-Sales',
+  'orders.statusDone': 'Completed',
+  'settings.title': 'Settings',
+  'settings.idVerify': 'Identity Verification',
+  'settings.idVerifyDesc': 'Manage your KYC documents',
+  'settings.changePwd': 'Change Password',
+  'settings.changePwdDesc': 'Update your login password',
+  'settings.language': 'Language',
+  'settings.privacy': 'Privacy Policy',
+  'settings.about': 'About FoneSquare',
+  'settings.aboutVer': 'Version 1.0.0',
+  'settings.logout': '🚪 Log Out',
+  'changePwd.title': 'Change Password',
+  'changePwd.current': 'Current Password',
+  'changePwd.currentPlaceholder': 'Enter current password',
+  'changePwd.new': 'New Password',
+  'changePwd.newPlaceholder': 'At least 8 characters',
+  'changePwd.confirm': 'Confirm New Password',
+  'changePwd.confirmPlaceholder': 'Re-enter new password',
+  'changePwd.hints': '✓ 8+ chars   ✓ Number   ✓ Letter',
+  'changePwd.btn': 'UPDATE PASSWORD',
+  'changePwd.success': 'Password updated ✓',
+  'lang.title': 'Language',
+  'help.title': 'Help & Support',
+  'help.whatsapp': 'WhatsApp Support',
+  'help.whatsappDesc': 'Chat with us on WhatsApp',
+  'help.email': 'Email Support',
+  'help.faq': 'FAQ',
+  'help.faqDesc': 'Frequently asked questions',
+  'privacy.title': 'Privacy Policy',
+  'privacy.heading': 'Privacy Policy',
+  'privacy.lastUpdated': 'Last updated: April 2026 · Version 1.0',
+  'about.title': 'About FoneSquare',
+  'about.version': 'Version 1.0.0 (Build 2026.04)',
+  'about.desc': 'FoneSquare is a cross-border B2B platform for certified pre-owned mobile devices. We connect global dealers with quality inventory at the best prices.',
+  'about.copyright': '© 2026 FoneSquare. All rights reserved.',
+  'notes.panelTitle': 'Product Notes',
+  'notes.saved': '✓ Saved',
+  'notes.tip': 'Auto-save · Edit directly',
+  'notes.export': 'Export',
+  'notes.reset': 'Reset',
+  'notes.clear': 'Clear',
+  'notes.placeholder': 'Enter product notes…',
+  'notes.confirmClear': 'Clear notes for this page?',
+  'notes.confirmReset': 'Reset all notes to default? Custom edits will be lost.',
+  'toast.langSelected': ' selected ✓',
+  'toast.profileSuccess': 'Profile submitted successfully ✓',
+  'toast.loggedOut': 'Logged out successfully',
+  'toast.waSupport': 'Opening WhatsApp support chat…',
+  'toast.openWa': 'Opening WhatsApp…',
+  'toast.openEmail': 'Opening email client…',
+  'toast.cameraPicker': 'Camera / Gallery picker',
+  'toast.datePicker': 'Date picker',
+  'toast.comingSoon': ' coming soon',
+  'about.companyLabel': 'Company:',
+  'about.regionLabel': 'Region:',
+  'about.contactLabel': 'Contact:',
+},
+zh: {
+  'myCenter.title': '个人中心',
+  'myCenter.unverified': '未认证',
+  'myCenter.verified': '已认证',
+  'myCenter.restricted': '账号受限',
+  'myCenter.verifyTitle': '完成身份认证',
+  'myCenter.verifyDesc': '下单前需完成认证 · 约2分钟',
+  'myCenter.verifiedBar': '已完成身份认证 · KYC通过',
+  'myCenter.restrictedTitle': '账号受限',
+  'myCenter.restrictedDesc': '请联系客服处理',
+  'myCenter.orders': '我的订单',
+  'myCenter.viewAll': '查看全部 ›',
+  'myCenter.pendingPay': '待支付',
+  'myCenter.pendingPickup': '待取货',
+  'myCenter.afterSales': '售后',
+  'myCenter.quickActions': '快捷入口',
+  'myCenter.settings': '设置',
+  'myCenter.settingsDesc': '账户、安全、语言',
+  'myCenter.help': '帮助与支持',
+  'myCenter.helpDesc': '常见问题、联系我们',
+  'tab.home': '首页',
+  'tab.cart': '购物车',
+  'tab.me': '我的',
+  'profile.title': '身份认证',
+  'profile.heading': '完善个人资料',
+  'profile.desc': '用于KYC身份验证的信息',
+  'profile.region': '国家 / 地区',
+  'profile.required': '必填',
+  'profile.province': '省份',
+  'profile.city': '城市',
+  'profile.idVerify': '身份验证',
+  'profile.selectId': '选择证件类型',
+  'profile.hkid': '港澳居民身份证',
+  'profile.passport': '护照',
+  'profile.cnid': '中国居民身份证',
+  'profile.front': '✅ 正面',
+  'profile.back': '反面',
+  'profile.uploadHint': 'JPG/PNG ≤10MB',
+  'profile.uploadPassport': '上传信息页',
+  'profile.passportHint': '含MRZ的信息页 · JPG/PNG ≤10MB',
+  'profile.ocrBanner': 'OCR 已识别',
+  'profile.ocrBannerDesc': '— 请检查并修正',
+  'profile.fullName': '姓名',
+  'profile.idNumber': '证件号码',
+  'profile.tapEdit': '✏️ 点击编辑',
+  'profile.validity': '证件有效期',
+  'profile.contactEmail': '联系邮箱',
+  'profile.optional': '选填',
+  'profile.emailPlaceholder': '用于接收订单通知',
+  'profile.bizInfo': '企业信息',
+  'profile.bizCollapse': '添加营业执照以开通企业账户',
+  'profile.bizUpload': '上传营业执照',
+  'profile.bizHint': 'JPG / PNG / PDF，最大20MB',
+  'profile.bizOcrPending': '上传执照后自动识别',
+  'profile.licenseType': '证照类型',
+  'profile.regNumber': '注册号',
+  'profile.legalRep': '法定代表人/董事',
+  'profile.bizAddress': '企业地址',
+  'profile.autoDetect': '自动识别',
+  'profile.licenseValidity': '执照有效期',
+  'profile.startDate': '开始日期',
+  'profile.endDate': '到期日期',
+  'profile.submit': '提交并继续',
+  'profile.skip': '暂时跳过 →',
+  'orders.title': '我的订单',
+  'orders.all': '全部',
+  'orders.pendingPay': '待支付',
+  'orders.pickup': '待取货',
+  'orders.afterSales': '售后',
+  'orders.completed': '已完成',
+  'orders.statusPending': '待支付',
+  'orders.statusPickup': '待取货',
+  'orders.statusAfterSales': '售后处理',
+  'orders.statusDone': '已完成',
+  'settings.title': '设置',
+  'settings.idVerify': '身份认证',
+  'settings.idVerifyDesc': '管理您的KYC证件',
+  'settings.changePwd': '修改密码',
+  'settings.changePwdDesc': '更新您的登录密码',
+  'settings.language': '语言',
+  'settings.privacy': '隐私政策',
+  'settings.about': '关于 FoneSquare',
+  'settings.aboutVer': '版本 1.0.0',
+  'settings.logout': '🚪 退出登录',
+  'changePwd.title': '修改密码',
+  'changePwd.current': '当前密码',
+  'changePwd.currentPlaceholder': '请输入当前密码',
+  'changePwd.new': '新密码',
+  'changePwd.newPlaceholder': '至少8个字符',
+  'changePwd.confirm': '确认新密码',
+  'changePwd.confirmPlaceholder': '再次输入新密码',
+  'changePwd.hints': '✓ 8位以上   ✓ 含数字   ✓ 含字母',
+  'changePwd.btn': '修改密码',
+  'changePwd.success': '密码已修改 ✓',
+  'lang.title': '语言选择',
+  'help.title': '帮助与支持',
+  'help.whatsapp': 'WhatsApp 客服',
+  'help.whatsappDesc': '通过WhatsApp联系我们',
+  'help.email': '邮件客服',
+  'help.faq': '常见问题',
+  'help.faqDesc': '查看常见问题',
+  'privacy.title': '隐私政策',
+  'privacy.heading': '隐私政策',
+  'privacy.lastUpdated': '最后更新：2026年4月 · 版本 1.0',
+  'about.title': '关于FoneSquare',
+  'about.version': '版本 1.0.0（Build 2026.04）',
+  'about.desc': 'FoneSquare 是一个跨境B2B认证二手手机交易平台，为全球经销商提供优质货源和最优价格。',
+  'about.copyright': '© 2026 FoneSquare 版权所有',
+  'notes.panelTitle': '产品说明',
+  'notes.saved': '✓ 已保存',
+  'notes.tip': '自动保存 · 可直接编辑',
+  'notes.export': '导出',
+  'notes.reset': '重置',
+  'notes.clear': '清空',
+  'notes.placeholder': '在此输入产品说明…',
+  'notes.confirmClear': '确定清空当前页面的备注？',
+  'notes.confirmReset': '重置所有备注为默认内容？自定义内容将丢失。',
+  'toast.langSelected': ' 已选择 ✓',
+  'toast.profileSuccess': '资料提交成功 ✓',
+  'toast.loggedOut': '已退出登录',
+  'toast.waSupport': '正在打开WhatsApp客服…',
+  'toast.openWa': '正在打开WhatsApp…',
+  'toast.openEmail': '正在打开邮件客户端…',
+  'toast.cameraPicker': '相机 / 相册选择',
+  'toast.datePicker': '日期选择',
+  'toast.comingSoon': ' 即将推出',
+  'about.companyLabel': '公司：',
+  'about.regionLabel': '地区：',
+  'about.contactLabel': '联系方式：',
+}
+};
+
+function t(key) {
+  return (i18n[currentLocale] && i18n[currentLocale][key]) || i18n.en[key] || key;
+}
+
+function applyLocale() {
+  function setText(el, v) { if (el) el.textContent = v; }
+  function setHTML(el, v) { if (el) el.innerHTML = v; }
+  function qs(id, sel) { var r = document.getElementById(id); return r ? r.querySelector(sel) : null; }
+  function qsa(id, sel) { var r = document.getElementById(id); return r ? [].slice.call(r.querySelectorAll(sel)) : []; }
+
+  // ── s-myCenter (个人中心) ──
+  setText(qs('s-myCenter', '.hdr-title'), t('myCenter.title'));
+  var badgeKeys = {unverified: 'myCenter.unverified', verified: 'myCenter.verified', restricted: 'myCenter.restricted'};
+  var badgeIcons = {unverified: '⚠️', verified: '✅', restricted: '🔒'};
+  setText(document.getElementById('mcBadgeText'), t(badgeKeys[accountState] || badgeKeys.unverified));
+  setText(document.getElementById('mcBadgeIcon'), badgeIcons[accountState] || '⚠️');
+
+  var vbText = qs('s-myCenter', '.vb-text');
+  if (vbText) {
+    var fc = vbText.childNodes[0];
+    if (fc) fc.textContent = t('myCenter.verifyTitle');
+    var vbSpan = vbText.querySelector('span');
+    if (vbSpan) vbSpan.textContent = t('myCenter.verifyDesc');
+  }
+  setText(qs('s-myCenter', '.vbb-text'), t('myCenter.verifiedBar'));
+  var rbText = qs('s-myCenter', '.rb-text');
+  if (rbText) {
+    var rfc = rbText.childNodes[0];
+    if (rfc) rfc.textContent = t('myCenter.restrictedTitle');
+    var rbSpan = rbText.querySelector('span');
+    if (rbSpan) rbSpan.textContent = t('myCenter.restrictedDesc');
+  }
+  setText(qs('s-myCenter', '.section-title h3'), t('myCenter.orders'));
+  setText(qs('s-myCenter', '.st-link'), t('myCenter.viewAll'));
+
+  var osLabels = qsa('s-myCenter', '.os-label');
+  ['myCenter.pendingPay','myCenter.pendingPickup','myCenter.afterSales'].forEach(function(k, i) {
+    if (osLabels[i]) setHTML(osLabels[i], t(k).replace(/\n/g, '<br>'));
+  });
+
+  setText(qs('s-myCenter', '.mg-title'), t('myCenter.quickActions'));
+
+  var mcMenu = qsa('s-myCenter', '.menu-item');
+  if (mcMenu[0]) { setText(mcMenu[0].querySelector('.mi-text'), t('myCenter.settings')); setText(mcMenu[0].querySelector('.mi-sub'), t('myCenter.settingsDesc')); }
+  if (mcMenu[1]) { setText(mcMenu[1].querySelector('.mi-text'), t('myCenter.help')); setText(mcMenu[1].querySelector('.mi-sub'), t('myCenter.helpDesc')); }
+
+  var tbItems = qsa('s-myCenter', '.tb-item');
+  ['tab.home','tab.cart','tab.me'].forEach(function(k, i) {
+    if (tbItems[i]) { var ic = tbItems[i].querySelector('.tb-i'); tbItems[i].innerHTML = (ic ? ic.outerHTML : '') + t(k); }
+  });
+
+  // ── s-profile (身份认证) ──
+  setText(qs('s-profile', '.hdr-title'), t('profile.title'));
+  setText(qs('s-profile', 'h2'), t('profile.heading'));
+  setText(qs('s-profile', 'h2 + p'), t('profile.desc'));
+
+  var secTitles = qsa('s-profile', '.sec-title');
+  ['profile.region','profile.idVerify','profile.contactEmail','profile.bizInfo'].forEach(function(k, i) { if (secTitles[i]) setText(secTitles[i], t(k)); });
+
+  var secTags = qsa('s-profile', '.sec-tag');
+  ['profile.required','profile.required','profile.optional','profile.optional'].forEach(function(k, i) { if (secTags[i]) setText(secTags[i], t(k)); });
+
+  var regionSels = qsa('s-profile', '.region-sel');
+  if (regionSels[1]) setText(regionSels[1], t('profile.province'));
+  if (regionSels[2]) setText(regionSels[2], t('profile.city'));
+
+  var idChips = qsa('s-profile', '.id-chip');
+  ['profile.hkid','profile.passport','profile.cnid'].forEach(function(k, i) {
+    if (idChips[i]) { var em = idChips[i].querySelector('.id-emoji'); if (em) idChips[i].innerHTML = em.outerHTML + t(k); }
+  });
+
+  var fLabels = qsa('s-profile', '.form-label');
+  ['profile.selectId','profile.validity','profile.licenseValidity'].forEach(function(k, i) { if (fLabels[i]) setText(fLabels[i], t(k)); });
+
+  var idCardLabels = document.querySelectorAll('#idUpload-card .du-label');
+  if (idCardLabels[0]) setText(idCardLabels[0], t('profile.front'));
+  if (idCardLabels[1]) setText(idCardLabels[1], t('profile.back'));
+  var idCardHints = document.querySelectorAll('#idUpload-card .du-hint');
+  if (idCardHints[0]) setText(idCardHints[0], t('profile.uploadHint'));
+
+  setText(document.querySelector('#idUpload-passport .du-label'), t('profile.uploadPassport'));
+  setText(document.querySelector('#idUpload-passport .du-hint'), t('profile.passportHint'));
+
+  var ocrOk = qs('s-profile', '.ocr-banner.ok');
+  if (ocrOk) setHTML(ocrOk, '<span>✅</span> <b>' + t('profile.ocrBanner') + '</b> ' + t('profile.ocrBannerDesc'));
+  var ocrPend = qs('s-profile', '.ocr-banner.pending');
+  if (ocrPend) setHTML(ocrPend, '<span>⏳</span> ' + t('profile.bizOcrPending'));
+
+  var ofLabels = qsa('s-profile', '.of-label');
+  ['profile.fullName','profile.idNumber','profile.licenseType','profile.regNumber','profile.legalRep','profile.bizAddress'].forEach(function(k, i) { if (ofLabels[i]) setText(ofLabels[i], t(k)); });
+  qsa('s-profile', '.of-edit').forEach(function(el) { setText(el, t('profile.tapEdit')); });
+  qsa('s-profile', '.of-val.placeholder').forEach(function(el) { setText(el, t('profile.autoDetect')); });
+
+  var dateEmpties = qsa('s-profile', '.df-val.empty');
+  if (dateEmpties[0]) setText(dateEmpties[0], t('profile.startDate'));
+  if (dateEmpties[1]) setText(dateEmpties[1], t('profile.endDate'));
+
+  var emailInp = qs('s-profile', '.inp');
+  if (emailInp) emailInp.placeholder = t('profile.emailPlaceholder');
+
+  setText(qs('s-profile', '.collapse-toggle span:first-child'), t('profile.bizCollapse'));
+  setText(qs('s-profile', '.collapse-body .du-label'), t('profile.bizUpload'));
+  setText(qs('s-profile', '.collapse-body .du-hint'), t('profile.bizHint'));
+
+  var profBtns = qsa('s-profile', '.btn');
+  if (profBtns[0]) setText(profBtns[0], t('profile.submit'));
+  if (profBtns[1]) setText(profBtns[1], t('profile.skip'));
+
+  // ── s-orders (我的订单) ──
+  setText(qs('s-orders', '.hdr-title'), t('orders.title'));
+
+  var fTabs = qsa('s-orders', '.filter-tab');
+  ['orders.all','orders.pendingPay','orders.pickup','orders.afterSales','orders.completed'].forEach(function(k, i) { if (fTabs[i]) setText(fTabs[i], t(k)); });
+
+  qsa('s-orders', '.oc-status').forEach(function(el) {
+    if (el.classList.contains('pending')) setText(el, t('orders.statusPending'));
+    else if (el.classList.contains('pickup')) setText(el, t('orders.statusPickup'));
+    else if (el.classList.contains('service')) setText(el, t('orders.statusAfterSales'));
+    else if (el.classList.contains('done')) setText(el, t('orders.statusDone'));
+  });
+
+  // ── s-settings (设置) ──
+  setText(qs('s-settings', '.hdr-title'), t('settings.title'));
+
+  var setMenu = qsa('s-settings', '.menu-item');
+  if (setMenu[0]) { setText(setMenu[0].querySelector('.mi-text'), t('settings.idVerify')); setText(setMenu[0].querySelector('.mi-sub'), t('settings.idVerifyDesc')); }
+  if (setMenu[1]) { setText(setMenu[1].querySelector('.mi-text'), t('settings.changePwd')); setText(setMenu[1].querySelector('.mi-sub'), t('settings.changePwdDesc')); }
+  if (setMenu[2]) { setText(setMenu[2].querySelector('.mi-text'), t('settings.language')); }
+  if (setMenu[3]) { setText(setMenu[3].querySelector('.mi-text'), t('settings.privacy')); }
+  if (setMenu[4]) { setText(setMenu[4].querySelector('.mi-text'), t('settings.about')); setText(setMenu[4].querySelector('.mi-sub'), t('settings.aboutVer')); }
+  setText(document.getElementById('curLang'), currentLocale === 'zh' ? '简体中文' : 'English');
+  setText(qs('s-settings', '.logout-btn'), t('settings.logout'));
+
+  // ── s-changePwd (修改密码) ──
+  setText(qs('s-changePwd', '.hdr-title'), t('changePwd.title'));
+
+  var cpLbls = qsa('s-changePwd', 'label');
+  ['changePwd.current','changePwd.new','changePwd.confirm'].forEach(function(k, i) { if (cpLbls[i]) setText(cpLbls[i], t(k)); });
+
+  var cpInps = qsa('s-changePwd', 'input');
+  ['changePwd.currentPlaceholder','changePwd.newPlaceholder','changePwd.confirmPlaceholder'].forEach(function(k, i) { if (cpInps[i]) cpInps[i].placeholder = t(k); });
+
+  setText(document.getElementById('cpHints'), t('changePwd.hints'));
+  setText(qs('s-changePwd', '.btn'), t('changePwd.btn'));
+
+  // ── s-langSelect (语言选择) ──
+  setText(qs('s-langSelect', '.hdr-title'), t('lang.title'));
+
+  qsa('s-langSelect', '.lang-opt').forEach(function(o) {
+    o.classList.remove('on');
+    var nm = o.querySelector('.lo-name');
+    if (nm) {
+      if (currentLocale === 'zh' && nm.textContent === '简体中文') o.classList.add('on');
+      else if (currentLocale === 'en' && nm.textContent === 'English') o.classList.add('on');
+    }
+  });
+
+  // ── s-helpSupport (帮助与支持) ──
+  setText(qs('s-helpSupport', '.hdr-title'), t('help.title'));
+
+  var helpMenu = qsa('s-helpSupport', '.menu-item');
+  if (helpMenu[0]) { setText(helpMenu[0].querySelector('.mi-text'), t('help.whatsapp')); setText(helpMenu[0].querySelector('.mi-sub'), t('help.whatsappDesc')); }
+  if (helpMenu[1]) { setText(helpMenu[1].querySelector('.mi-text'), t('help.email')); }
+  if (helpMenu[2]) { setText(helpMenu[2].querySelector('.mi-text'), t('help.faq')); setText(helpMenu[2].querySelector('.mi-sub'), t('help.faqDesc')); }
+
+  // ── s-privacy (隐私政策) ──
+  setText(qs('s-privacy', '.hdr-title'), t('privacy.title'));
+  setText(qs('s-privacy', '.about-block h2'), t('privacy.heading'));
+  setText(document.getElementById('privLastUpdated'), t('privacy.lastUpdated'));
+
+  // ── s-about (关于FoneSquare) ──
+  setText(qs('s-about', '.hdr-title'), t('about.title'));
+  setText(qs('s-about', '.ver-tag'), t('about.version'));
+  setText(document.getElementById('aboutDesc'), t('about.desc'));
+  setHTML(document.getElementById('aboutCompanyInfo'), '<b>' + t('about.companyLabel') + '</b> FoneSquare Limited<br><b>' + t('about.regionLabel') + '</b> Hong Kong SAR<br><b>' + t('about.contactLabel') + '</b> support@fonesquare.com');
+  setText(document.getElementById('aboutCopyright'), t('about.copyright'));
+
+  // ── Notes Panel ──
+  setText(document.querySelector('.notes-hdr h3'), t('notes.panelTitle'));
+  setText(document.getElementById('notesSaved'), t('notes.saved'));
+  setText(document.querySelector('.nf-tip'), t('notes.tip'));
+  document.querySelectorAll('.note-edit').forEach(function(ta) { ta.placeholder = t('notes.placeholder'); });
+  var nfBtns = document.querySelectorAll('.nf-btn');
+  if (nfBtns[0]) setText(nfBtns[0], t('notes.export'));
+  if (nfBtns[1]) setText(nfBtns[1], t('notes.reset'));
+  if (nfBtns[2]) setText(nfBtns[2], t('notes.clear'));
+
+  // ── Global ──
+  document.documentElement.lang = currentLocale === 'zh' ? 'zh-Hans' : 'en';
+}
+
+function setLocale(code) {
+  currentLocale = code;
+  localStorage.setItem(I18N_KEY, code);
+  applyLocale();
+}
+
+loadNotes();
+initNotesPanel();
+syncNote('myCenter');
+applyLocale();
+</script>
+</body>
+</html>
