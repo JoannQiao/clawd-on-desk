@@ -123,6 +123,15 @@ tr:hover td { background:var(--gray-50); }
 .flow-image-container { margin:16px 0; border:1px solid var(--gray-200); border-radius:12px; overflow:hidden; background:white; }
 .flow-image-container img { width:100%; height:auto; display:block; }
 
+/* Lightbox */
+.prd-lightbox-trigger { display:block; cursor:zoom-in; position:relative; }
+.prd-lightbox-trigger:hover::after { content:'🔍 点击查看大图'; position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,.7); color:#fff; font-size:12px; padding:4px 10px; border-radius:6px; pointer-events:none; }
+.prd-lightbox-overlay { display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,.85); backdrop-filter:blur(4px); justify-content:center; align-items:center; cursor:zoom-out; padding:24px; }
+.prd-lightbox-overlay.active { display:flex; }
+.prd-lightbox-overlay img { max-width:95vw; max-height:92vh; object-fit:contain; border-radius:8px; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+.prd-lightbox-close { position:fixed; top:16px; right:20px; z-index:100000; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.15); border:none; color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+.prd-lightbox-close:hover { background:rgba(255,255,255,.3); }
+
 /* Interaction Flow */
 .interaction-flow { background:white; border:1px solid var(--gray-200); border-radius:12px; padding:24px; margin:16px 0; }
 .iflow-title { font-size:14px; font-weight:700; color:var(--gray-800); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
@@ -324,40 +333,9 @@ body.editing .edit-mode-banner { display:block; }
   <h3>2、整体业务流程图</h3>
   <div style="margin:16px 0;">
     <div style="font-weight:600;font-size:15px;color:#1e293b;margin-bottom:12px;">🗺️ FoneSquare 用户全流程总览（登录注册 → KYC → 商家管理）</div>
-    <div style="overflow-x:auto;">
-      <pre class="mermaid" style="text-align:center;">
-flowchart LR
-    subgraph REG["📱 登录注册"]
-        direction TB
-        R1["手机号+OTP登录"] --> R4["个人信息补充"]
-        R2["WhatsApp登录"] --> R4
-        R3["邮箱+密码登录"] --> R4
-    end
-
-    subgraph KYC["🛡️ KYC认证"]
-        direction TB
-        K1["上传证件照片"] --> K2["OCR识别"]
-        K2 --> K3["制裁名单校验"]
-        K3 --> K4{"是否命中?"}
-        K4 -->|"未命中"| K5["认证通过"]
-        K4 -->|"命中"| K6["认证拒绝"]
-        K5 --> K7{"证件号匹配?"}
-        K7 -->|"有匹配"| K8["账号合并"]
-        K7 -->|"无匹配"| K9["KYC完成"]
-        K8 --> K9
-    end
-
-    subgraph BIZ["🏢 商家管理后台"]
-        direction TB
-        B1["用户列表/搜索"] --> B2["KYC审核记录"]
-        B2 --> B3["回收商额度管理"]
-    end
-
-    REG --> KYC --> BIZ
-
-    classDef default fill:#E8EAF6,stroke:#9FA8DA,stroke-width:1px,color:#283593
-      </pre>
-    </div>
+    <a href="overall-flow.png" class="prd-lightbox-trigger" style="display:block;cursor:zoom-in;" title="点击查看大图">
+      <img src="overall-flow.png" alt="FoneSquare 用户全流程泳道图" style="width:100%;height:auto;display:block;image-rendering:-webkit-optimize-contrast;border-radius:8px;">
+    </a>
     <div style="margin-top:8px;font-size:12px;color:#64748b;">
       📌 本流程图为总览，各环节的详细交互和异常处理见下方各子流程泳道图
     </div>
@@ -2644,6 +2622,39 @@ mermaid.initialize({
     rankSpacing: 40
   }
 });
+</script>
+
+<!-- Lightbox for images -->
+<div class="prd-lightbox-overlay" id="prdLightbox">
+  <button class="prd-lightbox-close" id="prdLightboxClose">&times;</button>
+  <img id="prdLightboxImg" src="" alt="">
+</div>
+<script>
+(function(){
+  const overlay = document.getElementById('prdLightbox');
+  const lbImg = document.getElementById('prdLightboxImg');
+  const closeBtn = document.getElementById('prdLightboxClose');
+
+  document.querySelectorAll('.prd-lightbox-trigger').forEach(function(trigger){
+    trigger.addEventListener('click', function(e){
+      e.preventDefault();
+      var img = trigger.querySelector('img');
+      if (!img) return;
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeLightbox(); });
+  closeBtn.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+})();
 </script>
 
 </body></html>
