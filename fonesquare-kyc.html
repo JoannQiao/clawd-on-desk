@@ -331,6 +331,11 @@ body{
 .ocr-banner{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:var(--r-sm);font-size:11px;margin:6px 0 12px;}
 .ocr-banner.ok{background:#edf7ed;color:#2e7d32;}
 .ocr-banner.pending{background:var(--bgi);color:var(--t3);}
+.biz-guide{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;background:linear-gradient(135deg,#FFF9E6,#FFF4D1);border:1px solid #F5D568;border-radius:var(--r-md);margin:10px 0 8px;}
+.biz-guide .bg-icon{font-size:18px;line-height:1;padding-top:1px;}
+.biz-guide .bg-text{display:flex;flex-direction:column;gap:3px;flex:1;}
+.biz-guide .bg-text b{font-size:13px;font-weight:700;color:#8A6D00;}
+.biz-guide .bg-text span{font-size:12px;color:#A27C00;line-height:1.4;}
 .collapse-toggle{display:flex;align-items:center;gap:8px;width:100%;padding:10px 0;cursor:pointer;background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--t2);}
 .collapse-toggle .ct-arrow{font-size:10px;transition:transform .2s;margin-left:auto;}
 .collapse-toggle.open .ct-arrow{transform:rotate(90deg);}
@@ -346,6 +351,37 @@ body{
 .inp-wrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;}
 .inp-wrap .inp{width:100%;padding:13px 14px 13px 42px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);font-size:14px;color:var(--t1);font-family:inherit;outline:none;transition:border-color .15s;}
 .inp-wrap .inp:focus{border-color:var(--pri);background:#fff;}
+
+/* region picker modal */
+.region-modal{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:500;display:none;flex-direction:column;justify-content:flex-end;}
+.region-modal.show{display:flex;}
+.region-sheet{background:#fff;border-radius:20px 20px 0 0;height:70%;display:flex;flex-direction:column;animation:sheetUp .25s ease;}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.region-sheet-hdr{display:flex;align-items:center;padding:16px 20px 12px;border-bottom:1px solid var(--bd);flex-shrink:0;}
+.region-sheet-hdr .rs-title{flex:1;font-size:16px;font-weight:700;text-align:center;}
+.region-sheet-hdr .rs-close{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:var(--bgi);border-radius:50%;font-size:16px;cursor:pointer;color:var(--t2);}
+/* Breadcrumb tabs */
+.cascade-tabs{display:flex;gap:0;padding:0 16px;border-bottom:1px solid var(--bd);flex-shrink:0;overflow-x:auto;}
+.cascade-tab{position:relative;padding:10px 12px 8px;font-size:13px;font-weight:500;color:var(--t3);cursor:pointer;white-space:nowrap;transition:color .15s;border-bottom:2px solid transparent;}
+.cascade-tab.active{color:var(--pri);font-weight:700;border-bottom-color:var(--pri);}
+.cascade-tab.done{color:var(--t1);}
+.cascade-tab .tab-arrow{margin:0 2px;font-size:11px;color:var(--t3);}
+/* Search */
+.region-search{margin:12px 16px;padding:10px 14px 10px 36px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);font-size:14px;color:var(--t1);font-family:inherit;outline:none;width:calc(100% - 32px);transition:border-color .15s;}
+.region-search:focus{border-color:var(--pri);background:#fff;}
+.region-search-wrap{position:relative;flex-shrink:0;}
+.region-search-wrap::before{content:'🔍';position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+/* List */
+.region-list{flex:1;overflow-y:auto;padding:0 16px 16px;}
+.region-list-group{margin-bottom:12px;}
+.region-list-group .rlg-title{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:8px 0 4px;position:sticky;top:0;background:#fff;}
+.region-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:var(--r-sm);cursor:pointer;transition:background .12s;font-size:14px;font-weight:500;}
+.region-item:hover{background:var(--bgi);}
+.region-item.selected{background:var(--pri-lt);color:var(--pri);font-weight:600;}
+.region-item .ri-flag{font-size:18px;flex-shrink:0;}
+.region-item .ri-code{font-size:12px;color:var(--t3);margin-left:auto;flex-shrink:0;}
+.region-item .ri-check{margin-left:auto;color:var(--pri);font-size:16px;display:none;}
+.region-item.selected .ri-check{display:inline;}
 
 /* WhatsApp icon */
 .wa-cs-btn{
@@ -364,9 +400,13 @@ body{
   <span class="nav-sep">›</span>
   <button class="nav-btn" onclick="go('profile')">Profile</button>
   <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('kycDup')">KYC Dup</button>
+  <span class="nav-sep">›</span>
   <button class="nav-btn" onclick="go('orders')">Orders</button>
   <span class="nav-sep">|</span>
   <button class="nav-btn" onclick="go('settings')">Settings</button>
+  <span class="nav-sep">›</span>
+  <button class="nav-btn" onclick="go('loginMethods')">Login Methods</button>
   <span class="nav-sep">›</span>
   <button class="nav-btn" onclick="go('changePwd')">Change Pwd</button>
   <span class="nav-sep">›</span>
@@ -461,15 +501,15 @@ body{
         <div class="order-stat" onclick="go('orders')">
           <div class="os-dot"></div>
           <div class="os-count">3</div>
-          <div class="os-label">Pending<br>Payment</div>
+          <div class="os-label" data-i18n-label="myCenter.pendingPay">Unpaid</div>
+        </div>
+        <div class="order-stat" onclick="go('orders')">
+          <div class="os-count">5</div>
+          <div class="os-label" data-i18n-label="myCenter.paid">Paid</div>
         </div>
         <div class="order-stat" onclick="go('orders')">
           <div class="os-count">1</div>
-          <div class="os-label">Pending<br>Pickup</div>
-        </div>
-        <div class="order-stat" onclick="go('orders')">
-          <div class="os-count">2</div>
-          <div class="os-label">After-<br>Sales</div>
+          <div class="os-label" data-i18n-label="myCenter.cancelled">Cancelled</div>
         </div>
       </div>
 
@@ -524,10 +564,26 @@ body{
           <span class="sec-title">Country / Region</span>
           <span class="sec-tag req">Required</span>
         </div>
-        <div class="region-row">
-          <div class="region-sel">🇭🇰 Hong Kong</div>
-          <div class="region-sel empty">Province</div>
-          <div class="region-sel empty">City</div>
+        <div class="region-row" id="regionSummaryRow" onclick="openCascadePicker()" style="cursor:pointer;">
+          <div class="region-sel" id="regionPick">🇭🇰 Hong Kong</div>
+          <div class="region-sel empty" id="provincePick"></div>
+          <div class="region-sel empty" id="cityPick"></div>
+        </div>
+
+        <!-- Three-level cascade picker (single modal) -->
+        <div class="region-modal" id="regionModal" onclick="if(event.target===this)closeCascadePicker()">
+          <div class="region-sheet">
+            <div class="region-sheet-hdr">
+              <span></span>
+              <span class="rs-title" id="cascadeTitle">Select Region</span>
+              <button class="rs-close" onclick="closeCascadePicker()">✕</button>
+            </div>
+            <div class="cascade-tabs" id="cascadeTabs"></div>
+            <div class="region-search-wrap">
+              <input class="region-search" id="regionSearchInput" type="text" placeholder="Search…" oninput="filterCascadeList(this.value)">
+            </div>
+            <div class="region-list" id="regionList"></div>
+          </div>
         </div>
 
         <div class="sec-hd">
@@ -537,17 +593,7 @@ body{
         </div>
 
         <label class="form-label">Select ID Type</label>
-        <div class="id-type-row">
-          <button class="id-chip on" onclick="pickIdType(this,'hkid')">
-            <span class="id-emoji">🪪</span>HK/Macau ID
-          </button>
-          <button class="id-chip" onclick="pickIdType(this,'passport')">
-            <span class="id-emoji">📘</span>Passport
-          </button>
-          <button class="id-chip" onclick="pickIdType(this,'cnid')">
-            <span class="id-emoji">🆔</span>CN Resident ID
-          </button>
-        </div>
+        <div class="id-type-row" id="idTypeRow"></div>
 
         <div id="idUpload-card">
           <div class="upload-pair">
@@ -606,11 +652,18 @@ body{
 
         <div class="sec-hd" style="margin-top:16px;">
           <span class="sec-icon">🏢</span>
-          <span class="sec-title">Business Information</span>
-          <span class="sec-tag opt">Optional</span>
+          <span class="sec-title" data-i18n="profile.bizInfo">Business Information</span>
+          <span class="sec-tag opt" data-i18n="profile.optional">Optional</span>
+        </div>
+        <div class="biz-guide" data-i18n="profile.bizGuide">
+          <span class="bg-icon">💎</span>
+          <div class="bg-text">
+            <b data-i18n="profile.bizGuideTitle">Fill in business info to unlock higher limits</b>
+            <span data-i18n="profile.bizGuideDesc">Enterprise accounts get higher daily purchase limits and priority support.</span>
+          </div>
         </div>
         <button class="collapse-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');">
-          <span>Add business license for enterprise account</span>
+          <span data-i18n="profile.bizCollapse">Add business license for enterprise account</span>
           <span class="ct-arrow">›</span>
         </button>
         <div class="collapse-body">
@@ -641,10 +694,156 @@ body{
         </div>
 
         <div style="margin-top:16px;padding-bottom:20px;">
-          <button class="btn" onclick="completeProfile()">SUBMIT & CONTINUE</button>
-          <button class="btn ghost" onclick="goBack()">Skip for now →</button>
+          <button class="btn" onclick="completeProfile()" data-i18n="profile.submit">SUBMIT & CONTINUE</button>
+          <button class="btn ghost" onclick="goBack()" data-i18n="profile.skip">Skip for now →</button>
+          <button class="btn ghost" onclick="go('kycDup')" style="margin-top:6px;color:#E89400;border-color:#F5D568;" data-i18n="profile.demoDup">🎬 Demo: Simulate duplicate identity</button>
         </div>
       </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== KYC DUP: DETECTED ====== -->
+  <div class="screen" id="s-kycDup">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title" data-i18n="kycDup.title">Identity Notice</span></div>
+    <div class="body" style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;">
+      <div style="width:56px;height:56px;background:var(--warn-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;">🪪</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;text-align:center;" data-i18n="kycDup.headline">This ID is already associated with an account</div>
+      <div style="font-size:13px;color:var(--t2);text-align:center;line-height:1.55;margin-bottom:20px;" data-i18n="kycDup.desc">For your security, each verified identity can belong to only one active account. Please continue with your existing verified account.</div>
+
+      <div style="width:100%;background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);padding:14px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;" data-i18n="kycDup.existingAcct">Existing verified account</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pri-dk));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;">J</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:var(--t1);">+852 ****1234</div>
+            <div style="font-size:11px;color:var(--ok-dk);" data-i18n="kycDup.verifiedTag">✓ Verified · HK</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="width:100%;background:var(--warn-bg);border:1.5px solid #FBBF24;border-radius:var(--r-md);padding:14px;margin-bottom:20px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:16px;flex-shrink:0;line-height:1;">💡</span>
+          <div style="font-size:12px;color:#92400E;line-height:1.55;" data-i18n="kycDup.friendlyNote">Your current login method will be migrated to the verified account. Once completed, you can use it to sign in to the verified account.</div>
+        </div>
+      </div>
+
+      <button class="btn" onclick="handleKycDupContinue()" data-i18n="kycDup.continueBtn">Continue with verified account</button>
+      <button class="btn ghost" onclick="goBack()" data-i18n="kycDup.cancelBtn">Use a different ID</button>
+
+      <div style="margin-top:24px;padding:12px;background:var(--bgi);border-radius:var(--r-md);width:100%;">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Scenario Simulation</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn ghost" id="btnDupNoConflict" onclick="setDupScenario('no-conflict')" style="flex:1;font-size:11px;padding:8px 4px;min-width:0;border-color:var(--pri);color:var(--pri);font-weight:700;background:rgba(239,68,68,.06);">No Conflict</button>
+          <button class="btn ghost" id="btnDupConflict" onclick="setDupScenario('conflict')" style="flex:1;font-size:11px;padding:8px 4px;min-width:0;">Has Conflict</button>
+        </div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== KYC DUP: CONFLICT (same login type exists) ====== -->
+  <div class="screen" id="s-kycDupConflict">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title" data-i18n="kycDupConflict.title">Identity Notice</span></div>
+    <div class="body" style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;">
+      <div style="width:56px;height:56px;background:var(--warn-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;">🪪</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;text-align:center;" data-i18n="kycDupConflict.headline">This ID is already associated with an account</div>
+      <div style="font-size:13px;color:var(--t2);text-align:center;line-height:1.55;margin-bottom:20px;" data-i18n="kycDupConflict.desc">For your security, each verified identity can belong to only one active account. The verified account already has the same type of login method, so no migration is needed.</div>
+
+      <div style="width:100%;background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);padding:14px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;" data-i18n="kycDupConflict.existingAcct">Existing verified account</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pri-dk));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;">J</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:var(--t1);">+852 ****1234</div>
+            <div style="font-size:12px;color:var(--t3);">j***@example.com</div>
+            <div style="font-size:11px;color:var(--ok-dk);" data-i18n="kycDup.verifiedTag">✓ Verified · HK</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="width:100%;background:#EFF6FF;border:1.5px solid #93C5FD;border-radius:var(--r-md);padding:14px;margin-bottom:20px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:16px;flex-shrink:0;line-height:1;">ℹ️</span>
+          <div style="font-size:12px;color:#1E40AF;line-height:1.55;" data-i18n="kycDupConflict.infoNote">The verified account already has a login method of the same type (e.g., both use email). Please sign in directly with the verified account.</div>
+        </div>
+      </div>
+
+      <button class="btn" onclick="go('lang')" data-i18n="kycDupConflict.goLoginBtn">Go to Login</button>
+      <button class="btn ghost" onclick="goBack()" data-i18n="kycDupConflict.cancelBtn">Use a different ID</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== KYC DUP: SUPPLEMENT LOGIN METHOD ====== -->
+  <div class="screen" id="s-kycDupSupplement">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title" data-i18n="kycDupSup.title">Add Login Method</span></div>
+    <div class="body" style="padding:20px;">
+      <div style="font-size:13px;color:var(--t2);margin-bottom:14px;" data-i18n="kycDupSup.desc">Your verified account currently uses phone login only. We'll add your email as a new login method so you can sign in with either.</div>
+
+      <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;" data-i18n="kycDupSup.emailLabel">Email to add</label>
+      <div style="display:flex;align-items:center;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:20px;">
+        <span style="font-size:16px;margin-right:10px;">✉️</span>
+        <span style="flex:1;font-size:14px;font-weight:500;color:var(--t1);">new.user@example.com</span>
+      </div>
+
+      <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;" data-i18n="kycDupSup.acctLabel">Bind to account</label>
+      <div style="display:flex;align-items:center;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:20px;">
+        <span style="font-size:16px;margin-right:10px;">📱</span>
+        <span style="flex:1;font-size:14px;font-weight:600;color:var(--t1);">+852 ****1234</span>
+        <span style="font-size:10px;background:var(--ok-bg);color:var(--ok-dk);padding:3px 10px;border-radius:var(--r-full);font-weight:700;" data-i18n="kycDup.verifiedTag">✓ Verified</span>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;background:var(--blue-bg);border:1.5px solid #BFDBFE;border-radius:var(--r-md);padding:12px 14px;margin-bottom:24px;">
+        <span style="font-size:15px;flex-shrink:0;">🔐</span>
+        <div style="font-size:12px;color:#1E40AF;line-height:1.5;" data-i18n="kycDupSup.secureNote">We'll send a one-time code to the verified phone number to confirm you own the account before binding.</div>
+      </div>
+
+      <button class="btn" onclick="go('kycDupOtp')" data-i18n="kycDupSup.nextBtn">Send verification code</button>
+      <button class="btn ghost" onclick="goBack()" data-i18n="kycDupSup.cancel">Cancel</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== KYC DUP: OTP VERIFICATION ====== -->
+  <div class="screen" id="s-kycDupOtp">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title" data-i18n="kycDupOtp.title">Verify Ownership</span></div>
+    <div class="body" style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;">
+      <div style="width:56px;height:56px;background:var(--blue-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;">🔑</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;" data-i18n="kycDupOtp.headline">Enter the 6-digit code</div>
+      <div style="font-size:14px;color:var(--t2);text-align:center;line-height:1.5;margin-bottom:20px;" data-i18n="kycDupOtp.desc">We sent a code to<br><b>+852 ****1234</b></div>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">1</div>
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">2</div>
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">3</div>
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">4</div>
+        <div style="width:44px;height:52px;border:2px solid var(--bd);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--bd);background:#fff;">_</div>
+        <div style="width:44px;height:52px;border:2px solid var(--bd);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--bd);background:#fff;">_</div>
+      </div>
+      <div style="font-size:12px;color:var(--t3);margin-bottom:20px;" data-i18n="kycDupOtp.resend">Resend code in <strong style="color:var(--blue);">60s</strong></div>
+      <button class="btn" style="width:100%;" onclick="completeKycDup()" data-i18n="kycDupOtp.verifyBtn">Verify & Complete</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== KYC DUP: DONE ====== -->
+  <div class="screen" id="s-kycDupDone">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><span class="hdr-title" data-i18n="kycDupDone.title">All Set</span></div>
+    <div class="body" style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;">
+      <div style="width:72px;height:72px;background:var(--ok-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;margin-top:20px;">
+        <span style="font-size:36px;color:var(--ok-dk);">✓</span>
+      </div>
+      <div style="font-size:19px;font-weight:700;margin-bottom:8px;" data-i18n="kycDupDone.headline">Successfully bound</div>
+      <div style="font-size:13px;color:var(--t2);text-align:center;line-height:1.6;max-width:280px;margin-bottom:24px;" data-i18n="kycDupDone.desc">Your email has been added as a login method to your verified account +852 ****1234. You can now sign in with either credential.</div>
+
+
+      <button class="btn" style="width:100%;" onclick="finishKycDup()" data-i18n="kycDupDone.btn">Sign in to verified account</button>
     </div>
     <div class="home-ind"></div>
   </div>
@@ -661,17 +860,13 @@ body{
     </div>
     <div class="body">
       <div class="filter-tabs">
-        <button class="filter-tab on">All</button>
-        <button class="filter-tab">Pending Pay</button>
-        <button class="filter-tab">Pickup</button>
-        <button class="filter-tab">After-Sales</button>
-        <button class="filter-tab">Completed</button>
+        <button class="filter-tab on">Unpaid</button>
+        <button class="filter-tab">Paid</button>
+        <button class="filter-tab">Cancelled</button>
       </div>
-      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120301</span><span class="oc-status pending">Pending Payment</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">iPhone 15 Pro Max 256GB</div><div class="oc-price">HK$ 6,800 <span class="oc-qty">× 1</span></div></div></div></div>
-      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120202</span><span class="oc-status pending">Pending Payment</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Samsung Galaxy S24 Ultra</div><div class="oc-price">HK$ 5,200 <span class="oc-qty">× 2</span></div></div></div></div>
-      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120105</span><span class="oc-status pickup">Pending Pickup</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Google Pixel 8 Pro 128GB</div><div class="oc-price">HK$ 3,900 <span class="oc-qty">× 1</span></div></div></div></div>
-      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024113020</span><span class="oc-status service">After-Sales</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">iPhone 14 128GB — Grade A</div><div class="oc-price">HK$ 3,400 <span class="oc-qty">× 1</span></div></div></div></div>
-      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024112815</span><span class="oc-status done">Completed</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Xiaomi 14 256GB — Grade S</div><div class="oc-price">HK$ 2,100 <span class="oc-qty">× 3</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120301</span><span class="oc-status pending">Unpaid</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">iPhone 15 Pro Max 256GB</div><div class="oc-price">HK$ 6,800 <span class="oc-qty">× 1</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120202</span><span class="oc-status pending">Unpaid</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Samsung Galaxy S24 Ultra</div><div class="oc-price">HK$ 5,200 <span class="oc-qty">× 2</span></div></div></div></div>
+      <div class="order-card"><div class="oc-top"><span class="oc-id">FS-2024120105</span><span class="oc-status done">Paid</span></div><div class="oc-product"><div class="oc-thumb">📱</div><div class="oc-info"><div class="oc-name">Google Pixel 8 Pro 128GB</div><div class="oc-price">HK$ 3,900 <span class="oc-qty">× 1</span></div></div></div></div>
     </div>
     <div class="home-ind"></div>
   </div>
@@ -691,6 +886,11 @@ body{
         <div class="menu-item" onclick="go('profile')">
           <div class="mi-icon" style="background:var(--warn-bg);">🛡️</div>
           <div><div class="mi-text">Identity Verification</div><div class="mi-sub">Manage your KYC documents</div></div>
+          <span class="mi-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="go('loginMethods')">
+          <div class="mi-icon" style="background:#E0F2FE;">🔗</div>
+          <div><div class="mi-text">Login Methods</div><div class="mi-sub">Manage phone, email, WhatsApp</div></div>
           <span class="mi-arrow">›</span>
         </div>
         <div class="menu-item" onclick="go('changePwd')">
@@ -768,10 +968,9 @@ body{
     <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Language</span></div>
     <div class="body">
       <div class="lang-pick">
-        <div class="lang-opt on" onclick="pickLang(this,'English')"><span class="lo-flag">🇬🇧</span><span class="lo-name">English</span><span class="lo-check">✓</span></div>
-        <div class="lang-opt" onclick="pickLang(this,'简体中文')"><span class="lo-flag">🇨🇳</span><span class="lo-name">简体中文</span><span class="lo-check">✓</span></div>
-        <div class="lang-opt" onclick="pickLang(this,'Filipino')"><span class="lo-flag">🇵🇭</span><span class="lo-name">Filipino</span><span class="lo-check">✓</span></div>
-        <div class="lang-opt" onclick="pickLang(this,'العربية')"><span class="lo-flag">🇸🇦</span><span class="lo-name">العربية</span><span class="lo-check">✓</span></div>
+        <div class="lang-opt" onclick="pickLang(this,'简体中文')"><span class="lo-name">简体中文</span><span class="lo-check">✓</span></div>
+        <div class="lang-opt" onclick="pickLang(this,'繁體中文')"><span class="lo-name">繁體中文</span><span class="lo-check">✓</span></div>
+        <div class="lang-opt on" onclick="pickLang(this,'English')"><span class="lo-name">English</span><span class="lo-check">✓</span></div>
       </div>
     </div>
     <div class="home-ind"></div>
@@ -841,6 +1040,113 @@ body{
     <div class="home-ind"></div>
   </div>
 
+  <!-- ====== LOGIN METHODS ====== -->
+  <div class="screen" id="s-loginMethods">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Login Methods</span></div>
+    <div class="body" style="padding:16px;">
+      <div style="font-size:13px;color:var(--t2);margin-bottom:14px;">Manage your login methods for this account</div>
+
+      <div style="background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);padding:14px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;">✉️</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;">joann@company.com</div>
+              <div style="font-size:11px;color:var(--t3);">Email · Added Mar 2026</div>
+            </div>
+          </div>
+          <span style="font-size:10px;background:#DBEAFE;color:#2563EB;padding:3px 10px;border-radius:var(--r-full);font-weight:700;">PRIMARY</span>
+        </div>
+      </div>
+
+      <div id="lmPhoneCard" style="display:none;background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);padding:14px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;">📱</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;">+852 9876 5432</div>
+              <div style="font-size:11px;color:var(--t3);">Phone · Just now</div>
+            </div>
+          </div>
+          <span style="font-size:10px;background:var(--ok-bg);color:var(--ok-dk);padding:3px 10px;border-radius:var(--r-full);font-weight:700;">NEW</span>
+        </div>
+      </div>
+
+      <div id="lmNudge" style="background:var(--warn-bg);border:1.5px solid #FBBF24;border-radius:var(--r-md);padding:14px;margin-bottom:16px;cursor:pointer;" onclick="go('addMethod')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">💡</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#92400E;">Add a phone number</div>
+            <div style="font-size:11px;color:#B45309;">Recommended for account security</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border:2px dashed var(--bd);border-radius:var(--r-md);padding:16px;text-align:center;cursor:pointer;" onclick="go('addMethod')">
+        <span style="font-size:22px;">＋</span>
+        <div style="font-size:14px;font-weight:600;color:var(--blue);margin-top:4px;">Add Login Method</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:2px;">Phone / Email / WhatsApp</div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== ADD METHOD ====== -->
+  <div class="screen" id="s-addMethod">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Add Login Method</span></div>
+    <div class="body" style="padding:16px;">
+      <div style="font-size:13px;color:var(--t2);margin-bottom:14px;">Choose a login method to add</div>
+
+      <div style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <span style="font-size:18px;">📱</span>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Phone Number</div><div style="font-size:11px;color:var(--t2);">Login via SMS OTP</div></div>
+        <span style="color:var(--blue);font-size:16px;font-weight:700;">●</span>
+      </div>
+      <div style="background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;opacity:0.5;">
+        <span style="font-size:18px;">✉️</span>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--t3);">Email</div><div style="font-size:11px;color:var(--bd);">Already linked</div></div>
+      </div>
+      <div style="background:#fff;border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:20px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <span style="font-size:18px;">💬</span>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:600;">WhatsApp</div><div style="font-size:11px;color:var(--t2);">Login via WhatsApp OTP</div></div>
+        <span style="color:var(--bd);font-size:16px;font-weight:700;">○</span>
+      </div>
+
+      <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px;">Phone Number</label>
+      <div style="display:flex;gap:6px;margin-bottom:20px;">
+        <div style="background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 10px;font-size:13px;width:80px;text-align:center;font-weight:500;">🇭🇰 +852</div>
+        <div style="flex:1;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-md);padding:12px 14px;font-size:14px;color:var(--t1);font-weight:500;">9876 5432</div>
+      </div>
+
+      <button class="btn" onclick="go('verifyPhone')">SEND VERIFICATION CODE</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== VERIFY PHONE ====== -->
+  <div class="screen" id="s-verifyPhone">
+    <div class="sb"><span class="time">9:41</span><span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span></div>
+    <div class="hdr"><button class="hdr-back" onclick="goBack()">‹</button><span class="hdr-title">Verify Phone</span></div>
+    <div class="body" style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;">
+      <div style="width:56px;height:56px;background:var(--blue-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;">📱</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Verify Your Phone</div>
+      <div style="font-size:14px;color:var(--t2);text-align:center;line-height:1.5;margin-bottom:20px;">Enter the code sent to<br><strong>+852 9876 5432</strong></div>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">5</div>
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">2</div>
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">9</div>
+        <div style="width:44px;height:52px;border:2px solid var(--blue);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:#fff;">4</div>
+        <div style="width:44px;height:52px;border:2px solid var(--bd);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--bd);background:#fff;">_</div>
+        <div style="width:44px;height:52px;border:2px solid var(--bd);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--bd);background:#fff;">_</div>
+      </div>
+      <div style="font-size:12px;color:var(--t3);margin-bottom:20px;">Resend code in <strong style="color:var(--blue);">60s</strong></div>
+      <button class="btn" style="width:100%;" onclick="completeAddPhone()">VERIFY</button>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
   <div class="toast" id="appToast"></div>
 </div>
 
@@ -856,6 +1162,7 @@ body{
   </div>
   <div class="notes-body" id="notesBody"></div>
   <div class="notes-footer">
+    <button class="nf-btn" id="btnSaveToFile" onclick="saveNotesToServer()" style="background:var(--pri);color:#fff;font-weight:700;min-width:60px;">💾 Save</button>
     <span class="nf-tip">Auto-save · Edit directly</span>
     <button class="nf-btn" onclick="exportNotes()">Export</button>
     <button class="nf-btn" onclick="resetToDefault()">Reset</button>
@@ -866,7 +1173,7 @@ body{
 
 <div class="screen-map">
   <b>👤 My Center:</b> My Center → Profile (KYC) / Orders / Settings<br>
-  <b>⚙️ Settings:</b> Settings → Change Pwd / Language / Privacy / About / Logout<br>
+  <b>⚙️ Settings:</b> Settings → Login Methods (→ Add → Verify) / Change Pwd / Language / Privacy / About / Logout<br>
   <b>💬 Help:</b> Help & Support → WhatsApp / Email / FAQ / Feedback
 </div>
 
@@ -879,8 +1186,16 @@ let accountState = 'unverified'; // 'unverified' | 'verified' | 'restricted'
 const screenMeta = [
   {id:'myCenter', label:'My Center'},
   {id:'profile', label:'Profile — Identity Verification'},
+  {id:'kycDup', label:'KYC — Duplicate Identity Detected'},
+  {id:'kycDupConflict', label:'KYC — Login Type Conflict'},
+  {id:'kycDupSupplement', label:'KYC — Bind Login Method'},
+  {id:'kycDupOtp', label:'KYC — Verify Ownership'},
+  {id:'kycDupDone', label:'KYC — Binding Complete'},
   {id:'orders', label:'My Orders'},
   {id:'settings', label:'Settings'},
+  {id:'loginMethods', label:'Login Methods'},
+  {id:'addMethod', label:'Add Login Method'},
+  {id:'verifyPhone', label:'Verify Phone'},
   {id:'changePwd', label:'Change Password'},
   {id:'langSelect', label:'Language'},
   {id:'helpSupport', label:'Help & Support'},
@@ -936,6 +1251,8 @@ function pickLang(opt, name) {
     setLocale('en');
   } else if (name === '简体中文') {
     setLocale('zh');
+  } else if (name === '繁體中文') {
+    setLocale('zh-TW');
   } else {
     toast(name + t('toast.comingSoon'));
     return;
@@ -943,11 +1260,519 @@ function pickLang(opt, name) {
   toast(name + t('toast.langSelected'));
 }
 
-function pickIdType(chip, type) {
-  document.querySelectorAll('.id-chip').forEach(c => c.classList.remove('on'));
-  chip.classList.add('on');
-  const card = document.getElementById('idUpload-card');
-  const passport = document.getElementById('idUpload-passport');
+/* ══════════════════════════════════════════════
+   Three-level cascading region picker
+   Country → Province/State → City/District
+   ══════════════════════════════════════════════ */
+
+var REGIONS = [
+  {group:'Popular',items:[
+    {code:'HK',flag:'🇭🇰',en:'Hong Kong',zh:'香港','zh-TW':'香港'},
+    {code:'MO',flag:'🇲🇴',en:'Macau',zh:'澳门','zh-TW':'澳門'},
+    {code:'CN',flag:'🇨🇳',en:'China',zh:'中国大陆','zh-TW':'中國大陸'},
+    {code:'TW',flag:'🇹🇼',en:'Taiwan',zh:'台湾','zh-TW':'臺灣'},
+    {code:'SG',flag:'🇸🇬',en:'Singapore',zh:'新加坡','zh-TW':'新加坡'},
+    {code:'MY',flag:'🇲🇾',en:'Malaysia',zh:'马来西亚','zh-TW':'馬來西亞'},
+    {code:'JP',flag:'🇯🇵',en:'Japan',zh:'日本','zh-TW':'日本'},
+    {code:'KR',flag:'🇰🇷',en:'South Korea',zh:'韩国','zh-TW':'韓國'},
+  ]},
+  {group:'Southeast Asia',items:[
+    {code:'PH',flag:'🇵🇭',en:'Philippines',zh:'菲律宾','zh-TW':'菲律賓'},
+    {code:'TH',flag:'🇹🇭',en:'Thailand',zh:'泰国','zh-TW':'泰國'},
+    {code:'VN',flag:'🇻🇳',en:'Vietnam',zh:'越南','zh-TW':'越南'},
+    {code:'ID',flag:'🇮🇩',en:'Indonesia',zh:'印度尼西亚','zh-TW':'印度尼西亞'},
+    {code:'MM',flag:'🇲🇲',en:'Myanmar',zh:'缅甸','zh-TW':'緬甸'},
+    {code:'KH',flag:'🇰🇭',en:'Cambodia',zh:'柬埔寨','zh-TW':'柬埔寨'},
+    {code:'LA',flag:'🇱🇦',en:'Laos',zh:'老挝','zh-TW':'寮國'},
+    {code:'BN',flag:'🇧🇳',en:'Brunei',zh:'文莱','zh-TW':'汶萊'},
+  ]},
+  {group:'South Asia',items:[
+    {code:'IN',flag:'🇮🇳',en:'India',zh:'印度','zh-TW':'印度'},
+    {code:'BD',flag:'🇧🇩',en:'Bangladesh',zh:'孟加拉国','zh-TW':'孟加拉'},
+    {code:'LK',flag:'🇱🇰',en:'Sri Lanka',zh:'斯里兰卡','zh-TW':'斯里蘭卡'},
+    {code:'PK',flag:'🇵🇰',en:'Pakistan',zh:'巴基斯坦','zh-TW':'巴基斯坦'},
+    {code:'NP',flag:'🇳🇵',en:'Nepal',zh:'尼泊尔','zh-TW':'尼泊爾'},
+  ]},
+  {group:'Middle East',items:[
+    {code:'AE',flag:'🇦🇪',en:'United Arab Emirates',zh:'阿联酋','zh-TW':'阿聯酋'},
+    {code:'SA',flag:'🇸🇦',en:'Saudi Arabia',zh:'沙特阿拉伯','zh-TW':'沙烏地阿拉伯'},
+    {code:'QA',flag:'🇶🇦',en:'Qatar',zh:'卡塔尔','zh-TW':'卡達'},
+    {code:'IL',flag:'🇮🇱',en:'Israel',zh:'以色列','zh-TW':'以色列'},
+    {code:'TR',flag:'🇹🇷',en:'Turkey',zh:'土耳其','zh-TW':'土耳其'},
+  ]},
+  {group:'Europe',items:[
+    {code:'GB',flag:'🇬🇧',en:'United Kingdom',zh:'英国','zh-TW':'英國'},
+    {code:'DE',flag:'🇩🇪',en:'Germany',zh:'德国','zh-TW':'德國'},
+    {code:'FR',flag:'🇫🇷',en:'France',zh:'法国','zh-TW':'法國'},
+    {code:'IT',flag:'🇮🇹',en:'Italy',zh:'意大利','zh-TW':'義大利'},
+    {code:'ES',flag:'🇪🇸',en:'Spain',zh:'西班牙','zh-TW':'西班牙'},
+    {code:'NL',flag:'🇳🇱',en:'Netherlands',zh:'荷兰','zh-TW':'荷蘭'},
+    {code:'PT',flag:'🇵🇹',en:'Portugal',zh:'葡萄牙','zh-TW':'葡萄牙'},
+    {code:'SE',flag:'🇸🇪',en:'Sweden',zh:'瑞典','zh-TW':'瑞典'},
+    {code:'CH',flag:'🇨🇭',en:'Switzerland',zh:'瑞士','zh-TW':'瑞士'},
+    {code:'PL',flag:'🇵🇱',en:'Poland',zh:'波兰','zh-TW':'波蘭'},
+  ]},
+  {group:'Americas',items:[
+    {code:'US',flag:'🇺🇸',en:'United States',zh:'美国','zh-TW':'美國'},
+    {code:'CA',flag:'🇨🇦',en:'Canada',zh:'加拿大','zh-TW':'加拿大'},
+    {code:'BR',flag:'🇧🇷',en:'Brazil',zh:'巴西','zh-TW':'巴西'},
+    {code:'MX',flag:'🇲🇽',en:'Mexico',zh:'墨西哥','zh-TW':'墨西哥'},
+    {code:'AR',flag:'🇦🇷',en:'Argentina',zh:'阿根廷','zh-TW':'阿根廷'},
+    {code:'CL',flag:'🇨🇱',en:'Chile',zh:'智利','zh-TW':'智利'},
+  ]},
+  {group:'Africa',items:[
+    {code:'ZA',flag:'🇿🇦',en:'South Africa',zh:'南非','zh-TW':'南非'},
+    {code:'NG',flag:'🇳🇬',en:'Nigeria',zh:'尼日利亚','zh-TW':'奈及利亞'},
+    {code:'KE',flag:'🇰🇪',en:'Kenya',zh:'肯尼亚','zh-TW':'肯亞'},
+    {code:'EG',flag:'🇪🇬',en:'Egypt',zh:'埃及','zh-TW':'埃及'},
+  ]},
+  {group:'Oceania',items:[
+    {code:'AU',flag:'🇦🇺',en:'Australia',zh:'澳大利亚','zh-TW':'澳洲'},
+    {code:'NZ',flag:'🇳🇿',en:'New Zealand',zh:'新西兰','zh-TW':'紐西蘭'},
+  ]}
+];
+
+/* Province/State data per country (key regions with real data; others use generic placeholder) */
+var PROVINCES = {
+  'HK': [
+    {id:'HK-HKI',en:'Hong Kong Island',zh:'香港岛','zh-TW':'香港島'},
+    {id:'HK-KLN',en:'Kowloon',zh:'九龙','zh-TW':'九龍'},
+    {id:'HK-NT', en:'New Territories',zh:'新界','zh-TW':'新界'},
+  ],
+  'MO': [
+    {id:'MO-P', en:'Macau Peninsula',zh:'澳门半岛','zh-TW':'澳門半島'},
+    {id:'MO-T', en:'Taipa',zh:'氹仔','zh-TW':'氹仔'},
+    {id:'MO-C', en:'Coloane',zh:'路环','zh-TW':'路環'},
+    {id:'MO-CT',en:'Cotai',zh:'路氹城','zh-TW':'路氹城'},
+  ],
+  'CN': [
+    {id:'CN-BJ', en:'Beijing',zh:'北京','zh-TW':'北京'},
+    {id:'CN-SH', en:'Shanghai',zh:'上海','zh-TW':'上海'},
+    {id:'CN-GD', en:'Guangdong',zh:'广东','zh-TW':'廣東'},
+    {id:'CN-ZJ', en:'Zhejiang',zh:'浙江','zh-TW':'浙江'},
+    {id:'CN-JS', en:'Jiangsu',zh:'江苏','zh-TW':'江蘇'},
+    {id:'CN-SC', en:'Sichuan',zh:'四川','zh-TW':'四川'},
+    {id:'CN-HB', en:'Hubei',zh:'湖北','zh-TW':'湖北'},
+    {id:'CN-HN', en:'Hunan',zh:'湖南','zh-TW':'湖南'},
+    {id:'CN-FJ', en:'Fujian',zh:'福建','zh-TW':'福建'},
+    {id:'CN-SD', en:'Shandong',zh:'山东','zh-TW':'山東'},
+    {id:'CN-HE', en:'Hebei',zh:'河北','zh-TW':'河北'},
+    {id:'CN-HA', en:'Henan',zh:'河南','zh-TW':'河南'},
+    {id:'CN-LN', en:'Liaoning',zh:'辽宁','zh-TW':'遼寧'},
+    {id:'CN-SX', en:'Shaanxi',zh:'陕西','zh-TW':'陝西'},
+    {id:'CN-CQ', en:'Chongqing',zh:'重庆','zh-TW':'重慶'},
+    {id:'CN-TJ', en:'Tianjin',zh:'天津','zh-TW':'天津'},
+    {id:'CN-AH', en:'Anhui',zh:'安徽','zh-TW':'安徽'},
+    {id:'CN-JX', en:'Jiangxi',zh:'江西','zh-TW':'江西'},
+    {id:'CN-GX', en:'Guangxi',zh:'广西','zh-TW':'廣西'},
+    {id:'CN-YN', en:'Yunnan',zh:'云南','zh-TW':'雲南'},
+    {id:'CN-GZ', en:'Guizhou',zh:'贵州','zh-TW':'貴州'},
+    {id:'CN-SN', en:'Shanxi',zh:'山西','zh-TW':'山西'},
+    {id:'CN-JL', en:'Jilin',zh:'吉林','zh-TW':'吉林'},
+    {id:'CN-HL', en:'Heilongjiang',zh:'黑龙江','zh-TW':'黑龍江'},
+    {id:'CN-NM', en:'Inner Mongolia',zh:'内蒙古','zh-TW':'內蒙古'},
+    {id:'CN-XJ', en:'Xinjiang',zh:'新疆','zh-TW':'新疆'},
+    {id:'CN-XZ', en:'Tibet',zh:'西藏','zh-TW':'西藏'},
+    {id:'CN-QH', en:'Qinghai',zh:'青海','zh-TW':'青海'},
+    {id:'CN-GS', en:'Gansu',zh:'甘肃','zh-TW':'甘肅'},
+    {id:'CN-NX', en:'Ningxia',zh:'宁夏','zh-TW':'寧夏'},
+    {id:'CN-HI', en:'Hainan',zh:'海南','zh-TW':'海南'},
+  ],
+  'TW': [
+    {id:'TW-TPE',en:'Taipei',zh:'台北','zh-TW':'臺北'},
+    {id:'TW-NTP',en:'New Taipei',zh:'新北','zh-TW':'新北'},
+    {id:'TW-TXG',en:'Taichung',zh:'台中','zh-TW':'臺中'},
+    {id:'TW-KHH',en:'Kaohsiung',zh:'高雄','zh-TW':'高雄'},
+    {id:'TW-TNN',en:'Tainan',zh:'台南','zh-TW':'臺南'},
+    {id:'TW-TYN',en:'Taoyuan',zh:'桃园','zh-TW':'桃園'},
+  ],
+  'SG': [
+    {id:'SG-C',en:'Central Region',zh:'中区','zh-TW':'中區'},
+    {id:'SG-E',en:'East Region',zh:'东区','zh-TW':'東區'},
+    {id:'SG-NE',en:'North-East Region',zh:'东北区','zh-TW':'東北區'},
+    {id:'SG-N',en:'North Region',zh:'北区','zh-TW':'北區'},
+    {id:'SG-W',en:'West Region',zh:'西区','zh-TW':'西區'},
+  ],
+  'MY': [
+    {id:'MY-KL', en:'Kuala Lumpur',zh:'吉隆坡','zh-TW':'吉隆坡'},
+    {id:'MY-PJ', en:'Penang',zh:'槟城','zh-TW':'檳城'},
+    {id:'MY-JHR',en:'Johor',zh:'柔佛','zh-TW':'柔佛'},
+    {id:'MY-SBH',en:'Sabah',zh:'沙巴','zh-TW':'沙巴'},
+    {id:'MY-SWK',en:'Sarawak',zh:'砂拉越','zh-TW':'砂拉越'},
+    {id:'MY-SGR',en:'Selangor',zh:'雪兰莪','zh-TW':'雪蘭莪'},
+  ],
+  'JP': [
+    {id:'JP-TK',en:'Tokyo',zh:'东京','zh-TW':'東京'},
+    {id:'JP-OS',en:'Osaka',zh:'大阪','zh-TW':'大阪'},
+    {id:'JP-KY',en:'Kyoto',zh:'京都','zh-TW':'京都'},
+    {id:'JP-HK',en:'Hokkaido',zh:'北海道','zh-TW':'北海道'},
+    {id:'JP-FK',en:'Fukuoka',zh:'福冈','zh-TW':'福岡'},
+    {id:'JP-AI',en:'Aichi',zh:'爱知','zh-TW':'愛知'},
+  ],
+  'KR': [
+    {id:'KR-SE',en:'Seoul',zh:'首尔','zh-TW':'首爾'},
+    {id:'KR-BS',en:'Busan',zh:'釜山','zh-TW':'釜山'},
+    {id:'KR-IC',en:'Incheon',zh:'仁川','zh-TW':'仁川'},
+    {id:'KR-GG',en:'Gyeonggi',zh:'京畿道','zh-TW':'京畿道'},
+    {id:'KR-DJ',en:'Daejeon',zh:'大田','zh-TW':'大田'},
+  ],
+  'US': [
+    {id:'US-CA',en:'California',zh:'加利福尼亚','zh-TW':'加利福尼亞'},
+    {id:'US-NY',en:'New York',zh:'纽约','zh-TW':'紐約'},
+    {id:'US-TX',en:'Texas',zh:'德克萨斯','zh-TW':'德克薩斯'},
+    {id:'US-FL',en:'Florida',zh:'佛罗里达','zh-TW':'佛羅里達'},
+    {id:'US-IL',en:'Illinois',zh:'伊利诺伊','zh-TW':'伊利諾伊'},
+    {id:'US-WA',en:'Washington',zh:'华盛顿','zh-TW':'華盛頓'},
+  ],
+  'GB': [
+    {id:'GB-ENG',en:'England',zh:'英格兰','zh-TW':'英格蘭'},
+    {id:'GB-SCT',en:'Scotland',zh:'苏格兰','zh-TW':'蘇格蘭'},
+    {id:'GB-WLS',en:'Wales',zh:'威尔士','zh-TW':'威爾士'},
+    {id:'GB-NIR',en:'Northern Ireland',zh:'北爱尔兰','zh-TW':'北愛爾蘭'},
+  ],
+};
+
+/* City/District data per province */
+var CITIES = {
+  'HK-HKI': [
+    {en:'Central & Western',zh:'中西区','zh-TW':'中西區'},
+    {en:'Wan Chai',zh:'湾仔','zh-TW':'灣仔'},
+    {en:'Eastern',zh:'东区','zh-TW':'東區'},
+    {en:'Southern',zh:'南区','zh-TW':'南區'},
+  ],
+  'HK-KLN': [
+    {en:'Yau Tsim Mong',zh:'油尖旺','zh-TW':'油尖旺'},
+    {en:'Sham Shui Po',zh:'深水埗','zh-TW':'深水埗'},
+    {en:'Kowloon City',zh:'九龙城','zh-TW':'九龍城'},
+    {en:'Wong Tai Sin',zh:'黄大仙','zh-TW':'黃大仙'},
+    {en:'Kwun Tong',zh:'观塘','zh-TW':'觀塘'},
+  ],
+  'HK-NT': [
+    {en:'Kwai Tsing',zh:'葵青','zh-TW':'葵青'},
+    {en:'Tsuen Wan',zh:'荃湾','zh-TW':'荃灣'},
+    {en:'Tuen Mun',zh:'屯门','zh-TW':'屯門'},
+    {en:'Yuen Long',zh:'元朗','zh-TW':'元朗'},
+    {en:'North',zh:'北区','zh-TW':'北區'},
+    {en:'Tai Po',zh:'大埔','zh-TW':'大埔'},
+    {en:'Sha Tin',zh:'沙田','zh-TW':'沙田'},
+    {en:'Sai Kung',zh:'西贡','zh-TW':'西貢'},
+    {en:'Islands',zh:'离岛','zh-TW':'離島'},
+  ],
+  'MO-P': [{en:'Macau Peninsula',zh:'澳门半岛','zh-TW':'澳門半島'}],
+  'MO-T': [{en:'Taipa',zh:'氹仔','zh-TW':'氹仔'}],
+  'MO-C': [{en:'Coloane',zh:'路环','zh-TW':'路環'}],
+  'MO-CT':[{en:'Cotai',zh:'路氹城','zh-TW':'路氹城'}],
+  'CN-GD': [
+    {en:'Guangzhou',zh:'广州','zh-TW':'廣州'},
+    {en:'Shenzhen',zh:'深圳','zh-TW':'深圳'},
+    {en:'Dongguan',zh:'东莞','zh-TW':'東莞'},
+    {en:'Foshan',zh:'佛山','zh-TW':'佛山'},
+    {en:'Zhuhai',zh:'珠海','zh-TW':'珠海'},
+    {en:'Huizhou',zh:'惠州','zh-TW':'惠州'},
+    {en:'Zhongshan',zh:'中山','zh-TW':'中山'},
+  ],
+  'CN-BJ': [{en:'Beijing',zh:'北京','zh-TW':'北京'}],
+  'CN-SH': [{en:'Shanghai',zh:'上海','zh-TW':'上海'}],
+  'CN-ZJ': [
+    {en:'Hangzhou',zh:'杭州','zh-TW':'杭州'},
+    {en:'Ningbo',zh:'宁波','zh-TW':'寧波'},
+    {en:'Wenzhou',zh:'温州','zh-TW':'溫州'},
+    {en:'Jiaxing',zh:'嘉兴','zh-TW':'嘉興'},
+  ],
+  'CN-JS': [
+    {en:'Nanjing',zh:'南京','zh-TW':'南京'},
+    {en:'Suzhou',zh:'苏州','zh-TW':'蘇州'},
+    {en:'Wuxi',zh:'无锡','zh-TW':'無錫'},
+    {en:'Changzhou',zh:'常州','zh-TW':'常州'},
+  ],
+  'CN-SC': [{en:'Chengdu',zh:'成都','zh-TW':'成都'},{en:'Mianyang',zh:'绵阳','zh-TW':'綿陽'}],
+  'CN-HB': [{en:'Wuhan',zh:'武汉','zh-TW':'武漢'},{en:'Yichang',zh:'宜昌','zh-TW':'宜昌'}],
+  'CN-HN': [{en:'Changsha',zh:'长沙','zh-TW':'長沙'},{en:'Zhuzhou',zh:'株洲','zh-TW':'株洲'}],
+  'CN-FJ': [{en:'Fuzhou',zh:'福州','zh-TW':'福州'},{en:'Xiamen',zh:'厦门','zh-TW':'廈門'}],
+  'CN-SD': [{en:'Jinan',zh:'济南','zh-TW':'濟南'},{en:'Qingdao',zh:'青岛','zh-TW':'青島'}],
+  'CN-CQ': [{en:'Chongqing',zh:'重庆','zh-TW':'重慶'}],
+  'CN-TJ': [{en:'Tianjin',zh:'天津','zh-TW':'天津'}],
+};
+
+/* ── Selection state ── */
+var selectedRegionCode = 'HK';
+var selectedProvinceId = null;
+var selectedCityName   = null;
+var cascadeLevel = 0; // 0=country, 1=province, 2=city
+
+function getLocName(item) {
+  if (!item) return '';
+  if (currentLocale === 'zh-TW') return item['zh-TW'] || item.zh || item.en;
+  if (currentLocale === 'zh') return item.zh || item.en;
+  return item.en;
+}
+
+function getGroupName(g) {
+  var map = {
+    'Popular':        {zh:'常用地区','zh-TW':'常用地區'},
+    'Southeast Asia': {zh:'东南亚','zh-TW':'東南亞'},
+    'South Asia':     {zh:'南亚','zh-TW':'南亞'},
+    'Middle East':    {zh:'中东','zh-TW':'中東'},
+    'Europe':         {zh:'欧洲','zh-TW':'歐洲'},
+    'Americas':       {zh:'美洲','zh-TW':'美洲'},
+    'Africa':         {zh:'非洲','zh-TW':'非洲'},
+    'Oceania':        {zh:'大洋洲','zh-TW':'大洋洲'}
+  };
+  if (currentLocale === 'en') return g;
+  return (map[g] && map[g][currentLocale]) || (map[g] && map[g].zh) || g;
+}
+
+function findRegionByCode(code) {
+  for (var i = 0; i < REGIONS.length; i++)
+    for (var j = 0; j < REGIONS[i].items.length; j++)
+      if (REGIONS[i].items[j].code === code) return REGIONS[i].items[j];
+  return null;
+}
+
+/* ── Breadcrumb tab rendering ── */
+function renderCascadeTabs() {
+  var box = document.getElementById('cascadeTabs');
+  if (!box) return;
+  var tabs = [];
+  var countryR = findRegionByCode(selectedRegionCode);
+  var countryLabel = countryR ? getLocName(countryR) : t('profile.selectPlaceholder');
+
+  tabs.push({level:0, label: countryLabel, done: true});
+
+  var hasProvData = PROVINCES[selectedRegionCode] && PROVINCES[selectedRegionCode].length;
+  if (hasProvData) {
+    if (selectedProvinceId) {
+      var provs = PROVINCES[selectedRegionCode] || [];
+      var prov = provs.filter(function(p){return p.id===selectedProvinceId;})[0];
+      tabs.push({level:1, label: prov ? getLocName(prov) : '—', done: true});
+    } else {
+      tabs.push({level:1, label: t('profile.selectPlaceholder'), done: false});
+    }
+  }
+
+  var hasCityData = selectedProvinceId && CITIES[selectedProvinceId] && CITIES[selectedProvinceId].length;
+  if (hasProvData && hasCityData) {
+    if (selectedCityName) {
+      var cities = CITIES[selectedProvinceId] || [];
+      var city = cities.filter(function(c){return c.en===selectedCityName||getLocName(c)===selectedCityName;})[0];
+      tabs.push({level:2, label: city ? getLocName(city) : selectedCityName, done: true});
+    } else if (selectedProvinceId) {
+      tabs.push({level:2, label: t('profile.selectPlaceholder'), done: false});
+    }
+  }
+
+  var html = '';
+  tabs.forEach(function(tb, idx) {
+    if (idx > 0) html += '<span class="tab-arrow" style="padding:10px 2px 8px;color:var(--t3);font-size:11px;">›</span>';
+    var cls = 'cascade-tab';
+    if (tb.level === cascadeLevel) cls += ' active';
+    else if (tb.done) cls += ' done';
+    html += '<div class="' + cls + '" onclick="switchCascadeLevel(' + tb.level + ')">' + tb.label + '</div>';
+  });
+  box.innerHTML = html;
+}
+
+/* ── List rendering for each level ── */
+function renderCurrentList(q) {
+  var list = document.getElementById('regionList');
+  if (!list) return;
+  q = (q || '').toLowerCase();
+  var html = '';
+
+  if (cascadeLevel === 0) {
+    REGIONS.forEach(function(grp) {
+      var items = grp.items.filter(function(it) {
+        if (!q) return true;
+        return it.en.toLowerCase().indexOf(q) >= 0 || it.zh.indexOf(q) >= 0 ||
+               (it['zh-TW'] && it['zh-TW'].indexOf(q) >= 0) || it.code.toLowerCase().indexOf(q) >= 0;
+      });
+      if (!items.length) return;
+      html += '<div class="region-list-group"><div class="rlg-title">' + getGroupName(grp.group) + '</div>';
+      items.forEach(function(it) {
+        var sel = it.code === selectedRegionCode ? ' selected' : '';
+        html += '<div class="region-item' + sel + '" onclick="pickCountry(\'' + it.code + '\')">';
+        html += '<span class="ri-flag">' + it.flag + '</span><span>' + getLocName(it) + '</span>';
+        html += '<span class="ri-check">✓</span>';
+        html += '<span class="ri-code">' + it.code + '</span></div>';
+      });
+      html += '</div>';
+    });
+  } else if (cascadeLevel === 1) {
+    var provs = PROVINCES[selectedRegionCode] || [];
+    var filtered = provs.filter(function(p) {
+      if (!q) return true;
+      return p.en.toLowerCase().indexOf(q) >= 0 || p.zh.indexOf(q) >= 0 ||
+             (p['zh-TW'] && p['zh-TW'].indexOf(q) >= 0);
+    });
+    filtered.forEach(function(p) {
+      var sel = p.id === selectedProvinceId ? ' selected' : '';
+      html += '<div class="region-item' + sel + '" onclick="pickProvince(\'' + p.id + '\')">';
+      html += '<span>' + getLocName(p) + '</span><span class="ri-check">✓</span></div>';
+    });
+  } else {
+    var cities = (selectedProvinceId && CITIES[selectedProvinceId]) || [];
+    var filtered2 = cities.filter(function(c) {
+      if (!q) return true;
+      return c.en.toLowerCase().indexOf(q) >= 0 || c.zh.indexOf(q) >= 0 ||
+             (c['zh-TW'] && c['zh-TW'].indexOf(q) >= 0);
+    });
+    filtered2.forEach(function(c) {
+      var isSel = (c.en === selectedCityName || getLocName(c) === selectedCityName);
+      var sel = isSel ? ' selected' : '';
+      html += '<div class="region-item' + sel + '" onclick="pickCity(\'' + c.en.replace(/'/g,"\\'") + '\')">';
+      html += '<span>' + getLocName(c) + '</span><span class="ri-check">✓</span></div>';
+    });
+  }
+
+  if (!html) html = '<div style="text-align:center;padding:40px;color:var(--t3);">' + t('profile.regionNoResults') + '</div>';
+  list.innerHTML = html;
+}
+
+/* ── Open / close / switch ── */
+function openCascadePicker() {
+  cascadeLevel = 0;
+  var modal = document.getElementById('regionModal');
+  var titleEl = document.getElementById('cascadeTitle');
+  titleEl.textContent = t('profile.regionPickerTitle');
+  var inp = document.getElementById('regionSearchInput');
+  inp.value = '';
+  inp.placeholder = t('profile.regionSearchPlaceholder');
+  modal.classList.add('show');
+  renderCascadeTabs();
+  renderCurrentList('');
+  setTimeout(function() { inp.focus(); }, 100);
+}
+
+function closeCascadePicker() {
+  document.getElementById('regionModal').classList.remove('show');
+}
+
+function switchCascadeLevel(lv) {
+  cascadeLevel = lv;
+  document.getElementById('regionSearchInput').value = '';
+  renderCascadeTabs();
+  renderCurrentList('');
+}
+
+function filterCascadeList(q) {
+  renderCurrentList(q);
+}
+
+/* ── Update summary row ── */
+function syncRegionSummary() {
+  var rp = document.getElementById('regionPick');
+  var pp = document.getElementById('provincePick');
+  var cp = document.getElementById('cityPick');
+  var r = findRegionByCode(selectedRegionCode);
+  if (r && rp) { rp.textContent = r.flag + ' ' + getLocName(r); rp.classList.remove('empty'); }
+  if (pp) {
+    if (selectedProvinceId) {
+      var provs = PROVINCES[selectedRegionCode] || [];
+      var prov = provs.filter(function(p){return p.id===selectedProvinceId;})[0];
+      pp.textContent = prov ? getLocName(prov) : '—';
+      pp.classList.remove('empty');
+    } else {
+      pp.textContent = t('profile.province');
+      pp.classList.add('empty');
+    }
+  }
+  if (cp) {
+    if (selectedCityName) {
+      var cities = CITIES[selectedProvinceId] || [];
+      var city = cities.filter(function(c){return c.en===selectedCityName||getLocName(c)===selectedCityName;})[0];
+      cp.textContent = city ? getLocName(city) : selectedCityName;
+      cp.classList.remove('empty');
+    } else {
+      cp.textContent = t('profile.city');
+      cp.classList.add('empty');
+    }
+  }
+}
+
+/* ── Selection handlers (stay in the same modal) ── */
+function pickCountry(code) {
+  selectedRegionCode = code;
+  selectedProvinceId = null;
+  selectedCityName = null;
+  renderIdTypes();
+  syncRegionSummary();
+
+  var hasProvData = PROVINCES[code] && PROVINCES[code].length;
+  if (hasProvData) {
+    cascadeLevel = 1;
+    document.getElementById('regionSearchInput').value = '';
+    renderCascadeTabs();
+    renderCurrentList('');
+  } else {
+    closeCascadePicker();
+  }
+}
+
+function pickProvince(id) {
+  selectedProvinceId = id;
+  selectedCityName = null;
+  syncRegionSummary();
+
+  var hasCityData = CITIES[id] && CITIES[id].length;
+  if (hasCityData) {
+    cascadeLevel = 2;
+    document.getElementById('regionSearchInput').value = '';
+    renderCascadeTabs();
+    renderCurrentList('');
+  } else {
+    closeCascadePicker();
+  }
+}
+
+function pickCity(enName) {
+  var cities = CITIES[selectedProvinceId] || [];
+  var city = cities.filter(function(c) { return c.en === enName; })[0];
+  selectedCityName = enName;
+  syncRegionSummary();
+  closeCascadePicker();
+}
+
+/* ── Dynamic ID types by region ── */
+var ID_TYPE_MAP = {
+  'HK': [
+    {type:'hkid', emoji:'🪪', key:'profile.hkid'},
+    {type:'passport', emoji:'📘', key:'profile.passport'}
+  ],
+  'MO': [
+    {type:'moid', emoji:'🪪', key:'profile.moid'},
+    {type:'passport', emoji:'📘', key:'profile.passport'}
+  ],
+  'CN': [
+    {type:'cnid', emoji:'🆔', key:'profile.cnid'},
+    {type:'passport', emoji:'📘', key:'profile.passport'}
+  ]
+};
+
+function getIdTypesForRegion(code) {
+  return ID_TYPE_MAP[code] || [{type:'passport', emoji:'📘', key:'profile.passport'}];
+}
+
+var currentIdType = 'hkid';
+
+function renderIdTypes() {
+  var row = document.getElementById('idTypeRow');
+  if (!row) return;
+  var types = getIdTypesForRegion(selectedRegionCode);
+  var html = '';
+  types.forEach(function(it, idx) {
+    var cls = idx === 0 ? ' on' : '';
+    html += '<button class="id-chip' + cls + '" onclick="pickIdType(this,\'' + it.type + '\')">';
+    html += '<span class="id-emoji">' + it.emoji + '</span>' + t(it.key);
+    html += '</button>';
+  });
+  row.innerHTML = html;
+  currentIdType = types[0].type;
+  updateIdUploadView(currentIdType);
+}
+
+function updateIdUploadView(type) {
+  var card = document.getElementById('idUpload-card');
+  var passport = document.getElementById('idUpload-passport');
   if (type === 'passport') {
     card.style.display = 'none';
     passport.style.display = '';
@@ -957,11 +1782,71 @@ function pickIdType(chip, type) {
   }
 }
 
+function pickIdType(chip, type) {
+  document.querySelectorAll('.id-chip').forEach(c => c.classList.remove('on'));
+  chip.classList.add('on');
+  currentIdType = type;
+  updateIdUploadView(type);
+}
+
 function completeProfile() {
   profileCompleted = true;
   setAccountState('verified');
   toast(t('toast.profileSuccess'));
   goBack();
+}
+
+function completeKycDup() {
+  toast(t('toast.kycDupVerified'));
+  go('kycDupDone');
+}
+
+function finishKycDup() {
+  profileCompleted = true;
+  setAccountState('verified');
+  toast(t('toast.kycDupSwitched'));
+  go('myCenter');
+}
+
+let dupScenario = 'no-conflict';
+function setDupScenario(mode) {
+  dupScenario = mode;
+  const btnNo = document.getElementById('btnDupNoConflict');
+  const btnYes = document.getElementById('btnDupConflict');
+  if (mode === 'no-conflict') {
+    btnNo.style.borderColor = 'var(--pri)';
+    btnNo.style.color = 'var(--pri)';
+    btnNo.style.fontWeight = '700';
+    btnNo.style.background = 'rgba(239,68,68,.06)';
+    btnYes.style.borderColor = '';
+    btnYes.style.color = '';
+    btnYes.style.fontWeight = '';
+    btnYes.style.background = '';
+  } else {
+    btnYes.style.borderColor = 'var(--pri)';
+    btnYes.style.color = 'var(--pri)';
+    btnYes.style.fontWeight = '700';
+    btnYes.style.background = 'rgba(239,68,68,.06)';
+    btnNo.style.borderColor = '';
+    btnNo.style.color = '';
+    btnNo.style.fontWeight = '';
+    btnNo.style.background = '';
+  }
+}
+
+function handleKycDupContinue() {
+  if (dupScenario === 'conflict') {
+    go('kycDupConflict');
+  } else {
+    go('kycDupSupplement');
+  }
+}
+
+function completeAddPhone() {
+  toast(t('toast.phoneAdded'));
+  document.getElementById('lmPhoneCard').style.display = '';
+  document.getElementById('lmNudge').style.display = 'none';
+  goBack(); goBack();
 }
 
 function setAccountState(state) {
@@ -990,7 +1875,6 @@ function setAccountState(state) {
   } else if (state === 'verified') {
     badge.className = 'kyc-badge verified';
     badgeText.textContent = t('myCenter.verified');
-    verifiedBar.style.display = '';
   } else if (state === 'restricted') {
     badge.className = 'kyc-badge restricted';
     badgeText.textContent = t('myCenter.restricted');
@@ -1150,6 +2034,73 @@ orders: `【My Orders — 订单列表】
 - click: filter_tab_{status}
 - click: order_card（携带order_id）`,
 
+loginMethods: `【Login Methods — 登录方式管理】
+
+■ 页面定位
+用户管理已绑定的登录方式（手机号/邮箱/WhatsApp），可添加新方式、查看主联系方式。
+
+■ 页面结构
+1. 已绑定方式列表
+   - 每行：图标 + 具体号码/邮箱 + 类型标签 + 添加时间
+   - PRIMARY 标签：标识主要联系方式
+   - NEW 标签：新绑定的方式
+
+2. 引导卡片（仅邮箱登录用户可见）
+   - 黄色提示"Add a phone number"
+   - 点击进入添加流程
+
+3. 添加按钮
+   - 虚线框 + 加号，点击进入添加登录方式页
+
+■ 入口
+- Settings → Login Methods
+
+■ 业务规则
+- 同类型方式最多各绑定1个（如1个手机号、1个邮箱、1个WhatsApp）
+- 至少保留1个登录方式，不可全部解绑
+- WhatsApp号码若与手机号相同，视为同一条目
+- 添加新方式需OTP验证
+
+■ 与KYC重复身份检测的联动
+- 添加登录方式时，若该号码/邮箱已被其他账号使用，弹出重复提示
+- 引导用户联系客服处理，不自动迁移
+
+■ 埋点事件
+- page_view: login_methods
+- click: add_login_method
+- click: nudge_add_phone`,
+
+addMethod: `【Add Login Method — 添加登录方式】
+
+■ 页面定位
+选择并添加新的登录方式。
+
+■ 流程
+1. 选择类型：手机号 / 邮箱 / WhatsApp
+   - 已绑定的类型置灰，显示 "Already linked"
+2. 输入号码/邮箱
+3. 点击发送验证码 → 跳转OTP验证页
+4. 验证通过 → 绑定成功，返回登录方式列表
+
+■ 埋点事件
+- click: login_methods_type_select
+- click: login_methods_send_otp`,
+
+verifyPhone: `【Verify Phone — OTP 验证】
+
+■ 页面定位
+输入发送至新手机号的OTP验证码，完成绑定。
+
+■ 交互说明
+- 6位验证码输入框
+- 倒计时重发（60秒）
+- 验证成功 → Toast + 返回Login Methods列表
+- 连续5次验证失败 → 锁定1小时
+
+■ 埋点事件
+- click: login_methods_verify_result（success/fail）
+- click: login_methods_bind_result`,
+
 settings: `【Settings — 设置】
 
 ■ 页面定位
@@ -1262,13 +2213,153 @@ privacy: `【Privacy Policy — 隐私政策】
 about: `【About FoneSquare — 关于】
 
 ■ 内容：Logo、应用名称、版本号、公司信息、版权声明
-■ 后续规划：检查更新、用户协议链接、开源许可证`
+■ 后续规划：检查更新、用户协议链接、开源许可证`,
+
+kycDup: `【KYC 重复身份识别 — Identity Notice】
+
+■ 触发时机
+用户在身份认证页（Profile）提交证件信息后，后端匹配到该证件号已存在已认证账号 → 前端自动跳转至本页。
+
+■ 页面结构
+1. 头部图标 + 主标题："This ID is already associated with an account / 该证件已关联已认证账号"
+2. 说明文案（安全口吻，不使用"废弃"字样）：
+   "为保障账户安全，同一认证身份仅可对应一个在用账号，请继续使用您已认证的账号"
+3. 已认证账号卡片
+   - 脱敏账号（如 +852 ****1234）
+   - ✓ Verified 标签 + 所在地区
+4. 友好提示横幅（黄色）
+   - 文案："系统会把当前登录方式迁移到已认证账号，迁移完成后当前账号将停止使用，已认证账号的数据不会受到影响"
+5. 主按钮："Continue with verified account / 继续使用已认证账号"
+   副按钮："Use a different ID / 使用其他证件"
+
+■ 业务规则
+- 匹配维度：证件类型 + 证件号（不含姓名）
+- 若已认证账号处于受限/冻结状态：不触发迁移流程，引导联系客服
+- 迁移仅做登录凭证绑定，不合并任何业务数据（订单、余额、收藏）
+- 当前未认证账号在迁移完成后：
+  ▸ 登录凭证解绑，无法继续使用
+  ▸ 后端标记 status=inactive（用户侧感知：该账号已停用/不再使用）
+  ▸ 文案禁止出现"废弃/作废"
+
+■ 边界场景分支
+点击"继续使用已认证账号"后，后端判断是否存在登录方式类型冲突：
+  ▸ 无冲突（已认证账号缺少当前登录类型）→ 进入"补全登录方式"流程
+  ▸ 有冲突（已认证账号已有同类型登录方式）→ 进入"冲突提示"页，引导直接登录已认证账号，不停用当前账号
+
+■ 埋点
+- page_view: kyc_dup_detected
+- click: kyc_dup_continue（继续使用已认证账号）
+- click: kyc_dup_cancel（使用其他证件）`,
+
+kycDupConflict: `【KYC 重复身份 — 登录方式类型冲突】
+
+■ 触发条件
+用户在"重复身份检测"页点击"继续使用已认证账号"后，后端检测到已认证账号已有与当前账号相同类型的登录方式（如当前用邮箱注册，已认证账号也已绑定邮箱）。
+
+■ 页面结构
+1. 头部图标 + 主标题：复用重复身份检测页标题
+2. 说明文案：告知已认证账号已有同类型登录方式，无需迁移
+3. 已认证账号卡片
+   - 脱敏主号码 + 脱敏邮箱（展示两种登录方式都已存在）
+   - ✓ Verified 标签 + 所在地区
+4. 蓝色信息提示横幅
+   - 文案：说明冲突原因，引导直接使用已认证账号登录
+5. 主按钮："Go to Login / 前往登录"
+   副按钮："Use a different ID / 使用其他证件"
+
+■ 业务规则
+- 不停用当前未认证账号（用户可继续使用）
+- 不执行任何登录方式迁移
+- 点击"前往登录" → 跳转至登录页
+- 点击"使用其他证件" → 返回身份认证页，更换证件信息
+
+■ 冲突场景矩阵
+| 当前账号登录方式 | 已认证账号已有 | 结果 |
+| 手机号 | 手机号+邮箱 | 冲突 → 本页 |
+| 邮箱 | 手机号+邮箱 | 冲突 → 本页 |
+| 手机号 | 仅邮箱 | 无冲突 → 补全流程 |
+| 邮箱 | 仅手机号 | 无冲突 → 补全流程 |
+
+■ 埋点
+- page_view: kyc_dup_conflict
+- click: kyc_dup_conflict_go_login（前往登录）
+- click: kyc_dup_conflict_cancel（使用其他证件）`,
+
+kycDupSupplement: `【KYC 重复身份 — 补全登录方式】
+
+■ 页面定位
+登录凭证迁移的第一步：把当前未认证账号的登录凭证（如邮箱）作为新登录方式补充到已认证账号上。
+
+■ 页面结构
+1. 主标题："Bind this email to the verified account / 将该邮箱绑定到已认证账号"
+2. 说明文案：解释已认证账号当前只有手机号登录，补全后可用两种方式登录
+3. "Email to add" 只读展示用户当前邮箱
+4. "Bind to account" 只读展示已认证账号脱敏信息 + ✓ Verified 标签
+5. 🔐 安全提示：下一步会向已认证手机号下发OTP，用于确认账号所有权
+6. 主按钮："Send verification code / 发送验证码"
+
+■ 业务规则
+- 若已认证账号已同时有邮箱和手机号：跳过本页，直接走二次验证
+- 若绑定的登录凭证已存在于其他第三账号：拒绝迁移，提示联系客服
+- 绑定操作具有幂等性，失败可重试
+
+■ 埋点
+- page_view: kyc_dup_supplement
+- click: kyc_dup_send_code`,
+
+kycDupOtp: `【KYC 重复身份 — 所有权验证】
+
+■ 页面定位
+通过对已认证账号手机号下发OTP，确认操作者是已认证账号的真实持有人，避免身份被冒用迁移。
+
+■ 页面结构
+1. 主标题："Enter the 6-digit code / 输入6位验证码"
+2. 说明文案：展示已认证账号脱敏手机号
+3. 6位OTP输入框
+4. 倒计时60s，到期后可重发
+5. 主按钮："Verify & Complete / 验证并完成"
+
+■ 业务规则
+- OTP长度6位，有效期5分钟
+- 连续错误5次 → 锁定1小时，提示联系客服
+- 验证成功：
+  ▸ 将邮箱写入已认证账号 login_methods 表
+  ▸ 当前未认证账号 status 置为 inactive
+  ▸ 记录审计日志（who / when / which account）
+  ▸ 不自动切换登录态，引导用户手动登录已认证账号
+- 24小时内可发起二次申诉（防误操作）
+
+■ 埋点
+- page_view: kyc_dup_otp
+- click: kyc_dup_verify（含 result=success/fail）
+- click: kyc_dup_resend`,
+
+kycDupDone: `【KYC 重复身份 — 绑定完成】
+
+■ 页面定位
+告知用户迁移成功 + 下一步引导，友好感知，不出现"废弃"字样。
+
+■ 页面结构
+1. ✓ 成功图标
+2. 主标题："Successfully bound / 绑定成功"
+3. 描述文案：明确告知邮箱已作为新登录方式绑定到已认证账号
+4. 主按钮："Sign in to verified account / 登录已认证账号"
+
+■ 业务规则
+- 点击主按钮 → 退出当前登录态，跳转登录页，预填已认证账号脱敏信息
+- 不做自动登录（安全要求）
+
+■ 埋点
+- page_view: kyc_dup_done
+- click: kyc_dup_signin_verified`
 };
 
 const isLocalDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 const isGitHubPages = !isLocalDev;
 let allNotes = {};
 let currentNoteId = 'myCenter';
+
+const NOTES_FILE = 'fonesquare-kyc.notes.json';
 
 function loadNotes() {
   try {
@@ -1280,11 +2371,62 @@ function loadNotes() {
   }
 }
 
+async function loadNotesFromServer() {
+  if (!isLocalDev) return;
+  try {
+    const resp = await fetch('/' + NOTES_FILE + '?t=' + Date.now());
+    if (resp.ok) {
+      const serverNotes = await resp.json();
+      for (const k in serverNotes) {
+        allNotes[k] = serverNotes[k];
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(allNotes));
+    }
+  } catch (e) {}
+}
+
 function saveNotes() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(allNotes));
   const badge = document.getElementById('notesSaved');
   badge.classList.add('show');
   setTimeout(() => badge.classList.remove('show'), 1500);
+}
+
+async function saveNotesToServer() {
+  if (!isLocalDev) return;
+  const btn = document.getElementById('btnSaveToFile');
+  btn.textContent = '⏳';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('/save-notes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename: NOTES_FILE, notes: allNotes })
+    });
+    if (resp.ok) {
+      btn.textContent = '✅ Saved';
+      btn.style.background = 'var(--ok)';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = '💾 Save';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 2000);
+    } else {
+      throw new Error('Server error');
+    }
+  } catch (e) {
+    btn.textContent = '❌ Failed';
+    btn.style.background = '#ef4444';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = '💾 Save';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.disabled = false;
+    }, 2000);
+  }
 }
 
 function initNotesPanel() {
@@ -1368,9 +2510,9 @@ en: {
   'myCenter.restrictedDesc': 'Contact support to resolve this issue',
   'myCenter.orders': 'My Orders',
   'myCenter.viewAll': 'View All ›',
-  'myCenter.pendingPay': 'Pending\nPayment',
-  'myCenter.pendingPickup': 'Pending\nPickup',
-  'myCenter.afterSales': 'After-\nSales',
+  'myCenter.pendingPay': 'Unpaid',
+  'myCenter.paid': 'Paid',
+  'myCenter.cancelled': 'Cancelled',
   'myCenter.quickActions': 'Quick Actions',
   'myCenter.settings': 'Settings',
   'myCenter.settingsDesc': 'Account, security, language',
@@ -1388,7 +2530,8 @@ en: {
   'profile.city': 'City',
   'profile.idVerify': 'Identity Verification',
   'profile.selectId': 'Select ID Type',
-  'profile.hkid': 'HK/Macau ID',
+  'profile.hkid': 'Hong Kong ID',
+  'profile.moid': 'Macau ID',
   'profile.passport': 'Passport',
   'profile.cnid': 'CN Resident ID',
   'profile.front': '✅ Front',
@@ -1406,6 +2549,8 @@ en: {
   'profile.optional': 'Optional',
   'profile.emailPlaceholder': 'For order notifications',
   'profile.bizInfo': 'Business Information',
+  'profile.bizGuideTitle': 'Fill in business info to unlock higher limits',
+  'profile.bizGuideDesc': 'Enterprise accounts get higher daily purchase limits and priority support.',
   'profile.bizCollapse': 'Add business license for enterprise account',
   'profile.bizUpload': 'Upload Business License',
   'profile.bizHint': 'JPG / PNG / PDF, max 20 MB',
@@ -1418,14 +2563,59 @@ en: {
   'profile.licenseValidity': 'License Validity Period',
   'profile.startDate': 'Start date',
   'profile.endDate': 'End date',
+  'profile.regionPickerTitle': 'Select Country / Region',
+  'profile.regionSearchPlaceholder': 'Search country or region…',
+  'profile.regionNoResults': 'No results',
+  'profile.province': 'Province / State',
+  'profile.city': 'City / District',
+  'profile.noProvinceData': 'No province data for this region',
+  'profile.noCityData': 'No city data for this province',
+  'profile.selectPlaceholder': 'Please select',
   'profile.submit': 'SUBMIT & CONTINUE',
   'profile.skip': 'Skip for now →',
+  'profile.demoDup': '🎬 Demo: Simulate duplicate identity',
+  'kycDup.title': 'Identity Notice',
+  'kycDup.headline': 'This ID is already associated with an account',
+  'kycDup.desc': 'For your security, each verified identity can belong to only one active account. Please continue with your existing verified account.',
+  'kycDup.existingAcct': 'Existing verified account',
+  'kycDup.verifiedTag': '✓ Verified',
+  'kycDup.friendlyNote': 'Your current login method will be migrated to the verified account. Once completed, you can use it to sign in to the verified account.',
+  'kycDup.continueBtn': 'Continue with verified account',
+  'kycDup.cancelBtn': 'Use a different ID',
+  'kycDupConflict.title': 'Identity Notice',
+  'kycDupConflict.headline': 'This ID is already associated with an account',
+  'kycDupConflict.desc': 'For your security, each verified identity can belong to only one active account. The verified account already has the same type of login method, so no migration is needed.',
+  'kycDupConflict.existingAcct': 'Existing verified account',
+  'kycDupConflict.infoNote': 'The verified account already has a login method of the same type (e.g., both use email). Please sign in directly with the verified account.',
+  'kycDupConflict.goLoginBtn': 'Go to Login',
+  'kycDupConflict.cancelBtn': 'Use a different ID',
+  'kycDupSup.title': 'Add Login Method',
+  'kycDupSup.headline': 'Bind this email to the verified account',
+  'kycDupSup.desc': 'Your verified account currently uses phone login only. We\'ll add your email as a new login method so you can sign in with either.',
+  'kycDupSup.emailLabel': 'Email to add',
+  'kycDupSup.acctLabel': 'Bind to account',
+  'kycDupSup.secureNote': '🔐 We\'ll send a one-time code to the verified phone number to confirm you own the account before binding.',
+  'kycDupSup.nextBtn': 'Send verification code',
+  'kycDupSup.cancel': 'Cancel',
+  'kycDupOtp.title': 'Verify Ownership',
+  'kycDupOtp.headline': 'Enter the 6-digit code',
+  'kycDupOtp.desc': 'We sent a code to <b>+852 ****1234</b>. Enter it below to confirm ownership and complete the binding.',
+  'kycDupOtp.resend': 'Resend code in 60s',
+  'kycDupOtp.verifyBtn': 'Verify & Complete',
+  'kycDupDone.title': 'All Set',
+  'kycDupDone.headline': 'Successfully bound',
+  'kycDupDone.desc': 'Your email has been added as a login method to your verified account +852 ****1234. You can now sign in with either credential.',
+  'kycDupDone.whatNext': 'What happens next',
+  'kycDupDone.item1': 'Verified account is now active on this device',
+  'kycDupDone.item2': 'Email + phone can both be used to sign in',
+  'kycDupDone.item3': 'The previous account is no longer in use and its access has been safely paused',
+  'kycDupDone.btn': 'Sign in to verified account',
+  'toast.kycDupVerified': 'Ownership verified ✓',
+  'toast.kycDupSwitched': 'Switched to verified account ✓',
   'orders.title': 'My Orders',
-  'orders.all': 'All',
-  'orders.pendingPay': 'Pending Pay',
-  'orders.pickup': 'Pickup',
-  'orders.afterSales': 'After-Sales',
-  'orders.completed': 'Completed',
+  'orders.unpaid': 'Unpaid',
+  'orders.paid': 'Paid',
+  'orders.cancelled': 'Cancelled',
   'orders.statusPending': 'Pending Payment',
   'orders.statusPickup': 'Pending Pickup',
   'orders.statusAfterSales': 'After-Sales',
@@ -1433,6 +2623,8 @@ en: {
   'settings.title': 'Settings',
   'settings.idVerify': 'Identity Verification',
   'settings.idVerifyDesc': 'Manage your KYC documents',
+  'settings.loginMethods': 'Login Methods',
+  'settings.loginMethodsDesc': 'Manage phone, email, WhatsApp',
   'settings.changePwd': 'Change Password',
   'settings.changePwdDesc': 'Update your login password',
   'settings.language': 'Language',
@@ -1440,6 +2632,7 @@ en: {
   'settings.about': 'About FoneSquare',
   'settings.aboutVer': 'Version 1.0.0',
   'settings.logout': '🚪 Log Out',
+  'toast.phoneAdded': 'Phone number added ✓',
   'changePwd.title': 'Change Password',
   'changePwd.current': 'Current Password',
   'changePwd.currentPlaceholder': 'Enter current password',
@@ -1499,8 +2692,8 @@ zh: {
   'myCenter.orders': '我的订单',
   'myCenter.viewAll': '查看全部 ›',
   'myCenter.pendingPay': '待支付',
-  'myCenter.pendingPickup': '待取货',
-  'myCenter.afterSales': '售后',
+  'myCenter.paid': '已支付',
+  'myCenter.cancelled': '已取消',
   'myCenter.quickActions': '快捷入口',
   'myCenter.settings': '设置',
   'myCenter.settingsDesc': '账户、安全、语言',
@@ -1518,7 +2711,8 @@ zh: {
   'profile.city': '城市',
   'profile.idVerify': '身份验证',
   'profile.selectId': '选择证件类型',
-  'profile.hkid': '港澳居民身份证',
+  'profile.hkid': '香港身份证',
+  'profile.moid': '澳门身份证',
   'profile.passport': '护照',
   'profile.cnid': '中国居民身份证',
   'profile.front': '✅ 正面',
@@ -1536,6 +2730,8 @@ zh: {
   'profile.optional': '选填',
   'profile.emailPlaceholder': '用于接收订单通知',
   'profile.bizInfo': '企业信息',
+  'profile.bizGuideTitle': '填写企业信息，解锁更高购买额度',
+  'profile.bizGuideDesc': '企业账户可享更高日购买限额与优先客服支持。',
   'profile.bizCollapse': '添加营业执照以开通企业账户',
   'profile.bizUpload': '上传营业执照',
   'profile.bizHint': 'JPG / PNG / PDF，最大20MB',
@@ -1548,14 +2744,59 @@ zh: {
   'profile.licenseValidity': '执照有效期',
   'profile.startDate': '开始日期',
   'profile.endDate': '到期日期',
+  'profile.regionPickerTitle': '选择国家 / 地区',
+  'profile.regionSearchPlaceholder': '搜索国家或地区…',
+  'profile.regionNoResults': '无搜索结果',
+  'profile.province': '省份 / 州',
+  'profile.city': '城市 / 区',
+  'profile.noProvinceData': '该地区暂无省份数据',
+  'profile.noCityData': '该省份暂无城市数据',
+  'profile.selectPlaceholder': '请选择',
   'profile.submit': '提交并继续',
   'profile.skip': '暂时跳过 →',
+  'profile.demoDup': '🎬 演示：模拟重复身份',
+  'kycDup.title': '身份提示',
+  'kycDup.headline': '该证件已关联已认证账号',
+  'kycDup.desc': '为保障账户安全，同一认证身份仅可对应一个在用账号，请继续使用您已认证的账号。',
+  'kycDup.existingAcct': '已认证账号',
+  'kycDup.verifiedTag': '✓ 已认证 · HK',
+  'kycDup.friendlyNote': '系统会把当前登录方式迁移到已认证账号，迁移完成后当前登录方式可用于登录已认证账号。',
+  'kycDup.continueBtn': '继续使用已认证账号',
+  'kycDup.cancelBtn': '使用其他证件',
+  'kycDupConflict.title': '身份提示',
+  'kycDupConflict.headline': '该证件已关联已认证账号',
+  'kycDupConflict.desc': '为保障账户安全，同一认证身份仅可对应一个在用账号。已认证账号已有相同类型的登录方式，无需迁移。',
+  'kycDupConflict.existingAcct': '已认证账号',
+  'kycDupConflict.infoNote': '已认证账号已有与当前相同类型的登录方式（如都是邮箱），请直接使用已认证账号登录。',
+  'kycDupConflict.goLoginBtn': '前往登录',
+  'kycDupConflict.cancelBtn': '使用其他证件',
+  'kycDupSup.title': '补全登录方式',
+  'kycDupSup.headline': '将该邮箱绑定到已认证账号',
+  'kycDupSup.desc': '您的已认证账号目前仅支持手机号登录，邮箱添加成功后可用邮箱或手机号登录。',
+  'kycDupSup.emailLabel': '待添加邮箱',
+  'kycDupSup.acctLabel': '绑定到账号',
+  'kycDupSup.secureNote': '🔐 系统将向已认证手机号发送一次性验证码，用于确认账号所有权。',
+  'kycDupSup.nextBtn': '发送验证码',
+  'kycDupSup.cancel': '取消',
+  'kycDupOtp.title': '所有权验证',
+  'kycDupOtp.headline': '请输入6位验证码',
+  'kycDupOtp.desc': '验证码已发送至 <b>+852 ****1234</b>，输入后即可完成绑定。',
+  'kycDupOtp.resend': '60秒后可重发',
+  'kycDupOtp.verifyBtn': '验证并完成',
+  'kycDupDone.title': '绑定完成',
+  'kycDupDone.headline': '绑定成功',
+  'kycDupDone.desc': '您的邮箱已作为登录方式添加到已认证账号 +852 ****1234，后续可用任一方式登录。',
+  'kycDupDone.whatNext': '接下来的变化',
+  'kycDupDone.item1': '本设备已切换至已认证账号',
+  'kycDupDone.item2': '邮箱与手机号均可用于登录',
+  'kycDupDone.item3': '原账号已停止使用，访问已安全暂停',
+  'kycDupDone.btn': '登录已认证账号',
+  'toast.kycDupVerified': '所有权验证通过 ✓',
+  'toast.kycDupSwitched': '已切换至已认证账号 ✓',
   'orders.title': '我的订单',
-  'orders.all': '全部',
-  'orders.pendingPay': '待支付',
-  'orders.pickup': '待取货',
-  'orders.afterSales': '售后',
-  'orders.completed': '已完成',
+  'orders.unpaid': '待支付',
+  'orders.paid': '已支付',
+  'orders.cancelled': '已取消',
   'orders.statusPending': '待支付',
   'orders.statusPickup': '待取货',
   'orders.statusAfterSales': '售后处理',
@@ -1563,6 +2804,8 @@ zh: {
   'settings.title': '设置',
   'settings.idVerify': '身份认证',
   'settings.idVerifyDesc': '管理您的KYC证件',
+  'settings.loginMethods': '登录方式',
+  'settings.loginMethodsDesc': '管理手机号、邮箱、WhatsApp',
   'settings.changePwd': '修改密码',
   'settings.changePwdDesc': '更新您的登录密码',
   'settings.language': '语言',
@@ -1570,6 +2813,7 @@ zh: {
   'settings.about': '关于 FoneSquare',
   'settings.aboutVer': '版本 1.0.0',
   'settings.logout': '🚪 退出登录',
+  'toast.phoneAdded': '手机号已添加 ✓',
   'changePwd.title': '修改密码',
   'changePwd.current': '当前密码',
   'changePwd.currentPlaceholder': '请输入当前密码',
@@ -1615,11 +2859,193 @@ zh: {
   'about.companyLabel': '公司：',
   'about.regionLabel': '地区：',
   'about.contactLabel': '联系方式：',
+},
+'zh-TW': {
+  'myCenter.title': '個人中心',
+  'myCenter.unverified': '未認證',
+  'myCenter.verified': '已認證',
+  'myCenter.restricted': '帳號受限',
+  'myCenter.verifyTitle': '完成身份認證',
+  'myCenter.verifyDesc': '下單前需完成認證 · 約2分鐘',
+  'myCenter.verifiedBar': '已完成身份認證 · KYC通過',
+  'myCenter.restrictedTitle': '帳號受限',
+  'myCenter.restrictedDesc': '請聯繫客服處理',
+  'myCenter.orders': '我的訂單',
+  'myCenter.viewAll': '查看全部 ›',
+  'myCenter.pendingPay': '待支付',
+  'myCenter.paid': '已支付',
+  'myCenter.cancelled': '已取消',
+  'myCenter.quickActions': '快捷入口',
+  'myCenter.settings': '設定',
+  'myCenter.settingsDesc': '帳戶、安全、語言',
+  'myCenter.help': '幫助與支援',
+  'myCenter.helpDesc': '常見問題、聯繫我們',
+  'tab.home': '首頁',
+  'tab.cart': '購物車',
+  'tab.me': '我的',
+  'profile.title': '身份認證',
+  'profile.heading': '完善個人資料',
+  'profile.desc': '用於KYC身份驗證的資訊',
+  'profile.region': '國家 / 地區',
+  'profile.required': '必填',
+  'profile.province': '省份',
+  'profile.city': '城市',
+  'profile.idVerify': '身份驗證',
+  'profile.selectId': '選擇證件類型',
+  'profile.hkid': '香港身份證',
+  'profile.moid': '澳門身份證',
+  'profile.passport': '護照',
+  'profile.cnid': '中國居民身份證',
+  'profile.front': '✅ 正面',
+  'profile.back': '反面',
+  'profile.uploadHint': 'JPG/PNG ≤10MB',
+  'profile.uploadPassport': '上傳資訊頁',
+  'profile.passportHint': '含MRZ的資訊頁 · JPG/PNG ≤10MB',
+  'profile.ocrBanner': 'OCR 已辨識',
+  'profile.ocrBannerDesc': '— 請檢查並修正',
+  'profile.fullName': '姓名',
+  'profile.idNumber': '證件號碼',
+  'profile.tapEdit': '✏️ 點擊編輯',
+  'profile.validity': '證件有效期',
+  'profile.contactEmail': '聯繫信箱',
+  'profile.optional': '選填',
+  'profile.emailPlaceholder': '用於接收訂單通知',
+  'profile.bizInfo': '企業資訊',
+  'profile.bizGuideTitle': '填寫企業資訊，解鎖更高購買額度',
+  'profile.bizGuideDesc': '企業帳戶可享更高日購買限額與優先客服支援。',
+  'profile.bizCollapse': '新增營業執照以開通企業帳戶',
+  'profile.bizUpload': '上傳營業執照',
+  'profile.bizHint': 'JPG / PNG / PDF，最大20MB',
+  'profile.bizOcrPending': '上傳執照後自動辨識',
+  'profile.licenseType': '證照類型',
+  'profile.regNumber': '註冊號',
+  'profile.legalRep': '法定代表人/董事',
+  'profile.bizAddress': '企業地址',
+  'profile.autoDetect': '自動辨識',
+  'profile.licenseValidity': '執照有效期',
+  'profile.startDate': '開始日期',
+  'profile.endDate': '到期日期',
+  'profile.regionPickerTitle': '選擇國家 / 地區',
+  'profile.regionSearchPlaceholder': '搜尋國家或地區…',
+  'profile.regionNoResults': '無搜尋結果',
+  'profile.province': '省份 / 州',
+  'profile.city': '城市 / 區',
+  'profile.noProvinceData': '該地區暫無省份資料',
+  'profile.noCityData': '該省份暫無城市資料',
+  'profile.selectPlaceholder': '請選擇',
+  'profile.submit': '提交並繼續',
+  'profile.skip': '暫時跳過 →',
+  'profile.demoDup': '🎬 演示：模擬重複身份',
+  'kycDup.title': '身份提示',
+  'kycDup.headline': '該證件已關聯已認證帳號',
+  'kycDup.desc': '為保障帳戶安全，同一認證身份僅可對應一個在用帳號，請繼續使用您已認證的帳號。',
+  'kycDup.existingAcct': '已認證帳號',
+  'kycDup.verifiedTag': '✓ 已認證 · HK',
+  'kycDup.friendlyNote': '系統會把目前登入方式遷移到已認證帳號，遷移完成後目前登入方式可用於登入已認證帳號。',
+  'kycDup.continueBtn': '繼續使用已認證帳號',
+  'kycDup.cancelBtn': '使用其他證件',
+  'kycDupConflict.title': '身份提示',
+  'kycDupConflict.headline': '該證件已關聯已認證帳號',
+  'kycDupConflict.desc': '為保障帳戶安全，同一認證身份僅可對應一個在用帳號。已認證帳號已有相同類型的登入方式，無需遷移。',
+  'kycDupConflict.existingAcct': '已認證帳號',
+  'kycDupConflict.infoNote': '已認證帳號已有與目前相同類型的登入方式（如都是信箱），請直接使用已認證帳號登入。',
+  'kycDupConflict.goLoginBtn': '前往登入',
+  'kycDupConflict.cancelBtn': '使用其他證件',
+  'kycDupSup.title': '補全登入方式',
+  'kycDupSup.desc': '您的已認證帳號目前僅支援手機號登入，信箱新增成功後可用信箱或手機號登入。',
+  'kycDupSup.emailLabel': '待新增信箱',
+  'kycDupSup.acctLabel': '綁定到帳號',
+  'kycDupSup.secureNote': '🔐 系統將向已認證手機號傳送一次性驗證碼，用於確認帳號所有權。',
+  'kycDupSup.nextBtn': '傳送驗證碼',
+  'kycDupSup.cancel': '取消',
+  'kycDupOtp.title': '所有權驗證',
+  'kycDupOtp.headline': '請輸入6位驗證碼',
+  'kycDupOtp.desc': '驗證碼已傳送至 <b>+852 ****1234</b>，輸入後即可完成綁定。',
+  'kycDupOtp.resend': '60秒後可重發',
+  'kycDupOtp.verifyBtn': '驗證並完成',
+  'kycDupDone.title': '綁定完成',
+  'kycDupDone.headline': '綁定成功',
+  'kycDupDone.desc': '您的信箱已作為登入方式新增到已認證帳號 +852 ****1234，後續可用任一方式登入。',
+  'kycDupDone.whatNext': '接下來的變化',
+  'kycDupDone.item1': '本裝置已切換至已認證帳號',
+  'kycDupDone.item2': '信箱與手機號均可用於登入',
+  'kycDupDone.item3': '原帳號已停止使用，存取已安全暫停',
+  'kycDupDone.btn': '登入已認證帳號',
+  'toast.kycDupVerified': '所有權驗證通過 ✓',
+  'toast.kycDupSwitched': '已切換至已認證帳號 ✓',
+  'orders.title': '我的訂單',
+  'orders.unpaid': '待支付',
+  'orders.paid': '已支付',
+  'orders.cancelled': '已取消',
+  'orders.statusPending': '待支付',
+  'orders.statusPickup': '待取貨',
+  'orders.statusAfterSales': '售後處理',
+  'orders.statusDone': '已完成',
+  'settings.title': '設定',
+  'settings.idVerify': '身份認證',
+  'settings.idVerifyDesc': '管理您的KYC證件',
+  'settings.loginMethods': '登入方式',
+  'settings.loginMethodsDesc': '管理手機號、信箱、WhatsApp',
+  'settings.changePwd': '修改密碼',
+  'settings.changePwdDesc': '更新您的登入密碼',
+  'settings.language': '語言',
+  'settings.privacy': '隱私政策',
+  'settings.about': '關於 FoneSquare',
+  'settings.aboutVer': '版本 1.0.0',
+  'settings.logout': '🚪 登出',
+  'toast.phoneAdded': '手機號已新增 ✓',
+  'changePwd.title': '修改密碼',
+  'changePwd.current': '目前密碼',
+  'changePwd.currentPlaceholder': '請輸入目前密碼',
+  'changePwd.new': '新密碼',
+  'changePwd.newPlaceholder': '至少8個字元',
+  'changePwd.confirm': '確認新密碼',
+  'changePwd.confirmPlaceholder': '再次輸入新密碼',
+  'changePwd.hints': '✓ 8位以上   ✓ 含數字   ✓ 含字母',
+  'changePwd.btn': '修改密碼',
+  'changePwd.success': '密碼已修改 ✓',
+  'lang.title': '語言選擇',
+  'help.title': '幫助與支援',
+  'help.whatsapp': 'WhatsApp 客服',
+  'help.whatsappDesc': '透過WhatsApp聯繫我們',
+  'help.email': '郵件客服',
+  'help.faq': '常見問題',
+  'help.faqDesc': '查看常見問題',
+  'privacy.title': '隱私政策',
+  'privacy.heading': '隱私政策',
+  'privacy.lastUpdated': '最後更新：2026年4月 · 版本 1.0',
+  'about.title': '關於FoneSquare',
+  'about.version': '版本 1.0.0（Build 2026.04）',
+  'about.desc': 'FoneSquare 是一個跨境B2B認證二手手機交易平台，為全球經銷商提供優質貨源和最優價格。',
+  'about.copyright': '© 2026 FoneSquare 版權所有',
+  'notes.panelTitle': '產品說明',
+  'notes.saved': '✓ 已儲存',
+  'notes.tip': '自動儲存 · 可直接編輯',
+  'notes.export': '匯出',
+  'notes.reset': '重設',
+  'notes.clear': '清空',
+  'notes.placeholder': '在此輸入產品說明…',
+  'notes.confirmClear': '確定清空目前頁面的備註？',
+  'notes.confirmReset': '重設所有備註為預設內容？自訂內容將遺失。',
+  'toast.langSelected': ' 已選擇 ✓',
+  'toast.profileSuccess': '資料提交成功 ✓',
+  'toast.loggedOut': '已登出',
+  'toast.waSupport': '正在開啟WhatsApp客服…',
+  'toast.openWa': '正在開啟WhatsApp…',
+  'toast.openEmail': '正在開啟郵件用戶端…',
+  'toast.cameraPicker': '相機 / 相簿選擇',
+  'toast.datePicker': '日期選擇',
+  'toast.comingSoon': ' 即將推出',
+  'about.companyLabel': '公司：',
+  'about.regionLabel': '地區：',
+  'about.contactLabel': '聯繫方式：',
 }
 };
 
 function t(key) {
-  return (i18n[currentLocale] && i18n[currentLocale][key]) || i18n.en[key] || key;
+  if (i18n[currentLocale] && i18n[currentLocale][key]) return i18n[currentLocale][key];
+  if (currentLocale === 'zh-TW' && i18n.zh && i18n.zh[key]) return i18n.zh[key];
+  return i18n.en[key] || key;
 }
 
 function applyLocale() {
@@ -1654,7 +3080,7 @@ function applyLocale() {
   setText(qs('s-myCenter', '.st-link'), t('myCenter.viewAll'));
 
   var osLabels = qsa('s-myCenter', '.os-label');
-  ['myCenter.pendingPay','myCenter.pendingPickup','myCenter.afterSales'].forEach(function(k, i) {
+  ['myCenter.pendingPay','myCenter.paid','myCenter.cancelled'].forEach(function(k, i) {
     if (osLabels[i]) setHTML(osLabels[i], t(k).replace(/\n/g, '<br>'));
   });
 
@@ -1680,14 +3106,9 @@ function applyLocale() {
   var secTags = qsa('s-profile', '.sec-tag');
   ['profile.required','profile.required','profile.optional','profile.optional'].forEach(function(k, i) { if (secTags[i]) setText(secTags[i], t(k)); });
 
-  var regionSels = qsa('s-profile', '.region-sel');
-  if (regionSels[1]) setText(regionSels[1], t('profile.province'));
-  if (regionSels[2]) setText(regionSels[2], t('profile.city'));
+  syncRegionSummary();
 
-  var idChips = qsa('s-profile', '.id-chip');
-  ['profile.hkid','profile.passport','profile.cnid'].forEach(function(k, i) {
-    if (idChips[i]) { var em = idChips[i].querySelector('.id-emoji'); if (em) idChips[i].innerHTML = em.outerHTML + t(k); }
-  });
+  // ID chips are rendered dynamically by renderIdTypes()
 
   var fLabels = qsa('s-profile', '.form-label');
   ['profile.selectId','profile.validity','profile.licenseValidity'].forEach(function(k, i) { if (fLabels[i]) setText(fLabels[i], t(k)); });
@@ -1718,6 +3139,11 @@ function applyLocale() {
   var emailInp = qs('s-profile', '.inp');
   if (emailInp) emailInp.placeholder = t('profile.emailPlaceholder');
 
+  var bizGuide = qs('s-profile', '.biz-guide');
+  if (bizGuide) {
+    var bgB = bizGuide.querySelector('b'); if (bgB) setText(bgB, t('profile.bizGuideTitle'));
+    var bgS = bizGuide.querySelector('span.bg-text span, .bg-text span'); if (bgS) setText(bgS, t('profile.bizGuideDesc'));
+  }
   setText(qs('s-profile', '.collapse-toggle span:first-child'), t('profile.bizCollapse'));
   setText(qs('s-profile', '.collapse-body .du-label'), t('profile.bizUpload'));
   setText(qs('s-profile', '.collapse-body .du-hint'), t('profile.bizHint'));
@@ -1730,7 +3156,7 @@ function applyLocale() {
   setText(qs('s-orders', '.hdr-title'), t('orders.title'));
 
   var fTabs = qsa('s-orders', '.filter-tab');
-  ['orders.all','orders.pendingPay','orders.pickup','orders.afterSales','orders.completed'].forEach(function(k, i) { if (fTabs[i]) setText(fTabs[i], t(k)); });
+  ['orders.unpaid','orders.paid','orders.cancelled'].forEach(function(k, i) { if (fTabs[i]) setText(fTabs[i], t(k)); });
 
   qsa('s-orders', '.oc-status').forEach(function(el) {
     if (el.classList.contains('pending')) setText(el, t('orders.statusPending'));
@@ -1744,11 +3170,12 @@ function applyLocale() {
 
   var setMenu = qsa('s-settings', '.menu-item');
   if (setMenu[0]) { setText(setMenu[0].querySelector('.mi-text'), t('settings.idVerify')); setText(setMenu[0].querySelector('.mi-sub'), t('settings.idVerifyDesc')); }
-  if (setMenu[1]) { setText(setMenu[1].querySelector('.mi-text'), t('settings.changePwd')); setText(setMenu[1].querySelector('.mi-sub'), t('settings.changePwdDesc')); }
-  if (setMenu[2]) { setText(setMenu[2].querySelector('.mi-text'), t('settings.language')); }
-  if (setMenu[3]) { setText(setMenu[3].querySelector('.mi-text'), t('settings.privacy')); }
-  if (setMenu[4]) { setText(setMenu[4].querySelector('.mi-text'), t('settings.about')); setText(setMenu[4].querySelector('.mi-sub'), t('settings.aboutVer')); }
-  setText(document.getElementById('curLang'), currentLocale === 'zh' ? '简体中文' : 'English');
+  if (setMenu[1]) { setText(setMenu[1].querySelector('.mi-text'), t('settings.loginMethods')); setText(setMenu[1].querySelector('.mi-sub'), t('settings.loginMethodsDesc')); }
+  if (setMenu[2]) { setText(setMenu[2].querySelector('.mi-text'), t('settings.changePwd')); setText(setMenu[2].querySelector('.mi-sub'), t('settings.changePwdDesc')); }
+  if (setMenu[3]) { setText(setMenu[3].querySelector('.mi-text'), t('settings.language')); }
+  if (setMenu[4]) { setText(setMenu[4].querySelector('.mi-text'), t('settings.privacy')); }
+  if (setMenu[5]) { setText(setMenu[5].querySelector('.mi-text'), t('settings.about')); setText(setMenu[5].querySelector('.mi-sub'), t('settings.aboutVer')); }
+  setText(document.getElementById('curLang'), currentLocale === 'zh' ? '简体中文' : currentLocale === 'zh-TW' ? '繁體中文' : 'English');
   setText(qs('s-settings', '.logout-btn'), t('settings.logout'));
 
   // ── s-changePwd (修改密码) ──
@@ -1771,6 +3198,7 @@ function applyLocale() {
     var nm = o.querySelector('.lo-name');
     if (nm) {
       if (currentLocale === 'zh' && nm.textContent === '简体中文') o.classList.add('on');
+      else if (currentLocale === 'zh-TW' && nm.textContent === '繁體中文') o.classList.add('on');
       else if (currentLocale === 'en' && nm.textContent === 'English') o.classList.add('on');
     }
   });
@@ -1805,8 +3233,20 @@ function applyLocale() {
   if (nfBtns[1]) setText(nfBtns[1], t('notes.reset'));
   if (nfBtns[2]) setText(nfBtns[2], t('notes.clear'));
 
+  // ── s-kycDup* (KYC 重复身份处理, 使用通用 [data-i18n] 绑定) ──
+  ['s-kycDup', 's-kycDupConflict', 's-kycDupSupplement', 's-kycDupOtp', 's-kycDupDone'].forEach(function(id) {
+    var root = document.getElementById(id);
+    if (!root) return;
+    root.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      var val = t(key);
+      if (val && val !== key) el.innerHTML = val;
+    });
+  });
+
   // ── Global ──
-  document.documentElement.lang = currentLocale === 'zh' ? 'zh-Hans' : 'en';
+  document.documentElement.lang = currentLocale === 'zh' ? 'zh-Hans' : currentLocale === 'zh-TW' ? 'zh-Hant' : 'en';
+  renderIdTypes();
 }
 
 function setLocale(code) {
@@ -1816,8 +3256,11 @@ function setLocale(code) {
 }
 
 loadNotes();
-initNotesPanel();
-syncNote('myCenter');
+loadNotesFromServer().then(() => {
+  initNotesPanel();
+  syncNote('myCenter');
+});
+renderIdTypes();
 applyLocale();
 </script>
 </body>

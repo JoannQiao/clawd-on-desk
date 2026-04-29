@@ -840,9 +840,9 @@ body{
   <span class="nav-sep">›</span>
   <button class="nav-btn" onclick="go('setPwd')">Set Pwd</button>
   <span class="nav-sep">›</span>
-  <button class="nav-btn" onclick="go('profile')">Profile</button>
+  <button class="nav-btn" onclick="go('regDone')">✅ Done</button>
   <span class="nav-sep">›</span>
-  <button class="nav-btn" onclick="go('success')">Success</button>
+  <button class="nav-btn" onclick="go('success')">Homepage</button>
   <span class="nav-sep">|</span>
   <button class="nav-btn" onclick="go('waInput')">WA Input</button>
   <span class="nav-sep">›</span>
@@ -851,8 +851,6 @@ body{
   <button class="nav-btn" onclick="go('emailInput')">Email</button>
   <span class="nav-sep">›</span>
   <button class="nav-btn" onclick="go('emailOtp')">Email OTP</button>
-  <span class="nav-sep">›</span>
-  <button class="nav-btn" onclick="go('emailPwd')">Email Pwd</button>
   <span class="nav-sep">|</span>
   <button class="nav-btn" onclick="go('pwdLogin')">Pwd Login</button>
   <span class="nav-sep">›</span>
@@ -907,10 +905,9 @@ body{
         <span class="chevron">▾</span>
       </div>
       <div class="lang-panel">
-        <button class="lang-opt on" onclick="pickLang(this,'EN','English')"><span class="flag">🇺🇸</span>English<span class="check">✓</span></button>
-        <button class="lang-opt" onclick="pickLang(this,'中文','中文')"><span class="flag">🇨🇳</span>中文</button>
-        <button class="lang-opt" onclick="pickLang(this,'FIL','Filipino')"><span class="flag">🇵🇭</span>Filipino</button>
-        <button class="lang-opt" onclick="pickLang(this,'عربي','عربي')"><span class="flag">🇦🇪</span>عربي</button>
+        <button class="lang-opt on" onclick="pickLang(this,'EN','English')"><span class="flag">🌐</span>English<span class="check">✓</span></button>
+        <button class="lang-opt" onclick="pickLang(this,'中文','简体中文')"><span class="flag">🌐</span>简体中文</button>
+        <button class="lang-opt" onclick="pickLang(this,'繁體','繁體中文')"><span class="flag">🌐</span>繁體中文</button>
       </div>
     </div>
     <div class="body">
@@ -1000,7 +997,7 @@ body{
         <input class="otp-c" type="text" maxlength="1" value="">
         <input class="otp-c" type="text" maxlength="1" value="">
       </div>
-      <div class="resend">Didn't receive? <b>Resend in 00:42</b></div>
+      <div class="resend">Didn't receive? <b>Resend in 01:00</b></div>
       <div style="padding:28px 24px 0;">
         <button class="btn" onclick="go('setPwd')">VERIFY & CONTINUE</button>
       </div>
@@ -1016,17 +1013,13 @@ body{
     </div>
     <div class="hdr">
       <button class="hdr-back" onclick="goBack()">←</button>
-      <span class="hdr-title">Registration</span>
+      <span class="hdr-title">Identity Verification</span>
     </div>
     <div class="body" style="overflow-y:auto;">
       <div style="padding:8px 24px 12px;">
-        <div class="steps">
-          <div class="step-d done"></div>
-          <div class="step-d done"></div>
-          <div class="step-d on"></div>
-        </div>
-        <h2 style="font-size:20px;font-weight:700;margin-bottom:2px;">Complete Your Profile</h2>
-        <p style="font-size:13px;color:var(--t2);">Identity info for KYC verification</p>
+        <div style="padding:6px 10px;background:#DBEAFE;border-radius:8px;font-size:11px;color:#1E40AF;margin-bottom:8px;">🛡️ Entry: Pre-order check / My page → Identity Verification</div>
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:2px;">Identity Verification</h2>
+        <p style="font-size:13px;color:var(--t2);">Complete KYC to unlock order placement</p>
       </div>
       <div style="padding:0 24px 24px;">
 
@@ -1173,8 +1166,7 @@ body{
         </div>
 
         <div style="margin-top:16px;padding-bottom:20px;">
-          <button class="btn" onclick="profileCompleted=true;go('success')">SUBMIT & CONTINUE</button>
-          <button class="btn ghost" onclick="go('success')">Skip for now →</button>
+          <button class="btn" onclick="toast('✅ Submitted! Returning to previous page...')">SUBMIT FOR VERIFICATION</button>
         </div>
       </div>
     </div>
@@ -1196,10 +1188,9 @@ body{
         <div class="steps">
           <div class="step-d done"></div>
           <div class="step-d on"></div>
-          <div class="step-d"></div>
         </div>
         <h2 style="font-size:22px;font-weight:700;margin-bottom:4px;">Secure Your Account</h2>
-        <p style="font-size:14px;color:var(--t2);">Set a password for easier login next time</p>
+        <p style="font-size:14px;color:var(--t2);">Set a password to complete registration</p>
       </div>
       <div style="padding:0 24px;flex:1;display:flex;flex-direction:column;">
         <label class="form-label">New Password</label>
@@ -1224,29 +1215,74 @@ body{
           <button class="act">👁</button>
         </div>
         <div style="margin-top:auto;padding-bottom:20px;">
-          <button class="btn" onclick="go('profile')">SET PASSWORD</button>
-          <button class="btn ghost" onclick="go('profile')">Skip for now →</button>
+          <button class="btn" onclick="go('regDone')">SET PASSWORD & CONTINUE</button>
         </div>
       </div>
     </div>
     <div class="home-ind"></div>
   </div>
 
-  <!-- ====== SUCCESS ====== -->
+  <!-- ====== REGISTRATION COMPLETE (transition) ====== -->
+  <div class="screen" id="s-regDone">
+    <div class="sb">
+      <span class="time">9:42</span>
+      <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
+    </div>
+    <div class="body" style="display:flex;align-items:center;justify-content:center;">
+      <div style="text-align:center;padding:0 32px;">
+        <div id="regDoneCircle" style="width:80px;height:80px;border-radius:50%;background:#ECFDF5;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:40px;opacity:0;transform:scale(0.5);transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);">✅</div>
+        <h2 id="regDoneTitle" style="font-size:22px;font-weight:700;margin-bottom:6px;opacity:0;transform:translateY(10px);transition:all 0.3s ease 0.2s;">Registration Complete!</h2>
+        <p id="regDoneDesc" style="font-size:14px;color:var(--t2);margin-bottom:24px;opacity:0;transform:translateY(10px);transition:all 0.3s ease 0.35s;">Welcome to FoneSquare. Redirecting to homepage...</p>
+        <div id="regDoneBar" style="width:120px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto;overflow:hidden;opacity:0;transition:opacity 0.3s ease 0.5s;">
+          <div id="regDoneProgress" style="width:0%;height:100%;background:var(--pri);border-radius:2px;transition:width 2s linear 0.6s;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+  <!-- ====== HOMEPAGE (Registration Complete) ====== -->
   <div class="screen" id="s-success">
     <div class="sb">
       <span class="time">9:42</span>
       <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
     </div>
     <div class="body">
-      <div class="ok-area">
-        <div class="ok-circle">🎉</div>
-        <h2>Welcome to FoneSquare!</h2>
-        <p>Your account has been created. Start exploring the best deals on certified devices.</p>
-        <div class="ok-btns">
-          <button class="btn green" onclick="toast('→ Homepage')">GO TO HOMEPAGE</button>
-          <button class="btn outline" id="successProfileBtn" onclick="go('profile')" style="display:none;">COMPLETE PROFILE NOW</button>
+      <div style="padding:16px 20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:40px;height:40px;background:var(--pri);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;">FS</div>
+          <div>
+            <div style="font-weight:700;font-size:16px;">FoneSquare</div>
+            <div style="font-size:11px;color:var(--t3);">Welcome! 🎉</div>
+          </div>
         </div>
+        <div style="background:var(--bgi);border-radius:var(--r-md);padding:14px;margin-bottom:12px;">
+          <div style="font-size:12px;font-weight:600;color:var(--t1);margin-bottom:6px;">🔍 Browse Categories</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:70px;background:#fff;border-radius:8px;padding:10px 6px;text-align:center;font-size:10px;border:1px solid var(--bd);">📱<br>Phones</div>
+            <div style="flex:1;min-width:70px;background:#fff;border-radius:8px;padding:10px 6px;text-align:center;font-size:10px;border:1px solid var(--bd);">💻<br>Laptops</div>
+            <div style="flex:1;min-width:70px;background:#fff;border-radius:8px;padding:10px 6px;text-align:center;font-size:10px;border:1px solid var(--bd);">⌚<br>Watches</div>
+            <div style="flex:1;min-width:70px;background:#fff;border-radius:8px;padding:10px 6px;text-align:center;font-size:10px;border:1px solid var(--bd);">🎧<br>Audio</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--t1);margin-bottom:8px;">🔥 Hot Deals</div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:#fff;border-radius:10px;padding:8px;border:1px solid var(--bd);">
+            <div style="background:var(--bgi);border-radius:6px;height:70px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">📱</div>
+            <div style="font-size:10px;font-weight:600;">iPhone 15 Pro</div>
+            <div style="font-size:10px;color:var(--pri);font-weight:700;">HK$ 4,280</div>
+          </div>
+          <div style="flex:1;background:#fff;border-radius:10px;padding:8px;border:1px solid var(--bd);">
+            <div style="background:var(--bgi);border-radius:6px;height:70px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">📱</div>
+            <div style="font-size:10px;font-weight:600;">Samsung S24</div>
+            <div style="font-size:10px;color:var(--pri);font-weight:700;">HK$ 3,150</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:auto;border-top:1px solid var(--bd);display:flex;padding:6px 0;">
+        <div style="flex:1;text-align:center;font-size:10px;color:var(--pri);font-weight:600;">🏠<br>Home</div>
+        <div style="flex:1;text-align:center;font-size:10px;color:var(--t3);">🛒<br>Cart</div>
+        <div style="flex:1;text-align:center;font-size:10px;color:var(--t3);">👤<br>Me</div>
       </div>
     </div>
     <div class="home-ind"></div>
@@ -1311,7 +1347,7 @@ body{
         <input class="otp-c" type="text" maxlength="1" value="">
         <input class="otp-c" type="text" maxlength="1" value="">
       </div>
-      <div class="resend">Didn't receive? <b>Resend in 00:58</b></div>
+      <div class="resend">Didn't receive? <b>Resend in 01:00</b></div>
       <div style="padding:28px 24px 0;">
         <button class="btn wa-green" onclick="go('setPwd')">VERIFY & CONTINUE</button>
       </div>
@@ -1377,14 +1413,14 @@ body{
       </div>
       <div class="resend">Didn't receive? <a onclick="toast('Code resent!')">Resend code</a></div>
       <div style="padding:28px 24px 0;">
-        <button class="btn" onclick="go('emailPwd')">VERIFY & CONTINUE</button>
+        <button class="btn" onclick="go('setPwd')">VERIFY & CONTINUE</button>
       </div>
     </div>
     <div class="home-ind"></div>
   </div>
 
-  <!-- ====== EMAIL SET PASSWORD ====== -->
-  <div class="screen" id="s-emailPwd">
+  <!-- ====== EMAIL SET PASSWORD (DEPRECATED: merged into common Set Pwd) ====== -->
+  <div class="screen" id="s-emailPwd" style="display:none !important;">
     <div class="sb">
       <span class="time">9:42</span>
       <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
@@ -1419,7 +1455,7 @@ body{
           <button class="act">👁</button>
         </div>
         <div style="margin-top:auto;padding-bottom:20px;">
-          <button class="btn" onclick="go('profile')">CREATE ACCOUNT</button>
+          <button class="btn" onclick="go('regDone')">CREATE ACCOUNT & CONTINUE</button>
         </div>
       </div>
     </div>
@@ -1440,10 +1476,9 @@ body{
         <span class="chevron">▾</span>
       </div>
       <div class="lang-panel">
-        <button class="lang-opt on" onclick="pickLang(this,'EN','English')"><span class="flag">🇺🇸</span>English<span class="check">✓</span></button>
-        <button class="lang-opt" onclick="pickLang(this,'中文','中文')"><span class="flag">🇨🇳</span>中文</button>
-        <button class="lang-opt" onclick="pickLang(this,'FIL','Filipino')"><span class="flag">🇵🇭</span>Filipino</button>
-        <button class="lang-opt" onclick="pickLang(this,'عربي','عربي')"><span class="flag">🇦🇪</span>عربي</button>
+        <button class="lang-opt on" onclick="pickLang(this,'EN','English')"><span class="flag">🌐</span>English<span class="check">✓</span></button>
+        <button class="lang-opt" onclick="pickLang(this,'中文','简体中文')"><span class="flag">🌐</span>简体中文</button>
+        <button class="lang-opt" onclick="pickLang(this,'繁體','繁體中文')"><span class="flag">🌐</span>繁體中文</button>
       </div>
     </div>
     <div class="body">
@@ -1483,19 +1518,19 @@ body{
     <div class="home-ind"></div>
   </div>
 
-  <!-- ====== LOGIN SUCCESS (returning user) ====== -->
+  <!-- ====== LOGIN SUCCESS (returning user) — auto-redirect, no button ====== -->
   <div class="screen" id="s-loginOk">
     <div class="sb">
       <span class="time">9:41</span>
       <span class="ic"><svg width="52" height="12"><use href="#sb-icons"/></svg></span>
     </div>
-    <div class="body">
-      <div class="ok-area">
-        <div class="ok-circle">✅</div>
-        <h2>Welcome Back!</h2>
-        <p>You've been logged in successfully.</p>
-        <div class="ok-btns">
-          <button class="btn green" onclick="toast('→ Homepage')">GO TO HOMEPAGE</button>
+    <div class="body" style="display:flex;align-items:center;justify-content:center;">
+      <div style="text-align:center;padding:0 32px;">
+        <div id="loginOkCircle" style="width:80px;height:80px;border-radius:50%;background:#ECFDF5;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:40px;opacity:0;transform:scale(0.5);transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);">✅</div>
+        <h2 id="loginOkTitle" style="font-size:22px;font-weight:700;margin-bottom:6px;opacity:0;transform:translateY(10px);transition:all 0.3s ease 0.2s;">Welcome Back!</h2>
+        <p id="loginOkDesc" style="font-size:14px;color:var(--t2);margin-bottom:24px;opacity:0;transform:translateY(10px);transition:all 0.3s ease 0.35s;">Redirecting to homepage...</p>
+        <div id="loginOkBar" style="width:120px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto;overflow:hidden;opacity:0;transition:opacity 0.3s ease 0.5s;">
+          <div id="loginOkProgress" style="width:0%;height:100%;background:var(--pri);border-radius:2px;transition:width 2s linear 0.6s;"></div>
         </div>
       </div>
     </div>
@@ -1509,22 +1544,32 @@ body{
       <div class="sheet-handle"></div>
       <button class="sheet-close" onclick="closeSheet()">✕</button>
 
-      <!-- Step 1: Enter Phone -->
+      <!-- Step 1: Enter Phone or Email -->
       <div class="sheet-step on" id="fgStep1">
-        <div class="sheet-title">Forgot Password</div>
-        <div class="sheet-desc">Enter your phone number to receive a verification code via SMS</div>
-        <label class="form-label">Phone Number</label>
-        <div class="phone-grp">
-          <div class="phone-pfx" onclick="openCountryPicker(this)">
-            <span class="f">🇭🇰</span>
-            <span class="code">+852</span>
-            <span class="a">▾</span>
-          </div>
-          <input type="tel" placeholder="Enter phone number" inputmode="numeric" value="9123 4567">
+        <div class="sheet-title" id="fgTitle">Forgot Password</div>
+        <div style="display:flex;gap:0;border:1px solid var(--bd);border-radius:var(--r-sm);overflow:hidden;margin-bottom:12px;">
+          <button id="fgTabPhone" class="fg-tab on" onclick="switchFgTab('phone')" style="flex:1;padding:8px 0;font-size:12px;font-weight:600;border:none;cursor:pointer;background:var(--pri);color:#fff;transition:all 0.2s;">📱 Phone</button>
+          <button id="fgTabEmail" class="fg-tab" onclick="switchFgTab('email')" style="flex:1;padding:8px 0;font-size:12px;font-weight:600;border:none;cursor:pointer;background:#fff;color:var(--t2);transition:all 0.2s;">✉️ Email</button>
         </div>
-        <div class="info-box wa" style="background:#FFF8E1;border-color:#FFE082;color:#8D6E00;margin-top:4px;">
-          <span class="ib-i">📱</span>
-          <span>Only SMS verification is supported for password reset</span>
+        <div id="fgPhonePanel">
+          <div class="sheet-desc" id="fgPhoneDesc">Enter your phone number to receive a verification code via SMS</div>
+          <label class="form-label">Phone Number</label>
+          <div class="phone-grp">
+            <div class="phone-pfx" onclick="openCountryPicker(this)">
+              <span class="f">🇭🇰</span>
+              <span class="code">+852</span>
+              <span class="a">▾</span>
+            </div>
+            <input type="tel" placeholder="Enter phone number" inputmode="numeric" value="9123 4567">
+          </div>
+        </div>
+        <div id="fgEmailPanel" style="display:none;">
+          <div class="sheet-desc" id="fgEmailDesc">Enter your email address to receive a verification code</div>
+          <label class="form-label">Email Address</label>
+          <div class="inp-wrap">
+            <span class="ico">✉️</span>
+            <input class="inp" type="email" placeholder="Enter email address" value="john@company.com">
+          </div>
         </div>
         <button class="btn" style="margin-top:16px;" onclick="fgNext(2)">SEND CODE</button>
       </div>
@@ -1541,7 +1586,7 @@ body{
           <input class="otp-c" type="text" maxlength="1" value="">
           <input class="otp-c" type="text" maxlength="1" value="">
         </div>
-        <div class="resend" style="margin-bottom:16px;">Didn't receive? <b>Resend in 00:48</b></div>
+        <div class="resend" style="margin-bottom:16px;">Didn't receive? <b>Resend in 01:00</b></div>
         <button class="btn" onclick="fgNext(3)">VERIFY</button>
       </div>
 
@@ -1598,6 +1643,7 @@ body{
   </div>
   <div class="notes-body" id="notesBody"></div>
   <div class="notes-footer">
+    <button class="nf-btn" id="btnSaveToFile" onclick="saveNotesToServer()" style="background:var(--pri);color:#fff;font-weight:700;min-width:60px;">💾 Save</button>
     <span class="nf-tip">自动保存 · 可直接编辑</span>
     <button class="nf-btn" onclick="exportNotes()">导出</button>
     <button class="nf-btn" onclick="resetToDefault()">重置</button>
@@ -1608,16 +1654,17 @@ body{
 
 <!-- Screen map -->
 <div class="screen-map">
-  <b>📱 SMS 主流程：</b> Splash → Login → SMS OTP → Set Pwd → Profile → Success<br>
-  <b>WhatsApp：</b> Login → WA Input → WA OTP → Set Pwd → Profile → …<br>
-  <b>✉️ Email：</b> Login → Email → Email OTP → Email Pwd → Profile → …<br>
-  <b>🔒 密码登录：</b> Login (Password Tab) → Login Success
+  <b>📱 SMS 注册：</b> Splash → Login → SMS OTP → Set Pwd（必填）→ 首页<br>
+  <b>WhatsApp 注册：</b> Login → WA Input → WA OTP → Set Pwd（必填）→ 首页<br>
+  <b>✉️ Email 注册：</b> Login → Email → Email OTP → Set Pwd（必填）→ 注册完成 → 首页<br>
+  <b>🔒 密码登录：</b> Login (Password Tab) → Login Success（自动跳转）→ 首页<br>
+  <b>🛡️ KYC 认证：</b> 下单前校验 / "Me"页面入口 → Profile（独立于注册流程）
 </div>
 
 <script>
 const history = [];
 let current = 'splash';
-let profileCompleted = false;
+// profileCompleted removed — KYC is independent from registration flow
 
 function go(id) {
   if (id === current) return;
@@ -1637,9 +1684,32 @@ function go(id) {
   const navBtn = document.querySelector(`.nav-btn[onclick="go('${id}')"]`);
   if (navBtn) navBtn.classList.add('active');
 
-  if (id === 'success') {
-    const btn = document.getElementById('successProfileBtn');
-    if (btn) btn.style.display = profileCompleted ? 'none' : '';
+  if (id === 'regDone') {
+    setTimeout(() => {
+      document.getElementById('regDoneCircle').style.opacity = '1';
+      document.getElementById('regDoneCircle').style.transform = 'scale(1)';
+      document.getElementById('regDoneTitle').style.opacity = '1';
+      document.getElementById('regDoneTitle').style.transform = 'translateY(0)';
+      document.getElementById('regDoneDesc').style.opacity = '1';
+      document.getElementById('regDoneDesc').style.transform = 'translateY(0)';
+      document.getElementById('regDoneBar').style.opacity = '1';
+      setTimeout(() => { document.getElementById('regDoneProgress').style.width = '100%'; }, 100);
+    }, 50);
+    setTimeout(() => go('success'), 2800);
+  }
+
+  if (id === 'loginOk') {
+    setTimeout(() => {
+      document.getElementById('loginOkCircle').style.opacity = '1';
+      document.getElementById('loginOkCircle').style.transform = 'scale(1)';
+      document.getElementById('loginOkTitle').style.opacity = '1';
+      document.getElementById('loginOkTitle').style.transform = 'translateY(0)';
+      document.getElementById('loginOkDesc').style.opacity = '1';
+      document.getElementById('loginOkDesc').style.transform = 'translateY(0)';
+      document.getElementById('loginOkBar').style.opacity = '1';
+      setTimeout(() => { document.getElementById('loginOkProgress').style.width = '100%'; }, 100);
+    }, 50);
+    setTimeout(() => go('success'), 2800);
   }
 }
 
@@ -1679,10 +1749,36 @@ function closeSheet() {
   syncNote(current);
 }
 
+let fgMode = 'phone';
+function switchFgTab(mode) {
+  fgMode = mode;
+  const phoneTab = document.getElementById('fgTabPhone');
+  const emailTab = document.getElementById('fgTabEmail');
+  const phonePanel = document.getElementById('fgPhonePanel');
+  const emailPanel = document.getElementById('fgEmailPanel');
+  if (mode === 'phone') {
+    phoneTab.style.background = 'var(--pri)'; phoneTab.style.color = '#fff';
+    emailTab.style.background = '#fff'; emailTab.style.color = 'var(--t2)';
+    phonePanel.style.display = ''; emailPanel.style.display = 'none';
+  } else {
+    emailTab.style.background = 'var(--pri)'; emailTab.style.color = '#fff';
+    phoneTab.style.background = '#fff'; phoneTab.style.color = 'var(--t2)';
+    emailPanel.style.display = ''; phonePanel.style.display = 'none';
+  }
+}
+
 function fgNext(step) {
   document.querySelectorAll('.sheet-step').forEach(s => s.classList.remove('on'));
   const el = document.getElementById('fgStep' + step);
   if (el) el.classList.add('on');
+  if (step === 2) {
+    const desc = el.querySelector('.sheet-desc');
+    if (desc) {
+      desc.innerHTML = fgMode === 'phone'
+        ? t('forgot.otp.desc.phone')
+        : t('forgot.otp.desc.email');
+    }
+  }
 }
 
 function toggleLang(anchor) {
@@ -1696,8 +1792,10 @@ function pickLang(opt, code, name) {
   anchor.classList.remove('open');
   if (code === 'EN' || name === 'English') {
     setLocale('en');
-  } else if (code === '中文' || name === '中文') {
+  } else if (code === '中文' || name === '简体中文') {
     setLocale('zh');
+  } else if (code === '繁體' || name === '繁體中文') {
+    setLocale('zh-hant');
   } else {
     toast(name + ' coming soon');
   }
@@ -2039,14 +2137,15 @@ const screenMeta = [
   {id:'splash',  label:'Splash 开屏页'},
   {id:'login',   label:'Login 登录首页'},
   {id:'smsOtp',  label:'SMS OTP 短信验证'},
-  {id:'setPwd',  label:'Set Password 设置密码'},
-  {id:'profile', label:'Profile 个人信息'},
-  {id:'success', label:'Success 注册成功'},
+  {id:'setPwd',  label:'Set Password 设置密码（必填）'},
+  {id:'regDone', label:'Registration Complete 注册完成'},
+  {id:'profile', label:'KYC 身份验证（独立入口）'},
+  {id:'success', label:'Homepage 首页'},
+  {id:'loginOk', label:'Login Success 登录成功（自动跳转）'},
   {id:'waInput', label:'WhatsApp 手机输入'},
   {id:'waOtp',   label:'WhatsApp OTP 验证'},
   {id:'emailInput', label:'Email 邮箱输入'},
   {id:'emailOtp',label:'Email OTP 邮箱验证'},
-  {id:'emailPwd',label:'Email Pwd 邮箱设密码'},
   {id:'pwdLogin',label:'Pwd Login 密码登录'},
   {id:'forgotPwd',label:'Forgot Password 忘记密码'},
 ];
@@ -2094,7 +2193,7 @@ login: `【页面功能】
 • 未注册用户提示跳转手机号注册
 
 【语言切换】
-• 右上角globe图标，支持语言：English / 中文 / Filipino / عربي
+• 右上角globe图标，支持语言：English / 简体中文 / 繁體中文
 • 切换后前端i18n即时生效，语言偏好存储至本地+同步至服务端
 • 本期语言包需覆盖完整登录注册流程
 
@@ -2108,7 +2207,7 @@ smsOtp: `【页面功能】
 【验证码规则】
 • 验证码长度：6位纯数字
 • 有效期：5分钟（服务端Redis TTL）
-• 错误重试：连续错误5次后锁定30分钟（待与安全团队确认阈值）
+• 错误重试：连续错误5次后锁定1小时
 • 自动聚焦：打开页面自动focus到第一个输入框
 • 自动提交：填满6位后自动触发验证，无需点击按钮
 
@@ -2134,15 +2233,20 @@ smsOtp: `【页面功能】
 • 老用户 → 更新登录时间 → 直接进入首页`,
 
 setPwd: `【页面功能】
-引导新注册用户设置账号密码，方便后续密码快捷登录。
+注册流程最后一步：强制设置账号密码，完成后直接进入首页。
+
+【V1.1 更新】
+🔐 密码设置为注册必填项，不可跳过
+• 适用于所有注册方式（手机号/WhatsApp/Email）
+• 完成密码设置后直接进入首页，不再引导身份验证
 
 【流程位置】
-• 注册流程第2步（共3步）：OTP验证 → 设置密码 → 完善个人信息
-• 进入条件：SMS/WhatsApp/Email OTP验证成功后
+• 注册流程第2步（共2步）：OTP验证 → 设置密码 → 进入首页
+• 进入条件：SMS/WhatsApp OTP验证成功后（新用户）
 
 【密码强度规则】
-• 最低长度：8个字符
-• 必须包含：大写字母 + 数字（至少各1个）
+• 最低长度：8个字符，最大20个字符
+• 必须包含：字母 + 数字（至少各1个）
 • 建议包含：特殊字符（显示为额外加分项）
 • 实时校验并展示强度条（4段式：弱/中/强/很强）
 
@@ -2154,194 +2258,142 @@ setPwd: `【页面功能】
 【确认密码】
 • 二次输入密码需一致，不一致时提示"Passwords do not match"
 
-【可跳过】
-• 提供"Skip for now →"按钮，用户可跳过密码设置
-• 跳过后仍可通过OTP登录，后续可在设置页补设密码
-• 跳过不影响注册流程完整性
+【不可跳过】
+• 无"Skip"按钮，密码设置为必填项
+• 设置完成后才能进入首页
+• 设置后用户可用 手机号+密码 / 邮箱+密码 / WhatsApp号+密码 快捷登录
 
 【安全】
 • 密码传输采用HTTPS + 前端AES加密
 • 服务端BCrypt哈希存储，不存明文`,
 
+regDone: `【页面功能】
+注册完成反馈过渡页，给予用户明确的注册成功视觉反馈后自动跳转到首页。
+
+【交互逻辑】
+• 密码设置/邮箱注册完成后进入此页面
+• 显示成功动画（绿色对勾 + 标题 + 描述）
+• 底部进度条 2.5 秒后自动跳转至首页
+• 用户无需点击任何按钮，自动完成过渡
+• 如网络延迟或异常，进度条走完后强制跳转
+
+【设计要求】
+• 动画入场：对勾图标弹性缩放 + 文字渐现上移
+• 过渡时长约 2.5-3 秒，不宜过长影响体验
+• 此页面不可回退（不在返回栈中记录）`,
+
+loginOk: `【页面功能】
+密码登录成功后的过渡页 — 给予用户"欢迎回来"的视觉反馈后自动跳转首页。
+
+【交互逻辑】
+• 密码登录验证通过后进入此页面
+• 显示成功动画（绿色对勾 + "Welcome Back!" + 描述）
+• 底部进度条 ~2.5 秒后自动跳转至首页
+• 无按钮，用户无需手动操作
+• 如网络延迟或异常，进度条走完后强制跳转
+
+【设计要求】
+• 动画入场与注册完成过渡页风格一致
+• 过渡时长约 2.5-3 秒
+• 此页面不可回退（不在返回栈中记录）`,
+
 profile: `【页面功能】
-注册流程最后一步：身份验证与个人信息补全。
+KYC 身份验证页 — 独立于注册流程，仅通过特定入口触发。
+
+【V1.1 更新】
+🛡️ 身份验证不再作为注册流程的一部分
+• 注册流程：OTP → 密码 → 首页（不含身份验证）
+• KYC 入口仅两个：① 下单前校验（未认证时拦截）② "Me"页面未认证提示
+• 无"Skip"按钮 — 进入此页即代表用户需要完成认证
+
+【触发入口】
+• 入口1：用户尝试下单 → 系统检测未通过KYC → 弹窗引导至此页
+• 入口2：用户点击"Me"页面中的"未认证"状态标签
 
 【设计原则】
 本页遵循"最少输入、系统识别、用户复核"的产品设计准则：
 • 用户只需 3 步操作：选地区 → 选证件类型 → 拍照上传
 • 系统通过 OCR 自动识别：姓名、证件号、有效期
 • 用户仅需复核 OCR 结果并确认提交
-• 不再要求用户手动输入姓名 — 姓名完全由证件 OCR 提供（可编辑修正）
-
-【流程位置】
-注册第3步（共3步）：OTP验证 → 设置密码 → 身份验证
 
 ═══════════════════════
 一、地区选择（页面最顶部 — 必填）
 ═══════════════════════
 • 三级联动：国家/地区 → 省/州 → 城市/区
-• 位于页面最顶部，原因：地区决定后续可用的证件类型
 • 默认值：根据注册区号/IP自动预填国家
-• 数据源：后端地区编码表（ISO 3166-2 + 本地行政区划）
-• 地区与证件类型联动：
-  - 🇭🇰 Hong Kong → 默认选中"港澳居民身份证"
-  - 🇨🇳 China → 默认选中"中国居民身份证"
-  - 其他国家 → 默认选中"护照"
+• 地区与证件类型联动
 
 ═══════════════════════
 二、身份验证（核心区域 — 必填）
 ═══════════════════════
-
-【2a. 证件类型选择】
-Chip Selector 横排，当前支持：
-  ① 港澳居民身份证（HK/Macau ID）
-  ② 护照（Passport）
-  ③ 中国居民身份证（CN Resident ID）
-• 选中态：主色边框 + 浅色背景
-• 切换证件类型时清空已上传的照片和 OCR 结果
-
-【2b. 证件照片上传 — 按类型动态切换】
-┌──────────────────┬────────────────────┬──────────────┐
-│ 证件类型         │ 上传组件           │ 说明         │
-├──────────────────┼────────────────────┼──────────────┤
-│ 港澳居民身份证   │ 正面 + 反面（并排） │ 两张照片     │
-│ 中国居民身份证   │ 正面 + 反面（并排） │ 两张照片     │
-│ 护照             │ 信息页（单卡）     │ 仅MRZ页      │
-└──────────────────┴────────────────────┴──────────────┘
-• 格式：JPG / PNG / HEIC，≤ 10 MB
-• 质量校验：前端模糊检测 + 服务端OCR置信度校验
-• 拍照引导框：矩形对齐辅助框
-• 上传成功 → 缩略图预览 + 自动触发OCR
-
-【2c. OCR 自动识别 → 用户复核】
-上传后系统自动识别，结果以"OCR Recognized"卡片展示：
-• ✅ 绿色banner："OCR Recognized — please review and correct if needed"
-• 识别字段：
-  - Full Name（法定姓名）— 这是本页获取姓名的唯一来源
-  - ID Number（证件号码）
-• 所有字段均支持 contenteditable 直接点击编辑（带"tap to edit"提示）
-• 识别失败 → 字段为空 + 提示用户手动输入
-
-【2d. 证件有效期】
-• 日期选择器：起始日期 — 到期日期
-• OCR 可自动回填（护照MRZ通常包含有效期）
-• 校验规则：
-  - 已过期 → 红色提示"ID expired"
-  - ≤ 90天到期 → 橙色提示"ID expiring soon"
-  - 港澳身份证可选"长期有效"
+• 证件类型选择（港澳身份证/护照/中国居民身份证）
+• 证件照片上传 + OCR自动识别
+• 用户复核OCR结果
+• 证件有效期填写
 
 ═══════════════════════
 三、联系邮箱（选填）
 ═══════════════════════
 • 仅在手机号/WhatsApp注册渠道显示
-• 邮箱注册用户此处不显示（已关联邮箱）
-• 用途：订单通知、密码找回、营销触达
-• placeholder："For order notifications"
 
 ═══════════════════════
 四、企业信息（选填，默认折叠）
 ═══════════════════════
 • 面向B2B企业采购用户
-• 默认折叠，点击展开
-• 企业认证可解锁更高额度、对公结算等权益
-
-【营业执照上传】
-• 格式：JPG / PNG / PDF，≤ 20 MB
-• 上传前显示"Upload license to auto-recognize"待上传提示
-• 上传后OCR识别：证件类型、注册编号、法人/董事、企业地址
-
-【营业执照有效期】
-• 日期选择器，OCR可自动回填
-• 已过期 → 红色提示"License expired"
-• ≤ 30天到期 → 橙色提示
-• 支持"长期有效"选项
-• 后续可设定时任务，到期前30天提醒更新
 
 ═══════════════════════
-五、交互与逻辑
+五、重复身份处理（方案C）
 ═══════════════════════
-
-【操作流（用户视角）】
-选地区 → 选证件 → 拍照/上传 → 系统自动识别 → 复核信息 → 提交
-              ↓                       ↓
-         上传组件切换            姓名+证件号+有效期自动填充
-
-【可跳过】
-• "Skip for now →" 按钮
-• 跳过后首页显示"完善资料"提示卡片
-• 下单前强制完成个人证件验证
+• OCR识别后检测到证件已关联其他账号
+• 弹窗提示：引导用户登录已认证账号
+• 补全登录方式 + OTP二次验证
+• 当前未认证账号废弃（友好文案提示）
 
 【提交校验】
 • 地区至少选到第一级
 • 已选证件类型 + 照片已上传
-• OCR姓名非空
-• OCR证件号非空
+• OCR姓名非空、证件号非空
 • 有效期已填写且未过期
-• 校验不通过 → 红色高亮 + 滚动至错误字段
-
-【数据流向】
-• OCR姓名 + 证件号 + 有效期 → 风控系统制裁名单预筛
-• 地区信息 → 影响商品展示（关税、物流区域）
-• 企业信息 → 企业认证审核队列
 
 【埋点事件】
-• page_view: registration_profile
-• region_select: country / province / city
-• id_type_select: hkid / passport / cnid
-• upload_start / upload_success / upload_fail: id_front / id_back / id_info_page / business_license
+• page_view: kyc_verification（来源：order_check / my_center）
+• region_select / id_type_select
+• upload_start / upload_success / upload_fail
 • ocr_result: success / partial / fail
-• ocr_field_edit: full_name / id_number（用户修改OCR结果时触发）
-• click: submit_profile / skip_profile / expand_business_section`,
+• click: submit_verification / expand_business_section
+• duplicate_id_detected / duplicate_id_login_redirect`,
 
 success: `【页面功能】
-注册成功引导页，展示注册完成状态并引导用户下一步操作。
+APP 首页 — 注册完成或登录成功后的落地页面。
 
-【展示内容】
-• 🎉 成功图标 + "Welcome to FoneSquare!" 标题
-• 欢迎语："Your account has been created. Start exploring the best deals on certified devices."
-
-═══════════════════════
-行动按钮（动态展示）
-═══════════════════════
-
-① "GO TO HOMEPAGE"（主按钮，绿色 — 始终展示）
-   • 跳转至APP首页，开始浏览商品
-   • 无论是否完成身份认证，用户都可进入首页
-
-② "COMPLETE PROFILE NOW"（次按钮，描边样式 — 条件展示）
-   • 展示条件：用户未完成身份认证（profileCompleted === false）
-   • 隐藏条件：用户已通过 Profile 页提交身份信息
-   • 点击 → 跳转至 Profile 页面，完成证件上传和身份验证
-   • 文案用 "Complete Profile" 而非 "Complete KYC"，降低用户对"认证"的抵触感
-
-【触发场景分析】
-┌──────────────────────────────┬───────────────┬──────────────────┐
-│ 用户行为路径                  │ profileCompleted │ 次按钮是否展示  │
-├──────────────────────────────┼───────────────┼──────────────────┤
-│ OTP → 设密码 → Profile提交   │ true          │ ❌ 隐藏          │
-│ OTP → 设密码 → Profile跳过   │ false         │ ✅ 展示          │
-│ OTP → 设密码跳过 → Profile跳过│ false         │ ✅ 展示          │
-│ 密码登录老用户（已认证）      │ true          │ ❌ 隐藏          │
-└──────────────────────────────┴───────────────┴──────────────────┘
+【V1.3 更新】
+🏠 首页不展示KYC入口/banner，不主动引导身份认证
+• 注册流程：OTP → 密码设置（必填）→ 注册完成过渡页 → 自动跳转首页
+• 登录流程：密码登录 → 登录成功过渡页 → 自动跳转首页
+• KYC入口仅在下单前校验和 Me 页面提供
 
 ═══════════════════════
-产品策略
+首页内容展示
 ═══════════════════════
-• 不强制身份认证，用户可先浏览商品，下单前再完成
-• 注册完成即可浏览商品和收藏，下单时强制要求身份认证通过
-• 跳过 Profile 的用户：首页显示"完善资料"提示卡片（持续引导）
-• 转化漏斗关注：success 页 → complete_profile 点击率（衡量身份认证引导效果）
-• V2迭代：可在此页增加新手引导卡片（首单优惠、热门品类推荐）
+
+① 顶部品牌栏 + 欢迎标识
+② 商品分类浏览（Phones / Laptops / Watches / Audio）
+③ 热门商品推荐（Hot Deals）
+④ 底部Tab栏（Home / Cart / Me）
+
+═══════════════════════
+KYC 引导策略
+═══════════════════════
+• 首页不展示KYC提示/banner
+• 下单前强制要求身份认证通过（弹窗拦截引导）
+• "Me"页面提供认证入口
 
 ═══════════════════════
 埋点事件
 ═══════════════════════
-• page_view: registration_success
-• button_visibility: complete_profile_shown / complete_profile_hidden
-• click: go_to_homepage
-• click: complete_profile_now（仅在按钮可见时可触发）
-• funnel: registration_complete（记录完整注册漏斗转化率）
-• profile_status: completed / skipped（记录到达此页时的身份认证状态）`,
+• page_view: homepage（来源：registration_complete / login_success）
+• click: category_browse / hot_deal_click
+• funnel: registration_complete（注册漏斗终点）`,
 
 waInput: `【页面功能】
 WhatsApp登录渠道入口，用户输入WhatsApp号码以接收OTP。
@@ -2377,7 +2429,7 @@ WhatsApp验证码输入页，用户填入通过WhatsApp收到的6位OTP。
 【验证码规则】
 • 验证码长度：6位纯数字
 • 有效期：5分钟（与SMS统一）
-• 错误重试机制：与SMS一致（5次锁定30分钟）
+• 错误重试机制：与SMS一致（5次锁定1小时）
 
 【重发机制】
 • 倒计时：60秒后可重发
@@ -2481,7 +2533,7 @@ emailInput: `【页面功能】
 • 同一邮箱每日上限：10次
 • 同一IP每小时上限：20次（防恶意刷码）
 • 超限提示："Too many requests. Please try again later."
-• 验证码暴力破解防护：连续5次错误 → 锁定30分钟
+• 验证码暴力破解防护：连续5次错误 → 锁定1小时
 
 ═══════════════════════
 七、邮件可达性保障（后端/运维）
@@ -2511,7 +2563,7 @@ emailOtp: `【页面功能】
 【验证码规则】
 • 验证码长度：6位纯数字
 • 有效期：5分钟
-• 错误重试：5次锁定30分钟
+• 错误重试：5次锁定1小时
 
 【邮件说明】
 • 通道标识："via Email"
@@ -2524,26 +2576,13 @@ emailOtp: `【页面功能】
 • 重发提示toast："Code resent!"
 
 【验证成功后】
-• 新用户 → 进入设置邮箱密码页（emailPwd）
+• 新用户 → 进入通用设置密码页（Set Pwd）
 • 已注册用户（有密码）→ 直接登录进入首页
-• 已注册用户（无密码）→ 引导设置密码`,
+• 已注册用户（无密码）→ 进入通用设置密码页`,
 
-emailPwd: `【页面功能】
-邮箱注册用户设置初始密码页面，密码与该邮箱地址绑定。邮箱注册流程中，此页同时作为账号密码设置页，无需再经过通用 Set Password 页。
-
-【密码规则】
-• 8+字符、含大写字母、含数字
-• 实时强度指示条（四段）
-• 需二次确认密码一致
-
-【流程位置】
-• Email OTP 验证通过 → 本页设密码 → Profile 个人信息 → Success 完成
-• 邮箱注册流程不经过通用 Set Pwd 页，因为此页已完成密码设置
-
-【产品说明】
-• 此页设置的密码即为账号登录密码，可用于"邮箱+密码"方式直接登录
-• 此页不可跳过，邮箱注册必须设置密码
-• 顶部显示 "Password linked to xxx@xxx.com" 明确关联邮箱`,
+emailPwd: `【⚠️ 已废弃 — 合并至通用 Set Pwd 页】
+本页不再使用。所有注册方式（手机、WhatsApp、邮箱）统一使用 Set Pwd 页设置密码。
+邮箱注册流程：Email OTP → Set Pwd → 注册完成 → 首页`,
 
 pwdLogin: `【页面功能】
 密码登录独立页面，面向已注册且设置过密码的老用户。
@@ -2576,22 +2615,21 @@ pwdLogin: `【页面功能】
 • "Don't have an account? Sign up with Phone" → 跳转至手机号注册`,
 
 forgotPwd: `【页面功能】
-忘记密码流程，以底部弹层（Bottom Sheet）形式呈现，支持通过手机验证码重置密码。
+忘记密码流程，以底部弹层（Bottom Sheet）形式呈现，支持手机号和邮箱两种方式重置密码。
 
 【触发入口】
 • Login页Password Tab → "Forgot password?"
 • Pwd Login页 → "Forgot password?"
 
 【三步流程】
-Step 1 — 输入手机号
-• 选择区号+输入手机号
-• 仅支持SMS验证码方式重置，不支持邮箱
-• 页面黄色提示框说明："Only SMS verification is supported for password reset"
+Step 1 — 选择验证方式（手机号 / 邮箱 Tab切换）
+📱 手机号方式：选择区号+输入手机号 → 发送短信验证码
+✉️ 邮箱方式：输入注册邮箱地址 → 发送邮件验证码
 
 Step 2 — 验证OTP
 • 6位数字验证码，规则同登录OTP
 • 有效期5分钟，支持重发（60秒倒计时）
-• 显示脱敏手机号
+• 根据Step 1选择，显示脱敏手机号或邮箱
 
 Step 3 — 设置新密码
 • 密码规则同注册设密码：8+字符、含大写、含数字
@@ -2600,9 +2638,7 @@ Step 3 — 设置新密码
 • 提交后关闭弹层+toast提示"Password changed successfully!"
 
 【产品决策】
-• 本期仅支持手机号重置，原因：
-  ① 手机号为主要注册方式，覆盖率最高
-  ② 邮箱重置链接体验复杂，V2再做
+• 支持手机号和邮箱两种重置方式
 • 重置密码不影响已登录设备的session
 
 【关闭方式】
@@ -2617,8 +2653,24 @@ const isGitHubPages = !isLocalDev;
 let allNotes = {};
 let currentNoteId = 'splash';
 
+const NOTES_FILE = 'fonesquare-login.notes.json';
+
 function loadNotes() {
   try { allNotes = JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch(e) { allNotes = {}; }
+}
+
+async function loadNotesFromServer() {
+  if (!isLocalDev) return;
+  try {
+    const resp = await fetch('/' + NOTES_FILE + '?t=' + Date.now());
+    if (resp.ok) {
+      const serverNotes = await resp.json();
+      for (const k in serverNotes) {
+        allNotes[k] = serverNotes[k];
+      }
+      localStorage.setItem(NOTES_KEY, JSON.stringify(allNotes));
+    }
+  } catch (e) {}
 }
 
 function saveNotes() {
@@ -2626,6 +2678,43 @@ function saveNotes() {
   const badge = document.getElementById('notesSaved');
   badge.classList.add('show');
   setTimeout(() => badge.classList.remove('show'), 1500);
+}
+
+async function saveNotesToServer() {
+  if (!isLocalDev) return;
+  const btn = document.getElementById('btnSaveToFile');
+  btn.textContent = '⏳';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('/save-notes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename: NOTES_FILE, notes: allNotes })
+    });
+    if (resp.ok) {
+      btn.textContent = '✅ Saved';
+      btn.style.background = 'var(--ok)';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = '💾 Save';
+        btn.style.background = 'var(--pri)';
+        btn.style.color = '#fff';
+        btn.disabled = false;
+      }, 2000);
+    } else {
+      throw new Error('Server error');
+    }
+  } catch (e) {
+    btn.textContent = '❌ Failed';
+    btn.style.background = '#ef4444';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = '💾 Save';
+      btn.style.background = 'var(--pri)';
+      btn.style.color = '#fff';
+      btn.disabled = false;
+    }, 2000);
+  }
 }
 
 function initNotesPanel() {
@@ -2758,11 +2847,11 @@ en: {
   'smsOtp.desc': 'We sent a 6-digit code via <b>SMS</b> to',
   'smsOtp.channel': '📱 via SMS',
   'smsOtp.resend': "Didn't receive?",
-  'smsOtp.resendTimer': 'Resend in 00:42',
+  'smsOtp.resendTimer': 'Resend in 01:00',
   'smsOtp.btn': 'VERIFY & CONTINUE',
   'setPwd.title': 'Set Password',
   'setPwd.heading': 'Secure Your Account',
-  'setPwd.desc': 'Set a password for easier login next time',
+  'setPwd.desc': 'Set a password to complete registration',
   'setPwd.new.label': 'New Password',
   'setPwd.new.placeholder': 'At least 8 characters',
   'setPwd.hint.chars': '✓ 8+ chars',
@@ -2771,11 +2860,12 @@ en: {
   'setPwd.hint.special': '✓ Special char',
   'setPwd.confirm.label': 'Confirm Password',
   'setPwd.confirm.placeholder': 'Re-enter password',
-  'setPwd.btn': 'SET PASSWORD',
-  'setPwd.skip': 'Skip for now →',
-  'profile.title': 'Registration',
-  'profile.heading': 'Complete Your Profile',
-  'profile.desc': 'Identity info for KYC verification',
+  'setPwd.btn': 'SET PASSWORD & CONTINUE',
+  'regDone.title': 'Registration Complete!',
+  'regDone.desc': 'Welcome to FoneSquare. Redirecting to homepage...',
+  'profile.title': 'Identity Verification',
+  'profile.heading': 'Identity Verification',
+  'profile.desc': 'Complete KYC to unlock order placement',
   'profile.region': 'Country / Region',
   'profile.region.required': 'Required',
   'profile.region.province': 'Province',
@@ -2813,12 +2903,7 @@ en: {
   'profile.biz.validity': 'License Validity Period',
   'profile.biz.startDate': 'Start date',
   'profile.biz.endDate': 'End date',
-  'profile.submit': 'SUBMIT & CONTINUE',
-  'profile.skip': 'Skip for now →',
-  'success.heading': 'Welcome to FoneSquare!',
-  'success.desc': 'Your account has been created. Start exploring the best deals on certified devices.',
-  'success.btn': 'GO TO HOMEPAGE',
-  'success.profile': 'COMPLETE PROFILE NOW',
+  'profile.submit': 'SUBMIT FOR VERIFICATION',
   'waInput.title': 'WhatsApp Login',
   'waInput.heading': 'Login via WhatsApp',
   'waInput.desc': "We'll send a verification code to your WhatsApp",
@@ -2831,7 +2916,7 @@ en: {
   'waOtp.desc': 'We sent a 6-digit code to',
   'waOtp.channel': 'via WhatsApp',
   'waOtp.resend': "Didn't receive?",
-  'waOtp.resendTimer': 'Resend in 00:58',
+  'waOtp.resendTimer': 'Resend in 01:00',
   'waOtp.btn': 'VERIFY & CONTINUE',
   'emailInput.title': 'Email Login',
   'emailInput.heading': 'Login with Email',
@@ -2873,18 +2958,23 @@ en: {
   'pwdLogin.terms.and': 'and',
   'pwdLogin.terms.pp': 'Privacy Policy',
   'loginOk.heading': 'Welcome Back!',
-  'loginOk.desc': "You've been logged in successfully.",
-  'loginOk.btn': 'GO TO HOMEPAGE',
+  'loginOk.desc': 'Redirecting to homepage...',
   'forgot.title': 'Forgot Password',
+  'forgot.tab.phone': '📱 Phone',
+  'forgot.tab.email': '✉️ Email',
   'forgot.desc': 'Enter your phone number to receive a verification code via SMS',
   'forgot.phoneLabel': 'Phone Number',
   'forgot.phonePlaceholder': 'Enter phone number',
-  'forgot.info': 'Only SMS verification is supported for password reset',
+  'forgot.emailDesc': 'Enter your email address to receive a verification code',
+  'forgot.emailLabel': 'Email Address',
+  'forgot.emailPlaceholder': 'Enter email address',
   'forgot.sendBtn': 'SEND CODE',
   'forgot.verifyTitle': 'Verify Code',
   'forgot.verifyDesc': 'Enter the 6-digit code sent to',
+  'forgot.otp.desc.phone': 'Enter the 6-digit code sent to <b>+852 9123 ****</b>',
+  'forgot.otp.desc.email': 'Enter the 6-digit code sent to <b>john@***.com</b>',
   'forgot.resend': "Didn't receive?",
-  'forgot.resendTimer': 'Resend in 00:48',
+  'forgot.resendTimer': 'Resend in 01:00',
   'forgot.verifyBtn': 'VERIFY',
   'forgot.newTitle': 'Create New Password',
   'forgot.newDesc': 'Enter your new password below',
@@ -2913,10 +3003,11 @@ en: {
   'notes.exportTime': '导出时间：',
   'notes.emptyNote': '（暂无说明）',
   'toast.langSelected': ' selected',
-  'map.sms': '📱 SMS 主流程：',
-  'map.wa': 'WhatsApp：',
-  'map.email': '✉️ Email：',
-  'map.pwd': '🔒 密码登录：',
+  'map.sms': '📱 SMS Registration: ',
+  'map.wa': 'WhatsApp Registration: ',
+  'map.email': '✉️ Email Registration: ',
+  'map.pwd': '🔒 Password Login: ',
+  'map.kyc': '🛡️ KYC Verification: ',
 },
 zh: {
   'splash.slogan': '品质至上 价格最优',
@@ -2948,11 +3039,11 @@ zh: {
   'smsOtp.desc': '我们已通过 <b>短信</b> 发送6位验证码至',
   'smsOtp.channel': '📱 短信服务',
   'smsOtp.resend': '没有收到？',
-  'smsOtp.resendTimer': '00:42 后重发',
+  'smsOtp.resendTimer': '01:00 后重发',
   'smsOtp.btn': '验证并继续',
   'setPwd.title': '设置密码',
   'setPwd.heading': '保护您的账号',
-  'setPwd.desc': '设置密码以便下次快速登录',
+  'setPwd.desc': '设置密码以完成注册',
   'setPwd.new.label': '新密码',
   'setPwd.new.placeholder': '至少8个字符',
   'setPwd.hint.chars': '✓ 8位以上',
@@ -2961,11 +3052,12 @@ zh: {
   'setPwd.hint.special': '✓ 含特殊字符',
   'setPwd.confirm.label': '确认密码',
   'setPwd.confirm.placeholder': '再次输入密码',
-  'setPwd.btn': '设置密码',
-  'setPwd.skip': '暂时跳过 →',
-  'profile.title': '注册',
-  'profile.heading': '完善个人资料',
-  'profile.desc': '用于KYC身份验证的信息',
+  'setPwd.btn': '设置密码并继续',
+  'regDone.title': '注册完成！',
+  'regDone.desc': '欢迎来到 FoneSquare，正在跳转至首页...',
+  'profile.title': '身份验证',
+  'profile.heading': '身份验证',
+  'profile.desc': '完成KYC认证以解锁下单功能',
   'profile.region': '国家 / 地区',
   'profile.region.required': '必填',
   'profile.region.province': '省份',
@@ -3003,12 +3095,7 @@ zh: {
   'profile.biz.validity': '执照有效期',
   'profile.biz.startDate': '开始日期',
   'profile.biz.endDate': '到期日期',
-  'profile.submit': '提交并继续',
-  'profile.skip': '暂时跳过 →',
-  'success.heading': '欢迎加入 FoneSquare！',
-  'success.desc': '您的账号已创建成功，开始探索优质认证设备吧。',
-  'success.btn': '进入首页',
-  'success.profile': '立即完善资料',
+  'profile.submit': '提交验证',
   'waInput.title': 'WhatsApp 登录',
   'waInput.heading': '通过 WhatsApp 登录',
   'waInput.desc': '我们将向您的WhatsApp发送验证码',
@@ -3021,7 +3108,7 @@ zh: {
   'waOtp.desc': '我们已发送6位验证码至',
   'waOtp.channel': 'via WhatsApp',
   'waOtp.resend': '没有收到？',
-  'waOtp.resendTimer': '00:58 后重发',
+  'waOtp.resendTimer': '01:00 后重发',
   'waOtp.btn': '验证并继续',
   'emailInput.title': '邮箱登录',
   'emailInput.heading': '邮箱登录',
@@ -3063,18 +3150,23 @@ zh: {
   'pwdLogin.terms.and': '和',
   'pwdLogin.terms.pp': '隐私政策',
   'loginOk.heading': '欢迎回来！',
-  'loginOk.desc': '登录成功',
-  'loginOk.btn': '前往首页',
+  'loginOk.desc': '正在跳转至首页...',
   'forgot.title': '忘记密码',
+  'forgot.tab.phone': '📱 手机号',
+  'forgot.tab.email': '✉️ 邮箱',
   'forgot.desc': '输入手机号码，通过短信接收验证码',
   'forgot.phoneLabel': '手机号码',
   'forgot.phonePlaceholder': '请输入手机号',
-  'forgot.info': '仅支持短信验证码重置密码',
+  'forgot.emailDesc': '输入您的邮箱地址，接收验证码',
+  'forgot.emailLabel': '邮箱地址',
+  'forgot.emailPlaceholder': '请输入邮箱',
   'forgot.sendBtn': '发送验证码',
   'forgot.verifyTitle': '验证码',
   'forgot.verifyDesc': '输入发送至 <b>+852 9123 ****</b> 的6位验证码',
+  'forgot.otp.desc.phone': '输入发送至 <b>+852 9123 ****</b> 的6位验证码',
+  'forgot.otp.desc.email': '输入发送至 <b>john@***.com</b> 的6位验证码',
   'forgot.resend': '没有收到？',
-  'forgot.resendTimer': '00:48 后重发',
+  'forgot.resendTimer': '01:00 后重发',
   'forgot.verifyBtn': '验证',
   'forgot.newTitle': '创建新密码',
   'forgot.newDesc': '请输入新密码',
@@ -3103,10 +3195,203 @@ zh: {
   'notes.exportTime': '导出时间：',
   'notes.emptyNote': '（暂无说明）',
   'toast.langSelected': ' 已选择',
-  'map.sms': '📱 短信主流程：',
-  'map.wa': 'WhatsApp：',
-  'map.email': '✉️ 邮箱：',
+  'map.sms': '📱 短信注册：',
+  'map.wa': 'WhatsApp 注册：',
+  'map.email': '✉️ 邮箱注册：',
   'map.pwd': '🔒 密码登录：',
+  'map.kyc': '🛡️ KYC 认证：',
+},
+'zh-hant': {
+  'splash.slogan': '品質至上 價格最優',
+  'splash.hint': '點擊繼續',
+  'splash.version': '版本 1.0.0',
+  'login.slogan': '品質至上 價格最優',
+  'login.tab.phone': '📱 手機',
+  'login.tab.pwd': '🔒 密碼',
+  'login.phone.label': '手機號碼',
+  'login.phone.placeholder': '請輸入手機號',
+  'login.divider': '或',
+  'login.wa': 'WhatsApp',
+  'login.email': '郵箱',
+  'login.btn': '登入 / 註冊',
+  'login.pwd.account.label': '手機號或郵箱',
+  'login.pwd.account.placeholder': '請輸入手機號或郵箱',
+  'login.pwd.label': '密碼',
+  'login.pwd.placeholder': '請輸入密碼',
+  'login.forgot': '忘記密碼？',
+  'login.pwd.btn': '登入',
+  'login.signup': '還沒有帳號？',
+  'login.signup.link': '手機號註冊',
+  'login.terms': '繼續即表示您同意我們的',
+  'login.terms.tos': '服務條款',
+  'login.terms.and': '和',
+  'login.terms.pp': '私隱政策',
+  'smsOtp.title': '驗證',
+  'smsOtp.heading': '輸入驗證碼',
+  'smsOtp.desc': '我們已透過 <b>短訊</b> 發送6位驗證碼至',
+  'smsOtp.channel': '📱 短訊服務',
+  'smsOtp.resend': '沒有收到？',
+  'smsOtp.resendTimer': '01:00 後重發',
+  'smsOtp.btn': '驗證並繼續',
+  'setPwd.title': '設置密碼',
+  'setPwd.heading': '保護您的帳號',
+  'setPwd.desc': '設置密碼以完成註冊',
+  'setPwd.new.label': '新密碼',
+  'setPwd.new.placeholder': '至少8個字元',
+  'setPwd.hint.chars': '✓ 8位以上',
+  'setPwd.hint.number': '✓ 含數字',
+  'setPwd.hint.upper': '✓ 含大寫',
+  'setPwd.hint.special': '✓ 含特殊字元',
+  'setPwd.confirm.label': '確認密碼',
+  'setPwd.confirm.placeholder': '再次輸入密碼',
+  'setPwd.btn': '設置密碼並繼續',
+  'regDone.title': '註冊完成！',
+  'regDone.desc': '歡迎來到 FoneSquare，正在跳轉至首頁...',
+  'profile.title': '身份驗證',
+  'profile.heading': '身份驗證',
+  'profile.desc': '完成KYC認證以解鎖下單功能',
+  'profile.region': '國家 / 地區',
+  'profile.region.required': '必填',
+  'profile.region.province': '省份',
+  'profile.region.city': '城市',
+  'profile.id': '身份驗證',
+  'profile.id.select': '選擇證件類型',
+  'profile.id.hkid': '港澳居民身份證',
+  'profile.id.passport': '護照',
+  'profile.id.cnid': '中國居民身份證',
+  'profile.upload.front': '✅ 正面',
+  'profile.upload.back': '反面',
+  'profile.upload.hint': 'JPG/PNG ≤10MB',
+  'profile.upload.passport': '上傳資訊頁',
+  'profile.upload.passport.hint': '含MRZ的資訊頁 · JPG/PNG ≤10MB',
+  'profile.ocr.banner': 'OCR 已識別',
+  'profile.ocr.bannerDesc': '— 請檢查並修正',
+  'profile.ocr.name': '姓名',
+  'profile.ocr.idNum': '證件號碼',
+  'profile.ocr.edit': '✏️ 點擊編輯',
+  'profile.validity': '證件有效期',
+  'profile.email': '聯絡郵箱',
+  'profile.email.optional': '選填',
+  'profile.email.placeholder': '用於接收訂單通知',
+  'profile.biz': '企業資訊',
+  'profile.biz.optional': '選填',
+  'profile.biz.collapse': '添加營業執照以開通企業帳戶',
+  'profile.biz.upload': '上傳營業執照',
+  'profile.biz.hint': 'JPG / PNG / PDF，最大20MB',
+  'profile.biz.ocrPending': '上傳執照後自動識別',
+  'profile.biz.licenseType': '證照類型',
+  'profile.biz.regNum': '註冊號',
+  'profile.biz.legalRep': '法定代表人/董事',
+  'profile.biz.address': '企業地址',
+  'profile.biz.autoDetect': '自動識別',
+  'profile.biz.validity': '執照有效期',
+  'profile.biz.startDate': '開始日期',
+  'profile.biz.endDate': '到期日期',
+  'profile.submit': '提交驗證',
+  'waInput.title': 'WhatsApp 登入',
+  'waInput.heading': '透過 WhatsApp 登入',
+  'waInput.desc': '我們將向您的WhatsApp發送驗證碼',
+  'waInput.info': '驗證碼透過 WhatsApp 發送',
+  'waInput.label': 'WhatsApp 號碼',
+  'waInput.placeholder': '請輸入WhatsApp號碼',
+  'waInput.btn': '發送 WHATSAPP 驗證碼',
+  'waOtp.title': 'WhatsApp 驗證',
+  'waOtp.heading': '請查看您的 WhatsApp',
+  'waOtp.desc': '我們已發送6位驗證碼至',
+  'waOtp.channel': 'via WhatsApp',
+  'waOtp.resend': '沒有收到？',
+  'waOtp.resendTimer': '01:00 後重發',
+  'waOtp.btn': '驗證並繼續',
+  'emailInput.title': '郵箱登入',
+  'emailInput.heading': '郵箱登入',
+  'emailInput.desc': '輸入郵箱地址獲取驗證碼',
+  'emailInput.label': '郵箱地址',
+  'emailInput.placeholder': 'you@example.com',
+  'emailInput.btn': '發送驗證碼',
+  'emailInput.pwdLink': '已有密碼？',
+  'emailInput.pwdLinkAction': '密碼登入',
+  'emailOtp.title': '郵箱驗證',
+  'emailOtp.heading': '查看您的郵箱',
+  'emailOtp.desc': '我們已發送6位驗證碼至',
+  'emailOtp.channel': '✉️ 郵箱發送',
+  'emailOtp.resend': '沒有收到？',
+  'emailOtp.resendLink': '重新發送',
+  'emailOtp.btn': '驗證並繼續',
+  'emailPwd.title': '建立密碼',
+  'emailPwd.heading': '建立您的密碼',
+  'emailPwd.desc': '為您的郵箱帳戶設置密碼',
+  'emailPwd.linked': '密碼關聯至',
+  'emailPwd.new.label': '新密碼',
+  'emailPwd.new.placeholder': '至少8個字元',
+  'emailPwd.confirm.label': '確認密碼',
+  'emailPwd.confirm.placeholder': '再次輸入密碼',
+  'emailPwd.btn': '建立帳戶',
+  'pwdLogin.tab.phone': '📱 手機',
+  'pwdLogin.tab.pwd': '🔒 密碼',
+  'pwdLogin.btn': '登入',
+  'pwdLogin.signup': '還沒有帳號？',
+  'pwdLogin.signupLink': '手機號註冊',
+  'pwdLogin.slogan': '品質至上 價格最優',
+  'pwdLogin.account.label': '手機號或郵箱',
+  'pwdLogin.account.placeholder': '請輸入手機號或郵箱',
+  'pwdLogin.pwd.label': '密碼',
+  'pwdLogin.pwd.placeholder': '請輸入密碼',
+  'pwdLogin.forgot': '忘記密碼？',
+  'pwdLogin.terms': '繼續即表示您同意我們的',
+  'pwdLogin.terms.tos': '服務條款',
+  'pwdLogin.terms.and': '和',
+  'pwdLogin.terms.pp': '私隱政策',
+  'loginOk.heading': '歡迎回來！',
+  'loginOk.desc': '正在跳轉至首頁...',
+  'forgot.title': '忘記密碼',
+  'forgot.tab.phone': '📱 手機號',
+  'forgot.tab.email': '✉️ 郵箱',
+  'forgot.desc': '輸入手機號碼，透過短訊接收驗證碼',
+  'forgot.phoneLabel': '手機號碼',
+  'forgot.phonePlaceholder': '請輸入手機號',
+  'forgot.emailDesc': '輸入您的郵箱地址，接收驗證碼',
+  'forgot.emailLabel': '郵箱地址',
+  'forgot.emailPlaceholder': '請輸入郵箱',
+  'forgot.sendBtn': '發送驗證碼',
+  'forgot.verifyTitle': '驗證碼',
+  'forgot.verifyDesc': '輸入發送至 <b>+852 9123 ****</b> 的6位驗證碼',
+  'forgot.otp.desc.phone': '輸入發送至 <b>+852 9123 ****</b> 的6位驗證碼',
+  'forgot.otp.desc.email': '輸入發送至 <b>john@***.com</b> 的6位驗證碼',
+  'forgot.resend': '沒有收到？',
+  'forgot.resendTimer': '01:00 後重發',
+  'forgot.verifyBtn': '驗證',
+  'forgot.newTitle': '建立新密碼',
+  'forgot.newDesc': '請輸入新密碼',
+  'forgot.new.label': '新密碼',
+  'forgot.new.placeholder': '至少8個字元',
+  'forgot.confirm.label': '確認密碼',
+  'forgot.confirm.placeholder': '再次輸入密碼',
+  'forgot.changeBtn': '修改密碼',
+  'forgot.success': '密碼修改成功 ✓',
+  'cpk.title': '選擇國家 / 地區',
+  'cpk.search': '搜尋國家或區號…',
+  'cpk.empty': '未找到結果',
+  'cpk.popular': '熱門',
+  'cpk.all': '所有國家',
+  'notes.title': '產品說明',
+  'notes.saved': '✓ 已儲存',
+  'notes.tip': '自動儲存 · 可直接編輯',
+  'notes.export': '匯出',
+  'notes.reset': '重設',
+  'notes.clear': '清空',
+  'notes.placeholder': '在此輸入該頁面的產品說明…',
+  'notes.confirmReset': '重設目前頁面為預設產品說明？您編輯的內容將被覆蓋。',
+  'notes.confirmClear': '確定清空目前頁面的備註？',
+  'notes.exported': '備註已匯出為 Markdown ✓',
+  'notes.exportTitle': '# FoneSquare 登入註冊 — 產品說明',
+  'notes.exportTime': '匯出時間：',
+  'notes.emptyNote': '（暫無說明）',
+  'toast.langSelected': ' 已選擇',
+  'map.sms': '📱 短訊註冊：',
+  'map.wa': 'WhatsApp 註冊：',
+  'map.email': '✉️ 郵箱註冊：',
+  'map.pwd': '🔒 密碼登入：',
+  'map.kyc': '🛡️ KYC 認證：',
 }
 };
 
@@ -3190,8 +3475,14 @@ function applyLocale() {
     _h(hints[1], 'setPwd.hint.number');
     _h(hints[2], 'setPwd.hint.upper');
     _h(hints[3], 'setPwd.hint.special');
-    _h(setPwd.querySelector('.btn:not(.ghost)'), 'setPwd.btn');
-    _h(setPwd.querySelector('.btn.ghost'), 'setPwd.skip');
+    _h(setPwd.querySelector('.btn'), 'setPwd.btn');
+  }
+
+  // ── RegDone ──
+  const regDone = _s('#s-regDone');
+  if (regDone) {
+    _h(regDone.querySelector('#regDoneTitle'), 'regDone.title');
+    _h(regDone.querySelector('#regDoneDesc'), 'regDone.desc');
   }
 
   // ── Profile ──
@@ -3265,18 +3556,11 @@ function applyLocale() {
       _h(bizDateVals[0], 'profile.biz.startDate');
       _h(bizDateVals[1], 'profile.biz.endDate');
     }
-    _h(profile.querySelector('.btn:not(.ghost)'), 'profile.submit');
-    _h(profile.querySelector('.btn.ghost'), 'profile.skip');
+    _h(profile.querySelector('.btn'), 'profile.submit');
   }
 
-  // ── Success ──
-  const success = _s('#s-success');
-  if (success) {
-    _h(success.querySelector('h2'), 'success.heading');
-    _h(success.querySelector('.ok-area p'), 'success.desc');
-    _h(success.querySelector('.btn.green'), 'success.btn');
-    _h(success.querySelector('#successProfileBtn'), 'success.profile');
-  }
+  // ── Homepage (registration complete) ──
+  // No dynamic i18n needed — homepage is locale-independent UI mockup
 
   // ── WhatsApp Input ──
   const waInput = _s('#s-waInput');
@@ -3371,22 +3655,27 @@ function applyLocale() {
     if (plFoot[1]) _i(plFoot[1], t('pwdLogin.terms') + ' <a href="#">' + t('pwdLogin.terms.tos') + '</a> ' + t('pwdLogin.terms.and') + ' <a href="#">' + t('pwdLogin.terms.pp') + '</a>');
   }
 
-  // ── Login OK (returning user) ──
+  // ── Login OK (returning user — auto-redirect, no button) ──
   const loginOk = _s('#s-loginOk');
   if (loginOk) {
-    _h(loginOk.querySelector('h2'), 'loginOk.heading');
-    _h(loginOk.querySelector('.ok-area p'), 'loginOk.desc');
-    _h(loginOk.querySelector('.btn'), 'loginOk.btn');
+    _h(loginOk.querySelector('#loginOkTitle'), 'loginOk.heading');
+    _h(loginOk.querySelector('#loginOkDesc'), 'loginOk.desc');
   }
 
   // ── Forgot Password Sheet ──
   const fg1 = _s('#fgStep1');
   if (fg1) {
-    _h(fg1.querySelector('.sheet-title'), 'forgot.title');
-    _h(fg1.querySelector('.sheet-desc'), 'forgot.desc');
-    _h(fg1.querySelector('.form-label'), 'forgot.phoneLabel');
-    _p(fg1.querySelector('.phone-grp input'), 'forgot.phonePlaceholder');
-    _h(fg1.querySelector('.info-box span:last-child'), 'forgot.info');
+    _h(fg1.querySelector('#fgTitle'), 'forgot.title');
+    _h(fg1.querySelector('#fgTabPhone'), 'forgot.tab.phone');
+    _h(fg1.querySelector('#fgTabEmail'), 'forgot.tab.email');
+    _h(fg1.querySelector('#fgPhoneDesc'), 'forgot.desc');
+    const fg1PhoneLabels = fg1.querySelectorAll('#fgPhonePanel .form-label');
+    if (fg1PhoneLabels[0]) _h(fg1PhoneLabels[0], 'forgot.phoneLabel');
+    _p(fg1.querySelector('#fgPhonePanel .phone-grp input'), 'forgot.phonePlaceholder');
+    _h(fg1.querySelector('#fgEmailDesc'), 'forgot.emailDesc');
+    const fg1EmailLabels = fg1.querySelectorAll('#fgEmailPanel .form-label');
+    if (fg1EmailLabels[0]) _h(fg1EmailLabels[0], 'forgot.emailLabel');
+    _p(fg1.querySelector('#fgEmailPanel .inp'), 'forgot.emailPlaceholder');
     _h(fg1.querySelector('.btn'), 'forgot.sendBtn');
   }
   const fg2 = _s('#fgStep2');
@@ -3420,23 +3709,25 @@ function applyLocale() {
   _h(_s('.nf-tip'), 'notes.tip');
   document.querySelectorAll('.note-edit').forEach(ta => { ta.placeholder = t('notes.placeholder'); });
   const footBtns = document.querySelectorAll('.nf-btn');
-  _h(footBtns[0], 'notes.export');
-  _h(footBtns[1], 'notes.reset');
-  _h(footBtns[2], 'notes.clear');
+  _h(footBtns[1], 'notes.export');
+  _h(footBtns[2], 'notes.reset');
+  _h(footBtns[3], 'notes.clear');
 
   // ── Lang switcher labels ──
-  document.documentElement.lang = currentLocale === 'zh' ? 'zh-Hans' : 'en';
+  const langMap = {'en':'en','zh':'zh-Hans','zh-hant':'zh-Hant-HK'};
+  document.documentElement.lang = langMap[currentLocale] || 'en';
+  const labelMap = {'en':'EN','zh':'中文','zh-hant':'繁體'};
+  const optIndexMap = {'en':0,'zh':1,'zh-hant':2};
   document.querySelectorAll('.lang-anchor').forEach(a => {
     const label = a.querySelector('.lang-label');
-    if (label) label.textContent = currentLocale === 'zh' ? '中文' : 'EN';
+    if (label) label.textContent = labelMap[currentLocale] || 'EN';
     a.querySelectorAll('.lang-opt').forEach(o => {
       o.classList.remove('on');
       const ck = o.querySelector('.check');
       if (ck) ck.remove();
     });
-    const targetOpt = currentLocale === 'zh'
-      ? a.querySelectorAll('.lang-opt')[1]
-      : a.querySelectorAll('.lang-opt')[0];
+    const idx = optIndexMap[currentLocale] ?? 0;
+    const targetOpt = a.querySelectorAll('.lang-opt')[idx];
     if (targetOpt) {
       targetOpt.classList.add('on');
       targetOpt.insertAdjacentHTML('beforeend', '<span class="check">✓</span>');
@@ -3446,10 +3737,11 @@ function applyLocale() {
   // ── Screen map ──
   const mapEl = _s('.screen-map');
   if (mapEl) {
-    mapEl.innerHTML = `<b>${t('map.sms')}</b> Splash → Login → SMS OTP → Set Pwd → Profile → Success<br>` +
-      `<b>${t('map.wa')}</b> Login → WA Input → WA OTP → Set Pwd → Profile → …<br>` +
-      `<b>${t('map.email')}</b> Login → Email → Email OTP → Email Pwd → Profile → …<br>` +
-      `<b>${t('map.pwd')}</b> Login (Password Tab) → Login Success`;
+    mapEl.innerHTML = `<b>${t('map.sms')}</b> Splash → Login → SMS OTP → Set Pwd（必填）→ 注册完成 → 首页<br>` +
+      `<b>${t('map.wa')}</b> Login → WA Input → WA OTP → Set Pwd（必填）→ 注册完成 → 首页<br>` +
+      `<b>${t('map.email')}</b> Login → Email → Email OTP → Set Pwd（必填）→ 注册完成 → 首页<br>` +
+      `<b>${t('map.pwd')}</b> Login (Password Tab) → Login Success（自动跳转）→ 首页<br>` +
+      `<b>${t('map.kyc')}</b> 下单前校验 / "Me"页面入口 → Profile（独立于注册流程）`;
   }
 }
 
@@ -3459,8 +3751,10 @@ function setLocale(code) {
   applyLocale();
 }
 
-initNotesPanel();
-applyLocale();
+loadNotesFromServer().then(() => {
+  initNotesPanel();
+  applyLocale();
+});
 </script>
 </body>
 </html>
