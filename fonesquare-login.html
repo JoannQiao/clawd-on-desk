@@ -2661,7 +2661,7 @@ function loadNotes() {
 
 async function loadNotesFromServer() {
   try {
-    const resp = await fetch('/' + NOTES_FILE + '?t=' + Date.now());
+    const resp = await fetch(NOTES_FILE + '?t=' + Date.now());
     if (resp.ok) {
       const serverNotes = await resp.json();
       for (const k in serverNotes) {
