@@ -2372,7 +2372,6 @@ function loadNotes() {
 }
 
 async function loadNotesFromServer() {
-  if (!isLocalDev) return;
   try {
     const resp = await fetch('/' + NOTES_FILE + '?t=' + Date.now());
     if (resp.ok) {
