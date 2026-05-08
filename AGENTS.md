@@ -110,3 +110,23 @@ bash deploy-prd.sh
 - After PRD changes, always copy updated files to `public/` for deployment readiness
 - The `prd-server.py` is for local development only; Cloud Agent should edit files directly
 - Respond in Chinese (中文) unless the user explicitly requests English
+
+## Cursor Cloud specific instructions
+
+### Electron App (Clawd on Desk)
+- The Electron app requires a display. In headless Cloud VMs, use `xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" npm start` to launch it.
+- GPU-related warnings (`ContextResult::kTransientFailure`, `APPIMAGE env is not defined`) are expected in headless environments and can be ignored.
+- The app's HTTP server listens on `127.0.0.1:23333`. Test state changes with: `curl -X POST http://127.0.0.1:23333/state -H "Content-Type: application/json" -d '{"state":"thinking","session_id":"test"}'`
+- There is no ESLint or other linter configured in this project.
+- Unit tests (`npm test`) are headless-safe — they use Node's built-in test runner and do not require Electron or a display.
+
+### PRD Server
+- Start with `python3 prd-server.py` — uses only Python stdlib, no pip dependencies.
+- Serves on `http://localhost:8080`. Test with `curl http://localhost:8080/FoneSquare-PRD-v2.html`.
+
+### Services summary
+| Service | Command | Port |
+|---------|---------|------|
+| Electron App | `xvfb-run npm start` | 23333 |
+| PRD Server | `python3 prd-server.py` | 8080 |
+| Unit Tests | `npm test` | N/A |
