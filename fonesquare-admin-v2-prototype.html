@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoneSquare Admin V2 — Interactive Prototype</title>
+<style>
+:root { --ant: #1677ff; --bg: #f0f2f5; --text: #262626; --muted: #8c8c8c; --border: #d9d9d9; --sider: #001529; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 13px; color: var(--text); background: var(--bg); min-height: 100vh; }
+.fs-bar { height: 48px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.fs-bar-title { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.fs-bar-title span { background: var(--ant); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 800; }
+.fs-lang { display: flex; gap: 4px; }
+.fs-lang button { padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 12px; }
+.fs-lang button.active { background: var(--ant); color: #fff; border-color: var(--ant); }
+.fs-wrap { display: flex; min-height: calc(100vh - 48px); }
+.fs-sider { width: 200px; background: var(--sider); color: rgba(255,255,255,.65); padding: 12px 0; flex-shrink: 0; }
+.fs-sider-g { padding: 8px 16px 4px; font-size: 10px; color: rgba(255,255,255,.35); letter-spacing: .5px; text-transform: uppercase; }
+.fs-nav { padding: 8px 16px; cursor: pointer; font-size: 13px; border-radius: 0; transition: background .15s; }
+.fs-nav:hover { color: #fff; background: rgba(255,255,255,.08); }
+.fs-nav.active { background: var(--ant); color: #fff; }
+.fs-main { flex: 1; padding: 20px 24px 40px; overflow: auto; }
+.fs-panel { display: none; animation: fade .2s ease; }
+.fs-panel.active { display: block; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.fs-card { background: #fff; border-radius: 8px; border: 1px solid #f0f0f0; margin-bottom: 16px; overflow: hidden; }
+.fs-card-h { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; font-weight: 600; font-size: 14px; }
+.fs-card-b { padding: 16px; }
+.fs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+.fs-field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.fs-input { border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 13px; color: #bfbfbf; background: #fafafa; }
+.fs-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+.fs-btn { padding: 6px 16px; border-radius: 6px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 13px; }
+.fs-btn.primary { background: var(--ant); color: #fff; border-color: var(--ant); }
+table.fs-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.fs-table th, .fs-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; text-align: left; }
+.fs-table th { background: #fafafa; font-weight: 600; color: var(--text); }
+.fs-tag { display: inline-block; padding: 0 8px; border-radius: 4px; font-size: 11px; }
+.fs-tag.buy { background: #e6f4ff; color: var(--ant); }
+.fs-tag.sell { background: #f9f0ff; color: #722ed1; }
+.fs-tag.ok { background: #f6ffed; color: #52c41a; }
+.fs-tabs { display: flex; gap: 0; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; }
+.fs-tab { padding: 10px 18px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.fs-tab.active { color: var(--ant); border-bottom-color: var(--ant); font-weight: 500; }
+.fs-tab-panel { display: none; }
+.fs-tab-panel.active { display: block; }
+.fs-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: rgba(0,0,0,.82); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; opacity: 0; transition: .25s; z-index: 100; pointer-events: none; }
+.fs-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.fs-upload-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.fs-upload { flex: 1; min-width: 100px; border: 1px dashed var(--border); border-radius: 6px; padding: 16px; text-align: center; color: var(--muted); font-size: 11px; cursor: pointer; }
+.fs-type-row { display: flex; gap: 12px; }
+.fs-type { flex: 1; border: 2px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; transition: border-color .15s; }
+.fs-type.on { border-color: var(--ant); background: #e6f4ff22; }
+.fs-bc { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.fs-bc strong { color: var(--text); }
+.fs-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.fs-stat { background: #fff; border: 1px solid #f0f0f0; border-radius: 8px; padding: 14px; text-align: center; }
+.fs-stat-v { font-size: 22px; font-weight: 700; color: var(--ant); }
+.fs-stat-l { font-size: 11px; color: var(--muted); margin-top: 4px; }
+@media (max-width: 900px) {
+  .fs-wrap { flex-direction: column; }
+  .fs-sider { width: 100%; display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; }
+  .fs-sider-g { width: 100%; }
+  .fs-nav { flex: 1; min-width: 120px; text-align: center; border-radius: 6px; }
+  .fs-row, .fs-stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="fs-bar">
+  <div class="fs-bar-title"><span>FS</span> <span data-i18n="appTitle">FoneSquare Admin V2</span></div>
+  <div class="fs-lang">
+    <button type="button" id="langZh" class="active">简体中文</button>
+    <button type="button" id="langEn">English</button>
+  </div>
+</div>
+
+<div class="fs-wrap">
+  <aside class="fs-sider">
+    <div class="fs-sider-g" data-i18n="navSectionWeb">WEB原型</div>
+    <div class="fs-nav active" data-view="list" data-i18n="navList">Merchant list</div>
+    <div class="fs-nav" data-view="detail" data-i18n="navDetail">Merchant detail</div>
+    <div class="fs-nav" data-view="add" data-i18n="navAdd">Add merchant</div>
+  </aside>
+
+  <main class="fs-main">
+    <!-- List -->
+    <section class="fs-panel active" id="panel-list">
+      <div class="fs-bc"><span data-i18n="bcHome">Home</span> / <strong data-i18n="bcList">Merchant list</strong></div>
+      <div class="fs-toolbar">
+        <span style="font-size:16px;font-weight:700;" data-i18n="listTitle">Merchant list</span>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="fs-btn" data-i18n="btnExport">Export</button>
+          <button type="button" class="fs-btn primary" data-action="go-add" data-i18n="btnAdd">Add merchant</button>
+        </div>
+      </div>
+      <div class="fs-card">
+        <div class="fs-card-b">
+          <div class="fs-row" style="margin-bottom:12px;">
+            <div class="fs-field"><label data-i18n="lblName">Keyword</label><div class="fs-input" data-i18n="phKeyword">Search name / phone…</div></div>
+            <div class="fs-field"><label data-i18n="lblType">Type</label><div class="fs-input">—</div></div>
+          </div>
+          <button type="button" class="fs-btn primary" data-i18n="btnQuery">Search</button>
+        </div>
+      </div>
+      <div class="fs-card">
+        <div class="fs-card-h" data-i18n="results">Results</div>
+        <table class="fs-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th data-i18n="colName">Name</th>
+              <th data-i18n="colType">Type</th>
+              <th data-i18n="colSales">Sales</th>
+              <th data-i18n="colAction">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1001</td>
+              <td>HK Mobile Trade Co.</td>
+              <td><span class="fs-tag buy" data-i18n="tagBuyer">Buyer</span></td>
+              <td>Zhang</td>
+              <td><span style="color:var(--ant);cursor:pointer;" data-action="go-detail" data-i18n="linkView">View</span></td>
+            </tr>
+            <tr>
+              <td>1002</td>
+              <td>Macau Phones Ltd.</td>
+              <td><span class="fs-tag sell" data-i18n="tagSeller">Seller</span></td>
+              <td>Li</td>
+              <td><span style="color:var(--ant);cursor:pointer;" data-action="go-detail" data-i18n="linkView">View</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Add — single scrollable page -->
+    <section class="fs-panel" id="panel-add">
+      <div class="fs-bc"><span data-i18n="bcHome">Home</span> / <strong data-i18n="bcAdd">Add merchant</strong></div>
+      <div class="fs-toolbar">
+        <span style="font-size:16px;font-weight:700;" data-i18n="addTitle">Add merchant</span>
+        <button type="button" class="fs-btn" data-action="go-list" data-i18n="btnBack">Back to list</button>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px;" data-i18n="addHint">Sales-created merchants bind automatically. Admin-created merchants need sales assignment on detail page.</p>
+
+      <div class="fs-card">
+        <div class="fs-card-h" data-i18n="secBasic">Basic information</div>
+        <div class="fs-card-b">
+          <div class="fs-field" style="margin-bottom:12px;">
+            <label data-i18n="lblMerchantType">Merchant type *</label>
+            <div class="fs-type-row">
+              <div class="fs-type on" id="typeBuyer" role="button"><div style="font-size:18px;">🛒</div><div data-i18n="typeBuyer">Buyer</div></div>
+              <div class="fs-type" id="typeSeller" role="button"><div style="font-size:18px;">📦</div><div data-i18n="typeSeller">Seller</div></div>
+            </div>
+          </div>
+          <div class="fs-row">
+            <div class="fs-field"><label data-i18n="lblBizName">Merchant name *</label><div class="fs-input">—</div></div>
+            <div class="fs-field"><label data-i18n="lblContact">Contact *</label><div class="fs-input">—</div></div>
+          </div>
+          <div class="fs-row" style="margin-top:12px;">
+            <div class="fs-field"><label data-i18n="lblPhone">Phone *</label><div class="fs-input">+852 …</div></div>
+            <div class="fs-field"><label data-i18n="lblEmail">Email</label><div class="fs-input">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fs-card">
+        <div class="fs-card-h" data-i18n="secKyc">Identity (KYC)</div>
+        <div class="fs-card-b">
+          <div class="fs-row">
+            <div class="fs-field"><label data-i18n="lblIdType">ID type *</label><div class="fs-input">—</div></div>
+            <div class="fs-field"><label data-i18n="lblIdNo">ID number *</label><div class="fs-input">—</div></div>
+          </div>
+          <div class="fs-field" style="margin-top:12px;"><label data-i18n="lblIdPhotos">ID photos *</label>
+            <div class="fs-upload-grid">
+              <div class="fs-upload" data-i18n="upFront">Front</div>
+              <div class="fs-upload" data-i18n="upBack">Back</div>
+              <div class="fs-upload" data-i18n="upHold">Holding</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fs-card">
+        <div class="fs-card-h"><span data-i18n="secBiz">Enterprise (optional)</span></div>
+        <div class="fs-card-b">
+          <div class="fs-row">
+            <div class="fs-field"><label data-i18n="lblCoName">Company name</label><div class="fs-input">—</div></div>
+            <div class="fs-field"><label data-i18n="lblBr">Business registration no.</label><div class="fs-input">—</div></div>
+          </div>
+          <div class="fs-field" style="margin-top:12px;"><label data-i18n="lblBrPhoto">BR scan</label><div class="fs-upload" style="max-width:220px;">—</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
+        <button type="button" class="fs-btn" data-action="go-list" data-i18n="btnCancel">Cancel</button>
+        <button type="button" class="fs-btn primary" id="btnSubmitAdd" data-i18n="btnSubmit">Submit</button>
+      </div>
+    </section>
+
+    <!-- Detail -->
+    <section class="fs-panel" id="panel-detail">
+      <div class="fs-bc"><span data-i18n="bcHome">Home</span> / <strong data-i18n="bcDetail">Merchant detail</strong></div>
+      <div class="fs-toolbar">
+        <span style="font-size:16px;font-weight:700;">HK Mobile Trade Co.</span>
+        <button type="button" class="fs-btn" data-action="go-list" data-i18n="btnBack">Back</button>
+      </div>
+      <div class="fs-tabs" role="tablist">
+        <div class="fs-tab active" data-tab="0" data-i18n="tabBasic">Basic</div>
+        <div class="fs-tab" data-tab="1" data-i18n="tabQuota">Quota & deposit</div>
+        <div class="fs-tab" data-tab="2" data-i18n="tabSales">Sales</div>
+        <div class="fs-tab" data-tab="3" data-i18n="tabLog">Log</div>
+      </div>
+      <div id="tabPanel0" class="fs-tab-panel active fs-card"><div class="fs-card-b" data-i18n="demoBasic">Demo content — basic info &amp; KYC summary.</div></div>
+      <div id="tabPanel1" class="fs-tab-panel fs-card"><div class="fs-card-b" data-i18n="demoQuota">HK store daily quota &amp; deposit.</div></div>
+      <div id="tabPanel2" class="fs-tab-panel fs-card"><div class="fs-card-b">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+          <div>
+            <div style="font-weight:600;margin-bottom:6px;" data-i18n="salesBindTitle">当前绑定销售</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:36px;height:36px;background:#e6f4ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ant);">张</div>
+              <div><div style="font-weight:600;">Zhang</div><div style="font-size:11px;color:var(--muted);" data-i18n="salesBindMeta">OB: sales_zhangsan · 2026-04-15</div></div>
+            </div>
+          </div>
+          <button type="button" class="fs-btn primary" id="btnDemoSales" data-i18n="btnChangeSales">更换销售</button>
+        </div>
+        <p style="font-size:12px;color:var(--muted);" data-i18n="salesBindHint">管理员在此分配或更换销售；销售账号仅可查看绑定关系。</p>
+      </div></div>
+      <div id="tabPanel3" class="fs-tab-panel fs-card"><div class="fs-card-b" data-i18n="demoLog">Operation timeline.</div></div>
+    </section>
+
+  </main>
+</div>
+
+<div class="fs-toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const I18N = {
+    zh: {
+      appTitle: 'FoneSquare 商家后台 V2（原型）',
+      navSectionWeb: 'WEB原型',
+      navList: '商家列表',
+      navAdd: '添加商家',
+      navDetail: '商家详情',
+      bcHome: '首页',
+      bcList: '商家列表',
+      bcAdd: '添加商家',
+      bcDetail: '商家详情',
+      listTitle: '商家列表',
+      btnExport: '导出',
+      btnAdd: '添加商家',
+      btnQuery: '查询',
+      btnBack: '返回列表',
+      btnCancel: '取消',
+      btnSubmit: '提交创建',
+      lblName: '关键词',
+      phKeyword: '搜索名称 / 手机…',
+      lblType: '类型',
+      results: '查询结果',
+      colName: '商家名称',
+      colType: '类型',
+      colSales: '所属销售',
+      colAction: '操作',
+      tagBuyer: '买家',
+      tagSeller: '卖家',
+      linkView: '查看',
+      addTitle: '添加商家',
+      addHint: '销售创建的商家自动绑定到本人；管理员创建的商家需在详情页手动分配销售。',
+      secBasic: '基本信息',
+      lblMerchantType: '商家类型',
+      typeBuyer: '买家',
+      typeSeller: '卖家',
+      lblBizName: '商家名称',
+      lblContact: '联系人',
+      lblPhone: '手机号',
+      lblEmail: '邮箱',
+      secKyc: '身份认证（KYC）',
+      lblIdType: '证件类型',
+      lblIdNo: '证件号码',
+      lblIdPhotos: '证件照片',
+      upFront: '正面',
+      upBack: '背面',
+      upHold: '手持',
+      secBiz: '企业信息（选填）',
+      lblCoName: '企业名称',
+      lblBr: '营业执照号',
+      lblBrPhoto: '营业执照扫描件',
+      tabBasic: '基本信息',
+      tabQuota: '限额与保证金',
+      tabSales: '销售绑定',
+      tabLog: '操作日志',
+      demoBasic: '演示：基本信息与 KYC 摘要。',
+      demoQuota: '演示：香港店每日限额与保证金。',
+      salesBindTitle: '当前绑定销售',
+      salesBindMeta: 'OB: sales_zhangsan · 绑定于 2026-04-15',
+      salesBindHint: '销售分配与更换仅在本页「销售绑定」Tab；不设独立「销售分配」菜单。',
+      btnChangeSales: '更换销售',
+      demoLog: '演示：操作时间线。',
+      toastOk: '创建成功（原型）',
+      toastSalesDemo: '示意：打开更换销售弹窗（原型）'
+    },
+    en: {
+      appTitle: 'FoneSquare Merchant Admin V2 (prototype)',
+      navSectionWeb: 'WEB prototype',
+      navList: 'Merchant list',
+      navAdd: 'Add merchant',
+      navDetail: 'Merchant detail',
+      bcHome: 'Home',
+      bcList: 'Merchant list',
+      bcAdd: 'Add merchant',
+      bcDetail: 'Merchant detail',
+      listTitle: 'Merchant list',
+      btnExport: 'Export',
+      btnAdd: 'Add merchant',
+      btnQuery: 'Search',
+      btnBack: 'Back to list',
+      btnCancel: 'Cancel',
+      btnSubmit: 'Submit',
+      lblName: 'Keyword',
+      phKeyword: 'Search name / phone…',
+      lblType: 'Type',
+      results: 'Results',
+      colName: 'Name',
+      colType: 'Type',
+      colSales: 'Sales',
+      colAction: 'Action',
+      tagBuyer: 'Buyer',
+      tagSeller: 'Seller',
+      linkView: 'View',
+      addTitle: 'Add merchant',
+      addHint: 'Merchants created by sales bind automatically; admin-created merchants need assignment on the detail page.',
+      secBasic: 'Basic information',
+      lblMerchantType: 'Merchant type',
+      typeBuyer: 'Buyer',
+      typeSeller: 'Seller',
+      lblBizName: 'Merchant name',
+      lblContact: 'Contact',
+      lblPhone: 'Phone',
+      lblEmail: 'Email',
+      secKyc: 'Identity (KYC)',
+      lblIdType: 'ID type',
+      lblIdNo: 'ID number',
+      lblIdPhotos: 'ID photos',
+      upFront: 'Front',
+      upBack: 'Back',
+      upHold: 'Holding',
+      secBiz: 'Enterprise (optional)',
+      lblCoName: 'Company name',
+      lblBr: 'Business registration no.',
+      lblBrPhoto: 'BR scan',
+      tabBasic: 'Basic',
+      tabQuota: 'Quota & deposit',
+      tabSales: 'Sales binding',
+      tabLog: 'Operation log',
+      demoBasic: 'Demo: basic profile & KYC summary.',
+      demoQuota: 'Demo: HK daily quota & deposit.',
+      salesBindTitle: 'Assigned sales',
+      salesBindMeta: 'OB: sales_zhangsan · since 2026-04-15',
+      salesBindHint: 'Assign or change sales only here (Sales tab). No standalone Sales menu.',
+      btnChangeSales: 'Reassign',
+      demoLog: 'Demo: operation timeline.',
+      toastOk: 'Created (prototype)',
+      toastSalesDemo: 'Demo: change-sales modal (prototype)'
+    }
+  };
+
+  let lang = localStorage.getItem('fsAdminV2Lang') || 'zh';
+
+  function applyLang() {
+    const dict = I18N[lang];
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n');
+      if (dict[k]) el.textContent = dict[k];
+    });
+    document.getElementById('langZh').classList.toggle('active', lang === 'zh');
+    document.getElementById('langEn').classList.toggle('active', lang === 'en');
+    localStorage.setItem('fsAdminV2Lang', lang);
+  }
+
+  function showPanel(id) {
+    document.querySelectorAll('.fs-panel').forEach(function(p) { p.classList.remove('active'); });
+    var el = document.getElementById('panel-' + id);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.fs-nav').forEach(function(n) {
+      n.classList.toggle('active', n.getAttribute('data-view') === id);
+    });
+    location.hash = id;
+  }
+
+  function routeFromHash() {
+    var h = (location.hash || '#list').replace(/^#\/?/, '');
+    if (!['list','add','detail'].includes(h)) h = 'list';
+    showPanel(h);
+  }
+
+  document.getElementById('langZh').addEventListener('click', function() { lang = 'zh'; applyLang(); });
+  document.getElementById('langEn').addEventListener('click', function() { lang = 'en'; applyLang(); });
+
+  document.querySelectorAll('.fs-nav[data-view]').forEach(function(n) {
+    n.addEventListener('click', function() { showPanel(n.getAttribute('data-view')); });
+  });
+
+  document.body.addEventListener('click', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var a = t.getAttribute('data-action');
+    if (a === 'go-add') showPanel('add');
+    if (a === 'go-list') showPanel('list');
+    if (a === 'go-detail') showPanel('detail');
+  });
+
+  document.getElementById('typeBuyer').addEventListener('click', function() {
+    document.getElementById('typeBuyer').classList.add('on');
+    document.getElementById('typeSeller').classList.remove('on');
+  });
+  document.getElementById('typeSeller').addEventListener('click', function() {
+    document.getElementById('typeSeller').classList.add('on');
+    document.getElementById('typeBuyer').classList.remove('on');
+  });
+
+  document.querySelectorAll('.fs-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var i = tab.getAttribute('data-tab');
+      document.querySelectorAll('.fs-tab').forEach(function(x) { x.classList.toggle('active', x === tab); });
+      for (var j = 0; j < 4; j++) {
+        var p = document.getElementById('tabPanel' + j);
+        if (p) p.classList.toggle('active', String(j) === i);
+      }
+    });
+  });
+
+  document.getElementById('btnDemoSales').addEventListener('click', function() {
+    var toast = document.getElementById('toast');
+    toast.textContent = I18N[lang].toastSalesDemo;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2000);
+  });
+
+  document.getElementById('btnSubmitAdd').addEventListener('click', function() {
+    var toast = document.getElementById('toast');
+    toast.textContent = I18N[lang].toastOk;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  });
+
+  window.addEventListener('hashchange', routeFromHash);
+  applyLang();
+  routeFromHash();
+})();
+</script>
+</body>
+</html>

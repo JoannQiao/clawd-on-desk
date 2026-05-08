@@ -222,7 +222,7 @@ LoginModule/
 | BR-015 | **注册后不引导KYC**：首页不展示KYC入口/banner，底部导航为 Home · Cart · Me |
 | BR-016 | **制裁名单校验**：注册阶段不做风控校验，仅在KYC身份认证阶段执行 |
 | BR-017 | **密码登录错误锁定**：连续错误5次锁定1小时 |
-| BR-018 | **i18n**：代码无中文硬编码，所有文案抽离到语言包(en/zh-Hans/zh-Hant)，以 locale 维度管理 |
+| BR-018 | **i18n**：代码无中文硬编码，所有文案抽离到语言包(en/zh-CN/zh-HK)，以 locale 维度管理 |
 | BR-019 | **默认locale推断**：设备系统语言 + IP地理位置 → CN→简体中文，HK→繁体中文，其他→English |
 
 ---
@@ -258,7 +258,7 @@ interface AuthState {
   lockExpiresAt: string | null;
   token: string | null;        // JWT
   isNewUser: boolean;          // 新用户标识
-  locale: 'en' | 'zh-Hans' | 'zh-Hant';
+  locale: 'en' | 'zh-CN' | 'zh-HK';
   deviceTimezone: string;      // IANA格式
 }
 ```

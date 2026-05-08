@@ -11,11 +11,9 @@ Thumbs.db
 CLAUDE.md
 
 # Development plans & review notes
-PLAN.md
 PLAN-*.md
 codex-*.md
 CHANGELOG-draft.md
-docs/
 
 # Temp files from testing
 .tmp_*

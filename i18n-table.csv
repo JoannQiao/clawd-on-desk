@@ -1,0 +1,595 @@
+﻿platform,page_name,key,en,zh-CN,zh-HK
+APP,Splash Screen,splash.hint,Tap to continue,点击继续,點擊繼續
+APP,Splash Screen,splash.slogan,Best Quality Best Price,品质至上 价格最优,品質至上 價格最優
+APP,Splash Screen,splash.version,Version 1.0.0,版本 1.0.0,版本 1.0.0
+APP,Login,login.btn,LOGIN / SIGN UP,登录 / 注册,登入 / 註冊
+APP,Login,login.divider,or,或,或
+APP,Login,login.email,Email,邮箱,郵箱
+APP,Login,login.forgot,Forgot password?,忘记密码？,忘記密碼？
+APP,Login,login.phone.label,Phone Number,手机号码,手機號碼
+APP,Login,login.phone.placeholder,Enter phone number,请输入手机号,請輸入手機號
+APP,Login,login.pwd.account.label,Phone or Email,手机号或邮箱,手機號或郵箱
+APP,Login,login.pwd.account.placeholder,Phone number or email,请输入手机号或邮箱,請輸入手機號或郵箱
+APP,Login,login.pwd.btn,LOGIN,登录,登入
+APP,Login,login.pwd.label,Password,密码,密碼
+APP,Login,login.pwd.placeholder,Enter password,请输入密码,請輸入密碼
+APP,Login,login.signup,Don't have an account?,还没有账号？,還沒有帳號？
+APP,Login,login.signup.link,Sign up with Phone,手机号注册,手機號註冊
+APP,Login,login.slogan,Best Quality Best Price,品质至上 价格最优,品質至上 價格最優
+APP,Login,login.tab.phone,📱 Phone,📱 手机,📱 手機
+APP,Login,login.tab.pwd,🔒 Password,🔒 密码,🔒 密碼
+APP,Login,login.terms,"By continuing, you agree to our",继续即表示您同意我们的,繼續即表示您同意我們的
+APP,Login,login.terms.and,and,和,和
+APP,Login,login.terms.pp,Privacy Policy,隐私政策,私隱政策
+APP,Login,login.terms.tos,Terms of Service,服务条款,服務條款
+APP,Login,login.wa,WhatsApp,WhatsApp,WhatsApp
+APP,SMS OTP Verification,smsOtp.btn,VERIFY & CONTINUE,验证并继续,驗證並繼續
+APP,SMS OTP Verification,smsOtp.channel,📱 via SMS,📱 短信服务,📱 短訊服務
+APP,SMS OTP Verification,smsOtp.desc,We sent a 6-digit code via SMS to,我们已通过短信发送6位验证码至,我們已透過短訊發送6位驗證碼至
+APP,SMS OTP Verification,smsOtp.heading,Enter Verification Code,输入验证码,輸入驗證碼
+APP,SMS OTP Verification,smsOtp.resend,Didn't receive?,没有收到？,沒有收到？
+APP,SMS OTP Verification,smsOtp.resendTimer,Resend in 01:00,01:00 后重发,01:00 後重發
+APP,SMS OTP Verification,smsOtp.title,Verification,验证,驗證
+APP,Set Password,setPwd.btn,SET PASSWORD & CONTINUE,设置密码并继续,設置密碼並繼續
+APP,Set Password,setPwd.confirm.label,Confirm Password,确认密码,確認密碼
+APP,Set Password,setPwd.confirm.placeholder,Re-enter password,再次输入密码,再次輸入密碼
+APP,Set Password,setPwd.desc,Set a password to complete registration,设置密码以完成注册,設置密碼以完成註冊
+APP,Set Password,setPwd.heading,Secure Your Account,保护您的账号,保護您的帳號
+APP,Set Password,setPwd.hint.chars,✓ 8+ chars,✓ 8位以上,✓ 8位以上
+APP,Set Password,setPwd.hint.number,✓ Number,✓ 含数字,✓ 含數字
+APP,Set Password,setPwd.hint.special,✓ Special char,✓ 含特殊字符,✓ 含特殊字元
+APP,Set Password,setPwd.hint.upper,✓ Uppercase,✓ 含大写,✓ 含大寫
+APP,Set Password,setPwd.new.label,New Password,新密码,新密碼
+APP,Set Password,setPwd.new.placeholder,At least 8 characters,至少8个字符,至少8個字元
+APP,Set Password,setPwd.title,Set Password,设置密码,設置密碼
+APP,Registration Complete,regDone.desc,Welcome to FoneSquare. Redirecting to homepage...,欢迎来到 FoneSquare，正在跳转至首页...,歡迎來到 FoneSquare，正在跳轉至首頁...
+APP,Registration Complete,regDone.title,Registration Complete!,注册完成！,註冊完成！
+APP,WhatsApp Number Input,waInput.btn,SEND WHATSAPP CODE,发送 WHATSAPP 验证码,發送 WHATSAPP 驗證碼
+APP,WhatsApp Number Input,waInput.desc,We'll send a verification code to your WhatsApp,我们将向您的WhatsApp发送验证码,我們將向您的WhatsApp發送驗證碼
+APP,WhatsApp Number Input,waInput.heading,Login via WhatsApp,通过 WhatsApp 登录,透過 WhatsApp 登入
+APP,WhatsApp Number Input,waInput.info,Verification code sent via WhatsApp,验证码通过 WhatsApp 发送,驗證碼透過 WhatsApp 發送
+APP,WhatsApp Number Input,waInput.label,WhatsApp Number,WhatsApp 号码,WhatsApp 號碼
+APP,WhatsApp Number Input,waInput.placeholder,Enter WhatsApp number,请输入WhatsApp号码,請輸入WhatsApp號碼
+APP,WhatsApp Number Input,waInput.title,WhatsApp Login,WhatsApp 登录,WhatsApp 登入
+APP,WhatsApp OTP,waOtp.btn,VERIFY & CONTINUE,验证并继续,驗證並繼續
+APP,WhatsApp OTP,waOtp.channel,via WhatsApp,via WhatsApp,via WhatsApp
+APP,WhatsApp OTP,waOtp.desc,We sent a 6-digit code to,我们已发送6位验证码至,我們已發送6位驗證碼至
+APP,WhatsApp OTP,waOtp.heading,Check Your WhatsApp,请查看您的 WhatsApp,請查看您的 WhatsApp
+APP,WhatsApp OTP,waOtp.resend,Didn't receive?,没有收到？,沒有收到？
+APP,WhatsApp OTP,waOtp.resendTimer,Resend in 01:00,01:00 后重发,01:00 後重發
+APP,WhatsApp OTP,waOtp.title,WhatsApp Verification,WhatsApp 验证,WhatsApp 驗證
+APP,Email Input,emailInput.btn,SEND VERIFICATION CODE,发送验证码,發送驗證碼
+APP,Email Input,emailInput.desc,Enter your email to receive a verification code,输入邮箱地址获取验证码,輸入郵箱地址獲取驗證碼
+APP,Email Input,emailInput.heading,Login with Email,邮箱登录,郵箱登入
+APP,Email Input,emailInput.label,Email Address,邮箱地址,郵箱地址
+APP,Email Input,emailInput.placeholder,you@example.com,you@example.com,you@example.com
+APP,Email Input,emailInput.pwdLink,Already have a password?,已有密码？,已有密碼？
+APP,Email Input,emailInput.pwdLinkAction,Login with password,密码登录,密碼登入
+APP,Email Input,emailInput.title,Email Login,邮箱登录,郵箱登入
+APP,Email OTP,emailOtp.btn,VERIFY & CONTINUE,验证并继续,驗證並繼續
+APP,Email OTP,emailOtp.channel,✉️ via Email,✉️ 邮箱发送,✉️ 郵箱發送
+APP,Email OTP,emailOtp.desc,We sent a 6-digit code to,我们已发送6位验证码至,我們已發送6位驗證碼至
+APP,Email OTP,emailOtp.heading,Check Your Email,查看您的邮箱,查看您的郵箱
+APP,Email OTP,emailOtp.resend,Didn't receive?,没有收到？,沒有收到？
+APP,Email OTP,emailOtp.resendLink,Resend code,重新发送,重新發送
+APP,Email OTP,emailOtp.title,Email Verification,邮箱验证,郵箱驗證
+APP,Email Password Login,emailPwd.btn,CREATE ACCOUNT,创建账户,建立帳戶
+APP,Email Password Login,emailPwd.confirm.label,Confirm Password,确认密码,確認密碼
+APP,Email Password Login,emailPwd.confirm.placeholder,Re-enter password,再次输入密码,再次輸入密碼
+APP,Email Password Login,emailPwd.desc,Set a password for your email account,为您的邮箱账户设置密码,為您的郵箱帳戶設置密碼
+APP,Email Password Login,emailPwd.heading,Create Your Password,创建您的密码,建立您的密碼
+APP,Email Password Login,emailPwd.linked,Password linked to,密码关联至,密碼關聯至
+APP,Email Password Login,emailPwd.new.label,New Password,新密码,新密碼
+APP,Email Password Login,emailPwd.new.placeholder,At least 8 characters,至少8个字符,至少8個字元
+APP,Email Password Login,emailPwd.title,Create Password,创建密码,建立密碼
+APP,Password Login,pwdLogin.account.label,Phone or Email,手机号或邮箱,手機號或郵箱
+APP,Password Login,pwdLogin.account.placeholder,Phone number or email,请输入手机号或邮箱,請輸入手機號或郵箱
+APP,Password Login,pwdLogin.btn,LOGIN,登录,登入
+APP,Password Login,pwdLogin.forgot,Forgot password?,忘记密码？,忘記密碼？
+APP,Password Login,pwdLogin.pwd.label,Password,密码,密碼
+APP,Password Login,pwdLogin.pwd.placeholder,Enter password,请输入密码,請輸入密碼
+APP,Password Login,pwdLogin.signup,Don't have an account?,还没有账号？,還沒有帳號？
+APP,Password Login,pwdLogin.signupLink,Sign up with Phone,手机号注册,手機號註冊
+APP,Password Login,pwdLogin.slogan,Best Quality Best Price,品质至上 价格最优,品質至上 價格最優
+APP,Password Login,pwdLogin.tab.phone,📱 Phone,📱 手机,📱 手機
+APP,Password Login,pwdLogin.tab.pwd,🔒 Password,🔒 密码,🔒 密碼
+APP,Password Login,pwdLogin.terms,"By continuing, you agree to our",继续即表示您同意我们的,繼續即表示您同意我們的
+APP,Password Login,pwdLogin.terms.and,and,和,和
+APP,Password Login,pwdLogin.terms.pp,Privacy Policy,隐私政策,私隱政策
+APP,Password Login,pwdLogin.terms.tos,Terms of Service,服务条款,服務條款
+APP,Login Success,loginOk.desc,Redirecting to homepage...,正在跳转至首页...,正在跳轉至首頁...
+APP,Login Success,loginOk.heading,Welcome Back!,欢迎回来！,歡迎回來！
+APP,Forgot Password,forgot.changeBtn,CHANGE PASSWORD,修改密码,修改密碼
+APP,Forgot Password,forgot.confirm.label,Confirm Password,确认密码,確認密碼
+APP,Forgot Password,forgot.confirm.placeholder,Re-enter password,再次输入密码,再次輸入密碼
+APP,Forgot Password,forgot.desc,Enter your phone number to receive a verification code via SMS,输入手机号码，通过短信接收验证码,輸入手機號碼，透過短訊接收驗證碼
+APP,Forgot Password,forgot.emailDesc,Enter your email address to receive a verification code,输入您的邮箱地址，接收验证码,輸入您的郵箱地址，接收驗證碼
+APP,Forgot Password,forgot.emailLabel,Email Address,邮箱地址,郵箱地址
+APP,Forgot Password,forgot.emailPlaceholder,Enter email address,请输入邮箱,請輸入郵箱
+APP,Forgot Password,forgot.new.label,New Password,新密码,新密碼
+APP,Forgot Password,forgot.new.placeholder,At least 8 characters,至少8个字符,至少8個字元
+APP,Forgot Password,forgot.newDesc,Enter your new password below,请输入新密码,請輸入新密碼
+APP,Forgot Password,forgot.newTitle,Create New Password,创建新密码,建立新密碼
+APP,Forgot Password,forgot.otp.desc.email,Enter the 6-digit code sent to <b>john@***.com</b>,输入发送至 <b>john@***.com</b> 的6位验证码,請輸入傳送至 <b>john@***.com</b> 的6位驗證碼
+APP,Forgot Password,forgot.otp.desc.phone,Enter the 6-digit code sent to <b>+852 9123 ****</b>,输入发送至 <b>+852 9123 ****</b> 的6位验证码,請輸入傳送至 <b>+852 9123 ****</b> 的6位驗證碼
+APP,Forgot Password,forgot.phoneLabel,Phone Number,手机号码,手機號碼
+APP,Forgot Password,forgot.phonePlaceholder,Enter phone number,请输入手机号,請輸入手機號
+APP,Forgot Password,forgot.resend,Didn't receive?,没有收到？,沒有收到？
+APP,Forgot Password,forgot.resendTimer,Resend in 01:00,01:00 后重发,01:00 後重發
+APP,Forgot Password,forgot.sendBtn,SEND CODE,发送验证码,發送驗證碼
+APP,Forgot Password,forgot.success,Password changed successfully! ✓,密码修改成功 ✓,密碼修改成功 ✓
+APP,Forgot Password,forgot.tab.email,✉️ Email,✉️ 邮箱,✉️ 郵箱
+APP,Forgot Password,forgot.tab.phone,📱 Phone,📱 手机号,📱 手機號
+APP,Forgot Password,forgot.title,Forgot Password,忘记密码,忘記密碼
+APP,Forgot Password,forgot.verifyBtn,VERIFY,验证,驗證
+APP,Forgot Password,forgot.verifyDesc,Enter the 6-digit code,输入6位验证码,輸入6位驗證碼
+APP,Forgot Password,forgot.verifyTitle,Verify Code,验证码,驗證碼
+APP,Create Password (KYC),cpk.all,All Countries,所有国家,所有國家
+APP,Create Password (KYC),cpk.empty,No results found,未找到结果,未找到結果
+APP,Create Password (KYC),cpk.popular,Popular,热门,熱門
+APP,Create Password (KYC),cpk.search,Search country or dial code…,搜索国家或区号…,搜尋國家或區號…
+APP,Create Password (KYC),cpk.title,Select Country / Region,选择国家 / 地区,選擇國家 / 地區
+APP,Flow Map,map.email,✉️ Email Registration: ,✉️ 邮箱注册：,✉️ 信箱註冊：
+APP,Flow Map,map.kyc,🛡️ KYC Verification: ,🛡️ KYC 认证：,🛡️ KYC認證：
+APP,Flow Map,map.pwd,🔒 Password Login: ,🔒 密码登录：,🔒 密碼登入：
+APP,Flow Map,map.sms,📱 SMS Registration: ,📱 短信注册：,📱 短信註冊：
+APP,Flow Map,map.wa,WhatsApp Registration: ,WhatsApp 注册：,WhatsApp 註冊：
+APP,Error Messages,error.accountLocked,"Account locked, please try again in 1 hour",账号已被锁定，请1小时后再试,帳號已被鎖定，請1小時後再試
+APP,Error Messages,error.emailInvalid,Invalid email format,邮箱格式错误,郵箱格式錯誤
+APP,Error Messages,error.forbidden,Access denied,无权限访问,無權限存取
+APP,Error Messages,error.invalidInput,Invalid input format,输入格式有误,輸入格式有誤
+APP,Error Messages,error.notFound,Page not found,页面不存在,頁面不存在
+APP,Error Messages,error.otpExpired,Verification code expired,验证码已过期,驗證碼已過期
+APP,Error Messages,error.otpInvalid,Invalid verification code,验证码错误,驗證碼錯誤
+APP,Error Messages,error.passwordMismatch,Passwords do not match,两次密码输入不一致,兩次密碼輸入不一致
+APP,Error Messages,error.passwordWeak,Password is too weak,密码强度不够,密碼強度不夠
+APP,Error Messages,error.phoneInvalid,Invalid phone number format,手机号格式错误,手機號格式錯誤
+APP,Error Messages,error.serverError,Server error,服务器错误,伺服器錯誤
+APP,Error Messages,error.timeout,"Request timed out, please retry",请求超时，请重试,請求逾時，請重試
+APP,Error Messages,error.tooManyAttempts,"Too many attempts, please try again later",尝试次数过多，请稍后再试,嘗試次數過多，請稍後再試
+APP,Error Messages,error.unauthorized,"Session expired, please log in again",登录已过期，请重新登录,登入已過期，請重新登入
+APP,My Center,myCenter.cancelled,Cancelled,已取消,已取消
+APP,My Center,myCenter.help,Help & Support,帮助与支持,幫助與支援
+APP,My Center,myCenter.helpDesc,"FAQ, contact us, feedback",常见问题、联系我们,常見問題、聯繫我們
+APP,My Center,myCenter.orders,My Orders,我的订单,我的訂單
+APP,My Center,myCenter.paid,Paid,已支付,已支付
+APP,My Center,myCenter.pendingPay,Unpaid,待支付,待支付
+APP,My Center,myCenter.quickActions,Quick Actions,快捷入口,快捷入口
+APP,My Center,myCenter.restricted,Account Restricted,账号受限,帳號受限
+APP,My Center,myCenter.restrictedDesc,Contact support to resolve this issue,请联系客服处理,請聯繫客服處理
+APP,My Center,myCenter.restrictedTitle,Account Restricted,账号受限,帳號受限
+APP,My Center,myCenter.settings,Settings,设置,設定
+APP,My Center,myCenter.settingsDesc,"Account, security, language",账户、安全、语言,帳戶、安全、語言
+APP,My Center,myCenter.title,My Center,个人中心,個人中心
+APP,My Center,myCenter.unverified,Unverified,未认证,未認證
+APP,My Center,myCenter.verified,Verified,已认证,已認證
+APP,My Center,myCenter.verifiedBar,Identity Verified · KYC Complete,已完成身份认证 · KYC通过,已完成身份認證 · KYC通過
+APP,My Center,myCenter.verifyDesc,Required before placing orders · Takes ~2 min,下单前需完成认证 · 约2分钟,下單前需完成認證 · 約2分鐘
+APP,My Center,myCenter.verifyTitle,Complete Identity Verification,完成身份认证,完成身份認證
+APP,My Center,myCenter.viewAll,View All ›,查看全部 ›,查看全部 ›
+APP,Me Tab (Profile),me.about,About Us,关于我们,關於我們
+APP,Me Tab (Profile),me.changePassword,Change Password,修改密码,修改密碼
+APP,Me Tab (Profile),me.kyc,Identity Verification,身份认证,身份認證
+APP,Me Tab (Profile),me.kyc.pending,Under Review,审核中,審核中
+APP,Me Tab (Profile),me.kyc.unverified,Unverified,未认证,未認證
+APP,Me Tab (Profile),me.kyc.verified,Verified,已认证,已認證
+APP,Me Tab (Profile),me.language,Language,语言设置,語言設定
+APP,Me Tab (Profile),me.logout,Log Out,退出登录,登出
+APP,Me Tab (Profile),me.logoutConfirm,Are you sure you want to log out?,确定要退出登录吗？,確定要登出嗎？
+APP,Me Tab (Profile),me.orders,My Orders,我的订单,我的訂單
+APP,Me Tab (Profile),me.orders.cancelled,Cancelled,已取消,已取消
+APP,Me Tab (Profile),me.orders.paid,Paid,已付款,已付款
+APP,Me Tab (Profile),me.orders.unpaid,Unpaid,待付款,待付款
+APP,Me Tab (Profile),me.profile,My Profile,我的资料,我的資料
+APP,Me Tab (Profile),me.security,Security Settings,安全设置,安全設定
+APP,Me Tab (Profile),me.title,Me,我的,我的
+APP,Me Tab (Profile),me.version,Version,版本信息,版本資訊
+APP,Identity Verification (KYC),profile.autoDetect,Auto-detect,自动识别,自動辨識
+APP,Identity Verification (KYC),profile.back,Back Side,反面,反面
+APP,Identity Verification (KYC),profile.biz,Business Information,企业信息,企業資訊
+APP,Identity Verification (KYC),profile.biz.address,Business Address,企业地址,企業地址
+APP,Identity Verification (KYC),profile.biz.autoDetect,Auto-detect,自动识别,自動識別
+APP,Identity Verification (KYC),profile.biz.collapse,Add business license for enterprise account,添加营业执照以开通企业账户,添加營業執照以開通企業帳戶
+APP,Identity Verification (KYC),profile.biz.endDate,End date,到期日期,到期日期
+APP,Identity Verification (KYC),profile.biz.hint,"JPG / PNG / PDF, max 20 MB",JPG / PNG / PDF，最大20MB,JPG / PNG / PDF，最大20MB
+APP,Identity Verification (KYC),profile.biz.legalRep,Legal Rep / Director,法定代表人/董事,法定代表人/董事
+APP,Identity Verification (KYC),profile.biz.licenseType,License Type,证照类型,證照類型
+APP,Identity Verification (KYC),profile.biz.ocrPending,Upload license to auto-recognize,上传执照后自动识别,上傳執照後自動識別
+APP,Identity Verification (KYC),profile.biz.optional,Optional,选填,選填
+APP,Identity Verification (KYC),profile.biz.regNum,Reg. Number,注册号,註冊號
+APP,Identity Verification (KYC),profile.biz.startDate,Start date,开始日期,開始日期
+APP,Identity Verification (KYC),profile.biz.upload,Upload Business License,上传营业执照,上傳營業執照
+APP,Identity Verification (KYC),profile.biz.validity,License Validity Period,执照有效期,執照有效期
+APP,Identity Verification (KYC),profile.bizAddress,Business Address,企业地址,企業地址
+APP,Identity Verification (KYC),profile.bizCollapse,Add business license for enterprise account,添加营业执照以开通企业账户,新增營業執照以開通企業帳戶
+APP,Identity Verification (KYC),profile.bizGuideDesc,Enterprise accounts get higher daily purchase limits and priority support.,企业账户可享更高日购买限额与优先客服支持。,企業帳戶可享更高日購買限額與優先客服支援。
+APP,Identity Verification (KYC),profile.bizGuideTitle,Fill in business info to unlock higher limits,填写企业信息，解锁更高购买额度,填寫企業資訊，解鎖更高購買額度
+APP,Identity Verification (KYC),profile.bizHint,"JPG / PNG / PDF, max 20 MB",JPG / PNG / PDF，最大20MB,JPG / PNG / PDF，最大20MB
+APP,Identity Verification (KYC),profile.bizInfo,Business Information,企业信息,企業資訊
+APP,Identity Verification (KYC),profile.bizOcrPending,Upload license to auto-recognize,上传执照后自动识别,上傳執照後自動辨識
+APP,Identity Verification (KYC),profile.bizUpload,Upload Business License,上传营业执照,上傳營業執照
+APP,Identity Verification (KYC),profile.city,City / District,城市 / 区,城市 / 區
+APP,Identity Verification (KYC),profile.cnid,CN Resident ID,中国居民身份证,中國居民身份證
+APP,Identity Verification (KYC),profile.contactEmail,Contact Email,联系邮箱,聯繫信箱
+APP,Identity Verification (KYC),profile.demoDup,🎬 Demo: Simulate duplicate identity,🎬 演示：模拟重复身份,🎬 演示：模擬重複身份
+APP,Identity Verification (KYC),profile.desc,Complete KYC to unlock order placement,完成KYC认证以解锁下单功能,完成KYC認證以解鎖下單功能
+APP,Identity Verification (KYC),profile.email,Contact Email,联系邮箱,聯絡郵箱
+APP,Identity Verification (KYC),profile.email.optional,Optional,选填,選填
+APP,Identity Verification (KYC),profile.email.placeholder,For order notifications,用于接收订单通知,用於接收訂單通知
+APP,Identity Verification (KYC),profile.emailPlaceholder,For order notifications,用于接收订单通知,用於接收訂單通知
+APP,Identity Verification (KYC),profile.endDate,End date,到期日期,到期日期
+APP,Identity Verification (KYC),profile.front,✅ Front,✅ 正面,✅ 正面
+APP,Identity Verification (KYC),profile.fullName,Full Name,姓名,姓名
+APP,Identity Verification (KYC),profile.heading,Identity Verification,身份验证,身份驗證
+APP,Identity Verification (KYC),profile.hkid,Hong Kong ID,香港身份证,香港身份證
+APP,Identity Verification (KYC),profile.id,Identity Verification,身份验证,身份驗證
+APP,Identity Verification (KYC),profile.id.cnid,CN Resident ID,中国居民身份证,中國居民身份證
+APP,Identity Verification (KYC),profile.id.hkid,HK/Macau ID,港澳居民身份证,港澳居民身份證
+APP,Identity Verification (KYC),profile.id.passport,Passport,护照,護照
+APP,Identity Verification (KYC),profile.id.select,Select ID Type,选择证件类型,選擇證件類型
+APP,Identity Verification (KYC),profile.idNumber,ID Number,证件号码,證件號碼
+APP,Identity Verification (KYC),profile.idVerify,Identity Verification,身份验证,身份驗證
+APP,Identity Verification (KYC),profile.legalRep,Legal Rep / Director,法定代表人/董事,法定代表人/董事
+APP,Identity Verification (KYC),profile.licenseType,License Type,证照类型,證照類型
+APP,Identity Verification (KYC),profile.licenseValidity,License Validity Period,执照有效期,執照有效期
+APP,Identity Verification (KYC),profile.moid,Macau ID,澳门身份证,澳門身份證
+APP,Identity Verification (KYC),profile.noCityData,No city data for this province,该省份暂无城市数据,該省份暫無城市資料
+APP,Identity Verification (KYC),profile.noProvinceData,No province data for this region,该地区暂无省份数据,該地區暫無省份資料
+APP,Identity Verification (KYC),profile.ocr.banner,OCR Recognized,OCR 已识别,OCR 已識別
+APP,Identity Verification (KYC),profile.ocr.bannerDesc,— please review and correct if needed,— 请检查并修正,— 請檢查並修正
+APP,Identity Verification (KYC),profile.ocr.edit,✏️ tap to edit,✏️ 点击编辑,✏️ 點擊編輯
+APP,Identity Verification (KYC),profile.ocr.idNum,ID Number,证件号码,證件號碼
+APP,Identity Verification (KYC),profile.ocr.name,Full Name,姓名,姓名
+APP,Identity Verification (KYC),profile.ocrBanner,OCR Recognized,OCR 已识别,OCR 已辨識
+APP,Identity Verification (KYC),profile.ocrBannerDesc,— please review and correct if needed,— 请检查并修正,— 請檢查並修正
+APP,Identity Verification (KYC),profile.optional,Optional,选填,選填
+APP,Identity Verification (KYC),profile.passport,Passport,护照,護照
+APP,Identity Verification (KYC),profile.passportHint,Photo page with MRZ · JPG/PNG ≤10MB,含MRZ的信息页 · JPG/PNG ≤10MB,含MRZ的資訊頁 · JPG/PNG ≤10MB
+APP,Identity Verification (KYC),profile.province,Province / State,省份 / 州,省份 / 州
+APP,Identity Verification (KYC),profile.regNumber,Reg. Number,注册号,註冊號
+APP,Identity Verification (KYC),profile.region,Country / Region,国家 / 地区,國家 / 地區
+APP,Identity Verification (KYC),profile.region.city,City,城市,城市
+APP,Identity Verification (KYC),profile.region.province,Province,省份,省份
+APP,Identity Verification (KYC),profile.region.required,Required,必填,必填
+APP,Identity Verification (KYC),profile.regionNoResults,No results,无搜索结果,無搜尋結果
+APP,Identity Verification (KYC),profile.regionPickerTitle,Select Country / Region,选择国家 / 地区,選擇國家 / 地區
+APP,Identity Verification (KYC),profile.regionSearchPlaceholder,Search country or region…,搜索国家或地区…,搜尋國家或地區…
+APP,Identity Verification (KYC),profile.required,Required,必填,必填
+APP,Identity Verification (KYC),profile.selectId,Select ID Type,选择证件类型,選擇證件類型
+APP,Identity Verification (KYC),profile.selectPlaceholder,Please select,请选择,請選擇
+APP,Identity Verification (KYC),profile.skip,Skip for now →,暂时跳过 →,暫時跳過 →
+APP,Identity Verification (KYC),profile.startDate,Start date,开始日期,開始日期
+APP,Identity Verification (KYC),profile.submit,SUBMIT FOR VERIFICATION,提交验证,提交驗證
+APP,Identity Verification (KYC),profile.tapEdit,✏️ tap to edit,✏️ 点击编辑,✏️ 點擊編輯
+APP,Identity Verification (KYC),profile.title,Identity Verification,身份验证,身份驗證
+APP,Identity Verification (KYC),profile.upload.back,Back Side,反面,反面
+APP,Identity Verification (KYC),profile.upload.front,✅ Front,✅ 正面,✅ 正面
+APP,Identity Verification (KYC),profile.upload.hint,JPG/PNG ≤10MB,JPG/PNG ≤10MB,JPG/PNG ≤10MB
+APP,Identity Verification (KYC),profile.upload.passport,Upload Info Page,上传信息页,上傳資訊頁
+APP,Identity Verification (KYC),profile.upload.passport.hint,Photo page with MRZ · JPG/PNG ≤10MB,含MRZ的信息页 · JPG/PNG ≤10MB,含MRZ的資訊頁 · JPG/PNG ≤10MB
+APP,Identity Verification (KYC),profile.uploadHint,JPG/PNG ≤10MB,JPG/PNG ≤10MB,JPG/PNG ≤10MB
+APP,Identity Verification (KYC),profile.uploadPassport,Upload Info Page,上传信息页,上傳資訊頁
+APP,Identity Verification (KYC),profile.validity,ID Validity Period,证件有效期,證件有效期
+APP,KYC Duplicate Identity,kycDup.cancelBtn,Use a different ID,使用其他证件,使用其他證件
+APP,KYC Duplicate Identity,kycDup.continueBtn,Continue with verified account,继续使用已认证账号,繼續使用已認證帳號
+APP,KYC Duplicate Identity,kycDup.desc,"For your security, each verified identity can belong to only one active account. Please continue with your existing verified account.",为保障账户安全，同一认证身份仅可对应一个在用账号，请继续使用您已认证的账号。,為保障帳戶安全，同一認證身份僅可對應一個在用帳號，請繼續使用您已認證的帳號。
+APP,KYC Duplicate Identity,kycDup.existingAcct,Existing verified account,已认证账号,已認證帳號
+APP,KYC Duplicate Identity,kycDup.friendlyNote,"Your current login method will be migrated to the verified account. Once completed, you can use it to sign in to the verified account.",系统会把当前登录方式迁移到已认证账号，迁移完成后当前登录方式可用于登录已认证账号。,系統會把目前登入方式遷移到已認證帳號，遷移完成後目前登入方式可用於登入已認證帳號。
+APP,KYC Duplicate Identity,kycDup.headline,This ID is already associated with an account,该证件已关联已认证账号,該證件已關聯已認證帳號
+APP,KYC Duplicate Identity,kycDup.title,Identity Notice,身份提示,身份提示
+APP,KYC Duplicate Identity,kycDup.verifiedTag,✓ Verified,✓ 已认证 · HK,✓ 已認證 · HK
+APP,KYC Duplicate Conflict,kycDupConflict.cancelBtn,Use a different ID,使用其他证件,使用其他證件
+APP,KYC Duplicate Conflict,kycDupConflict.desc,"For your security, each verified identity can belong to only one active account. The verified account already has the same type of login method, so no migration is needed.",为保障账户安全，同一认证身份仅可对应一个在用账号。已认证账号已有相同类型的登录方式，无需迁移。,為保障帳戶安全，同一認證身份僅可對應一個在用帳號。已認證帳號已有相同類型的登入方式，無需遷移。
+APP,KYC Duplicate Conflict,kycDupConflict.existingAcct,Existing verified account,已认证账号,已認證帳號
+APP,KYC Duplicate Conflict,kycDupConflict.goLoginBtn,Go to Login,前往登录,前往登入
+APP,KYC Duplicate Conflict,kycDupConflict.headline,This ID is already associated with an account,该证件已关联已认证账号,該證件已關聯已認證帳號
+APP,KYC Duplicate Conflict,kycDupConflict.infoNote,"The verified account already has a login method of the same type (e.g., both use email). Please sign in directly with the verified account.",已认证账号已有与当前相同类型的登录方式（如都是邮箱），请直接使用已认证账号登录。,已認證帳號已有與目前相同類型的登入方式（如都是信箱），請直接使用已認證帳號登入。
+APP,KYC Duplicate Conflict,kycDupConflict.title,Identity Notice,身份提示,身份提示
+APP,KYC Bind Login Method,kycDupSup.acctLabel,Bind to account,绑定到账号,綁定到帳號
+APP,KYC Bind Login Method,kycDupSup.cancel,Cancel,取消,取消
+APP,KYC Bind Login Method,kycDupSup.desc,Your verified account currently uses phone login only. We'll add your email as a new login method so you can sign in with either.,您的已认证账号目前仅支持手机号登录，邮箱添加成功后可用邮箱或手机号登录。,您的已認證帳號目前僅支援手機號登入，信箱新增成功後可用信箱或手機號登入。
+APP,KYC Bind Login Method,kycDupSup.emailLabel,Email to add,待添加邮箱,待新增信箱
+APP,KYC Bind Login Method,kycDupSup.headline,Bind this email to the verified account,将该邮箱绑定到已认证账号,將該信箱綁定到已認證帳號
+APP,KYC Bind Login Method,kycDupSup.nextBtn,Send verification code,发送验证码,傳送驗證碼
+APP,KYC Bind Login Method,kycDupSup.secureNote,🔐 We'll send a one-time code to the verified phone number to confirm you own the account before binding.,🔐 系统将向已认证手机号发送一次性验证码，用于确认账号所有权。,🔐 系統將向已認證手機號傳送一次性驗證碼，用於確認帳號所有權。
+APP,KYC Bind Login Method,kycDupSup.title,Add Login Method,补全登录方式,補全登入方式
+APP,KYC Ownership OTP,kycDupOtp.desc,We sent a code to <b>+852 ****1234</b>. Enter it below to confirm ownership and complete the binding.,验证码已发送至 <b>+852 ****1234</b>，输入后即可完成绑定。,驗證碼已傳送至 <b>+852 ****1234</b>，輸入後即可完成綁定。
+APP,KYC Ownership OTP,kycDupOtp.headline,Enter the 6-digit code,请输入6位验证码,請輸入6位驗證碼
+APP,KYC Ownership OTP,kycDupOtp.resend,Resend code in 60s,60秒后可重发,60秒後可重發
+APP,KYC Ownership OTP,kycDupOtp.title,Verify Ownership,所有权验证,所有權驗證
+APP,KYC Ownership OTP,kycDupOtp.verifyBtn,Verify & Complete,验证并完成,驗證並完成
+APP,KYC Binding Done,kycDupDone.btn,Sign in to verified account,登录已认证账号,登入已認證帳號
+APP,KYC Binding Done,kycDupDone.desc,Your email has been added as a login method to your verified account +852 ****1234. You can now sign in with either credential.,您的邮箱已作为登录方式添加到已认证账号 +852 ****1234，后续可用任一方式登录。,您的信箱已作為登入方式新增到已認證帳號 +852 ****1234，後續可用任一方式登入。
+APP,KYC Binding Done,kycDupDone.headline,Successfully bound,绑定成功,綁定成功
+APP,KYC Binding Done,kycDupDone.item1,Verified account is now active on this device,本设备已切换至已认证账号,本裝置已切換至已認證帳號
+APP,KYC Binding Done,kycDupDone.item2,Email + phone can both be used to sign in,邮箱与手机号均可用于登录,信箱與手機號均可用於登入
+APP,KYC Binding Done,kycDupDone.item3,The previous account is no longer in use and its access has been safely paused,原账号已停止使用，访问已安全暂停,原帳號已停止使用，存取已安全暫停
+APP,KYC Binding Done,kycDupDone.title,All Set,绑定完成,綁定完成
+APP,KYC Binding Done,kycDupDone.whatNext,What happens next,接下来的变化,接下來的變化
+APP,My Orders,orders.cancelled,Cancelled,已取消,已取消
+APP,My Orders,orders.paid,Paid,已支付,已支付
+APP,My Orders,orders.statusAfterSales,After-Sales,售后处理,售後處理
+APP,My Orders,orders.statusDone,Completed,已完成,已完成
+APP,My Orders,orders.statusPending,Pending Payment,待支付,待支付
+APP,My Orders,orders.statusPickup,Pending Pickup,待取货,待取貨
+APP,My Orders,orders.title,My Orders,我的订单,我的訂單
+APP,My Orders,orders.unpaid,Unpaid,待支付,待支付
+APP,Settings,settings.about,About FoneSquare,关于 FoneSquare,關於 FoneSquare
+APP,Settings,settings.aboutVer,Version 1.0.0,版本 1.0.0,版本 1.0.0
+APP,Settings,settings.changePwd,Change Password,修改密码,修改密碼
+APP,Settings,settings.changePwdDesc,Update your login password,更新您的登录密码,更新您的登入密碼
+APP,Settings,settings.idVerify,Identity Verification,身份认证,身份認證
+APP,Settings,settings.idVerifyDesc,Manage your KYC documents,管理您的KYC证件,管理您的KYC證件
+APP,Settings,settings.language,Language,语言,語言
+APP,Settings,settings.loginMethods,Login Methods,登录方式,登入方式
+APP,Settings,settings.loginMethodsDesc,"Manage phone, email, WhatsApp",管理手机号、邮箱、WhatsApp,管理手機號、信箱、WhatsApp
+APP,Settings,settings.logout,🚪 Log Out,🚪 退出登录,🚪 登出
+APP,Settings,settings.privacy,Privacy Policy,隐私政策,隱私政策
+APP,Settings,settings.title,Settings,设置,設定
+APP,Change Password,changePwd.btn,UPDATE PASSWORD,修改密码,修改密碼
+APP,Change Password,changePwd.confirm,Confirm New Password,确认新密码,確認新密碼
+APP,Change Password,changePwd.confirmPlaceholder,Re-enter new password,再次输入新密码,再次輸入新密碼
+APP,Change Password,changePwd.current,Current Password,当前密码,目前密碼
+APP,Change Password,changePwd.currentPlaceholder,Enter current password,请输入当前密码,請輸入目前密碼
+APP,Change Password,changePwd.hints,✓ 8+ chars   ✓ Number   ✓ Letter,✓ 8位以上   ✓ 含数字   ✓ 含字母,✓ 8位以上   ✓ 含數字   ✓ 含字母
+APP,Change Password,changePwd.new,New Password,新密码,新密碼
+APP,Change Password,changePwd.newPlaceholder,At least 8 characters,至少8个字符,至少8個字元
+APP,Change Password,changePwd.success,Password updated ✓,密码已修改 ✓,密碼已修改 ✓
+APP,Change Password,changePwd.title,Change Password,修改密码,修改密碼
+APP,Language Selection,lang.title,Language,语言选择,語言選擇
+APP,Help & Support,help.email,Email Support,邮件客服,郵件客服
+APP,Help & Support,help.faq,FAQ,常见问题,常見問題
+APP,Help & Support,help.faqDesc,Frequently asked questions,查看常见问题,查看常見問題
+APP,Help & Support,help.title,Help & Support,帮助与支持,幫助與支援
+APP,Help & Support,help.whatsapp,WhatsApp Support,WhatsApp 客服,WhatsApp 客服
+APP,Help & Support,help.whatsappDesc,Chat with us on WhatsApp,通过WhatsApp联系我们,透過WhatsApp聯繫我們
+APP,Privacy Policy,privacy.heading,Privacy Policy,隐私政策,隱私政策
+APP,Privacy Policy,privacy.lastUpdated,Last updated: April 2026 · Version 1.0,最后更新：2026年4月 · 版本 1.0,最後更新：2026年4月 · 版本 1.0
+APP,Privacy Policy,privacy.title,Privacy Policy,隐私政策,隱私政策
+APP,About,about.companyLabel,Company:,公司：,公司：
+APP,About,about.contactLabel,Contact:,联系方式：,聯繫方式：
+APP,About,about.copyright,© 2026 FoneSquare. All rights reserved.,© 2026 FoneSquare 版权所有,© 2026 FoneSquare 版權所有
+APP,About,about.desc,FoneSquare is a cross-border B2B platform for certified pre-owned mobile devices. We connect global dealers with quality inventory at the best prices.,FoneSquare 是一个跨境B2B认证二手手机交易平台，为全球经销商提供优质货源和最优价格。,FoneSquare 是一個跨境B2B認證二手手機交易平台，為全球經銷商提供優質貨源和最優價格。
+APP,About,about.regionLabel,Region:,地区：,地區：
+APP,About,about.title,About FoneSquare,关于FoneSquare,關於FoneSquare
+APP,About,about.version,Version 1.0.0 (Build 2026.04),版本 1.0.0（Build 2026.04）,版本 1.0.0（Build 2026.04）
+APP,Bottom Tab Bar,tab.cart,Cart,购物车,購物車
+APP,Bottom Tab Bar,tab.home,Home,首页,首頁
+APP,Bottom Tab Bar,tab.me,Me,我的,我的
+APP,Bottom Tab Bar,tabBar.cart,Cart,购物车,購物車
+APP,Bottom Tab Bar,tabBar.home,Home,首页,首頁
+APP,Bottom Tab Bar,tabBar.me,Me,我的,我的
+APP,Common,common.back,Back,返回,返回
+APP,Common,common.cancel,Cancel,取消,取消
+APP,Common,common.close,Close,关闭,關閉
+APP,Common,common.confirm,Confirm,确认,確認
+APP,Common,common.delete,Delete,删除,刪除
+APP,Common,common.done,Done,完成,完成
+APP,Common,common.failed,Failed,操作失败,操作失敗
+APP,Common,common.loading,Loading...,加载中...,載入中...
+APP,Common,common.networkError,"Network error, please check your connection",网络错误，请检查网络连接,網絡錯誤，請檢查網絡連接
+APP,Common,common.next,Next,下一步,下一步
+APP,Common,common.optional,Optional,选填,選填
+APP,Common,common.required,Required,必填,必填
+APP,Common,common.retry,Retry,重试,重試
+APP,Common,common.save,Save,保存,儲存
+APP,Common,common.submit,Submit,提交,提交
+APP,Common,common.success,Success,操作成功,操作成功
+APP,Product Notes Panel,notes.clear,Clear,清空,清空
+APP,Product Notes Panel,notes.confirmClear,Clear notes for this page?,确定清空当前页面的备注？,確定清空目前頁面的備註？
+APP,Product Notes Panel,notes.confirmReset,Reset all notes to default? Custom edits will be lost.,重置所有备注为默认内容？自定义内容将丢失。,重設所有備註為預設內容？自訂內容將遺失。
+APP,Product Notes Panel,notes.emptyNote,（暂无说明）,（暂无说明）,（暫無說明）
+APP,Product Notes Panel,notes.export,Export,导出,匯出
+APP,Product Notes Panel,notes.exportTime,导出时间：,导出时间：,匯出時間：
+APP,Product Notes Panel,notes.exportTitle,# FoneSquare 登录注册 — 产品说明,# FoneSquare 登录注册 — 产品说明,# FoneSquare 登入註冊 — 產品說明
+APP,Product Notes Panel,notes.exported,备注已导出为 Markdown ✓,备注已导出为 Markdown ✓,備註已匯出為 Markdown ✓
+APP,Product Notes Panel,notes.panelTitle,Product Notes,产品说明,產品說明
+APP,Product Notes Panel,notes.placeholder,Enter product notes…,在此输入产品说明…,在此輸入產品說明…
+APP,Product Notes Panel,notes.reset,Reset,重置,重設
+APP,Product Notes Panel,notes.saved,✓ Saved,✓ 已保存,✓ 已儲存
+APP,Product Notes Panel,notes.tip,Auto-save · Edit directly,自动保存 · 可直接编辑,自動儲存 · 可直接編輯
+APP,Product Notes Panel,notes.title,产品说明,产品说明,產品說明
+APP,Toast Messages,toast.cameraPicker,Camera / Gallery picker,相机 / 相册选择,相機 / 相簿選擇
+APP,Toast Messages,toast.comingSoon, coming soon, 即将推出, 即將推出
+APP,Toast Messages,toast.datePicker,Date picker,日期选择,日期選擇
+APP,Toast Messages,toast.kycDupSwitched,Switched to verified account ✓,已切换至已认证账号 ✓,已切換至已認證帳號 ✓
+APP,Toast Messages,toast.kycDupVerified,Ownership verified ✓,所有权验证通过 ✓,所有權驗證通過 ✓
+APP,Toast Messages,toast.langSelected, selected ✓, 已选择 ✓, 已選擇 ✓
+APP,Toast Messages,toast.loggedOut,Logged out successfully,已退出登录,已登出
+APP,Toast Messages,toast.openEmail,Opening email client…,正在打开邮件客户端…,正在開啟郵件用戶端…
+APP,Toast Messages,toast.openWa,Opening WhatsApp…,正在打开WhatsApp…,正在開啟WhatsApp…
+APP,Toast Messages,toast.phoneAdded,Phone number added ✓,手机号已添加 ✓,手機號已新增 ✓
+APP,Toast Messages,toast.profileSuccess,Profile submitted successfully ✓,资料提交成功 ✓,資料提交成功 ✓
+APP,Toast Messages,toast.waSupport,Opening WhatsApp support chat…,正在打开WhatsApp客服…,正在開啟WhatsApp客服…
+Web,Common,common.add,➕ Add Merchant,➕ 添加商家,
+Web,Common,common.all,All,全部,
+Web,Common,common.back,Back to list,返回列表,
+Web,Common,common.brand,FoneSquare Admin,FoneSquare 商家管理后台,
+Web,Common,common.cancel,Cancel,取消,
+Web,Common,common.confirm,Confirm,确认变更,
+Web,Common,common.edit,Edit,编辑,
+Web,Common,common.export,📥 Export,📥 导出,
+Web,Common,common.home,Home,首页,
+Web,Common,common.perPage,10 / page,10 条/页,
+Web,Common,common.reset,↺ Reset,↺ 重置,
+Web,Common,common.save,💾 Validate & Save,💾 校验并保存,
+Web,Common,common.search,🔍 Search,🔍 查询,
+Web,Common,common.user,Qian Q.,乔谦,
+Web,Common,common.view,View,查看,
+Web,Navigation,nav.groupDownload,Downloads,下载中心,
+Web,Navigation,nav.groupMerchant,Merchant,商家管理,
+Web,Navigation,nav.menuList,Merchant List,商家列表,
+Web,Navigation,nav.menuMyFiles,My Files,我的文件,
+Web,Breadcrumb,crumb.add,Add Merchant,添加商家,
+Web,Breadcrumb,crumb.detail,Merchant Detail,商家详情,
+Web,Breadcrumb,crumb.list,Merchant List,商家列表,
+Web,Breadcrumb,crumb.myFiles,My Files,我的文件,
+Web,Merchant Management,merchant.add.basicTitle,Basic Info (Personal),基本信息（个人）,
+Web,Merchant Management,merchant.add.buyer,Buyer,买家,
+Web,Merchant Management,merchant.add.cancelBtn,Cancel,取消,
+Web,Merchant Management,merchant.add.contactHint,"Phone, Email, or WhatsApp — at least one required",手机号、邮箱、WhatsApp 三选一必填,
+Web,Merchant Management,merchant.add.corpDocPlaceholder,Business Registration etc.,商业登记证等,
+Web,Merchant Management,merchant.add.corpKycTitle,KYC (Corporate),KYC 认证材料（企业）,
+Web,Merchant Management,merchant.add.corpLicense,Business License Photo,营业执照照片,
+Web,Merchant Management,merchant.add.corpLicenseHint,JPG/PNG/PDF ≤ 10MB; raises transaction quota,JPG / PNG / PDF ≤ 10MB，提交可获更高交易额度,
+Web,Merchant Management,merchant.add.corpName,Company Name,公司名称,
+Web,Merchant Management,merchant.add.corpPhotoHint,JPG/PNG/PDF ≤ 10MB,JPG / PNG / PDF ≤ 10MB,
+Web,Merchant Management,merchant.add.corpRegNo,Business Reg. No.,商业登记号,
+Web,Merchant Management,merchant.add.docPlaceholder,Dynamic by region (HK ID / Passport / ID…),按地区动态展示（HK ID / 护照 / 身份证…）,
+Web,Merchant Management,merchant.add.kycTitle,KYC (Personal),KYC 认证材料（个人）,
+Web,Merchant Management,merchant.add.optional,Optional,选填,
+Web,Merchant Management,merchant.add.phonePlaceholder,e.g. +852 1234 5678,含区号，如 +852 1234 5678,
+Web,Merchant Management,merchant.add.photoHint,Passport: one side only; JPG/PNG ≤ 5MB,护照仅需上传一面；JPG/PNG ≤ 5MB,
+Web,Merchant Management,merchant.add.placeholder,Input…,请输入,
+Web,Merchant Management,merchant.add.regionPlaceholder,Country / Province / City,国家 / 省份 / 城市 三级联动,
+Web,Merchant Management,merchant.add.seller,Seller,卖家,
+Web,Merchant Management,merchant.add.submitBtn,✅ Submit,✅ 提交创建,
+Web,Merchant Management,merchant.add.tip,"Sales adds → auto-bound to self; Admin adds → unassigned by default, bind on detail page.",销售添加 → 自动绑定为本人；管理员添加 → 默认未分配，需在「商家详情 → 销售绑定」中手动分配。,
+Web,Merchant Management,merchant.add.title,Add Merchant (Single Page),添加商家（单页录入）,
+Web,Merchant Management,merchant.add.typeMulti,(multi-select),（可多选）,
+Web,Merchant Management,merchant.add.typePlaceholder,Select Buyer / Seller,请选择 买家 / 卖家,
+Web,Merchant Management,merchant.add.validPlaceholder,Future date only,不可选过去日期,
+Web,Merchant Management,merchant.add.waPlaceholder,Optional,选填,
+Web,Merchant Management,merchant.advisor.unassigned,Unassigned,未分配,
+Web,Merchant Management,merchant.authStatus.restricted,Restricted,账号受限,
+Web,Merchant Management,merchant.authStatus.unverified,Unverified,未认证,
+Web,Merchant Management,merchant.authStatus.verified,Verified,已认证,
+Web,Merchant Management,merchant.detail.advisor,Advisor,维护人,
+Web,Merchant Management,merchant.detail.advisor.bind,➕ Bind,➕ 绑定,
+Web,Merchant Management,merchant.detail.advisor.boundBy,Bound By,绑定人,
+Web,Merchant Management,merchant.detail.advisor.boundSince,Bound Since,绑定时间,
+Web,Merchant Management,merchant.detail.advisor.current,Current Advisor,当前维护人,
+Web,Merchant Management,merchant.detail.advisor.history,📜 History,📜 查看变更历史,
+Web,Merchant Management,merchant.detail.advisor.historyFrom,Bound At,绑定时间,
+Web,Merchant Management,merchant.detail.advisor.historyOB,OB Account,OB 账号,
+Web,Merchant Management,merchant.detail.advisor.historyOperator,Operator,操作人,
+Web,Merchant Management,merchant.detail.advisor.historyOwner,Advisor,维护人,
+Web,Merchant Management,merchant.detail.advisor.historyReason,Reason,原因,
+Web,Merchant Management,merchant.detail.advisor.historyTitle,Binding History,历史绑定记录,
+Web,Merchant Management,merchant.detail.advisor.historyTo,Unbound At,解绑时间,
+Web,Merchant Management,merchant.detail.advisor.obAccount,OB Account,OB 账号,
+Web,Merchant Management,merchant.detail.advisor.reason,Reason,变更原因,
+Web,Merchant Management,merchant.detail.advisor.reasonCreate,Auto-bound on creation,商家创建自动绑定,
+Web,Merchant Management,merchant.detail.advisor.reasonPlaceholder,"Reason (required, written to logs)",请填写变更原因（必填，将记录到操作日志）,
+Web,Merchant Management,merchant.detail.advisor.reasonResign,"Sales resigned, transferred",销售离职转交,
+Web,Merchant Management,merchant.detail.advisor.reassign,🔄 Reassign,🔄 更换维护人,
+Web,Merchant Management,merchant.detail.advisor.selectNew,Select New Advisor,选择新维护人,
+Web,Merchant Management,merchant.detail.advisor.selectNewPlaceholder,Pick from OB accounts…,从 OB 账号列表选择…,
+Web,Merchant Management,merchant.detail.advisor.title,Advisor Binding,维护人绑定,
+Web,Merchant Management,merchant.detail.advisor.unbind,⛔ Unbind,⛔ 解绑,
+Web,Merchant Management,merchant.detail.basic.contact,Contact,联系人,
+Web,Merchant Management,merchant.detail.basic.corpLicense,Business Reg. No.,营业执照号,
+Web,Merchant Management,merchant.detail.basic.corpName,Company Name,企业名称,
+Web,Merchant Management,merchant.detail.basic.corporate,Corporate Info,企业信息,
+Web,Merchant Management,merchant.detail.basic.email,Email,邮箱,
+Web,Merchant Management,merchant.detail.basic.name,Merchant Name,商家名称,
+Web,Merchant Management,merchant.detail.basic.personal,Personal Info,个人信息,
+Web,Merchant Management,merchant.detail.basic.personalName,Name,姓名,
+Web,Merchant Management,merchant.detail.basic.phone,Phone,联系方式,
+Web,Merchant Management,merchant.detail.basic.region,Region,所在地区,
+Web,Merchant Management,merchant.detail.basic.regionHK,Hong Kong,香港,
+Web,Merchant Management,merchant.detail.basic.remark,Remark,备注,
+Web,Merchant Management,merchant.detail.basic.status,Status,状态,
+Web,Merchant Management,merchant.detail.basic.title,Basic Info,基本信息,
+Web,Merchant Management,merchant.detail.basic.type,Type,商家类型,
+Web,Merchant Management,merchant.detail.basic.whatsapp,WhatsApp,WhatsApp,
+Web,Merchant Management,merchant.detail.disableBtn,⏸️ Disable,⏸️ 停用,
+Web,Merchant Management,merchant.detail.editBtn,✏️ Edit,✏️ 编辑信息,
+Web,Merchant Management,merchant.detail.id,Merchant ID,商家 ID,
+Web,Merchant Management,merchant.detail.kyc.auditStatus,Audit Status,审核状态,
+Web,Merchant Management,merchant.detail.kyc.auditedAt,Audited At,审核时间,
+Web,Merchant Management,merchant.detail.kyc.corpAddress,Company Address,企业地址,
+Web,Merchant Management,merchant.detail.kyc.corpDocNo,Document No.,证照编号,
+Web,Merchant Management,merchant.detail.kyc.corpDocType,Document Type,证照类型,
+Web,Merchant Management,merchant.detail.kyc.corpLegalRep,Legal Rep. / Director,法定代表 / 董事,
+Web,Merchant Management,merchant.detail.kyc.corpName,Company Name,企业名称,
+Web,Merchant Management,merchant.detail.kyc.corpPhoto,Document Photo,证照照片,
+Web,Merchant Management,merchant.detail.kyc.corpValidUntil,Document Valid Until,证照有效期,
+Web,Merchant Management,merchant.detail.kyc.corporate,Corporate KYC,企业 KYC 材料,
+Web,Merchant Management,merchant.detail.kyc.docBack,Doc (Back),证件反面,
+Web,Merchant Management,merchant.detail.kyc.docFront,Doc (Front),证件正面,
+Web,Merchant Management,merchant.detail.kyc.docName,Doc Holder Name,证件姓名,
+Web,Merchant Management,merchant.detail.kyc.docNo,Doc No.,证件号,
+Web,Merchant Management,merchant.detail.kyc.docType,Doc Type,证件类型,
+Web,Merchant Management,merchant.detail.kyc.handHeld,Hand-held Doc,手持证件,
+Web,Merchant Management,merchant.detail.kyc.passed,Passed,已通过,
+Web,Merchant Management,merchant.detail.kyc.personal,Personal KYC,个人 KYC 材料,
+Web,Merchant Management,merchant.detail.kyc.photoHint,(Passport: one side),（护照仅一面）,
+Web,Merchant Management,merchant.detail.kyc.photos,Doc Photos,证件照片,
+Web,Merchant Management,merchant.detail.kyc.title,KYC Docs,KYC 认证材料,
+Web,Merchant Management,merchant.detail.kyc.validUntil,Doc Valid Until,证件有效期,
+Web,Merchant Management,merchant.detail.kyc.viewRaw,View raw,点击查看原值,
+Web,Merchant Management,merchant.detail.log.create,Created HK Mobile Trade Co. (auto-bound to Z. San / OB1001),创建商家 HK Mobile Trade Co.（自动绑定维护人：张三 / OB1001）,
+Web,Merchant Management,merchant.detail.log.disable,Disabled merchant,停用商家,
+Web,Merchant Management,merchant.detail.log.editBasic,Edited basic info: phone,编辑基本信息：手机号,
+Web,Merchant Management,merchant.detail.log.enable,Enabled merchant,启用商家,
+Web,Merchant Management,merchant.detail.log.kyc,KYC review completed → Passed,完成 KYC 审核 → 已通过,
+Web,Merchant Management,merchant.detail.log.quota,"Set daily limit (deposit 5,000 confirmed)","配置每日下单限额（保证金 5,000 已确认）",
+Web,Merchant Management,merchant.detail.log.rebind,Reassigned advisor,更换维护人,
+Web,Merchant Management,merchant.detail.log.title,Operation Logs,操作日志,
+Web,Merchant Management,merchant.detail.quota.confirmedAtBy,Confirmed At / By,确认时间 / 确认人,
+Web,Merchant Management,merchant.detail.quota.deposit,Deposit Amount (HKD),保证金金额（HKD）,
+Web,Merchant Management,merchant.detail.quota.depositHint,Entered by operator; deposit × 10 = limit cap,运营录入；保证金 × 10 = 限额上限,
+Web,Merchant Management,merchant.detail.quota.depositStatus,Deposit Status,保证金状态,
+Web,Merchant Management,merchant.detail.quota.hkTitle,Hong Kong Daily Order Limit Config (Buyer only),香港店每日下单限额配置（仅买家）,
+Web,Merchant Management,merchant.detail.quota.limit,Daily Order Limit (HKD),每日下单限额（HKD）,
+Web,Merchant Management,merchant.detail.quota.limitHint,Default minimum from config; cap = current deposit × 10,默认最小值由业务配置；上限 = 当前保证金 × 10,
+Web,Merchant Management,merchant.detail.quota.proof,Deposit Transfer Proof (Image),保证金转账记录（图片上传）,
+Web,Merchant Management,merchant.detail.quota.proofHint,"Without proof, limit must stay at default minimum",未提交凭证前限额无法调高，仅可保留默认最小值,
+Web,Merchant Management,merchant.detail.quota.rule,"Rule: Deposit is paid by Buyer. Daily order limit cap = Deposit × 10. Without proof submission, limit must stay at the business-defined default minimum. Once proof is uploaded and confirmed by ops, limit can be configured between default minimum ~ deposit × 10.",业务规则：保证金由买家缴纳；每日下单限额上限 = 保证金 × 10。未提交转账凭证前，限额仅可设置为业务默认最小值；上传凭证、运营确认后，限额可在默认最小值 ~ 保证金 × 10 范围内自由配置。,
+Web,Merchant Management,merchant.detail.quota.statusPending,Not submitted,未提交,
+Web,Merchant Management,merchant.detail.quota.statusSubmitted,"Submitted, pending review",已提交待确认,
+Web,Merchant Management,merchant.detail.quota.uploadDone,✅ 1 proof uploaded (click to toggle demo),✅ 已上传 1 张转账凭证（点击切换示例）,
+Web,Merchant Management,merchant.detail.quota.uploadHint,"Click to upload (JPG/PNG, ≤ 5MB each, up to 3)",点击上传转账凭证（JPG/PNG，单张 ≤ 5MB，最多 3 张）,
+Web,Merchant Management,merchant.detail.registeredAt,Registered,注册日期,
+Web,Merchant Management,merchant.detail.salesOwner,Sales Owner,所属销售,
+Web,Merchant Management,merchant.detail.tab.advisor,Advisor Binding,维护人绑定,
+Web,Merchant Management,merchant.detail.tab.basic,Basic Info,基本信息,
+Web,Merchant Management,merchant.detail.tab.kyc,KYC Docs,KYC 认证材料,
+Web,Merchant Management,merchant.detail.tab.log,Logs,操作日志,
+Web,Merchant Management,merchant.detail.tab.quota,Limit & Deposit,限额与保证金,
+Web,Merchant Management,merchant.list.filter.advisor,Advisor,维护人,
+Web,Merchant Management,merchant.list.filter.advisorAdmin,Account Advisor (Admin),维护人（仅管理员）,
+Web,Merchant Management,merchant.list.filter.authStatus,Auth Status,认证状态,
+Web,Merchant Management,merchant.list.filter.hint,Advisor filter is admin-only; sales reps see only their own merchants.,维护人筛选仅管理员可见；销售自动锁定为本人。,
+Web,Merchant Management,merchant.list.filter.name,Merchant Name,商家名称,
+Web,Merchant Management,merchant.list.filter.name.placeholder,Search by name…,请输入名称关键词,
+Web,Merchant Management,merchant.list.filter.status,Merchant Status,商家状态,
+Web,Merchant Management,merchant.list.filter.type,Type,商家类型,
+Web,Merchant Management,merchant.list.filter.type.all,All,全部,
+Web,Merchant Management,merchant.list.result,Result,查询结果,
+Web,Merchant Management,merchant.list.th.action,Action,操作,
+Web,Merchant Management,merchant.list.th.advisor,Advisor,维护人,
+Web,Merchant Management,merchant.list.th.authStatus,Auth Status,认证状态,
+Web,Merchant Management,merchant.list.th.contact,Contact,联系人,
+Web,Merchant Management,merchant.list.th.createdAt,Created At,创建时间,
+Web,Merchant Management,merchant.list.th.id,ID,ID,
+Web,Merchant Management,merchant.list.th.name,Merchant Name,商家名称,
+Web,Merchant Management,merchant.list.th.phone,Phone,联系方式,
+Web,Merchant Management,merchant.list.th.salesOwner,Sales Owner,所属销售,
+Web,Merchant Management,merchant.list.th.status,Merchant Status,商家状态,
+Web,Merchant Management,merchant.list.th.type,Type,类型,
+Web,Merchant Management,merchant.list.title,Merchant List,商家列表,
+Web,Merchant Management,merchant.list.total,86 rows,共 86 条,
+Web,Merchant Management,merchant.op.disable,Disable,停用,
+Web,Merchant Management,merchant.op.enable,Enable,启用,
+Web,Merchant Management,merchant.status.active,Active,使用,
+Web,Merchant Management,merchant.status.disabled,Disabled,停用,
+Web,Merchant Management,merchant.type.buyer,Buyer,买家,
+Web,Merchant Management,merchant.type.seller,Seller,卖家,
+Web,My Files,myFiles.action.download,Download,下载,
+Web,My Files,myFiles.action.regenerate,Regenerate,重新生成,
+Web,My Files,myFiles.empty,(empty),（无文件）,
+Web,My Files,myFiles.source.merchantList,Merchant List,商家列表,
+Web,My Files,myFiles.status.expired,Expired,已过期,
+Web,My Files,myFiles.status.processing,Processing,处理中,
+Web,My Files,myFiles.status.ready,Ready,可下载,
+Web,My Files,myFiles.th.action,Action,操作,
+Web,My Files,myFiles.th.createdAt,Created At,创建时间,
+Web,My Files,myFiles.th.fileName,File,文件名,
+Web,My Files,myFiles.th.size,Size,大小,
+Web,My Files,myFiles.th.source,Source,来源页面,
+Web,My Files,myFiles.th.status,Status,状态,
+Web,My Files,myFiles.th.type,Type,类型,
+Web,My Files,myFiles.tip,"This page lists files generated by Export actions. Kept for 30 days, then auto-purged. Click Download to fetch; click Regenerate for expired items.",本页存放商家列表 / 详情 等页面通过「📥 导出」生成的文件，近 30 天有效，过期自动清理。点击「下载」获取本地副本，过期项可点「重新生成」重跑导出任务。,
+Web,My Files,myFiles.title,My Files,我的文件,

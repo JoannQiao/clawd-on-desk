@@ -1,0 +1,4232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>FoneSquare i18n Language Pack Comparison</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 20px; background: #f5f5f5; }
+  h1 { font-size: 20px; margin-bottom: 12px; }
+  .stats { font-size: 13px; color: #666; margin-bottom: 16px; }
+  .filter-bar { margin-bottom: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filter-bar input { padding: 8px 14px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 14px; width: 300px; }
+  .filter-bar select { padding: 8px 14px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 14px; }
+  .filter-bar .count { font-size: 13px; color: #999; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+  th { background: #fafafa; font-weight: 600; font-size: 13px; text-align: left; padding: 10px 12px; border-bottom: 2px solid #e8e8e8; position: sticky; top: 0; z-index: 1; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  td code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 12px; white-space: nowrap; }
+  tr:hover { background: #fafafa; }
+  tr.page-first td { border-top: 3px solid #d0d0d0; }
+</style>
+</head>
+<body>
+<h1>FoneSquare i18n 语言包对照表</h1>
+<div class="stats">共 594 条 · APP 402 条 · Web 192 条 · 按页面流程路径排序</div>
+<div class="filter-bar">
+  <input type="text" id="search" placeholder="搜索 key / 翻译 / 页面名…" oninput="filterTable()">
+  <select id="platformFilter" onchange="filterTable()">
+    <option value="">全部平台</option>
+    <option value="APP">APP</option>
+    <option value="Web">Web</option>
+  </select>
+  <select id="pageFilter" onchange="filterTable()">
+    <option value="">全部页面</option>
+  </select>
+  <span class="count" id="visibleCount"></span>
+</div>
+<table>
+<thead><tr><th>端</th><th>Page Name</th><th>Key</th><th>en</th><th>zh-CN</th><th>zh-HK</th></tr></thead>
+<tbody id="tbody">
+<tr class="page-first">
+<td>APP</td>
+<td>Splash Screen</td>
+<td><code>splash.hint</code></td>
+<td>Tap to continue</td>
+<td>点击继续</td>
+<td>點擊繼續</td>
+</tr><tr>
+<td>APP</td>
+<td>Splash Screen</td>
+<td><code>splash.slogan</code></td>
+<td>Best Quality Best Price</td>
+<td>品质至上 价格最优</td>
+<td>品質至上 價格最優</td>
+</tr><tr>
+<td>APP</td>
+<td>Splash Screen</td>
+<td><code>splash.version</code></td>
+<td>Version 1.0.0</td>
+<td>版本 1.0.0</td>
+<td>版本 1.0.0</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Login</td>
+<td><code>login.btn</code></td>
+<td>LOGIN / SIGN UP</td>
+<td>登录 / 注册</td>
+<td>登入 / 註冊</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.divider</code></td>
+<td>or</td>
+<td>或</td>
+<td>或</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.email</code></td>
+<td>Email</td>
+<td>邮箱</td>
+<td>郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.forgot</code></td>
+<td>Forgot password?</td>
+<td>忘记密码？</td>
+<td>忘記密碼？</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.phone.label</code></td>
+<td>Phone Number</td>
+<td>手机号码</td>
+<td>手機號碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.phone.placeholder</code></td>
+<td>Enter phone number</td>
+<td>请输入手机号</td>
+<td>請輸入手機號</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.pwd.account.label</code></td>
+<td>Phone or Email</td>
+<td>手机号或邮箱</td>
+<td>手機號或郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.pwd.account.placeholder</code></td>
+<td>Phone number or email</td>
+<td>请输入手机号或邮箱</td>
+<td>請輸入手機號或郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.pwd.btn</code></td>
+<td>LOGIN</td>
+<td>登录</td>
+<td>登入</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.pwd.label</code></td>
+<td>Password</td>
+<td>密码</td>
+<td>密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.pwd.placeholder</code></td>
+<td>Enter password</td>
+<td>请输入密码</td>
+<td>請輸入密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.signup</code></td>
+<td>Don&#x27;t have an account?</td>
+<td>还没有账号？</td>
+<td>還沒有帳號？</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.signup.link</code></td>
+<td>Sign up with Phone</td>
+<td>手机号注册</td>
+<td>手機號註冊</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.slogan</code></td>
+<td>Best Quality Best Price</td>
+<td>品质至上 价格最优</td>
+<td>品質至上 價格最優</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.tab.phone</code></td>
+<td>📱 Phone</td>
+<td>📱 手机</td>
+<td>📱 手機</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.tab.pwd</code></td>
+<td>🔒 Password</td>
+<td>🔒 密码</td>
+<td>🔒 密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.terms</code></td>
+<td>By continuing, you agree to our</td>
+<td>继续即表示您同意我们的</td>
+<td>繼續即表示您同意我們的</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.terms.and</code></td>
+<td>and</td>
+<td>和</td>
+<td>和</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.terms.pp</code></td>
+<td>Privacy Policy</td>
+<td>隐私政策</td>
+<td>私隱政策</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.terms.tos</code></td>
+<td>Terms of Service</td>
+<td>服务条款</td>
+<td>服務條款</td>
+</tr><tr>
+<td>APP</td>
+<td>Login</td>
+<td><code>login.wa</code></td>
+<td>WhatsApp</td>
+<td>WhatsApp</td>
+<td>WhatsApp</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.btn</code></td>
+<td>VERIFY &amp; CONTINUE</td>
+<td>验证并继续</td>
+<td>驗證並繼續</td>
+</tr><tr>
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.channel</code></td>
+<td>📱 via SMS</td>
+<td>📱 短信服务</td>
+<td>📱 短訊服務</td>
+</tr><tr>
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.desc</code></td>
+<td>We sent a 6-digit code via SMS to</td>
+<td>我们已通过短信发送6位验证码至</td>
+<td>我們已透過短訊發送6位驗證碼至</td>
+</tr><tr>
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.heading</code></td>
+<td>Enter Verification Code</td>
+<td>输入验证码</td>
+<td>輸入驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.resend</code></td>
+<td>Didn&#x27;t receive?</td>
+<td>没有收到？</td>
+<td>沒有收到？</td>
+</tr><tr>
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.resendTimer</code></td>
+<td>Resend in 01:00</td>
+<td>01:00 后重发</td>
+<td>01:00 後重發</td>
+</tr><tr>
+<td>APP</td>
+<td>SMS OTP Verification</td>
+<td><code>smsOtp.title</code></td>
+<td>Verification</td>
+<td>验证</td>
+<td>驗證</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.btn</code></td>
+<td>SET PASSWORD &amp; CONTINUE</td>
+<td>设置密码并继续</td>
+<td>設置密碼並繼續</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.confirm.label</code></td>
+<td>Confirm Password</td>
+<td>确认密码</td>
+<td>確認密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.confirm.placeholder</code></td>
+<td>Re-enter password</td>
+<td>再次输入密码</td>
+<td>再次輸入密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.desc</code></td>
+<td>Set a password to complete registration</td>
+<td>设置密码以完成注册</td>
+<td>設置密碼以完成註冊</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.heading</code></td>
+<td>Secure Your Account</td>
+<td>保护您的账号</td>
+<td>保護您的帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.hint.chars</code></td>
+<td>✓ 8+ chars</td>
+<td>✓ 8位以上</td>
+<td>✓ 8位以上</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.hint.number</code></td>
+<td>✓ Number</td>
+<td>✓ 含数字</td>
+<td>✓ 含數字</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.hint.special</code></td>
+<td>✓ Special char</td>
+<td>✓ 含特殊字符</td>
+<td>✓ 含特殊字元</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.hint.upper</code></td>
+<td>✓ Uppercase</td>
+<td>✓ 含大写</td>
+<td>✓ 含大寫</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.new.label</code></td>
+<td>New Password</td>
+<td>新密码</td>
+<td>新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.new.placeholder</code></td>
+<td>At least 8 characters</td>
+<td>至少8个字符</td>
+<td>至少8個字元</td>
+</tr><tr>
+<td>APP</td>
+<td>Set Password</td>
+<td><code>setPwd.title</code></td>
+<td>Set Password</td>
+<td>设置密码</td>
+<td>設置密碼</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Registration Complete</td>
+<td><code>regDone.desc</code></td>
+<td>Welcome to FoneSquare. Redirecting to homepage...</td>
+<td>欢迎来到 FoneSquare，正在跳转至首页...</td>
+<td>歡迎來到 FoneSquare，正在跳轉至首頁...</td>
+</tr><tr>
+<td>APP</td>
+<td>Registration Complete</td>
+<td><code>regDone.title</code></td>
+<td>Registration Complete!</td>
+<td>注册完成！</td>
+<td>註冊完成！</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.btn</code></td>
+<td>SEND WHATSAPP CODE</td>
+<td>发送 WHATSAPP 验证码</td>
+<td>發送 WHATSAPP 驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.desc</code></td>
+<td>We&#x27;ll send a verification code to your WhatsApp</td>
+<td>我们将向您的WhatsApp发送验证码</td>
+<td>我們將向您的WhatsApp發送驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.heading</code></td>
+<td>Login via WhatsApp</td>
+<td>通过 WhatsApp 登录</td>
+<td>透過 WhatsApp 登入</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.info</code></td>
+<td>Verification code sent via WhatsApp</td>
+<td>验证码通过 WhatsApp 发送</td>
+<td>驗證碼透過 WhatsApp 發送</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.label</code></td>
+<td>WhatsApp Number</td>
+<td>WhatsApp 号码</td>
+<td>WhatsApp 號碼</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.placeholder</code></td>
+<td>Enter WhatsApp number</td>
+<td>请输入WhatsApp号码</td>
+<td>請輸入WhatsApp號碼</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp Number Input</td>
+<td><code>waInput.title</code></td>
+<td>WhatsApp Login</td>
+<td>WhatsApp 登录</td>
+<td>WhatsApp 登入</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.btn</code></td>
+<td>VERIFY &amp; CONTINUE</td>
+<td>验证并继续</td>
+<td>驗證並繼續</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.channel</code></td>
+<td>via WhatsApp</td>
+<td>via WhatsApp</td>
+<td>via WhatsApp</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.desc</code></td>
+<td>We sent a 6-digit code to</td>
+<td>我们已发送6位验证码至</td>
+<td>我們已發送6位驗證碼至</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.heading</code></td>
+<td>Check Your WhatsApp</td>
+<td>请查看您的 WhatsApp</td>
+<td>請查看您的 WhatsApp</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.resend</code></td>
+<td>Didn&#x27;t receive?</td>
+<td>没有收到？</td>
+<td>沒有收到？</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.resendTimer</code></td>
+<td>Resend in 01:00</td>
+<td>01:00 后重发</td>
+<td>01:00 後重發</td>
+</tr><tr>
+<td>APP</td>
+<td>WhatsApp OTP</td>
+<td><code>waOtp.title</code></td>
+<td>WhatsApp Verification</td>
+<td>WhatsApp 验证</td>
+<td>WhatsApp 驗證</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.btn</code></td>
+<td>SEND VERIFICATION CODE</td>
+<td>发送验证码</td>
+<td>發送驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.desc</code></td>
+<td>Enter your email to receive a verification code</td>
+<td>输入邮箱地址获取验证码</td>
+<td>輸入郵箱地址獲取驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.heading</code></td>
+<td>Login with Email</td>
+<td>邮箱登录</td>
+<td>郵箱登入</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.label</code></td>
+<td>Email Address</td>
+<td>邮箱地址</td>
+<td>郵箱地址</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.placeholder</code></td>
+<td>you@example.com</td>
+<td>you@example.com</td>
+<td>you@example.com</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.pwdLink</code></td>
+<td>Already have a password?</td>
+<td>已有密码？</td>
+<td>已有密碼？</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.pwdLinkAction</code></td>
+<td>Login with password</td>
+<td>密码登录</td>
+<td>密碼登入</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Input</td>
+<td><code>emailInput.title</code></td>
+<td>Email Login</td>
+<td>邮箱登录</td>
+<td>郵箱登入</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.btn</code></td>
+<td>VERIFY &amp; CONTINUE</td>
+<td>验证并继续</td>
+<td>驗證並繼續</td>
+</tr><tr>
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.channel</code></td>
+<td>✉️ via Email</td>
+<td>✉️ 邮箱发送</td>
+<td>✉️ 郵箱發送</td>
+</tr><tr>
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.desc</code></td>
+<td>We sent a 6-digit code to</td>
+<td>我们已发送6位验证码至</td>
+<td>我們已發送6位驗證碼至</td>
+</tr><tr>
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.heading</code></td>
+<td>Check Your Email</td>
+<td>查看您的邮箱</td>
+<td>查看您的郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.resend</code></td>
+<td>Didn&#x27;t receive?</td>
+<td>没有收到？</td>
+<td>沒有收到？</td>
+</tr><tr>
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.resendLink</code></td>
+<td>Resend code</td>
+<td>重新发送</td>
+<td>重新發送</td>
+</tr><tr>
+<td>APP</td>
+<td>Email OTP</td>
+<td><code>emailOtp.title</code></td>
+<td>Email Verification</td>
+<td>邮箱验证</td>
+<td>郵箱驗證</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.btn</code></td>
+<td>CREATE ACCOUNT</td>
+<td>创建账户</td>
+<td>建立帳戶</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.confirm.label</code></td>
+<td>Confirm Password</td>
+<td>确认密码</td>
+<td>確認密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.confirm.placeholder</code></td>
+<td>Re-enter password</td>
+<td>再次输入密码</td>
+<td>再次輸入密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.desc</code></td>
+<td>Set a password for your email account</td>
+<td>为您的邮箱账户设置密码</td>
+<td>為您的郵箱帳戶設置密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.heading</code></td>
+<td>Create Your Password</td>
+<td>创建您的密码</td>
+<td>建立您的密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.linked</code></td>
+<td>Password linked to</td>
+<td>密码关联至</td>
+<td>密碼關聯至</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.new.label</code></td>
+<td>New Password</td>
+<td>新密码</td>
+<td>新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.new.placeholder</code></td>
+<td>At least 8 characters</td>
+<td>至少8个字符</td>
+<td>至少8個字元</td>
+</tr><tr>
+<td>APP</td>
+<td>Email Password Login</td>
+<td><code>emailPwd.title</code></td>
+<td>Create Password</td>
+<td>创建密码</td>
+<td>建立密碼</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.account.label</code></td>
+<td>Phone or Email</td>
+<td>手机号或邮箱</td>
+<td>手機號或郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.account.placeholder</code></td>
+<td>Phone number or email</td>
+<td>请输入手机号或邮箱</td>
+<td>請輸入手機號或郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.btn</code></td>
+<td>LOGIN</td>
+<td>登录</td>
+<td>登入</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.forgot</code></td>
+<td>Forgot password?</td>
+<td>忘记密码？</td>
+<td>忘記密碼？</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.pwd.label</code></td>
+<td>Password</td>
+<td>密码</td>
+<td>密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.pwd.placeholder</code></td>
+<td>Enter password</td>
+<td>请输入密码</td>
+<td>請輸入密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.signup</code></td>
+<td>Don&#x27;t have an account?</td>
+<td>还没有账号？</td>
+<td>還沒有帳號？</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.signupLink</code></td>
+<td>Sign up with Phone</td>
+<td>手机号注册</td>
+<td>手機號註冊</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.slogan</code></td>
+<td>Best Quality Best Price</td>
+<td>品质至上 价格最优</td>
+<td>品質至上 價格最優</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.tab.phone</code></td>
+<td>📱 Phone</td>
+<td>📱 手机</td>
+<td>📱 手機</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.tab.pwd</code></td>
+<td>🔒 Password</td>
+<td>🔒 密码</td>
+<td>🔒 密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.terms</code></td>
+<td>By continuing, you agree to our</td>
+<td>继续即表示您同意我们的</td>
+<td>繼續即表示您同意我們的</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.terms.and</code></td>
+<td>and</td>
+<td>和</td>
+<td>和</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.terms.pp</code></td>
+<td>Privacy Policy</td>
+<td>隐私政策</td>
+<td>私隱政策</td>
+</tr><tr>
+<td>APP</td>
+<td>Password Login</td>
+<td><code>pwdLogin.terms.tos</code></td>
+<td>Terms of Service</td>
+<td>服务条款</td>
+<td>服務條款</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Login Success</td>
+<td><code>loginOk.desc</code></td>
+<td>Redirecting to homepage...</td>
+<td>正在跳转至首页...</td>
+<td>正在跳轉至首頁...</td>
+</tr><tr>
+<td>APP</td>
+<td>Login Success</td>
+<td><code>loginOk.heading</code></td>
+<td>Welcome Back!</td>
+<td>欢迎回来！</td>
+<td>歡迎回來！</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.changeBtn</code></td>
+<td>CHANGE PASSWORD</td>
+<td>修改密码</td>
+<td>修改密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.confirm.label</code></td>
+<td>Confirm Password</td>
+<td>确认密码</td>
+<td>確認密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.confirm.placeholder</code></td>
+<td>Re-enter password</td>
+<td>再次输入密码</td>
+<td>再次輸入密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.desc</code></td>
+<td>Enter your phone number to receive a verification code via SMS</td>
+<td>输入手机号码，通过短信接收验证码</td>
+<td>輸入手機號碼，透過短訊接收驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.emailDesc</code></td>
+<td>Enter your email address to receive a verification code</td>
+<td>输入您的邮箱地址，接收验证码</td>
+<td>輸入您的郵箱地址，接收驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.emailLabel</code></td>
+<td>Email Address</td>
+<td>邮箱地址</td>
+<td>郵箱地址</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.emailPlaceholder</code></td>
+<td>Enter email address</td>
+<td>请输入邮箱</td>
+<td>請輸入郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.new.label</code></td>
+<td>New Password</td>
+<td>新密码</td>
+<td>新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.new.placeholder</code></td>
+<td>At least 8 characters</td>
+<td>至少8个字符</td>
+<td>至少8個字元</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.newDesc</code></td>
+<td>Enter your new password below</td>
+<td>请输入新密码</td>
+<td>請輸入新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.newTitle</code></td>
+<td>Create New Password</td>
+<td>创建新密码</td>
+<td>建立新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.otp.desc.email</code></td>
+<td>Enter the 6-digit code sent to &lt;b&gt;john@***.com&lt;/b&gt;</td>
+<td>输入发送至 &lt;b&gt;john@***.com&lt;/b&gt; 的6位验证码</td>
+<td>請輸入傳送至 &lt;b&gt;john@***.com&lt;/b&gt; 的6位驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.otp.desc.phone</code></td>
+<td>Enter the 6-digit code sent to &lt;b&gt;+852 9123 ****&lt;/b&gt;</td>
+<td>输入发送至 &lt;b&gt;+852 9123 ****&lt;/b&gt; 的6位验证码</td>
+<td>請輸入傳送至 &lt;b&gt;+852 9123 ****&lt;/b&gt; 的6位驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.phoneLabel</code></td>
+<td>Phone Number</td>
+<td>手机号码</td>
+<td>手機號碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.phonePlaceholder</code></td>
+<td>Enter phone number</td>
+<td>请输入手机号</td>
+<td>請輸入手機號</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.resend</code></td>
+<td>Didn&#x27;t receive?</td>
+<td>没有收到？</td>
+<td>沒有收到？</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.resendTimer</code></td>
+<td>Resend in 01:00</td>
+<td>01:00 后重发</td>
+<td>01:00 後重發</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.sendBtn</code></td>
+<td>SEND CODE</td>
+<td>发送验证码</td>
+<td>發送驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.success</code></td>
+<td>Password changed successfully! ✓</td>
+<td>密码修改成功 ✓</td>
+<td>密碼修改成功 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.tab.email</code></td>
+<td>✉️ Email</td>
+<td>✉️ 邮箱</td>
+<td>✉️ 郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.tab.phone</code></td>
+<td>📱 Phone</td>
+<td>📱 手机号</td>
+<td>📱 手機號</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.title</code></td>
+<td>Forgot Password</td>
+<td>忘记密码</td>
+<td>忘記密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.verifyBtn</code></td>
+<td>VERIFY</td>
+<td>验证</td>
+<td>驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.verifyDesc</code></td>
+<td>Enter the 6-digit code</td>
+<td>输入6位验证码</td>
+<td>輸入6位驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Forgot Password</td>
+<td><code>forgot.verifyTitle</code></td>
+<td>Verify Code</td>
+<td>验证码</td>
+<td>驗證碼</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Create Password (KYC)</td>
+<td><code>cpk.all</code></td>
+<td>All Countries</td>
+<td>所有国家</td>
+<td>所有國家</td>
+</tr><tr>
+<td>APP</td>
+<td>Create Password (KYC)</td>
+<td><code>cpk.empty</code></td>
+<td>No results found</td>
+<td>未找到结果</td>
+<td>未找到結果</td>
+</tr><tr>
+<td>APP</td>
+<td>Create Password (KYC)</td>
+<td><code>cpk.popular</code></td>
+<td>Popular</td>
+<td>热门</td>
+<td>熱門</td>
+</tr><tr>
+<td>APP</td>
+<td>Create Password (KYC)</td>
+<td><code>cpk.search</code></td>
+<td>Search country or dial code…</td>
+<td>搜索国家或区号…</td>
+<td>搜尋國家或區號…</td>
+</tr><tr>
+<td>APP</td>
+<td>Create Password (KYC)</td>
+<td><code>cpk.title</code></td>
+<td>Select Country / Region</td>
+<td>选择国家 / 地区</td>
+<td>選擇國家 / 地區</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Flow Map</td>
+<td><code>map.email</code></td>
+<td>✉️ Email Registration: </td>
+<td>✉️ 邮箱注册：</td>
+<td>✉️ 信箱註冊：</td>
+</tr><tr>
+<td>APP</td>
+<td>Flow Map</td>
+<td><code>map.kyc</code></td>
+<td>🛡️ KYC Verification: </td>
+<td>🛡️ KYC 认证：</td>
+<td>🛡️ KYC認證：</td>
+</tr><tr>
+<td>APP</td>
+<td>Flow Map</td>
+<td><code>map.pwd</code></td>
+<td>🔒 Password Login: </td>
+<td>🔒 密码登录：</td>
+<td>🔒 密碼登入：</td>
+</tr><tr>
+<td>APP</td>
+<td>Flow Map</td>
+<td><code>map.sms</code></td>
+<td>📱 SMS Registration: </td>
+<td>📱 短信注册：</td>
+<td>📱 短信註冊：</td>
+</tr><tr>
+<td>APP</td>
+<td>Flow Map</td>
+<td><code>map.wa</code></td>
+<td>WhatsApp Registration: </td>
+<td>WhatsApp 注册：</td>
+<td>WhatsApp 註冊：</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.accountLocked</code></td>
+<td>Account locked, please try again in 1 hour</td>
+<td>账号已被锁定，请1小时后再试</td>
+<td>帳號已被鎖定，請1小時後再試</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.emailInvalid</code></td>
+<td>Invalid email format</td>
+<td>邮箱格式错误</td>
+<td>郵箱格式錯誤</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.forbidden</code></td>
+<td>Access denied</td>
+<td>无权限访问</td>
+<td>無權限存取</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.invalidInput</code></td>
+<td>Invalid input format</td>
+<td>输入格式有误</td>
+<td>輸入格式有誤</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.notFound</code></td>
+<td>Page not found</td>
+<td>页面不存在</td>
+<td>頁面不存在</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.otpExpired</code></td>
+<td>Verification code expired</td>
+<td>验证码已过期</td>
+<td>驗證碼已過期</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.otpInvalid</code></td>
+<td>Invalid verification code</td>
+<td>验证码错误</td>
+<td>驗證碼錯誤</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.passwordMismatch</code></td>
+<td>Passwords do not match</td>
+<td>两次密码输入不一致</td>
+<td>兩次密碼輸入不一致</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.passwordWeak</code></td>
+<td>Password is too weak</td>
+<td>密码强度不够</td>
+<td>密碼強度不夠</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.phoneInvalid</code></td>
+<td>Invalid phone number format</td>
+<td>手机号格式错误</td>
+<td>手機號格式錯誤</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.serverError</code></td>
+<td>Server error</td>
+<td>服务器错误</td>
+<td>伺服器錯誤</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.timeout</code></td>
+<td>Request timed out, please retry</td>
+<td>请求超时，请重试</td>
+<td>請求逾時，請重試</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.tooManyAttempts</code></td>
+<td>Too many attempts, please try again later</td>
+<td>尝试次数过多，请稍后再试</td>
+<td>嘗試次數過多，請稍後再試</td>
+</tr><tr>
+<td>APP</td>
+<td>Error Messages</td>
+<td><code>error.unauthorized</code></td>
+<td>Session expired, please log in again</td>
+<td>登录已过期，请重新登录</td>
+<td>登入已過期，請重新登入</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.cancelled</code></td>
+<td>Cancelled</td>
+<td>已取消</td>
+<td>已取消</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.help</code></td>
+<td>Help &amp; Support</td>
+<td>帮助与支持</td>
+<td>幫助與支援</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.helpDesc</code></td>
+<td>FAQ, contact us, feedback</td>
+<td>常见问题、联系我们</td>
+<td>常見問題、聯繫我們</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.orders</code></td>
+<td>My Orders</td>
+<td>我的订单</td>
+<td>我的訂單</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.paid</code></td>
+<td>Paid</td>
+<td>已支付</td>
+<td>已支付</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.pendingPay</code></td>
+<td>Unpaid</td>
+<td>待支付</td>
+<td>待支付</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.quickActions</code></td>
+<td>Quick Actions</td>
+<td>快捷入口</td>
+<td>快捷入口</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.restricted</code></td>
+<td>Account Restricted</td>
+<td>账号受限</td>
+<td>帳號受限</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.restrictedDesc</code></td>
+<td>Contact support to resolve this issue</td>
+<td>请联系客服处理</td>
+<td>請聯繫客服處理</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.restrictedTitle</code></td>
+<td>Account Restricted</td>
+<td>账号受限</td>
+<td>帳號受限</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.settings</code></td>
+<td>Settings</td>
+<td>设置</td>
+<td>設定</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.settingsDesc</code></td>
+<td>Account, security, language</td>
+<td>账户、安全、语言</td>
+<td>帳戶、安全、語言</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.title</code></td>
+<td>My Center</td>
+<td>个人中心</td>
+<td>個人中心</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.unverified</code></td>
+<td>Unverified</td>
+<td>未认证</td>
+<td>未認證</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.verified</code></td>
+<td>Verified</td>
+<td>已认证</td>
+<td>已認證</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.verifiedBar</code></td>
+<td>Identity Verified · KYC Complete</td>
+<td>已完成身份认证 · KYC通过</td>
+<td>已完成身份認證 · KYC通過</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.verifyDesc</code></td>
+<td>Required before placing orders · Takes ~2 min</td>
+<td>下单前需完成认证 · 约2分钟</td>
+<td>下單前需完成認證 · 約2分鐘</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.verifyTitle</code></td>
+<td>Complete Identity Verification</td>
+<td>完成身份认证</td>
+<td>完成身份認證</td>
+</tr><tr>
+<td>APP</td>
+<td>My Center</td>
+<td><code>myCenter.viewAll</code></td>
+<td>View All ›</td>
+<td>查看全部 ›</td>
+<td>查看全部 ›</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.about</code></td>
+<td>About Us</td>
+<td>关于我们</td>
+<td>關於我們</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.changePassword</code></td>
+<td>Change Password</td>
+<td>修改密码</td>
+<td>修改密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.kyc</code></td>
+<td>Identity Verification</td>
+<td>身份认证</td>
+<td>身份認證</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.kyc.pending</code></td>
+<td>Under Review</td>
+<td>审核中</td>
+<td>審核中</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.kyc.unverified</code></td>
+<td>Unverified</td>
+<td>未认证</td>
+<td>未認證</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.kyc.verified</code></td>
+<td>Verified</td>
+<td>已认证</td>
+<td>已認證</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.language</code></td>
+<td>Language</td>
+<td>语言设置</td>
+<td>語言設定</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.logout</code></td>
+<td>Log Out</td>
+<td>退出登录</td>
+<td>登出</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.logoutConfirm</code></td>
+<td>Are you sure you want to log out?</td>
+<td>确定要退出登录吗？</td>
+<td>確定要登出嗎？</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.orders</code></td>
+<td>My Orders</td>
+<td>我的订单</td>
+<td>我的訂單</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.orders.cancelled</code></td>
+<td>Cancelled</td>
+<td>已取消</td>
+<td>已取消</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.orders.paid</code></td>
+<td>Paid</td>
+<td>已付款</td>
+<td>已付款</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.orders.unpaid</code></td>
+<td>Unpaid</td>
+<td>待付款</td>
+<td>待付款</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.profile</code></td>
+<td>My Profile</td>
+<td>我的资料</td>
+<td>我的資料</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.security</code></td>
+<td>Security Settings</td>
+<td>安全设置</td>
+<td>安全設定</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.title</code></td>
+<td>Me</td>
+<td>我的</td>
+<td>我的</td>
+</tr><tr>
+<td>APP</td>
+<td>Me Tab (Profile)</td>
+<td><code>me.version</code></td>
+<td>Version</td>
+<td>版本信息</td>
+<td>版本資訊</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.autoDetect</code></td>
+<td>Auto-detect</td>
+<td>自动识别</td>
+<td>自動辨識</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.back</code></td>
+<td>Back Side</td>
+<td>反面</td>
+<td>反面</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz</code></td>
+<td>Business Information</td>
+<td>企业信息</td>
+<td>企業資訊</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.address</code></td>
+<td>Business Address</td>
+<td>企业地址</td>
+<td>企業地址</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.autoDetect</code></td>
+<td>Auto-detect</td>
+<td>自动识别</td>
+<td>自動識別</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.collapse</code></td>
+<td>Add business license for enterprise account</td>
+<td>添加营业执照以开通企业账户</td>
+<td>添加營業執照以開通企業帳戶</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.endDate</code></td>
+<td>End date</td>
+<td>到期日期</td>
+<td>到期日期</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.hint</code></td>
+<td>JPG / PNG / PDF, max 20 MB</td>
+<td>JPG / PNG / PDF，最大20MB</td>
+<td>JPG / PNG / PDF，最大20MB</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.legalRep</code></td>
+<td>Legal Rep / Director</td>
+<td>法定代表人/董事</td>
+<td>法定代表人/董事</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.licenseType</code></td>
+<td>License Type</td>
+<td>证照类型</td>
+<td>證照類型</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.ocrPending</code></td>
+<td>Upload license to auto-recognize</td>
+<td>上传执照后自动识别</td>
+<td>上傳執照後自動識別</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.optional</code></td>
+<td>Optional</td>
+<td>选填</td>
+<td>選填</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.regNum</code></td>
+<td>Reg. Number</td>
+<td>注册号</td>
+<td>註冊號</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.startDate</code></td>
+<td>Start date</td>
+<td>开始日期</td>
+<td>開始日期</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.upload</code></td>
+<td>Upload Business License</td>
+<td>上传营业执照</td>
+<td>上傳營業執照</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.biz.validity</code></td>
+<td>License Validity Period</td>
+<td>执照有效期</td>
+<td>執照有效期</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizAddress</code></td>
+<td>Business Address</td>
+<td>企业地址</td>
+<td>企業地址</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizCollapse</code></td>
+<td>Add business license for enterprise account</td>
+<td>添加营业执照以开通企业账户</td>
+<td>新增營業執照以開通企業帳戶</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizGuideDesc</code></td>
+<td>Enterprise accounts get higher daily purchase limits and priority support.</td>
+<td>企业账户可享更高日购买限额与优先客服支持。</td>
+<td>企業帳戶可享更高日購買限額與優先客服支援。</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizGuideTitle</code></td>
+<td>Fill in business info to unlock higher limits</td>
+<td>填写企业信息，解锁更高购买额度</td>
+<td>填寫企業資訊，解鎖更高購買額度</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizHint</code></td>
+<td>JPG / PNG / PDF, max 20 MB</td>
+<td>JPG / PNG / PDF，最大20MB</td>
+<td>JPG / PNG / PDF，最大20MB</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizInfo</code></td>
+<td>Business Information</td>
+<td>企业信息</td>
+<td>企業資訊</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizOcrPending</code></td>
+<td>Upload license to auto-recognize</td>
+<td>上传执照后自动识别</td>
+<td>上傳執照後自動辨識</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.bizUpload</code></td>
+<td>Upload Business License</td>
+<td>上传营业执照</td>
+<td>上傳營業執照</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.city</code></td>
+<td>City / District</td>
+<td>城市 / 区</td>
+<td>城市 / 區</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.cnid</code></td>
+<td>CN Resident ID</td>
+<td>中国居民身份证</td>
+<td>中國居民身份證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.contactEmail</code></td>
+<td>Contact Email</td>
+<td>联系邮箱</td>
+<td>聯繫信箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.demoDup</code></td>
+<td>🎬 Demo: Simulate duplicate identity</td>
+<td>🎬 演示：模拟重复身份</td>
+<td>🎬 演示：模擬重複身份</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.desc</code></td>
+<td>Complete KYC to unlock order placement</td>
+<td>完成KYC认证以解锁下单功能</td>
+<td>完成KYC認證以解鎖下單功能</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.email</code></td>
+<td>Contact Email</td>
+<td>联系邮箱</td>
+<td>聯絡郵箱</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.email.optional</code></td>
+<td>Optional</td>
+<td>选填</td>
+<td>選填</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.email.placeholder</code></td>
+<td>For order notifications</td>
+<td>用于接收订单通知</td>
+<td>用於接收訂單通知</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.emailPlaceholder</code></td>
+<td>For order notifications</td>
+<td>用于接收订单通知</td>
+<td>用於接收訂單通知</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.endDate</code></td>
+<td>End date</td>
+<td>到期日期</td>
+<td>到期日期</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.front</code></td>
+<td>✅ Front</td>
+<td>✅ 正面</td>
+<td>✅ 正面</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.fullName</code></td>
+<td>Full Name</td>
+<td>姓名</td>
+<td>姓名</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.heading</code></td>
+<td>Identity Verification</td>
+<td>身份验证</td>
+<td>身份驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.hkid</code></td>
+<td>Hong Kong ID</td>
+<td>香港身份证</td>
+<td>香港身份證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.id</code></td>
+<td>Identity Verification</td>
+<td>身份验证</td>
+<td>身份驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.id.cnid</code></td>
+<td>CN Resident ID</td>
+<td>中国居民身份证</td>
+<td>中國居民身份證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.id.hkid</code></td>
+<td>HK/Macau ID</td>
+<td>港澳居民身份证</td>
+<td>港澳居民身份證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.id.passport</code></td>
+<td>Passport</td>
+<td>护照</td>
+<td>護照</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.id.select</code></td>
+<td>Select ID Type</td>
+<td>选择证件类型</td>
+<td>選擇證件類型</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.idNumber</code></td>
+<td>ID Number</td>
+<td>证件号码</td>
+<td>證件號碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.idVerify</code></td>
+<td>Identity Verification</td>
+<td>身份验证</td>
+<td>身份驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.legalRep</code></td>
+<td>Legal Rep / Director</td>
+<td>法定代表人/董事</td>
+<td>法定代表人/董事</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.licenseType</code></td>
+<td>License Type</td>
+<td>证照类型</td>
+<td>證照類型</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.licenseValidity</code></td>
+<td>License Validity Period</td>
+<td>执照有效期</td>
+<td>執照有效期</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.moid</code></td>
+<td>Macau ID</td>
+<td>澳门身份证</td>
+<td>澳門身份證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.noCityData</code></td>
+<td>No city data for this province</td>
+<td>该省份暂无城市数据</td>
+<td>該省份暫無城市資料</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.noProvinceData</code></td>
+<td>No province data for this region</td>
+<td>该地区暂无省份数据</td>
+<td>該地區暫無省份資料</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocr.banner</code></td>
+<td>OCR Recognized</td>
+<td>OCR 已识别</td>
+<td>OCR 已識別</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocr.bannerDesc</code></td>
+<td>— please review and correct if needed</td>
+<td>— 请检查并修正</td>
+<td>— 請檢查並修正</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocr.edit</code></td>
+<td>✏️ tap to edit</td>
+<td>✏️ 点击编辑</td>
+<td>✏️ 點擊編輯</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocr.idNum</code></td>
+<td>ID Number</td>
+<td>证件号码</td>
+<td>證件號碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocr.name</code></td>
+<td>Full Name</td>
+<td>姓名</td>
+<td>姓名</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocrBanner</code></td>
+<td>OCR Recognized</td>
+<td>OCR 已识别</td>
+<td>OCR 已辨識</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.ocrBannerDesc</code></td>
+<td>— please review and correct if needed</td>
+<td>— 请检查并修正</td>
+<td>— 請檢查並修正</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.optional</code></td>
+<td>Optional</td>
+<td>选填</td>
+<td>選填</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.passport</code></td>
+<td>Passport</td>
+<td>护照</td>
+<td>護照</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.passportHint</code></td>
+<td>Photo page with MRZ · JPG/PNG ≤10MB</td>
+<td>含MRZ的信息页 · JPG/PNG ≤10MB</td>
+<td>含MRZ的資訊頁 · JPG/PNG ≤10MB</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.province</code></td>
+<td>Province / State</td>
+<td>省份 / 州</td>
+<td>省份 / 州</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.regNumber</code></td>
+<td>Reg. Number</td>
+<td>注册号</td>
+<td>註冊號</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.region</code></td>
+<td>Country / Region</td>
+<td>国家 / 地区</td>
+<td>國家 / 地區</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.region.city</code></td>
+<td>City</td>
+<td>城市</td>
+<td>城市</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.region.province</code></td>
+<td>Province</td>
+<td>省份</td>
+<td>省份</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.region.required</code></td>
+<td>Required</td>
+<td>必填</td>
+<td>必填</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.regionNoResults</code></td>
+<td>No results</td>
+<td>无搜索结果</td>
+<td>無搜尋結果</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.regionPickerTitle</code></td>
+<td>Select Country / Region</td>
+<td>选择国家 / 地区</td>
+<td>選擇國家 / 地區</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.regionSearchPlaceholder</code></td>
+<td>Search country or region…</td>
+<td>搜索国家或地区…</td>
+<td>搜尋國家或地區…</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.required</code></td>
+<td>Required</td>
+<td>必填</td>
+<td>必填</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.selectId</code></td>
+<td>Select ID Type</td>
+<td>选择证件类型</td>
+<td>選擇證件類型</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.selectPlaceholder</code></td>
+<td>Please select</td>
+<td>请选择</td>
+<td>請選擇</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.skip</code></td>
+<td>Skip for now →</td>
+<td>暂时跳过 →</td>
+<td>暫時跳過 →</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.startDate</code></td>
+<td>Start date</td>
+<td>开始日期</td>
+<td>開始日期</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.submit</code></td>
+<td>SUBMIT FOR VERIFICATION</td>
+<td>提交验证</td>
+<td>提交驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.tapEdit</code></td>
+<td>✏️ tap to edit</td>
+<td>✏️ 点击编辑</td>
+<td>✏️ 點擊編輯</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.title</code></td>
+<td>Identity Verification</td>
+<td>身份验证</td>
+<td>身份驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.upload.back</code></td>
+<td>Back Side</td>
+<td>反面</td>
+<td>反面</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.upload.front</code></td>
+<td>✅ Front</td>
+<td>✅ 正面</td>
+<td>✅ 正面</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.upload.hint</code></td>
+<td>JPG/PNG ≤10MB</td>
+<td>JPG/PNG ≤10MB</td>
+<td>JPG/PNG ≤10MB</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.upload.passport</code></td>
+<td>Upload Info Page</td>
+<td>上传信息页</td>
+<td>上傳資訊頁</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.upload.passport.hint</code></td>
+<td>Photo page with MRZ · JPG/PNG ≤10MB</td>
+<td>含MRZ的信息页 · JPG/PNG ≤10MB</td>
+<td>含MRZ的資訊頁 · JPG/PNG ≤10MB</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.uploadHint</code></td>
+<td>JPG/PNG ≤10MB</td>
+<td>JPG/PNG ≤10MB</td>
+<td>JPG/PNG ≤10MB</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.uploadPassport</code></td>
+<td>Upload Info Page</td>
+<td>上传信息页</td>
+<td>上傳資訊頁</td>
+</tr><tr>
+<td>APP</td>
+<td>Identity Verification (KYC)</td>
+<td><code>profile.validity</code></td>
+<td>ID Validity Period</td>
+<td>证件有效期</td>
+<td>證件有效期</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.cancelBtn</code></td>
+<td>Use a different ID</td>
+<td>使用其他证件</td>
+<td>使用其他證件</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.continueBtn</code></td>
+<td>Continue with verified account</td>
+<td>继续使用已认证账号</td>
+<td>繼續使用已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.desc</code></td>
+<td>For your security, each verified identity can belong to only one active account. Please continue with your existing verified account.</td>
+<td>为保障账户安全，同一认证身份仅可对应一个在用账号，请继续使用您已认证的账号。</td>
+<td>為保障帳戶安全，同一認證身份僅可對應一個在用帳號，請繼續使用您已認證的帳號。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.existingAcct</code></td>
+<td>Existing verified account</td>
+<td>已认证账号</td>
+<td>已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.friendlyNote</code></td>
+<td>Your current login method will be migrated to the verified account. Once completed, you can use it to sign in to the verified account.</td>
+<td>系统会把当前登录方式迁移到已认证账号，迁移完成后当前登录方式可用于登录已认证账号。</td>
+<td>系統會把目前登入方式遷移到已認證帳號，遷移完成後目前登入方式可用於登入已認證帳號。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.headline</code></td>
+<td>This ID is already associated with an account</td>
+<td>该证件已关联已认证账号</td>
+<td>該證件已關聯已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.title</code></td>
+<td>Identity Notice</td>
+<td>身份提示</td>
+<td>身份提示</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Identity</td>
+<td><code>kycDup.verifiedTag</code></td>
+<td>✓ Verified</td>
+<td>✓ 已认证 · HK</td>
+<td>✓ 已認證 · HK</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.cancelBtn</code></td>
+<td>Use a different ID</td>
+<td>使用其他证件</td>
+<td>使用其他證件</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.desc</code></td>
+<td>For your security, each verified identity can belong to only one active account. The verified account already has the same type of login method, so no migration is needed.</td>
+<td>为保障账户安全，同一认证身份仅可对应一个在用账号。已认证账号已有相同类型的登录方式，无需迁移。</td>
+<td>為保障帳戶安全，同一認證身份僅可對應一個在用帳號。已認證帳號已有相同類型的登入方式，無需遷移。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.existingAcct</code></td>
+<td>Existing verified account</td>
+<td>已认证账号</td>
+<td>已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.goLoginBtn</code></td>
+<td>Go to Login</td>
+<td>前往登录</td>
+<td>前往登入</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.headline</code></td>
+<td>This ID is already associated with an account</td>
+<td>该证件已关联已认证账号</td>
+<td>該證件已關聯已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.infoNote</code></td>
+<td>The verified account already has a login method of the same type (e.g., both use email). Please sign in directly with the verified account.</td>
+<td>已认证账号已有与当前相同类型的登录方式（如都是邮箱），请直接使用已认证账号登录。</td>
+<td>已認證帳號已有與目前相同類型的登入方式（如都是信箱），請直接使用已認證帳號登入。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Duplicate Conflict</td>
+<td><code>kycDupConflict.title</code></td>
+<td>Identity Notice</td>
+<td>身份提示</td>
+<td>身份提示</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.acctLabel</code></td>
+<td>Bind to account</td>
+<td>绑定到账号</td>
+<td>綁定到帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.cancel</code></td>
+<td>Cancel</td>
+<td>取消</td>
+<td>取消</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.desc</code></td>
+<td>Your verified account currently uses phone login only. We&#x27;ll add your email as a new login method so you can sign in with either.</td>
+<td>您的已认证账号目前仅支持手机号登录，邮箱添加成功后可用邮箱或手机号登录。</td>
+<td>您的已認證帳號目前僅支援手機號登入，信箱新增成功後可用信箱或手機號登入。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.emailLabel</code></td>
+<td>Email to add</td>
+<td>待添加邮箱</td>
+<td>待新增信箱</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.headline</code></td>
+<td>Bind this email to the verified account</td>
+<td>将该邮箱绑定到已认证账号</td>
+<td>將該信箱綁定到已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.nextBtn</code></td>
+<td>Send verification code</td>
+<td>发送验证码</td>
+<td>傳送驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.secureNote</code></td>
+<td>🔐 We&#x27;ll send a one-time code to the verified phone number to confirm you own the account before binding.</td>
+<td>🔐 系统将向已认证手机号发送一次性验证码，用于确认账号所有权。</td>
+<td>🔐 系統將向已認證手機號傳送一次性驗證碼，用於確認帳號所有權。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Bind Login Method</td>
+<td><code>kycDupSup.title</code></td>
+<td>Add Login Method</td>
+<td>补全登录方式</td>
+<td>補全登入方式</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>KYC Ownership OTP</td>
+<td><code>kycDupOtp.desc</code></td>
+<td>We sent a code to &lt;b&gt;+852 ****1234&lt;/b&gt;. Enter it below to confirm ownership and complete the binding.</td>
+<td>验证码已发送至 &lt;b&gt;+852 ****1234&lt;/b&gt;，输入后即可完成绑定。</td>
+<td>驗證碼已傳送至 &lt;b&gt;+852 ****1234&lt;/b&gt;，輸入後即可完成綁定。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Ownership OTP</td>
+<td><code>kycDupOtp.headline</code></td>
+<td>Enter the 6-digit code</td>
+<td>请输入6位验证码</td>
+<td>請輸入6位驗證碼</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Ownership OTP</td>
+<td><code>kycDupOtp.resend</code></td>
+<td>Resend code in 60s</td>
+<td>60秒后可重发</td>
+<td>60秒後可重發</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Ownership OTP</td>
+<td><code>kycDupOtp.title</code></td>
+<td>Verify Ownership</td>
+<td>所有权验证</td>
+<td>所有權驗證</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Ownership OTP</td>
+<td><code>kycDupOtp.verifyBtn</code></td>
+<td>Verify &amp; Complete</td>
+<td>验证并完成</td>
+<td>驗證並完成</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.btn</code></td>
+<td>Sign in to verified account</td>
+<td>登录已认证账号</td>
+<td>登入已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.desc</code></td>
+<td>Your email has been added as a login method to your verified account +852 ****1234. You can now sign in with either credential.</td>
+<td>您的邮箱已作为登录方式添加到已认证账号 +852 ****1234，后续可用任一方式登录。</td>
+<td>您的信箱已作為登入方式新增到已認證帳號 +852 ****1234，後續可用任一方式登入。</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.headline</code></td>
+<td>Successfully bound</td>
+<td>绑定成功</td>
+<td>綁定成功</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.item1</code></td>
+<td>Verified account is now active on this device</td>
+<td>本设备已切换至已认证账号</td>
+<td>本裝置已切換至已認證帳號</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.item2</code></td>
+<td>Email + phone can both be used to sign in</td>
+<td>邮箱与手机号均可用于登录</td>
+<td>信箱與手機號均可用於登入</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.item3</code></td>
+<td>The previous account is no longer in use and its access has been safely paused</td>
+<td>原账号已停止使用，访问已安全暂停</td>
+<td>原帳號已停止使用，存取已安全暫停</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.title</code></td>
+<td>All Set</td>
+<td>绑定完成</td>
+<td>綁定完成</td>
+</tr><tr>
+<td>APP</td>
+<td>KYC Binding Done</td>
+<td><code>kycDupDone.whatNext</code></td>
+<td>What happens next</td>
+<td>接下来的变化</td>
+<td>接下來的變化</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.cancelled</code></td>
+<td>Cancelled</td>
+<td>已取消</td>
+<td>已取消</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.paid</code></td>
+<td>Paid</td>
+<td>已支付</td>
+<td>已支付</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.statusAfterSales</code></td>
+<td>After-Sales</td>
+<td>售后处理</td>
+<td>售後處理</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.statusDone</code></td>
+<td>Completed</td>
+<td>已完成</td>
+<td>已完成</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.statusPending</code></td>
+<td>Pending Payment</td>
+<td>待支付</td>
+<td>待支付</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.statusPickup</code></td>
+<td>Pending Pickup</td>
+<td>待取货</td>
+<td>待取貨</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.title</code></td>
+<td>My Orders</td>
+<td>我的订单</td>
+<td>我的訂單</td>
+</tr><tr>
+<td>APP</td>
+<td>My Orders</td>
+<td><code>orders.unpaid</code></td>
+<td>Unpaid</td>
+<td>待支付</td>
+<td>待支付</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.about</code></td>
+<td>About FoneSquare</td>
+<td>关于 FoneSquare</td>
+<td>關於 FoneSquare</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.aboutVer</code></td>
+<td>Version 1.0.0</td>
+<td>版本 1.0.0</td>
+<td>版本 1.0.0</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.changePwd</code></td>
+<td>Change Password</td>
+<td>修改密码</td>
+<td>修改密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.changePwdDesc</code></td>
+<td>Update your login password</td>
+<td>更新您的登录密码</td>
+<td>更新您的登入密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.idVerify</code></td>
+<td>Identity Verification</td>
+<td>身份认证</td>
+<td>身份認證</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.idVerifyDesc</code></td>
+<td>Manage your KYC documents</td>
+<td>管理您的KYC证件</td>
+<td>管理您的KYC證件</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.language</code></td>
+<td>Language</td>
+<td>语言</td>
+<td>語言</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.loginMethods</code></td>
+<td>Login Methods</td>
+<td>登录方式</td>
+<td>登入方式</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.loginMethodsDesc</code></td>
+<td>Manage phone, email, WhatsApp</td>
+<td>管理手机号、邮箱、WhatsApp</td>
+<td>管理手機號、信箱、WhatsApp</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.logout</code></td>
+<td>🚪 Log Out</td>
+<td>🚪 退出登录</td>
+<td>🚪 登出</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.privacy</code></td>
+<td>Privacy Policy</td>
+<td>隐私政策</td>
+<td>隱私政策</td>
+</tr><tr>
+<td>APP</td>
+<td>Settings</td>
+<td><code>settings.title</code></td>
+<td>Settings</td>
+<td>设置</td>
+<td>設定</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.btn</code></td>
+<td>UPDATE PASSWORD</td>
+<td>修改密码</td>
+<td>修改密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.confirm</code></td>
+<td>Confirm New Password</td>
+<td>确认新密码</td>
+<td>確認新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.confirmPlaceholder</code></td>
+<td>Re-enter new password</td>
+<td>再次输入新密码</td>
+<td>再次輸入新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.current</code></td>
+<td>Current Password</td>
+<td>当前密码</td>
+<td>目前密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.currentPlaceholder</code></td>
+<td>Enter current password</td>
+<td>请输入当前密码</td>
+<td>請輸入目前密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.hints</code></td>
+<td>✓ 8+ chars   ✓ Number   ✓ Letter</td>
+<td>✓ 8位以上   ✓ 含数字   ✓ 含字母</td>
+<td>✓ 8位以上   ✓ 含數字   ✓ 含字母</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.new</code></td>
+<td>New Password</td>
+<td>新密码</td>
+<td>新密碼</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.newPlaceholder</code></td>
+<td>At least 8 characters</td>
+<td>至少8个字符</td>
+<td>至少8個字元</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.success</code></td>
+<td>Password updated ✓</td>
+<td>密码已修改 ✓</td>
+<td>密碼已修改 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Change Password</td>
+<td><code>changePwd.title</code></td>
+<td>Change Password</td>
+<td>修改密码</td>
+<td>修改密碼</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Language Selection</td>
+<td><code>lang.title</code></td>
+<td>Language</td>
+<td>语言选择</td>
+<td>語言選擇</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Help &amp; Support</td>
+<td><code>help.email</code></td>
+<td>Email Support</td>
+<td>邮件客服</td>
+<td>郵件客服</td>
+</tr><tr>
+<td>APP</td>
+<td>Help &amp; Support</td>
+<td><code>help.faq</code></td>
+<td>FAQ</td>
+<td>常见问题</td>
+<td>常見問題</td>
+</tr><tr>
+<td>APP</td>
+<td>Help &amp; Support</td>
+<td><code>help.faqDesc</code></td>
+<td>Frequently asked questions</td>
+<td>查看常见问题</td>
+<td>查看常見問題</td>
+</tr><tr>
+<td>APP</td>
+<td>Help &amp; Support</td>
+<td><code>help.title</code></td>
+<td>Help &amp; Support</td>
+<td>帮助与支持</td>
+<td>幫助與支援</td>
+</tr><tr>
+<td>APP</td>
+<td>Help &amp; Support</td>
+<td><code>help.whatsapp</code></td>
+<td>WhatsApp Support</td>
+<td>WhatsApp 客服</td>
+<td>WhatsApp 客服</td>
+</tr><tr>
+<td>APP</td>
+<td>Help &amp; Support</td>
+<td><code>help.whatsappDesc</code></td>
+<td>Chat with us on WhatsApp</td>
+<td>通过WhatsApp联系我们</td>
+<td>透過WhatsApp聯繫我們</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Privacy Policy</td>
+<td><code>privacy.heading</code></td>
+<td>Privacy Policy</td>
+<td>隐私政策</td>
+<td>隱私政策</td>
+</tr><tr>
+<td>APP</td>
+<td>Privacy Policy</td>
+<td><code>privacy.lastUpdated</code></td>
+<td>Last updated: April 2026 · Version 1.0</td>
+<td>最后更新：2026年4月 · 版本 1.0</td>
+<td>最後更新：2026年4月 · 版本 1.0</td>
+</tr><tr>
+<td>APP</td>
+<td>Privacy Policy</td>
+<td><code>privacy.title</code></td>
+<td>Privacy Policy</td>
+<td>隐私政策</td>
+<td>隱私政策</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>About</td>
+<td><code>about.companyLabel</code></td>
+<td>Company:</td>
+<td>公司：</td>
+<td>公司：</td>
+</tr><tr>
+<td>APP</td>
+<td>About</td>
+<td><code>about.contactLabel</code></td>
+<td>Contact:</td>
+<td>联系方式：</td>
+<td>聯繫方式：</td>
+</tr><tr>
+<td>APP</td>
+<td>About</td>
+<td><code>about.copyright</code></td>
+<td>© 2026 FoneSquare. All rights reserved.</td>
+<td>© 2026 FoneSquare 版权所有</td>
+<td>© 2026 FoneSquare 版權所有</td>
+</tr><tr>
+<td>APP</td>
+<td>About</td>
+<td><code>about.desc</code></td>
+<td>FoneSquare is a cross-border B2B platform for certified pre-owned mobile devices. We connect global dealers with quality inventory at the best prices.</td>
+<td>FoneSquare 是一个跨境B2B认证二手手机交易平台，为全球经销商提供优质货源和最优价格。</td>
+<td>FoneSquare 是一個跨境B2B認證二手手機交易平台，為全球經銷商提供優質貨源和最優價格。</td>
+</tr><tr>
+<td>APP</td>
+<td>About</td>
+<td><code>about.regionLabel</code></td>
+<td>Region:</td>
+<td>地区：</td>
+<td>地區：</td>
+</tr><tr>
+<td>APP</td>
+<td>About</td>
+<td><code>about.title</code></td>
+<td>About FoneSquare</td>
+<td>关于FoneSquare</td>
+<td>關於FoneSquare</td>
+</tr><tr>
+<td>APP</td>
+<td>About</td>
+<td><code>about.version</code></td>
+<td>Version 1.0.0 (Build 2026.04)</td>
+<td>版本 1.0.0（Build 2026.04）</td>
+<td>版本 1.0.0（Build 2026.04）</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Bottom Tab Bar</td>
+<td><code>tab.cart</code></td>
+<td>Cart</td>
+<td>购物车</td>
+<td>購物車</td>
+</tr><tr>
+<td>APP</td>
+<td>Bottom Tab Bar</td>
+<td><code>tab.home</code></td>
+<td>Home</td>
+<td>首页</td>
+<td>首頁</td>
+</tr><tr>
+<td>APP</td>
+<td>Bottom Tab Bar</td>
+<td><code>tab.me</code></td>
+<td>Me</td>
+<td>我的</td>
+<td>我的</td>
+</tr><tr>
+<td>APP</td>
+<td>Bottom Tab Bar</td>
+<td><code>tabBar.cart</code></td>
+<td>Cart</td>
+<td>购物车</td>
+<td>購物車</td>
+</tr><tr>
+<td>APP</td>
+<td>Bottom Tab Bar</td>
+<td><code>tabBar.home</code></td>
+<td>Home</td>
+<td>首页</td>
+<td>首頁</td>
+</tr><tr>
+<td>APP</td>
+<td>Bottom Tab Bar</td>
+<td><code>tabBar.me</code></td>
+<td>Me</td>
+<td>我的</td>
+<td>我的</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Common</td>
+<td><code>common.back</code></td>
+<td>Back</td>
+<td>返回</td>
+<td>返回</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.cancel</code></td>
+<td>Cancel</td>
+<td>取消</td>
+<td>取消</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.close</code></td>
+<td>Close</td>
+<td>关闭</td>
+<td>關閉</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.confirm</code></td>
+<td>Confirm</td>
+<td>确认</td>
+<td>確認</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.delete</code></td>
+<td>Delete</td>
+<td>删除</td>
+<td>刪除</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.done</code></td>
+<td>Done</td>
+<td>完成</td>
+<td>完成</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.failed</code></td>
+<td>Failed</td>
+<td>操作失败</td>
+<td>操作失敗</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.loading</code></td>
+<td>Loading...</td>
+<td>加载中...</td>
+<td>載入中...</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.networkError</code></td>
+<td>Network error, please check your connection</td>
+<td>网络错误，请检查网络连接</td>
+<td>網絡錯誤，請檢查網絡連接</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.next</code></td>
+<td>Next</td>
+<td>下一步</td>
+<td>下一步</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.optional</code></td>
+<td>Optional</td>
+<td>选填</td>
+<td>選填</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.required</code></td>
+<td>Required</td>
+<td>必填</td>
+<td>必填</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.retry</code></td>
+<td>Retry</td>
+<td>重试</td>
+<td>重試</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.save</code></td>
+<td>Save</td>
+<td>保存</td>
+<td>儲存</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.submit</code></td>
+<td>Submit</td>
+<td>提交</td>
+<td>提交</td>
+</tr><tr>
+<td>APP</td>
+<td>Common</td>
+<td><code>common.success</code></td>
+<td>Success</td>
+<td>操作成功</td>
+<td>操作成功</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.clear</code></td>
+<td>Clear</td>
+<td>清空</td>
+<td>清空</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.confirmClear</code></td>
+<td>Clear notes for this page?</td>
+<td>确定清空当前页面的备注？</td>
+<td>確定清空目前頁面的備註？</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.confirmReset</code></td>
+<td>Reset all notes to default? Custom edits will be lost.</td>
+<td>重置所有备注为默认内容？自定义内容将丢失。</td>
+<td>重設所有備註為預設內容？自訂內容將遺失。</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.emptyNote</code></td>
+<td>（暂无说明）</td>
+<td>（暂无说明）</td>
+<td>（暫無說明）</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.export</code></td>
+<td>Export</td>
+<td>导出</td>
+<td>匯出</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.exportTime</code></td>
+<td>导出时间：</td>
+<td>导出时间：</td>
+<td>匯出時間：</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.exportTitle</code></td>
+<td># FoneSquare 登录注册 — 产品说明</td>
+<td># FoneSquare 登录注册 — 产品说明</td>
+<td># FoneSquare 登入註冊 — 產品說明</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.exported</code></td>
+<td>备注已导出为 Markdown ✓</td>
+<td>备注已导出为 Markdown ✓</td>
+<td>備註已匯出為 Markdown ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.panelTitle</code></td>
+<td>Product Notes</td>
+<td>产品说明</td>
+<td>產品說明</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.placeholder</code></td>
+<td>Enter product notes…</td>
+<td>在此输入产品说明…</td>
+<td>在此輸入產品說明…</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.reset</code></td>
+<td>Reset</td>
+<td>重置</td>
+<td>重設</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.saved</code></td>
+<td>✓ Saved</td>
+<td>✓ 已保存</td>
+<td>✓ 已儲存</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.tip</code></td>
+<td>Auto-save · Edit directly</td>
+<td>自动保存 · 可直接编辑</td>
+<td>自動儲存 · 可直接編輯</td>
+</tr><tr>
+<td>APP</td>
+<td>Product Notes Panel</td>
+<td><code>notes.title</code></td>
+<td>产品说明</td>
+<td>产品说明</td>
+<td>產品說明</td>
+</tr><tr class="page-first">
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.cameraPicker</code></td>
+<td>Camera / Gallery picker</td>
+<td>相机 / 相册选择</td>
+<td>相機 / 相簿選擇</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.comingSoon</code></td>
+<td> coming soon</td>
+<td> 即将推出</td>
+<td> 即將推出</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.datePicker</code></td>
+<td>Date picker</td>
+<td>日期选择</td>
+<td>日期選擇</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.kycDupSwitched</code></td>
+<td>Switched to verified account ✓</td>
+<td>已切换至已认证账号 ✓</td>
+<td>已切換至已認證帳號 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.kycDupVerified</code></td>
+<td>Ownership verified ✓</td>
+<td>所有权验证通过 ✓</td>
+<td>所有權驗證通過 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.langSelected</code></td>
+<td> selected ✓</td>
+<td> 已选择 ✓</td>
+<td> 已選擇 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.loggedOut</code></td>
+<td>Logged out successfully</td>
+<td>已退出登录</td>
+<td>已登出</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.openEmail</code></td>
+<td>Opening email client…</td>
+<td>正在打开邮件客户端…</td>
+<td>正在開啟郵件用戶端…</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.openWa</code></td>
+<td>Opening WhatsApp…</td>
+<td>正在打开WhatsApp…</td>
+<td>正在開啟WhatsApp…</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.phoneAdded</code></td>
+<td>Phone number added ✓</td>
+<td>手机号已添加 ✓</td>
+<td>手機號已新增 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.profileSuccess</code></td>
+<td>Profile submitted successfully ✓</td>
+<td>资料提交成功 ✓</td>
+<td>資料提交成功 ✓</td>
+</tr><tr>
+<td>APP</td>
+<td>Toast Messages</td>
+<td><code>toast.waSupport</code></td>
+<td>Opening WhatsApp support chat…</td>
+<td>正在打开WhatsApp客服…</td>
+<td>正在開啟WhatsApp客服…</td>
+</tr><tr class="page-first">
+<td>Web</td>
+<td>Common</td>
+<td><code>common.add</code></td>
+<td>➕ Add Merchant</td>
+<td>➕ 添加商家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.all</code></td>
+<td>All</td>
+<td>全部</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.back</code></td>
+<td>Back to list</td>
+<td>返回列表</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.brand</code></td>
+<td>FoneSquare Admin</td>
+<td>FoneSquare 商家管理后台</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.cancel</code></td>
+<td>Cancel</td>
+<td>取消</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.confirm</code></td>
+<td>Confirm</td>
+<td>确认变更</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.edit</code></td>
+<td>Edit</td>
+<td>编辑</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.export</code></td>
+<td>📥 Export</td>
+<td>📥 导出</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.home</code></td>
+<td>Home</td>
+<td>首页</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.perPage</code></td>
+<td>10 / page</td>
+<td>10 条/页</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.reset</code></td>
+<td>↺ Reset</td>
+<td>↺ 重置</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.save</code></td>
+<td>💾 Validate &amp; Save</td>
+<td>💾 校验并保存</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.search</code></td>
+<td>🔍 Search</td>
+<td>🔍 查询</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.user</code></td>
+<td>Qian Q.</td>
+<td>乔谦</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Common</td>
+<td><code>common.view</code></td>
+<td>View</td>
+<td>查看</td>
+<td>—</td>
+</tr><tr class="page-first">
+<td>Web</td>
+<td>Navigation</td>
+<td><code>nav.groupDownload</code></td>
+<td>Downloads</td>
+<td>下载中心</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Navigation</td>
+<td><code>nav.groupMerchant</code></td>
+<td>Merchant</td>
+<td>商家管理</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Navigation</td>
+<td><code>nav.menuList</code></td>
+<td>Merchant List</td>
+<td>商家列表</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Navigation</td>
+<td><code>nav.menuMyFiles</code></td>
+<td>My Files</td>
+<td>我的文件</td>
+<td>—</td>
+</tr><tr class="page-first">
+<td>Web</td>
+<td>Breadcrumb</td>
+<td><code>crumb.add</code></td>
+<td>Add Merchant</td>
+<td>添加商家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Breadcrumb</td>
+<td><code>crumb.detail</code></td>
+<td>Merchant Detail</td>
+<td>商家详情</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Breadcrumb</td>
+<td><code>crumb.list</code></td>
+<td>Merchant List</td>
+<td>商家列表</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Breadcrumb</td>
+<td><code>crumb.myFiles</code></td>
+<td>My Files</td>
+<td>我的文件</td>
+<td>—</td>
+</tr><tr class="page-first">
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.basicTitle</code></td>
+<td>Basic Info (Personal)</td>
+<td>基本信息（个人）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.buyer</code></td>
+<td>Buyer</td>
+<td>买家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.cancelBtn</code></td>
+<td>Cancel</td>
+<td>取消</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.contactHint</code></td>
+<td>Phone, Email, or WhatsApp — at least one required</td>
+<td>手机号、邮箱、WhatsApp 三选一必填</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpDocPlaceholder</code></td>
+<td>Business Registration etc.</td>
+<td>商业登记证等</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpKycTitle</code></td>
+<td>KYC (Corporate)</td>
+<td>KYC 认证材料（企业）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpLicense</code></td>
+<td>Business License Photo</td>
+<td>营业执照照片</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpLicenseHint</code></td>
+<td>JPG/PNG/PDF ≤ 10MB; raises transaction quota</td>
+<td>JPG / PNG / PDF ≤ 10MB，提交可获更高交易额度</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpName</code></td>
+<td>Company Name</td>
+<td>公司名称</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpPhotoHint</code></td>
+<td>JPG/PNG/PDF ≤ 10MB</td>
+<td>JPG / PNG / PDF ≤ 10MB</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.corpRegNo</code></td>
+<td>Business Reg. No.</td>
+<td>商业登记号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.docPlaceholder</code></td>
+<td>Dynamic by region (HK ID / Passport / ID…)</td>
+<td>按地区动态展示（HK ID / 护照 / 身份证…）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.kycTitle</code></td>
+<td>KYC (Personal)</td>
+<td>KYC 认证材料（个人）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.optional</code></td>
+<td>Optional</td>
+<td>选填</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.phonePlaceholder</code></td>
+<td>e.g. +852 1234 5678</td>
+<td>含区号，如 +852 1234 5678</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.photoHint</code></td>
+<td>Passport: one side only; JPG/PNG ≤ 5MB</td>
+<td>护照仅需上传一面；JPG/PNG ≤ 5MB</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.placeholder</code></td>
+<td>Input…</td>
+<td>请输入</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.regionPlaceholder</code></td>
+<td>Country / Province / City</td>
+<td>国家 / 省份 / 城市 三级联动</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.seller</code></td>
+<td>Seller</td>
+<td>卖家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.submitBtn</code></td>
+<td>✅ Submit</td>
+<td>✅ 提交创建</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.tip</code></td>
+<td>Sales adds → auto-bound to self; Admin adds → unassigned by default, bind on detail page.</td>
+<td>销售添加 → 自动绑定为本人；管理员添加 → 默认未分配，需在「商家详情 → 销售绑定」中手动分配。</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.title</code></td>
+<td>Add Merchant (Single Page)</td>
+<td>添加商家（单页录入）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.typeMulti</code></td>
+<td>(multi-select)</td>
+<td>（可多选）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.typePlaceholder</code></td>
+<td>Select Buyer / Seller</td>
+<td>请选择 买家 / 卖家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.validPlaceholder</code></td>
+<td>Future date only</td>
+<td>不可选过去日期</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.add.waPlaceholder</code></td>
+<td>Optional</td>
+<td>选填</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.advisor.unassigned</code></td>
+<td>Unassigned</td>
+<td>未分配</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.authStatus.restricted</code></td>
+<td>Restricted</td>
+<td>账号受限</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.authStatus.unverified</code></td>
+<td>Unverified</td>
+<td>未认证</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.authStatus.verified</code></td>
+<td>Verified</td>
+<td>已认证</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor</code></td>
+<td>Advisor</td>
+<td>维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.bind</code></td>
+<td>➕ Bind</td>
+<td>➕ 绑定</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.boundBy</code></td>
+<td>Bound By</td>
+<td>绑定人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.boundSince</code></td>
+<td>Bound Since</td>
+<td>绑定时间</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.current</code></td>
+<td>Current Advisor</td>
+<td>当前维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.history</code></td>
+<td>📜 History</td>
+<td>📜 查看变更历史</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyFrom</code></td>
+<td>Bound At</td>
+<td>绑定时间</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyOB</code></td>
+<td>OB Account</td>
+<td>OB 账号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyOperator</code></td>
+<td>Operator</td>
+<td>操作人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyOwner</code></td>
+<td>Advisor</td>
+<td>维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyReason</code></td>
+<td>Reason</td>
+<td>原因</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyTitle</code></td>
+<td>Binding History</td>
+<td>历史绑定记录</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.historyTo</code></td>
+<td>Unbound At</td>
+<td>解绑时间</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.obAccount</code></td>
+<td>OB Account</td>
+<td>OB 账号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.reason</code></td>
+<td>Reason</td>
+<td>变更原因</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.reasonCreate</code></td>
+<td>Auto-bound on creation</td>
+<td>商家创建自动绑定</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.reasonPlaceholder</code></td>
+<td>Reason (required, written to logs)</td>
+<td>请填写变更原因（必填，将记录到操作日志）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.reasonResign</code></td>
+<td>Sales resigned, transferred</td>
+<td>销售离职转交</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.reassign</code></td>
+<td>🔄 Reassign</td>
+<td>🔄 更换维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.selectNew</code></td>
+<td>Select New Advisor</td>
+<td>选择新维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.selectNewPlaceholder</code></td>
+<td>Pick from OB accounts…</td>
+<td>从 OB 账号列表选择…</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.title</code></td>
+<td>Advisor Binding</td>
+<td>维护人绑定</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.advisor.unbind</code></td>
+<td>⛔ Unbind</td>
+<td>⛔ 解绑</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.contact</code></td>
+<td>Contact</td>
+<td>联系人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.corpLicense</code></td>
+<td>Business Reg. No.</td>
+<td>营业执照号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.corpName</code></td>
+<td>Company Name</td>
+<td>企业名称</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.corporate</code></td>
+<td>Corporate Info</td>
+<td>企业信息</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.email</code></td>
+<td>Email</td>
+<td>邮箱</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.name</code></td>
+<td>Merchant Name</td>
+<td>商家名称</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.personal</code></td>
+<td>Personal Info</td>
+<td>个人信息</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.personalName</code></td>
+<td>Name</td>
+<td>姓名</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.phone</code></td>
+<td>Phone</td>
+<td>联系方式</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.region</code></td>
+<td>Region</td>
+<td>所在地区</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.regionHK</code></td>
+<td>Hong Kong</td>
+<td>香港</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.remark</code></td>
+<td>Remark</td>
+<td>备注</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.status</code></td>
+<td>Status</td>
+<td>状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.title</code></td>
+<td>Basic Info</td>
+<td>基本信息</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.type</code></td>
+<td>Type</td>
+<td>商家类型</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.basic.whatsapp</code></td>
+<td>WhatsApp</td>
+<td>WhatsApp</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.disableBtn</code></td>
+<td>⏸️ Disable</td>
+<td>⏸️ 停用</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.editBtn</code></td>
+<td>✏️ Edit</td>
+<td>✏️ 编辑信息</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.id</code></td>
+<td>Merchant ID</td>
+<td>商家 ID</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.auditStatus</code></td>
+<td>Audit Status</td>
+<td>审核状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.auditedAt</code></td>
+<td>Audited At</td>
+<td>审核时间</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpAddress</code></td>
+<td>Company Address</td>
+<td>企业地址</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpDocNo</code></td>
+<td>Document No.</td>
+<td>证照编号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpDocType</code></td>
+<td>Document Type</td>
+<td>证照类型</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpLegalRep</code></td>
+<td>Legal Rep. / Director</td>
+<td>法定代表 / 董事</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpName</code></td>
+<td>Company Name</td>
+<td>企业名称</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpPhoto</code></td>
+<td>Document Photo</td>
+<td>证照照片</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corpValidUntil</code></td>
+<td>Document Valid Until</td>
+<td>证照有效期</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.corporate</code></td>
+<td>Corporate KYC</td>
+<td>企业 KYC 材料</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.docBack</code></td>
+<td>Doc (Back)</td>
+<td>证件反面</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.docFront</code></td>
+<td>Doc (Front)</td>
+<td>证件正面</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.docName</code></td>
+<td>Doc Holder Name</td>
+<td>证件姓名</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.docNo</code></td>
+<td>Doc No.</td>
+<td>证件号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.docType</code></td>
+<td>Doc Type</td>
+<td>证件类型</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.handHeld</code></td>
+<td>Hand-held Doc</td>
+<td>手持证件</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.passed</code></td>
+<td>Passed</td>
+<td>已通过</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.personal</code></td>
+<td>Personal KYC</td>
+<td>个人 KYC 材料</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.photoHint</code></td>
+<td>(Passport: one side)</td>
+<td>（护照仅一面）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.photos</code></td>
+<td>Doc Photos</td>
+<td>证件照片</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.title</code></td>
+<td>KYC Docs</td>
+<td>KYC 认证材料</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.validUntil</code></td>
+<td>Doc Valid Until</td>
+<td>证件有效期</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.kyc.viewRaw</code></td>
+<td>View raw</td>
+<td>点击查看原值</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.create</code></td>
+<td>Created HK Mobile Trade Co. (auto-bound to Z. San / OB1001)</td>
+<td>创建商家 HK Mobile Trade Co.（自动绑定维护人：张三 / OB1001）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.disable</code></td>
+<td>Disabled merchant</td>
+<td>停用商家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.editBasic</code></td>
+<td>Edited basic info: phone</td>
+<td>编辑基本信息：手机号</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.enable</code></td>
+<td>Enabled merchant</td>
+<td>启用商家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.kyc</code></td>
+<td>KYC review completed → Passed</td>
+<td>完成 KYC 审核 → 已通过</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.quota</code></td>
+<td>Set daily limit (deposit 5,000 confirmed)</td>
+<td>配置每日下单限额（保证金 5,000 已确认）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.rebind</code></td>
+<td>Reassigned advisor</td>
+<td>更换维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.log.title</code></td>
+<td>Operation Logs</td>
+<td>操作日志</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.confirmedAtBy</code></td>
+<td>Confirmed At / By</td>
+<td>确认时间 / 确认人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.deposit</code></td>
+<td>Deposit Amount (HKD)</td>
+<td>保证金金额（HKD）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.depositHint</code></td>
+<td>Entered by operator; deposit × 10 = limit cap</td>
+<td>运营录入；保证金 × 10 = 限额上限</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.depositStatus</code></td>
+<td>Deposit Status</td>
+<td>保证金状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.hkTitle</code></td>
+<td>Hong Kong Daily Order Limit Config (Buyer only)</td>
+<td>香港店每日下单限额配置（仅买家）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.limit</code></td>
+<td>Daily Order Limit (HKD)</td>
+<td>每日下单限额（HKD）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.limitHint</code></td>
+<td>Default minimum from config; cap = current deposit × 10</td>
+<td>默认最小值由业务配置；上限 = 当前保证金 × 10</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.proof</code></td>
+<td>Deposit Transfer Proof (Image)</td>
+<td>保证金转账记录（图片上传）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.proofHint</code></td>
+<td>Without proof, limit must stay at default minimum</td>
+<td>未提交凭证前限额无法调高，仅可保留默认最小值</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.rule</code></td>
+<td>Rule: Deposit is paid by Buyer. Daily order limit cap = Deposit × 10. Without proof submission, limit must stay at the business-defined default minimum. Once proof is uploaded and confirmed by ops, limit can be configured between default minimum ~ deposit × 10.</td>
+<td>业务规则：保证金由买家缴纳；每日下单限额上限 = 保证金 × 10。未提交转账凭证前，限额仅可设置为业务默认最小值；上传凭证、运营确认后，限额可在默认最小值 ~ 保证金 × 10 范围内自由配置。</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.statusPending</code></td>
+<td>Not submitted</td>
+<td>未提交</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.statusSubmitted</code></td>
+<td>Submitted, pending review</td>
+<td>已提交待确认</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.uploadDone</code></td>
+<td>✅ 1 proof uploaded (click to toggle demo)</td>
+<td>✅ 已上传 1 张转账凭证（点击切换示例）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.quota.uploadHint</code></td>
+<td>Click to upload (JPG/PNG, ≤ 5MB each, up to 3)</td>
+<td>点击上传转账凭证（JPG/PNG，单张 ≤ 5MB，最多 3 张）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.registeredAt</code></td>
+<td>Registered</td>
+<td>注册日期</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.salesOwner</code></td>
+<td>Sales Owner</td>
+<td>所属销售</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.tab.advisor</code></td>
+<td>Advisor Binding</td>
+<td>维护人绑定</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.tab.basic</code></td>
+<td>Basic Info</td>
+<td>基本信息</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.tab.kyc</code></td>
+<td>KYC Docs</td>
+<td>KYC 认证材料</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.tab.log</code></td>
+<td>Logs</td>
+<td>操作日志</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.detail.tab.quota</code></td>
+<td>Limit &amp; Deposit</td>
+<td>限额与保证金</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.advisor</code></td>
+<td>Advisor</td>
+<td>维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.advisorAdmin</code></td>
+<td>Account Advisor (Admin)</td>
+<td>维护人（仅管理员）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.authStatus</code></td>
+<td>Auth Status</td>
+<td>认证状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.hint</code></td>
+<td>Advisor filter is admin-only; sales reps see only their own merchants.</td>
+<td>维护人筛选仅管理员可见；销售自动锁定为本人。</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.name</code></td>
+<td>Merchant Name</td>
+<td>商家名称</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.name.placeholder</code></td>
+<td>Search by name…</td>
+<td>请输入名称关键词</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.status</code></td>
+<td>Merchant Status</td>
+<td>商家状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.type</code></td>
+<td>Type</td>
+<td>商家类型</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.filter.type.all</code></td>
+<td>All</td>
+<td>全部</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.result</code></td>
+<td>Result</td>
+<td>查询结果</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.action</code></td>
+<td>Action</td>
+<td>操作</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.advisor</code></td>
+<td>Advisor</td>
+<td>维护人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.authStatus</code></td>
+<td>Auth Status</td>
+<td>认证状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.contact</code></td>
+<td>Contact</td>
+<td>联系人</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.createdAt</code></td>
+<td>Created At</td>
+<td>创建时间</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.id</code></td>
+<td>ID</td>
+<td>ID</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.name</code></td>
+<td>Merchant Name</td>
+<td>商家名称</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.phone</code></td>
+<td>Phone</td>
+<td>联系方式</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.salesOwner</code></td>
+<td>Sales Owner</td>
+<td>所属销售</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.status</code></td>
+<td>Merchant Status</td>
+<td>商家状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.th.type</code></td>
+<td>Type</td>
+<td>类型</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.title</code></td>
+<td>Merchant List</td>
+<td>商家列表</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.list.total</code></td>
+<td>86 rows</td>
+<td>共 86 条</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.op.disable</code></td>
+<td>Disable</td>
+<td>停用</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.op.enable</code></td>
+<td>Enable</td>
+<td>启用</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.status.active</code></td>
+<td>Active</td>
+<td>使用</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.status.disabled</code></td>
+<td>Disabled</td>
+<td>停用</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.type.buyer</code></td>
+<td>Buyer</td>
+<td>买家</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>Merchant Management</td>
+<td><code>merchant.type.seller</code></td>
+<td>Seller</td>
+<td>卖家</td>
+<td>—</td>
+</tr><tr class="page-first">
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.action.download</code></td>
+<td>Download</td>
+<td>下载</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.action.regenerate</code></td>
+<td>Regenerate</td>
+<td>重新生成</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.empty</code></td>
+<td>(empty)</td>
+<td>（无文件）</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.source.merchantList</code></td>
+<td>Merchant List</td>
+<td>商家列表</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.status.expired</code></td>
+<td>Expired</td>
+<td>已过期</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.status.processing</code></td>
+<td>Processing</td>
+<td>处理中</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.status.ready</code></td>
+<td>Ready</td>
+<td>可下载</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.action</code></td>
+<td>Action</td>
+<td>操作</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.createdAt</code></td>
+<td>Created At</td>
+<td>创建时间</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.fileName</code></td>
+<td>File</td>
+<td>文件名</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.size</code></td>
+<td>Size</td>
+<td>大小</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.source</code></td>
+<td>Source</td>
+<td>来源页面</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.status</code></td>
+<td>Status</td>
+<td>状态</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.th.type</code></td>
+<td>Type</td>
+<td>类型</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.tip</code></td>
+<td>This page lists files generated by Export actions. Kept for 30 days, then auto-purged. Click Download to fetch; click Regenerate for expired items.</td>
+<td>本页存放商家列表 / 详情 等页面通过「📥 导出」生成的文件，近 30 天有效，过期自动清理。点击「下载」获取本地副本，过期项可点「重新生成」重跑导出任务。</td>
+<td>—</td>
+</tr><tr>
+<td>Web</td>
+<td>My Files</td>
+<td><code>myFiles.title</code></td>
+<td>My Files</td>
+<td>我的文件</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<script>
+const seen = new Set();
+const pages = [];
+document.querySelectorAll('#tbody tr td:nth-child(2)').forEach(td => {
+  const p = td.textContent;
+  if (!seen.has(p)) { seen.add(p); pages.push(p); }
+});
+const pf = document.getElementById('pageFilter');
+pages.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; pf.appendChild(o); });
+
+function filterTable() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const pv = document.getElementById('platformFilter').value;
+  const pg = document.getElementById('pageFilter').value;
+  const rows = document.querySelectorAll('#tbody tr');
+  let visible = 0;
+  rows.forEach(r => {
+    const cells = r.querySelectorAll('td');
+    const text = r.textContent.toLowerCase();
+    const platform = cells[0].textContent;
+    const page = cells[1].textContent;
+    const show = (!q || text.includes(q)) && (!pv || platform === pv) && (!pg || page === pg);
+    r.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('visibleCount').textContent = visible + ' / 594';
+}
+filterTable();
+</script>
+</body>
+</html>

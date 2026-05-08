@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoneSquare Admin PRD — 海外商家管理后台 MVP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand: #E63946; --brand-light: #FFF0F1; --brand-dark: #C62828;
+  --blue: #2563EB; --blue-light: #EFF6FF;
+  --green: #16A34A; --green-light: #F0FDF4;
+  --orange: #EA580C; --orange-light: #FFF7ED;
+  --purple: #7C3AED; --purple-light: #F5F3FF;
+  --cyan: #0891B2; --cyan-light: #ECFEFF;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-600: #4B5563; --gray-700: #374151;
+  --gray-800: #1F2937; --gray-900: #111827;
+  --sidebar-w: 260px; --header-h: 56px;
+  --ant-primary: #1677FF; --ant-success: #52C41A; --ant-warning: #FAAD14; --ant-error: #FF4D4F;
+}
+html { font-size: 14px; }
+body { font-family: 'Noto Sans SC','Inter',-apple-system,sans-serif; color: var(--gray-800); background: var(--gray-50); line-height: 1.7; }
+
+.header { position:fixed; top:0; left:0; right:0; height:var(--header-h); background:white; border-bottom:1px solid var(--gray-200); display:flex; align-items:center; padding:0 24px; z-index:100; gap:16px; }
+.header-logo { display:flex; align-items:center; gap:8px; font-weight:700; font-size:16px; color:var(--gray-900); }
+.header-logo .icon { width:28px; height:28px; background:var(--brand); border-radius:6px; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:800; }
+.header-meta { margin-left:auto; display:flex; align-items:center; gap:20px; font-size:12px; color:var(--gray-500); }
+.badge { padding:3px 10px; border-radius:99px; font-weight:600; font-size:11px; }
+.badge-draft { background:var(--orange-light); color:var(--orange); }
+
+/* Edit Mode */
+.edit-toggle { display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; cursor:pointer; font-size:12px; font-weight:600; border:1.5px solid var(--gray-300); background:white; color:var(--gray-700); transition:all 0.2s; user-select:none; }
+.edit-toggle:hover { border-color:var(--brand); color:var(--brand); }
+.edit-toggle.active { background:var(--brand); color:white; border-color:var(--brand); }
+.edit-toolbar { display:none; align-items:center; gap:8px; }
+.edit-toolbar.visible { display:flex; }
+.edit-toolbar button { padding:5px 12px; border-radius:6px; cursor:pointer; font-size:11px; font-weight:600; border:1.5px solid var(--gray-300); background:white; color:var(--gray-700); transition:all 0.15s; }
+.edit-toolbar button:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-light); }
+.edit-toolbar .btn-save { border-color:var(--green); color:var(--green); }
+.edit-toolbar .btn-save:hover { background:var(--green-light); }
+.edit-toolbar .btn-save.saving { opacity:0.6; pointer-events:none; }
+.edit-toolbar .btn-export { border-color:var(--gray-400); color:var(--gray-500); }
+body.editing [contenteditable="true"] { outline:1.5px dashed var(--blue); outline-offset:2px; border-radius:3px; min-height:1em; transition:outline-color 0.15s; }
+body.editing [contenteditable="true"]:focus { outline-color:var(--brand); outline-style:solid; background:rgba(230,57,70,0.03); }
+body.editing [contenteditable="true"]:empty::before { content:'点击此处输入内容'; color:var(--gray-400); font-style:italic; }
+.edit-mode-banner { display:none; position:fixed; bottom:0; left:var(--sidebar-w); right:0; background:var(--brand); color:white; font-size:12px; font-weight:600; text-align:center; padding:8px 16px; z-index:100; }
+body.editing .edit-mode-banner { display:block; }
+
+.sidebar { position:fixed; top:var(--header-h); left:0; bottom:0; width:var(--sidebar-w); background:white; border-right:1px solid var(--gray-200); overflow-y:auto; padding:16px 0; z-index:90; }
+.sidebar::-webkit-scrollbar { width:4px; }
+.sidebar::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:4px; }
+.nav-section { padding:0 12px; margin-bottom:8px; }
+.nav-section-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gray-400); padding:8px 12px 4px; }
+.nav-item { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; cursor:pointer; transition:all 0.15s; font-size:13px; color:var(--gray-600); text-decoration:none; line-height:1.4; user-select:none; }
+.nav-item:hover { background:var(--gray-100); color:var(--gray-900); }
+.nav-item.active { background:var(--brand-light); color:var(--brand); font-weight:600; }
+.nav-item .nav-icon { font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+
+.main { margin-left:var(--sidebar-w); margin-top:var(--header-h); padding:32px 48px 80px; max-width:1080px; }
+.page { display:none; }
+.page.active { display:block; }
+.section-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--gray-200); }
+.section-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.section-header h2 { font-size:20px; font-weight:700; color:var(--gray-900); }
+.section-header .section-tag { margin-left:auto; font-size:11px; font-weight:600; padding:3px 10px; border-radius:99px; }
+h3 { font-size:16px; font-weight:700; color:var(--gray-900); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+h4 { font-size:14px; font-weight:600; color:var(--gray-700); margin:16px 0 8px; }
+p, li { font-size:13.5px; color:var(--gray-700); }
+ul, ol { padding-left:20px; margin:8px 0; }
+li { margin-bottom:4px; }
+
+.info-box { padding:14px 16px; border-radius:10px; margin:12px 0; font-size:13px; line-height:1.6; display:flex; gap:10px; }
+.info-box .ib-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.info-box.info { background:var(--blue-light); color:var(--blue); border-left:3px solid var(--blue); }
+.info-box.warning { background:var(--orange-light); color:var(--orange); border-left:3px solid var(--orange); }
+.info-box.success { background:var(--green-light); color:var(--green); border-left:3px solid var(--green); }
+
+table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+th { background:var(--gray-100); font-weight:600; color:var(--gray-700); text-align:left; padding:10px 14px; border:1px solid var(--gray-200); font-size:12px; }
+td { padding:10px 14px; border:1px solid var(--gray-200); vertical-align:top; color:var(--gray-700); }
+tr:hover td { background:var(--gray-50); }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; white-space:nowrap; }
+.tag-p0 { background:#FEE2E2; color:#DC2626; }
+.tag-p1 { background:#FEF3C7; color:#D97706; }
+.tag-required { background:#FEE2E2; color:#DC2626; }
+.tag-optional { background:var(--gray-100); color:var(--gray-500); }
+
+.spec-group { background:white; border:1px solid var(--gray-200); border-radius:10px; margin:16px 0; overflow:hidden; }
+.spec-group-title { background:var(--gray-100); padding:10px 16px; font-size:13px; font-weight:700; color:var(--gray-700); border-bottom:1px solid var(--gray-200); display:flex; align-items:center; gap:8px; }
+.spec-row { display:flex; border-bottom:1px solid var(--gray-100); font-size:13px; }
+.spec-row:last-child { border-bottom:none; }
+.spec-label { width:160px; padding:10px 16px; color:var(--gray-500); font-weight:500; flex-shrink:0; background:var(--gray-50); }
+.spec-value { flex:1; padding:10px 16px; color:var(--gray-800); }
+.spec-value code { background:var(--gray-100); padding:1px 6px; border-radius:4px; font-size:12px; font-family:'SF Mono',Menlo,monospace; color:var(--brand); }
+
+.pm-yes { color:var(--green); font-weight:700; text-align:center; }
+.pm-no { color:var(--gray-400); text-align:center; }
+.pm-own { color:var(--orange); font-weight:600; text-align:center; }
+
+/* ===== Interactive Wireframe Shell (16:10) ===== */
+.wf-shell { width:100%; aspect-ratio:16/10; border:1px solid var(--gray-300); border-radius:10px; overflow:hidden; background:#F0F2F5; position:relative; font-size:12px; display:flex; flex-direction:column; margin:16px 0; }
+.wf-topbar { height:40px; background:white; border-bottom:1px solid #E5E7EB; display:flex; align-items:center; padding:0 16px; justify-content:space-between; flex-shrink:0; }
+.wf-topbar-left { display:flex; align-items:center; gap:6px; font-size:11px; color:#8C8C8C; }
+.wf-topbar-right { display:flex; align-items:center; gap:10px; font-size:11px; color:#8C8C8C; }
+.wf-topbar-avatar { width:22px; height:22px; background:var(--ant-primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:9px; font-weight:700; }
+.wf-body { flex:1; display:flex; overflow:hidden; }
+.wf-sider { width:180px; background:#001529; color:rgba(255,255,255,.65); flex-shrink:0; overflow-y:auto; padding-top:8px; }
+.wf-sider-logo { padding:10px 16px; font-size:13px; font-weight:700; color:white; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:4px; }
+.wf-sider-logo span { background:var(--ant-primary); padding:1px 6px; border-radius:3px; font-size:9px; }
+.wf-menu-group { padding:6px 0 2px 16px; font-size:9px; color:rgba(255,255,255,.3); letter-spacing:1px; text-transform:uppercase; }
+.wf-menu-item { padding:7px 16px; font-size:11px; cursor:pointer; transition:background .15s; display:flex; align-items:center; gap:6px; user-select:none; }
+.wf-menu-item:hover { background:rgba(255,255,255,.08); }
+.wf-menu-item.active { background:var(--ant-primary); color:white; }
+.wf-content { flex:1; overflow-y:auto; display:flex; flex-direction:column; }
+.wf-page { flex:1; padding:16px 20px; overflow-y:auto; }
+
+.wf-card { background:white; border-radius:6px; box-shadow:0 1px 2px rgba(0,0,0,.04); margin-bottom:12px; }
+.wf-card-head { padding:10px 16px; border-bottom:1px solid #F0F0F0; font-size:12px; font-weight:600; color:#262626; display:flex; align-items:center; justify-content:space-between; }
+.wf-card-body { padding:16px; }
+.wf-btn { display:inline-flex; align-items:center; justify-content:center; height:26px; padding:0 12px; border-radius:4px; font-size:11px; font-weight:500; cursor:pointer; border:1px solid #D9D9D9; background:white; color:#595959; gap:3px; transition:all .15s; user-select:none; }
+.wf-btn:hover { border-color:var(--ant-primary); color:var(--ant-primary); }
+.wf-btn-primary { background:var(--ant-primary); color:white; border-color:var(--ant-primary); }
+.wf-btn-primary:hover { opacity:.85; }
+.wf-btn-sm { height:22px; font-size:10px; padding:0 8px; }
+.wf-btn-link { border:none; background:none; color:var(--ant-primary); padding:0; height:auto; font-size:11px; cursor:pointer; }
+.wf-input { height:26px; border:1px solid #D9D9D9; border-radius:4px; padding:0 8px; font-size:11px; color:#BFBFBF; background:white; display:flex; align-items:center; width:100%; }
+.wf-select { height:26px; border:1px solid #D9D9D9; border-radius:4px; padding:0 8px; font-size:11px; color:#BFBFBF; background:white; display:flex; align-items:center; justify-content:space-between; width:100%; }
+.wf-select::after { content:'▾'; font-size:9px; }
+.wf-textarea { border:1px solid #D9D9D9; border-radius:4px; padding:6px 8px; font-size:11px; color:#BFBFBF; background:white; width:100%; min-height:50px; }
+.wf-upload { border:1px dashed #D9D9D9; border-radius:4px; padding:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; color:#8C8C8C; font-size:10px; background:#FAFAFA; min-height:60px; cursor:pointer; }
+.wf-upload:hover { border-color:var(--ant-primary); }
+.wf-upload-icon { font-size:18px; color:var(--ant-primary); }
+.wf-form-label { font-size:11px; color:#595959; margin-bottom:3px; font-weight:500; }
+.wf-form-label .req { color:var(--ant-error); margin-right:2px; }
+.wf-form-item { margin-bottom:10px; }
+.wf-form-row { display:flex; gap:12px; }
+.wf-form-row > .wf-form-item { flex:1; }
+
+.wf-tag { display:inline-block; padding:0 6px; border-radius:3px; font-size:10px; font-weight:500; line-height:18px; }
+.wf-tag-blue { background:#E6F4FF; color:var(--ant-primary); }
+.wf-tag-green { background:#F6FFED; color:var(--ant-success); }
+.wf-tag-red { background:#FFF1F0; color:var(--ant-error); }
+.wf-tag-cyan { background:#E6FFFB; color:#13C2C2; }
+.wf-tag-purple { background:#F9F0FF; color:#722ED1; }
+.wf-tag-default { background:#F5F5F5; color:#8C8C8C; }
+
+.wf-table { width:100%; border-collapse:collapse; font-size:11px; }
+.wf-table th { background:#FAFAFA; padding:7px 10px; text-align:left; font-weight:600; color:#595959; font-size:10px; border-bottom:1px solid #F0F0F0; }
+.wf-table td { padding:7px 10px; border-bottom:1px solid #F0F0F0; color:#595959; }
+.wf-table tr:hover td { background:#E6F4FF; }
+.wf-table tr { cursor:pointer; transition:background .1s; }
+
+.wf-pagination { display:flex; align-items:center; justify-content:flex-end; gap:3px; padding:10px 0; font-size:10px; color:#8C8C8C; }
+.wf-pg { width:22px; height:22px; display:flex; align-items:center; justify-content:center; border:1px solid #D9D9D9; border-radius:3px; cursor:pointer; font-size:10px; }
+.wf-pg.active { border-color:var(--ant-primary); color:var(--ant-primary); }
+
+.wf-tabs { display:flex; border-bottom:1px solid #F0F0F0; background:white; padding:0 16px; flex-shrink:0; }
+.wf-tab { padding:8px 12px; font-size:11px; color:#8C8C8C; cursor:pointer; border-bottom:2px solid transparent; font-weight:500; user-select:none; transition:color .15s; }
+.wf-tab:hover { color:var(--ant-primary); }
+.wf-tab.active { color:var(--ant-primary); border-bottom-color:var(--ant-primary); font-weight:600; }
+.wf-tab-panel { display:none; }
+.wf-tab-panel.active { display:block; }
+
+.wf-desc-row { display:flex; padding:5px 0; border-bottom:1px solid #F5F5F5; font-size:11px; }
+.wf-desc-label { width:100px; color:#8C8C8C; flex-shrink:0; }
+.wf-desc-value { flex:1; color:#262626; }
+
+.wf-timeline { padding-left:14px; border-left:2px solid #F0F0F0; }
+.wf-tl-item { position:relative; padding:0 0 12px 12px; }
+.wf-tl-item::before { content:''; position:absolute; left:-18px; top:3px; width:8px; height:8px; border-radius:50%; background:var(--ant-primary); border:2px solid white; box-shadow:0 0 0 1px #E6F4FF; }
+.wf-tl-time { font-size:10px; color:#BFBFBF; }
+.wf-tl-text { font-size:11px; color:#595959; margin-top:1px; }
+
+.wf-stat { text-align:center; }
+.wf-stat-val { font-size:18px; font-weight:700; color:#262626; }
+.wf-stat-label { font-size:10px; color:#8C8C8C; margin-top:2px; }
+
+.wf-modal-overlay { display:none; position:absolute; inset:0; background:rgba(0,0,0,.35); z-index:10; justify-content:center; align-items:center; }
+.wf-modal-overlay.visible { display:flex; }
+.wf-modal { background:white; border-radius:8px; box-shadow:0 6px 16px rgba(0,0,0,.12); width:380px; max-width:90%; }
+.wf-modal-head { padding:12px 16px; border-bottom:1px solid #F0F0F0; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:space-between; }
+.wf-modal-body { padding:16px; }
+.wf-modal-foot { padding:8px 16px; border-top:1px solid #F0F0F0; display:flex; justify-content:flex-end; gap:6px; }
+.wf-modal-close { cursor:pointer; color:#BFBFBF; font-size:14px; }
+.wf-modal-close:hover { color:#595959; }
+
+.wf-filter-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+.wf-filter-bar .wf-form-item { flex:none; width:140px; margin-bottom:0; }
+.wf-filter-bar .wf-form-item.w120 { width:120px; }
+
+.wf-alert { padding:7px 12px; border-radius:4px; font-size:11px; display:flex; gap:6px; align-items:flex-start; margin-bottom:10px; }
+.wf-alert-info { background:#E6F4FF; color:var(--ant-primary); }
+.wf-alert-warning { background:#FFFBE6; color:#D48806; border:1px solid #FFE58F; }
+
+.wf-result { text-align:center; padding:32px 0; }
+.wf-result-icon { font-size:48px; margin-bottom:10px; }
+.wf-result-title { font-size:18px; font-weight:600; color:#262626; }
+.wf-result-sub { font-size:12px; color:#8C8C8C; margin-top:6px; }
+
+.wf-type-card { flex:1; padding:10px; border:2px solid #D9D9D9; border-radius:6px; text-align:center; cursor:pointer; transition:all .15s; user-select:none; }
+.wf-type-card:hover { border-color:var(--ant-primary); }
+.wf-type-card.selected { border-color:var(--ant-primary); background:#E6F4FF; }
+.wf-type-card .tc-icon { font-size:20px; }
+.wf-type-card .tc-name { font-size:11px; font-weight:600; margin-top:2px; }
+.wf-type-card .tc-desc { font-size:9px; color:#8C8C8C; }
+
+.wf-photo-grid { display:flex; gap:8px; margin-top:4px; }
+.wf-photo-box { width:80px; height:60px; background:#FAFAFA; border:1px solid #D9D9D9; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:9px; color:#BFBFBF; gap:2px; }
+.wf-photo-box-lg { width:120px; height:80px; }
+
+.mermaid { margin:16px 0; overflow-x:auto; }
+.prd-spec { margin-top:24px; }
+
+@media print { .sidebar,.header,.edit-mode-banner { display:none !important; } .main { margin:0; padding:20px; max-width:100%; } .page { display:block !important; page-break-before:always; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo"><div class="icon">FS</div> FoneSquare Admin PRD</div>
+  <span style="font-size:12px;color:var(--gray-400);">v1.0 · 海外商家管理后台 MVP</span>
+  <div class="header-meta">
+    <div class="edit-toolbar" id="editToolbar">
+      <button class="btn-save" id="btnSave" onclick="saveToFile()">💾 保存</button>
+      <button class="btn-export" onclick="exportHTML()">📥 导出副本</button>
+    </div>
+    <button class="edit-toggle" id="editToggle" onclick="toggleEditMode()">
+      <span id="editIcon">✏️</span>
+      <span id="editLabel">编辑</span>
+    </button>
+    <span class="badge badge-draft">草稿</span>
+    <span>产品经理：乔谦</span>
+    <span>最后更新：2026-04-16</span>
+  </div>
+</header>
+<div class="edit-mode-banner">📝 编辑模式 — 点击文本可直接修改，完成后点击"保存"</div>
+
+<nav class="sidebar">
+  <div class="nav-section">
+    <div class="nav-section-title">项目文档</div>
+    <a class="nav-item active" data-page="page-ver-record"><span class="nav-icon">📅</span> 版本记录</a>
+    <a class="nav-item" data-page="page-ver-desc"><span class="nav-icon">📋</span> 版本说明</a>
+    <a class="nav-item" data-page="page-solution"><span class="nav-icon">💡</span> 解决方案</a>
+    <a class="nav-item" data-page="page-other-req"><span class="nav-icon">📎</span> 其它需求</a>
+    <a class="nav-item" data-page="page-qa"><span class="nav-icon">❓</span> Q&A</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">WEB原型</div>
+    <a class="nav-item" data-page="page-web-list"><span class="nav-icon">📑</span> 商家列表</a>
+    <a class="nav-item" data-page="page-web-detail"><span class="nav-icon">👤</span> 商家详情</a>
+    <a class="nav-item" data-page="page-web-add"><span class="nav-icon">➕</span> 添加商家</a>
+    <a class="nav-item" data-page="page-web-sales"><span class="nav-icon">🤝</span> 销售OB绑定</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ==================== 版本记录 ==================== -->
+<div class="page active" id="page-ver-record">
+  <div class="section-header"><div class="section-icon" style="background:var(--green-light);">📅</div><h2>版本记录</h2></div>
+  <table>
+    <thead><tr><th style="width:120px;">日期</th><th>内容</th><th style="width:80px;">更新人</th></tr></thead>
+    <tbody>
+      <tr><td contenteditable="true">2026-04-16</td><td contenteditable="true">V1.0 新建：海外商家管理后台 MVP — 商家列表/详情/添加/销售OB绑定，角色权限，状态机，完整交互流程</td><td contenteditable="true">乔谦</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 版本说明 ==================== -->
+<div class="page" id="page-ver-desc">
+  <div class="section-header"><div class="section-icon" style="background:var(--blue-light);">📋</div><h2>版本说明</h2></div>
+  <div class="spec-group">
+    <div class="spec-group-title">📌 项目概述</div>
+    <div class="spec-row"><div class="spec-label">项目名称</div><div class="spec-value" contenteditable="true">FoneSquare 海外商家管理后台</div></div>
+    <div class="spec-row"><div class="spec-label">项目负责人</div><div class="spec-value" contenteditable="true">乔谦</div></div>
+    <div class="spec-row"><div class="spec-label">项目阶段</div><div class="spec-value" contenteditable="true"><span class="tag tag-p0">MVP</span> 最小可行产品 — 仅 Web 管理后台，不含 APP</div></div>
+    <div class="spec-row"><div class="spec-label">项目背景</div><div class="spec-value" contenteditable="true">FoneSquare 海外B2B二手手机交易平台需要一套内部管理后台，用于运营和销售团队对海外商家进行录入、查询和日常管理。MVP 阶段仅搭建 Web 管理后台。</div></div>
+  </div>
+  <h3>🎯 MVP 功能范围</h3>
+  <table>
+    <thead><tr><th>模块</th><th>功能</th><th>优先级</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>登录</td><td>OB 账号登录</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">复用海外 OB 已有账号体系</td></tr>
+      <tr><td>商家管理</td><td>商家列表</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">多条件筛选、分页、按角色数据隔离</td></tr>
+      <tr><td>商家管理</td><td>商家详情</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">基本信息 + KYC 材料 + 销售绑定 + 操作日志</td></tr>
+      <tr><td>商家管理</td><td>添加商家</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">管理员和销售均可添加；销售添加的商家自动绑定自己</td></tr>
+      <tr><td>销售管理</td><td>销售 OB 绑定</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">管理员可分配/更换销售，销售添加自动绑定</td></tr>
+      <tr><td>权限</td><td>数据权限</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">管理员全量，销售仅自己商家</td></tr>
+      <tr><td>对外接口</td><td>商家信息查询API</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">通过商家ID / 名称模糊匹配 / 手机号查询商家信息，供国内系统调用</td></tr>
+      <tr><td>数据同步</td><td>海外-国内双ID同步</td><td><span class="tag tag-p0">P0</span></td><td contenteditable="true">海外创建商家时同步在国内CS系统创建镜像记录并记录映射关系</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 解决方案 ==================== -->
+<div class="page" id="page-solution">
+  <div class="section-header"><div class="section-icon" style="background:var(--orange-light);">💡</div><h2>解决方案</h2></div>
+
+  <h3>👥 角色权限模型</h3>
+  <table>
+    <thead><tr><th>角色</th><th>数据范围</th><th>查看列表</th><th>查看详情</th><th>添加商家</th><th>编辑商家</th><th>分配销售</th><th>导出</th></tr></thead>
+    <tbody>
+      <tr><td><strong>管理员</strong></td><td>全量</td><td class="pm-yes">✓</td><td class="pm-yes">✓</td><td class="pm-yes">✓</td><td class="pm-yes">✓</td><td class="pm-yes">✓</td><td class="pm-yes">✓</td></tr>
+      <tr><td><strong>销售</strong></td><td>仅自己</td><td class="pm-own">自己的</td><td class="pm-own">自己的</td><td class="pm-yes">✓ 自动绑定</td><td class="pm-no">✗</td><td class="pm-no">✗</td><td class="pm-no">✗</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box warning">
+    <span class="ib-icon">⚠️</span>
+    <div><strong>销售添加商家规则：</strong>销售可添加商家，添加后该商家<strong>自动绑定到该销售名下</strong>，无需手动分配。后续管理员可在商家详情页调整所属销售。<br><strong>数据权限：</strong>销售仅能查看和操作自己名下绑定的商家数据，不可访问其他销售或未分配的商家。</div>
+  </div>
+
+  <h3>🔄 商家状态机</h3>
+  <p contenteditable="true">商家仅有两种业务状态：<strong>使用</strong>和<strong>停用</strong>。创建后默认为"使用"状态。不支持物理删除，通过"停用"处理。</p>
+  <div class="mermaid">
+stateDiagram-v2
+    s1 : 使用
+    s2 : 停用
+    [*] --> s1 : 创建商家
+    s1 --> s2 : 管理员停用
+    s2 --> s1 : 管理员启用
+  </div>
+  <table>
+    <thead><tr><th>状态</th><th>标签</th><th>说明</th><th>允许操作</th></tr></thead>
+    <tbody>
+      <tr><td><strong>使用</strong></td><td style="text-align:center;"><span style="display:inline-block;padding:1px 8px;border-radius:3px;font-size:11px;background:#F6FFED;color:#52C41A;">使用</span></td><td contenteditable="true">商家正常运营，可下单交易</td><td contenteditable="true">编辑信息、分配销售、停用</td></tr>
+      <tr><td><strong>停用</strong></td><td style="text-align:center;"><span style="display:inline-block;padding:1px 8px;border-radius:3px;font-size:11px;background:#F5F5F5;color:#8C8C8C;">停用</span></td><td contenteditable="true">商家已停用，不可交易，数据保留用于审计</td><td contenteditable="true">启用、查看</td></tr>
+    </tbody>
+  </table>
+
+  <h3>📊 角色与入口</h3>
+  <p contenteditable="true">登录后根据 OB 账号角色自动识别权限范围，不同角色进入不同视图。</p>
+  <div class="mermaid">
+flowchart LR
+    A[OB 账号登录] --> B{角色识别}
+    B -->|管理员| C[全量商家列表 + 全功能操作]
+    B -->|销售| D[仅自己商家列表 + 受限操作]
+  </div>
+
+  <h3>📊 管理员操作流程</h3>
+  <p contenteditable="true">管理员拥有全量数据和全功能操作权限，包括添加、编辑、停用/启用、分配销售和导出。</p>
+  <div class="mermaid">
+flowchart TD
+    L[商家列表] --> S[搜索+筛选+导出]
+    L --> A[添加商家]
+    L --> D[查看商家详情]
+    A --> A1[填写基本信息+KYC]
+    A1 --> A2[创建成功,状态:使用]
+    D --> T1[基本信息 - 可编辑]
+    D --> T2[KYC材料 - 可编辑]
+    D --> T3[销售绑定 - 分配或更换]
+    D --> T4[操作日志 - 全部记录]
+    D --> OP[停用或启用]
+  </div>
+
+  <h3>📊 销售操作流程</h3>
+  <p contenteditable="true">销售仅能查看自己名下的商家。可添加商家（自动绑定自己），但不可编辑、分配销售或停用商家。</p>
+  <div class="mermaid">
+flowchart TD
+    L[自己的商家列表] --> S[搜索+筛选]
+    L --> A[添加商家,自动绑定自己]
+    L --> D[查看商家详情]
+    A --> A1[填写基本信息+KYC]
+    A1 --> A2[创建成功,自动绑定]
+    D --> T1[基本信息 - 仅查看]
+    D --> T2[KYC材料 - 仅查看]
+    D --> T4[操作日志 - 自己相关]
+  </div>
+
+  <h3>📊 添加商家业务流程</h3>
+  <p contenteditable="true">管理员和销售均可添加商家，差异在于绑定行为：销售添加自动绑定，管理员添加需手动分配。</p>
+  <div class="mermaid">
+flowchart TD
+    START[进入添加商家页面] --> FILL[填写基本信息+KYC+企业信息]
+    FILL --> CHECK{必填校验}
+    CHECK -->|不通过| ERR[高亮缺失字段提示]
+    ERR --> FILL
+    CHECK -->|通过| SUBMIT[提交创建]
+    SUBMIT --> ROLE{当前角色}
+    ROLE -->|销售| BIND[自动绑定到当前销售]
+    ROLE -->|管理员| UNASSIGN[未分配销售]
+    BIND --> OK[创建成功,结果页]
+    UNASSIGN --> OK
+  </div>
+
+  <h3>🔌 对外查询接口</h3>
+  <p contenteditable="true">海外商家管理后台需要对外提供商家信息查询能力，供国内订单/风控/支付等系统调用。本接口部署在海外服务，需认证鉴权和访问审计。</p>
+  <div class="spec-group">
+    <div class="spec-group-title">接口概述</div>
+    <div class="spec-row"><div class="spec-label">用途</div><div class="spec-value" contenteditable="true">国内系统通过此接口获取海外商家基本信息，用于订单创建、风控校验等场景</div></div>
+    <div class="spec-row"><div class="spec-label">部署位置</div><div class="spec-value" contenteditable="true">海外服务器</div></div>
+    <div class="spec-row"><div class="spec-label">认证方式</div><div class="spec-value" contenteditable="true">内部服务间鉴权（Token / 签名验证），不对外公开</div></div>
+    <div class="spec-row"><div class="spec-label">访问审计</div><div class="spec-value" contenteditable="true">所有查询请求记录调用方、时间、查询条件，用于合规审计</div></div>
+  </div>
+  <h4>查询方式</h4>
+  <table>
+    <thead><tr><th>查询条件</th><th>匹配方式</th><th>返回字段</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>海外商家ID</td><td>精确匹配</td><td contenteditable="true">商家名称、类型、状态、脱敏联系方式、所在地区、国内商家ID</td><td contenteditable="true">最常用场景：国内系统通过映射ID查询商家信息</td></tr>
+      <tr><td>商家名称</td><td>模糊匹配</td><td contenteditable="true">同上，支持分页返回</td><td contenteditable="true">运营查询场景，按名称关键词搜索</td></tr>
+      <tr><td>手机号</td><td>精确匹配</td><td contenteditable="true">同上</td><td contenteditable="true">风控/客服场景，通过手机号定位商家</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box info">
+    <span class="ib-icon">ℹ️</span>
+    <div><strong>数据脱敏规则：</strong>接口返回的手机号、邮箱默认脱敏（如 +852 9***4567），仅特定权限的调用方可获取完整信息。证件号码、KYC照片等敏感信息不通过此接口返回。</div>
+  </div>
+
+  <h3>🔄 海外-国内数据同步方案</h3>
+  <p contenteditable="true">为满足合规要求，商家完整数据（PII、KYC、证件）仅存储在海外服务器。但国内的订单、风控、支付等业务系统需要商家基本信息才能完成业务闭环。采用<strong>「海外主数据 + 国内镜像 + 双ID映射」</strong>架构。</p>
+
+  <h4>整体架构</h4>
+  <div class="mermaid">
+flowchart LR
+    subgraph overseas[海外服务]
+        A[商家管理后台]
+        B[完整商家数据]
+        C[对外查询接口]
+    end
+    subgraph domestic[国内服务]
+        D[CS商家管理系统]
+        E[镜像商家数据]
+        F[订单+风控+支付]
+    end
+    A -->|创建+更新+状态变更| D
+    F -->|查询海外商家详情| C
+    F -->|使用国内商家ID| E
+  </div>
+
+  <h4>双ID映射关系</h4>
+  <table>
+    <thead><tr><th>系统</th><th>主键</th><th>存储的对方ID</th><th>数据范围</th></tr></thead>
+    <tbody>
+      <tr><td><strong>海外商家后台</strong></td><td contenteditable="true">overseas_merchant_id</td><td contenteditable="true">domestic_merchant_id（同步成功后回写）</td><td contenteditable="true">完整数据：基本信息 + KYC + 企业信息 + 证件照片</td></tr>
+      <tr><td><strong>国内CS系统</strong></td><td contenteditable="true">domestic_merchant_id</td><td contenteditable="true">overseas_merchant_id</td><td contenteditable="true">脱敏摘要：名称、类型、状态、脱敏手机号、地区</td></tr>
+    </tbody>
+  </table>
+
+  <h4>同步规则</h4>
+  <table>
+    <thead><tr><th>触发事件</th><th>同步方向</th><th>同步内容</th><th>失败处理</th></tr></thead>
+    <tbody>
+      <tr><td contenteditable="true">海外创建商家</td><td>海外 → 国内</td><td contenteditable="true">名称、类型、脱敏手机号、地区 → 国内创建镜像记录</td><td contenteditable="true">重试3次 → 进入异步队列 → 运营告警</td></tr>
+      <tr><td contenteditable="true">海外编辑商家信息</td><td>海外 → 国内</td><td contenteditable="true">同步可变字段（名称、手机号、地区）</td><td contenteditable="true">异步同步，失败不阻塞主流程</td></tr>
+      <tr><td contenteditable="true">海外停用/启用商家</td><td>海外 → 国内</td><td contenteditable="true">同步状态变更</td><td contenteditable="true">重试3次 → 运营告警（状态不一致影响交易）</td></tr>
+      <tr><td contenteditable="true">国内需要商家详情</td><td>国内 → 海外</td><td contenteditable="true">通过对外查询接口按需获取</td><td contenteditable="true">接口不可用时展示已同步的脱敏摘要信息</td></tr>
+    </tbody>
+  </table>
+
+  <h4>业务流程闭环</h4>
+  <div class="mermaid">
+flowchart TD
+    A[海外后台创建商家] --> B[生成海外商家ID]
+    B --> C[同步请求国内CS系统]
+    C --> D[国内生成国内商家ID]
+    D --> E[记录双ID映射关系]
+    E --> F[回写国内ID到海外记录]
+    F --> G[同步完成]
+    G --> H[国内订单系统创建订单]
+    H --> I[使用国内商家ID]
+    I --> J{需要海外商家详情}
+    J -->|是| K[调用海外查询接口]
+    J -->|否| L[使用已同步的脱敏摘要]
+  </div>
+
+  <div class="info-box warning">
+    <span class="ib-icon">⚠️</span>
+    <div><strong>关键注意事项：</strong><br>
+    1. 海外为唯一数据源（Source of Truth），国内不可直接修改商家信息<br>
+    2. 证件号码、KYC照片等敏感数据不同步到国内，仅通过接口按需查询<br>
+    3. 建议定期运行对账Job，比对海外和国内的商家数量及状态是否一致<br>
+    4. ID策略建议使用UUID避免自增ID在两个系统间冲突</div>
+  </div>
+</div>
+
+<!-- ==================== 其它需求 ==================== -->
+<div class="page" id="page-other-req">
+  <div class="section-header"><div class="section-icon" style="background:var(--purple-light);">📎</div><h2>其它需求</h2></div>
+  <h3>📋 表单字段清单</h3>
+  <table>
+    <thead><tr><th>分组</th><th>字段</th><th>必填</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="7">基本信息</td><td>商家类型</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">买家/卖家，创建后不可自助变更</td></tr>
+      <tr><td>商家名称</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">公司全称或个人姓名，不可重复</td></tr>
+      <tr><td>联系人</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">主要联系人姓名</td></tr>
+      <tr><td>手机号</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">含区号，格式校验</td></tr>
+      <tr><td>邮箱</td><td><span class="tag tag-optional">选填</span></td><td contenteditable="true">格式校验</td></tr>
+      <tr><td>所在地区</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">下拉选择</td></tr>
+      <tr><td>详细地址/备注</td><td><span class="tag tag-optional">选填</span></td><td contenteditable="true">—</td></tr>
+      <tr><td rowspan="5">身份认证</td><td>证件类型</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">HKID/澳门ID/身份证/护照</td></tr>
+      <tr><td>证件号码</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">按证件类型格式校验</td></tr>
+      <tr><td>姓名（证件）</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">与证件一致</td></tr>
+      <tr><td>证件有效期</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">不可选过去日期</td></tr>
+      <tr><td>证件照片</td><td><span class="tag tag-required">必填</span></td><td contenteditable="true">正面+背面+手持，JPG/PNG ≤5MB</td></tr>
+      <tr><td rowspan="3">企业信息</td><td>企业名称</td><td><span class="tag tag-optional">选填</span></td><td contenteditable="true">—</td></tr>
+      <tr><td>营业执照号</td><td><span class="tag tag-optional">选填</span></td><td contenteditable="true">—</td></tr>
+      <tr><td>营业执照照片</td><td><span class="tag tag-optional">选填</span></td><td contenteditable="true">JPG/PNG/PDF ≤10MB，提交可获更高交易额度</td></tr>
+    </tbody>
+  </table>
+  <h3>🔌 对外查询接口字段规范</h3>
+  <table>
+    <thead><tr><th>返回字段</th><th>类型</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>overseas_merchant_id</td><td>String</td><td contenteditable="true">海外商家唯一标识</td></tr>
+      <tr><td>domestic_merchant_id</td><td>String</td><td contenteditable="true">国内CS系统对应的商家ID，未同步时为空</td></tr>
+      <tr><td>merchant_name</td><td>String</td><td contenteditable="true">商家名称</td></tr>
+      <tr><td>merchant_type</td><td>Enum</td><td contenteditable="true">buyer / seller</td></tr>
+      <tr><td>status</td><td>Enum</td><td contenteditable="true">active / disabled</td></tr>
+      <tr><td>contact_name</td><td>String</td><td contenteditable="true">联系人姓名</td></tr>
+      <tr><td>phone_masked</td><td>String</td><td contenteditable="true">脱敏手机号（如 +852 9***4567），需完整信息的调用方另行申请权限</td></tr>
+      <tr><td>region</td><td>String</td><td contenteditable="true">所在地区</td></tr>
+      <tr><td>created_at</td><td>DateTime</td><td contenteditable="true">创建时间</td></tr>
+    </tbody>
+  </table>
+
+  <h3>🔄 数据同步运营规则</h3>
+  <div class="spec-group">
+    <div class="spec-group-title">同步与对账</div>
+    <div class="spec-row"><div class="spec-label">同步时机</div><div class="spec-value" contenteditable="true">商家创建、信息编辑、状态变更时实时同步到国内CS系统</div></div>
+    <div class="spec-row"><div class="spec-label">对账频率</div><div class="spec-value" contenteditable="true">每日凌晨自动对账，比对海外与国内商家总数、状态一致性</div></div>
+    <div class="spec-row"><div class="spec-label">异常处理</div><div class="spec-value" contenteditable="true">同步失败时自动重试3次（间隔递增），超过后进入异步队列并发送运营告警</div></div>
+    <div class="spec-row"><div class="spec-label">人工介入</div><div class="spec-value" contenteditable="true">对账发现不一致时，运营可在后台手动触发单条/批量重新同步</div></div>
+  </div>
+
+  <h3>🔗 销售绑定规则</h3>
+  <div class="spec-group">
+    <div class="spec-group-title">绑定规则</div>
+    <div class="spec-row"><div class="spec-label">关系类型</div><div class="spec-value" contenteditable="true">一对多：一个销售可绑定多个商家，一个商家仅绑定一个销售</div></div>
+    <div class="spec-row"><div class="spec-label">自动绑定</div><div class="spec-value" contenteditable="true">销售添加的商家自动绑定到该销售名下，无需手动分配</div></div>
+    <div class="spec-row"><div class="spec-label">手动分配</div><div class="spec-value" contenteditable="true">管理员可在商家详情页为未分配的商家分配销售，或调整已有绑定</div></div>
+    <div class="spec-row"><div class="spec-label">更换规则</div><div class="spec-value" contenteditable="true">仅管理员可更换销售绑定，更换后原销售立即失去该商家数据查看权限</div></div>
+    <div class="spec-row"><div class="spec-label">未分配商家</div><div class="spec-value" contenteditable="true">管理员添加但未指定销售的商家，仅管理员可见</div></div>
+  </div>
+</div>
+
+<!-- ==================== Q&A ==================== -->
+<div class="page" id="page-qa">
+  <div class="section-header"><div class="section-icon" style="background:var(--cyan-light);">❓</div><h2>Q&A</h2></div>
+  <table>
+    <thead><tr><th style="width:30px;">No.</th><th>问题</th><th>回答</th><th style="width:70px;">确认人</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>销售可以添加商家吗？</td><td contenteditable="true">可以。销售添加的商家自动绑定到该销售名下。后续管理员可调整绑定关系。</td><td>乔谦</td></tr>
+      <tr><td>2</td><td>一个商家可以绑定多个销售吗？</td><td contenteditable="true">不可以，一个商家仅绑定一个销售，避免数据权限交叉</td><td>乔谦</td></tr>
+      <tr><td>3</td><td>KYC 是否对接第三方验证？</td><td contenteditable="true">MVP暂不对接，后台录入+人工审核。后续接入OCR</td><td>乔谦</td></tr>
+      <tr><td>4</td><td>OB角色如何配置？</td><td contenteditable="true">在OB系统分配admin/sales角色，后台通过Token中的role自动识别</td><td>乔谦</td></tr>
+      <tr><td>5</td><td>商家可以删除吗？</td><td contenteditable="true">不支持删除，通过"停用"处理，数据保留用于审计</td><td>乔谦</td></tr>
+      <tr><td>6</td><td>商家类型可以变更吗？</td><td contenteditable="true">创建后不可自助变更，需管理员操作并记录原因到操作日志</td><td>乔谦</td></tr>
+      <tr><td>7</td><td>证件照片存储在哪里？</td><td contenteditable="true">云OSS，后端返回加密URL。证件号码数据库脱敏存储</td><td>乔谦</td></tr>
+      <tr><td>8</td><td>商家数据为什么需要海外-国内双ID？</td><td contenteditable="true">合规要求商家PII数据（KYC、证件）仅存海外。国内订单/风控系统需要商家基本信息，因此在国内CS系统创建镜像记录并记录映射关系，国内业务使用国内ID闭环。</td><td>乔谦</td></tr>
+      <tr><td>9</td><td>国内系统如何获取海外商家完整信息？</td><td contenteditable="true">通过海外提供的对外查询接口，按需获取。支持按海外商家ID、名称、手机号查询。敏感信息（证件号、KYC照片）不通过此接口返回。</td><td>乔谦</td></tr>
+      <tr><td>10</td><td>同步失败怎么办？</td><td contenteditable="true">自动重试3次 → 进入异步队列 → 运营告警。每日自动对账，发现不一致可手动触发重新同步。创建类同步失败不阻塞海外操作，但国内暂时无法看到该商家。</td><td>乔谦</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== WEB原型: 商家列表 ==================== -->
+<div class="page" id="page-web-list">
+  <div class="section-header"><div class="section-icon" style="background:var(--blue-light);">📑</div><h2>商家列表</h2><span class="section-tag" style="background:var(--blue-light);color:var(--blue);">可交互原型</span></div>
+
+  <div class="wf-shell" id="wfList">
+    <div class="wf-topbar">
+      <div class="wf-topbar-left">首页 / 商家管理 / <strong style="color:#262626;">商家列表</strong></div>
+      <div class="wf-topbar-right"><span>🔔</span><div class="wf-topbar-avatar">Q</div><span style="color:#595959;">乔谦</span></div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-sider">
+        <div class="wf-sider-logo"><span>FS</span> FoneSquare</div>
+        <div class="wf-menu-group">商家管理</div>
+        <div class="wf-menu-item active">📑 商家列表</div>
+        <div class="wf-menu-item" onclick="alert('跳转到添加商家页面')">➕ 添加商家</div>
+        <div class="wf-menu-group">销售管理</div>
+        <div class="wf-menu-item">🤝 销售分配</div>
+        <div class="wf-menu-group">系统</div>
+        <div class="wf-menu-item">📋 操作日志</div>
+      </div>
+      <div class="wf-content">
+        <div class="wf-page">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <span style="font-size:16px; font-weight:700; color:#262626;">商家列表</span>
+            <div style="display:flex; gap:6px;">
+              <button class="wf-btn" onclick="alert('导出当前筛选结果为Excel')">📥 导出</button>
+              <button class="wf-btn wf-btn-primary" onclick="alert('跳转到添加商家页面')">➕ 添加商家</button>
+            </div>
+          </div>
+          <div class="wf-card">
+            <div class="wf-card-body" style="padding:12px 16px;">
+              <div class="wf-filter-bar">
+                <div class="wf-form-item"><div class="wf-form-label">商家名称</div><div class="wf-input">请输入名称关键词</div></div>
+                <div class="wf-form-item w120"><div class="wf-form-label">商家类型</div><div class="wf-select">全部</div></div>
+                <div class="wf-form-item w120"><div class="wf-form-label">状态</div><div class="wf-select">全部</div></div>
+                <div class="wf-form-item"><div class="wf-form-label">所属销售 <span style="font-size:9px;color:#BFBFBF;">(仅管理员)</span></div><div class="wf-select">全部</div></div>
+                <div class="wf-form-item" style="flex:none; width:auto;">
+                  <div class="wf-form-label">&nbsp;</div>
+                  <div style="display:flex; gap:4px;">
+                    <button class="wf-btn wf-btn-primary" onclick="alert('执行查询')">🔍 查询</button>
+                    <button class="wf-btn">↺ 重置</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wf-card">
+            <div class="wf-card-head"><span>查询结果</span><span style="font-size:10px; color:#8C8C8C; font-weight:400;">共 86 条</span></div>
+            <table class="wf-table">
+              <thead><tr><th style="width:40px;">ID</th><th>商家名称</th><th style="width:56px;">类型</th><th style="width:56px;">状态</th><th>联系人</th><th>联系方式</th><th style="width:70px;">所属销售</th><th style="width:80px;">创建时间</th><th style="width:80px;">操作</th></tr></thead>
+              <tbody>
+                <tr onclick="alert('查看 HK Mobile Trade Co. 详情')"><td>1001</td><td style="font-weight:500;color:#262626;">HK Mobile Trade Co.</td><td><span class="wf-tag wf-tag-cyan">买家</span></td><td><span class="wf-tag wf-tag-green">使用</span></td><td>陈先生</td><td>+852 9123 4567</td><td>张三</td><td style="font-size:10px;color:#BFBFBF;">2026-04-10</td><td><button class="wf-btn-link" onclick="event.stopPropagation();alert('查看详情')">查看</button> <button class="wf-btn-link" onclick="event.stopPropagation();alert('编辑')">编辑</button></td></tr>
+                <tr onclick="alert('查看 Macau Phones Ltd. 详情')"><td>1002</td><td style="font-weight:500;color:#262626;">Macau Phones Ltd.</td><td><span class="wf-tag wf-tag-purple">卖家</span></td><td><span class="wf-tag wf-tag-green">使用</span></td><td>李小姐</td><td>+853 6234 5678</td><td>李四</td><td style="font-size:10px;color:#BFBFBF;">2026-04-12</td><td><button class="wf-btn-link" onclick="event.stopPropagation();alert('查看详情')">查看</button> <button class="wf-btn-link" onclick="event.stopPropagation();alert('编辑')">编辑</button></td></tr>
+                <tr onclick="alert('查看 SG Recycle Hub 详情')"><td>1003</td><td style="font-weight:500;color:#262626;">SG Recycle Hub</td><td><span class="wf-tag wf-tag-cyan">买家</span></td><td><span class="wf-tag wf-tag-default">停用</span></td><td>王先生</td><td>+65 8345 6789</td><td style="color:#BFBFBF;">未分配</td><td style="font-size:10px;color:#BFBFBF;">2026-04-15</td><td><button class="wf-btn-link" onclick="event.stopPropagation();alert('查看详情')">查看</button> <button class="wf-btn-link" onclick="event.stopPropagation();alert('编辑')">编辑</button></td></tr>
+                <tr onclick="alert('查看 TW Digital Trade 详情')"><td>1004</td><td style="font-weight:500;color:#262626;">TW Digital Trade</td><td><span class="wf-tag wf-tag-purple">卖家</span></td><td><span class="wf-tag wf-tag-green">使用</span></td><td>林先生</td><td>+886 912 345678</td><td>张三</td><td style="font-size:10px;color:#BFBFBF;">2026-04-08</td><td><button class="wf-btn-link" onclick="event.stopPropagation();alert('查看详情')">查看</button> <button class="wf-btn-link" onclick="event.stopPropagation();alert('编辑')">编辑</button></td></tr>
+                <tr onclick="alert('查看 JP Phone Market 详情')"><td>1005</td><td style="font-weight:500;color:#262626;">JP Phone Market</td><td><span class="wf-tag wf-tag-cyan">买家</span></td><td><span class="wf-tag wf-tag-green">使用</span></td><td>田中</td><td>+81 80 1234 5678</td><td>王五</td><td style="font-size:10px;color:#BFBFBF;">2026-04-06</td><td><button class="wf-btn-link" onclick="event.stopPropagation();alert('查看详情')">查看</button> <button class="wf-btn-link" onclick="event.stopPropagation();alert('编辑')">编辑</button></td></tr>
+              </tbody>
+            </table>
+            <div class="wf-pagination"><span style="margin-right:6px;">共 86 条</span><div class="wf-pg">&lt;</div><div class="wf-pg active">1</div><div class="wf-pg">2</div><div class="wf-pg">3</div><div class="wf-pg">…</div><div class="wf-pg">9</div><div class="wf-pg">&gt;</div><span style="margin-left:6px;">10 条/页</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 产品说明 -->
+  <div class="prd-spec">
+    <h3>📖 产品说明</h3>
+    <h4>页面概述</h4>
+    <p contenteditable="true">商家列表是后台的核心入口页面，运营和销售人员进入系统后默认展示此页。支持多条件组合筛选、排序和分页浏览，管理员可查看全量数据，销售仅可查看自己绑定的商家。</p>
+    <h4>筛选条件</h4>
+    <ul>
+      <li contenteditable="true"><strong>商家名称：</strong>模糊搜索，支持中英文关键词</li>
+      <li contenteditable="true"><strong>商家类型：</strong>下拉选择，全部 / 买家 / 卖家</li>
+      <li contenteditable="true"><strong>状态：</strong>下拉选择，全部 / 使用 / 停用</li>
+      <li contenteditable="true"><strong>所属销售：</strong>下拉选择销售人员，仅管理员可见此筛选项。销售登录时自动隐藏此字段</li>
+    </ul>
+    <h4>表格字段</h4>
+    <table>
+      <thead><tr><th>字段</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>ID</td><td contenteditable="true">系统自增唯一标识</td></tr>
+        <tr><td>商家名称</td><td contenteditable="true">公司全称或个人姓名，点击可进入详情</td></tr>
+        <tr><td>类型</td><td contenteditable="true">买家（青色标签）/ 卖家（紫色标签）</td></tr>
+        <tr><td>状态</td><td contenteditable="true">使用（绿色）/ 停用（灰色）</td></tr>
+        <tr><td>联系人/方式</td><td contenteditable="true">主要联系人姓名及手机号/邮箱</td></tr>
+        <tr><td>所属销售</td><td contenteditable="true">已绑定的销售名称，未分配显示灰色"未分配"</td></tr>
+        <tr><td>创建时间</td><td contenteditable="true">商家录入时间，默认倒序排列</td></tr>
+      </tbody>
+    </table>
+    <h4>交互规则</h4>
+    <ul>
+      <li contenteditable="true">默认按创建时间倒序，支持点击表头切换排序</li>
+      <li contenteditable="true">默认 10 条/页，支持 10/20/50 切换</li>
+      <li contenteditable="true">点击行或"查看"按钮进入商家详情页</li>
+      <li contenteditable="true">"编辑"按钮仅管理员可见，销售角色隐藏</li>
+      <li contenteditable="true">"导出"按钮仅管理员可见，导出当前筛选结果为 Excel</li>
+      <li contenteditable="true">"添加商家"按钮管理员和销售均可见</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== WEB原型: 商家详情 ==================== -->
+<div class="page" id="page-web-detail">
+  <div class="section-header"><div class="section-icon" style="background:var(--blue-light);">👤</div><h2>商家详情</h2><span class="section-tag" style="background:var(--blue-light);color:var(--blue);">可交互原型</span></div>
+
+  <div class="wf-shell" id="wfDetail">
+    <div class="wf-topbar">
+      <div class="wf-topbar-left"><span style="cursor:pointer;color:var(--ant-primary);" onclick="alert('返回商家列表')">← 返回列表</span> / <strong style="color:#262626;">HK Mobile Trade Co.</strong> <span class="wf-tag wf-tag-cyan" style="margin-left:4px;">买家</span> <span class="wf-tag wf-tag-green" style="margin-left:2px;">使用</span></div>
+      <div class="wf-topbar-right">
+        <button class="wf-btn" onclick="alert('确认停用该商家？停用后不可交易。')">⛔ 停用</button>
+        <button class="wf-btn wf-btn-primary" onclick="alert('进入编辑模式')">✏️ 编辑</button>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-sider">
+        <div class="wf-sider-logo"><span>FS</span> FoneSquare</div>
+        <div class="wf-menu-group">商家管理</div>
+        <div class="wf-menu-item active">📑 商家列表</div>
+        <div class="wf-menu-item">➕ 添加商家</div>
+        <div class="wf-menu-group">销售管理</div>
+        <div class="wf-menu-item">🤝 销售分配</div>
+      </div>
+      <div class="wf-content" style="display:flex; flex-direction:column;">
+        <div style="background:white; padding:12px 20px; display:flex; gap:32px; border-bottom:1px solid #F0F0F0; flex-shrink:0;">
+          <div class="wf-stat"><div class="wf-stat-val" style="color:var(--ant-primary);">1001</div><div class="wf-stat-label">商家ID</div></div>
+          <div class="wf-stat"><div class="wf-stat-val">15</div><div class="wf-stat-label">总订单</div></div>
+          <div class="wf-stat"><div class="wf-stat-val" style="color:var(--ant-success);">HK$126,800</div><div class="wf-stat-label">累计交易额</div></div>
+          <div class="wf-stat"><div class="wf-stat-val" style="font-size:14px;">张三</div><div class="wf-stat-label">所属销售</div></div>
+          <div class="wf-stat"><div class="wf-stat-val" style="font-size:12px;">2026-04-10</div><div class="wf-stat-label">入驻日期</div></div>
+        </div>
+        <div class="wf-tabs" id="detailTabs">
+          <div class="wf-tab active" onclick="switchDetailTab(0)">基本信息</div>
+          <div class="wf-tab" onclick="switchDetailTab(1)">KYC认证材料</div>
+          <div class="wf-tab" onclick="switchDetailTab(2)">销售绑定</div>
+          <div class="wf-tab" onclick="switchDetailTab(3)">操作日志</div>
+        </div>
+        <div style="flex:1; overflow-y:auto; padding:16px 20px;" id="detailPanels">
+          <div class="wf-tab-panel active" data-panel="0">
+            <div class="wf-card"><div class="wf-card-head">商家基本信息</div><div class="wf-card-body"><div style="display:grid; grid-template-columns:1fr 1fr; gap:0;"><div class="wf-desc-row"><div class="wf-desc-label">商家名称</div><div class="wf-desc-value">HK Mobile Trade Co.</div></div><div class="wf-desc-row"><div class="wf-desc-label">商家类型</div><div class="wf-desc-value"><span class="wf-tag wf-tag-cyan">买家</span></div></div><div class="wf-desc-row"><div class="wf-desc-label">联系人</div><div class="wf-desc-value">陈先生</div></div><div class="wf-desc-row"><div class="wf-desc-label">联系电话</div><div class="wf-desc-value">+852 9123 4567</div></div><div class="wf-desc-row"><div class="wf-desc-label">邮箱</div><div class="wf-desc-value">chen@hkmobile.com</div></div><div class="wf-desc-row"><div class="wf-desc-label">地区</div><div class="wf-desc-value">中国香港</div></div><div class="wf-desc-row"><div class="wf-desc-label">详细地址</div><div class="wf-desc-value">Rm 1205, Tower A, Mong Kok Centre</div></div><div class="wf-desc-row"><div class="wf-desc-label">备注</div><div class="wf-desc-value">长期合作客户，月均采购量 500+</div></div></div></div></div>
+            <div class="wf-card"><div class="wf-card-head">企业信息 <span style="font-size:10px;color:#BFBFBF;font-weight:400;margin-left:6px;">选填</span></div><div class="wf-card-body"><div style="display:grid; grid-template-columns:1fr 1fr; gap:0;"><div class="wf-desc-row"><div class="wf-desc-label">企业名称</div><div class="wf-desc-value">HK Mobile Trade Co. Limited</div></div><div class="wf-desc-row"><div class="wf-desc-label">营业执照号</div><div class="wf-desc-value">BR-2024-12345</div></div></div></div></div>
+          </div>
+          <div class="wf-tab-panel" data-panel="1">
+            <div class="wf-card"><div class="wf-card-head">个人证件信息</div><div class="wf-card-body"><div style="display:grid; grid-template-columns:1fr 1fr; gap:0;"><div class="wf-desc-row"><div class="wf-desc-label">证件类型</div><div class="wf-desc-value">HKID</div></div><div class="wf-desc-row"><div class="wf-desc-label">证件号码</div><div class="wf-desc-value">A123***(脱敏)</div></div><div class="wf-desc-row"><div class="wf-desc-label">姓名</div><div class="wf-desc-value">CHAN Tai Man</div></div><div class="wf-desc-row"><div class="wf-desc-label">有效期</div><div class="wf-desc-value">2030-12-31</div></div></div><div style="margin-top:10px;"><div class="wf-form-label">证件照片</div><div class="wf-photo-grid"><div class="wf-photo-box">🖼️<span>正面</span></div><div class="wf-photo-box">🖼️<span>背面</span></div><div class="wf-photo-box">🖼️<span>手持照</span></div></div></div></div></div>
+            <div class="wf-card"><div class="wf-card-head">营业执照 <span style="font-size:10px;color:#BFBFBF;font-weight:400;margin-left:6px;">选填</span></div><div class="wf-card-body"><div class="wf-photo-grid"><div class="wf-photo-box wf-photo-box-lg">🖼️<span>营业执照</span></div></div></div></div>
+          </div>
+          <div class="wf-tab-panel" data-panel="2">
+            <div class="wf-card"><div class="wf-card-head"><span>当前绑定销售</span><button class="wf-btn wf-btn-primary wf-btn-sm" onclick="document.getElementById('salesModal').classList.add('visible')">更换销售</button></div><div class="wf-card-body"><div style="display:flex; align-items:center; gap:10px;"><div style="width:36px; height:36px; background:#E6F4FF; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ant-primary); font-weight:700;">张</div><div><div style="font-size:13px; font-weight:600; color:#262626;">张三</div><div style="font-size:10px; color:#BFBFBF;">OB: sales_zhangsan | 绑定: 2026-04-15</div></div></div></div></div>
+            <div class="wf-card"><div class="wf-card-head">绑定历史</div><table class="wf-table"><thead><tr><th>销售</th><th>OB ID</th><th>操作</th><th>时间</th><th>操作人</th></tr></thead><tbody><tr><td>张三</td><td>sales_zhangsan</td><td><span class="wf-tag wf-tag-green">绑定</span></td><td>2026-04-15 14:32</td><td>乔谦</td></tr><tr><td>李四</td><td>sales_lisi</td><td><span class="wf-tag wf-tag-red">解绑</span></td><td>2026-04-15 14:32</td><td>乔谦</td></tr><tr><td>李四</td><td>sales_lisi</td><td><span class="wf-tag wf-tag-green">绑定</span></td><td>2026-04-10 09:15</td><td>乔谦</td></tr></tbody></table></div>
+          </div>
+          <div class="wf-tab-panel" data-panel="3">
+            <div class="wf-card"><div class="wf-card-body"><div class="wf-timeline"><div class="wf-tl-item"><div class="wf-tl-time">2026-04-15 14:32 · 乔谦（管理员）</div><div class="wf-tl-text">更换所属销售：李四 → 张三</div></div><div class="wf-tl-item"><div class="wf-tl-time">2026-04-12 10:15 · 系统</div><div class="wf-tl-text">KYC 信息录入完成</div></div><div class="wf-tl-item"><div class="wf-tl-time">2026-04-10 09:15 · 乔谦（管理员）</div><div class="wf-tl-text">绑定销售：李四</div></div><div class="wf-tl-item"><div class="wf-tl-time">2026-04-10 09:00 · 乔谦（管理员）</div><div class="wf-tl-text">创建商家，类型：买家，状态：使用</div></div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-modal-overlay" id="salesModal">
+      <div class="wf-modal">
+        <div class="wf-modal-head">更换所属销售 <span class="wf-modal-close" onclick="document.getElementById('salesModal').classList.remove('visible')">✕</span></div>
+        <div class="wf-modal-body">
+          <div class="wf-alert wf-alert-warning" style="margin-bottom:10px;">⚠️ 更换后，原销售将无法查看该商家</div>
+          <div class="wf-form-item"><div class="wf-form-label">当前销售</div><div style="font-size:12px;color:#262626;padding:4px 0;">张三（sales_zhangsan）</div></div>
+          <div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 新销售</div><div class="wf-select">请选择销售人员</div></div>
+        </div>
+        <div class="wf-modal-foot"><button class="wf-btn" onclick="document.getElementById('salesModal').classList.remove('visible')">取消</button><button class="wf-btn wf-btn-primary" onclick="document.getElementById('salesModal').classList.remove('visible');alert('销售更换成功')">确认更换</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prd-spec">
+    <h3>📖 产品说明</h3>
+    <h4>页面概述</h4>
+    <p contenteditable="true">商家详情页是查看和管理单个商家完整信息的页面。通过 Tab 切换展示 4 个信息面板。页面顶部展示商家关键统计数据。</p>
+    <h4>Tab 面板说明</h4>
+    <table>
+      <thead><tr><th>Tab</th><th>内容</th><th>权限</th></tr></thead>
+      <tbody>
+        <tr><td>基本信息</td><td contenteditable="true">商家名称、类型、联系人、联系方式、地区、地址、备注、企业信息</td><td contenteditable="true">管理员可编辑，销售仅查看</td></tr>
+        <tr><td>KYC认证材料</td><td contenteditable="true">证件类型、号码（脱敏）、姓名、有效期、证件照片（正/反/手持）、营业执照</td><td contenteditable="true">管理员可编辑，销售仅查看</td></tr>
+        <tr><td>销售绑定</td><td contenteditable="true">当前绑定销售信息、绑定历史记录、更换销售功能</td><td contenteditable="true">仅管理员可操作"更换销售"</td></tr>
+        <tr><td>操作日志</td><td contenteditable="true">按时间倒序展示所有操作记录，包含操作人、时间、变更内容</td><td contenteditable="true">管理员查看全部，销售查看自己相关</td></tr>
+      </tbody>
+    </table>
+    <h4>顶部统计栏</h4>
+    <ul>
+      <li contenteditable="true"><strong>商家 ID：</strong>系统唯一标识</li>
+      <li contenteditable="true"><strong>总订单：</strong>该商家历史总订单数量（后续版本接入交易系统后展示）</li>
+      <li contenteditable="true"><strong>累计交易额：</strong>该商家历史累计交易金额</li>
+      <li contenteditable="true"><strong>所属销售：</strong>当前绑定的销售人员名称</li>
+      <li contenteditable="true"><strong>入驻日期：</strong>商家创建时间</li>
+    </ul>
+    <h4>交互规则</h4>
+    <ul>
+      <li contenteditable="true">"编辑"按钮仅管理员可见，点击后表单字段变为可编辑状态</li>
+      <li contenteditable="true">"停用"按钮仅管理员可见，需二次确认弹窗</li>
+      <li contenteditable="true">已停用的商家，顶部展示"启用"按钮替代"停用"按钮</li>
+      <li contenteditable="true">"更换销售"仅管理员在销售绑定 Tab 中可见</li>
+      <li contenteditable="true">证件号码前端脱敏展示，管理员可点击"查看完整"临时展示</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== WEB原型: 添加商家 ==================== -->
+<div class="page" id="page-web-add">
+  <div class="section-header"><div class="section-icon" style="background:var(--blue-light);">➕</div><h2>添加商家</h2><span class="section-tag" style="background:var(--blue-light);color:var(--blue);">可交互原型</span></div>
+
+  <div class="wf-shell" id="wfAdd">
+    <div class="wf-topbar">
+      <div class="wf-topbar-left"><span style="cursor:pointer;color:var(--ant-primary);" onclick="alert('返回商家列表')">← 返回列表</span> / <strong style="color:#262626;">添加商家</strong></div>
+      <div class="wf-topbar-right"><div class="wf-topbar-avatar">Q</div><span style="color:#595959;">乔谦</span></div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-sider">
+        <div class="wf-sider-logo"><span>FS</span> FoneSquare</div>
+        <div class="wf-menu-group">商家管理</div>
+        <div class="wf-menu-item">📑 商家列表</div>
+        <div class="wf-menu-item active">➕ 添加商家</div>
+        <div class="wf-menu-group">销售管理</div>
+        <div class="wf-menu-item">🤝 销售分配</div>
+      </div>
+      <div class="wf-content" id="addContent">
+        <div class="wf-page" id="addFormPage">
+          <div style="font-size:16px; font-weight:700; color:#262626; margin-bottom:12px;">添加商家</div>
+          <div class="wf-alert wf-alert-info" style="margin-bottom:12px;">💡 销售添加的商家将自动绑定到您名下。管理员添加的商家需在详情页手动分配销售。</div>
+          <div class="wf-card"><div class="wf-card-head">基本信息</div><div class="wf-card-body">
+            <div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 商家类型</div><div style="display:flex; gap:10px;"><div class="wf-type-card selected" id="tcBuyer" onclick="document.getElementById('tcBuyer').classList.add('selected');document.getElementById('tcSeller').classList.remove('selected');"><div class="tc-icon">🛒</div><div class="tc-name">买家 Buyer</div><div class="tc-desc">采购二手手机</div></div><div class="wf-type-card" id="tcSeller" onclick="document.getElementById('tcSeller').classList.add('selected');document.getElementById('tcBuyer').classList.remove('selected');"><div class="tc-icon">📦</div><div class="tc-name">卖家 Seller</div><div class="tc-desc">供应二手手机</div></div></div></div>
+            <div class="wf-form-row"><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 商家名称</div><div class="wf-input">请输入公司全称或个人姓名</div></div><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 联系人</div><div class="wf-input">请输入联系人姓名</div></div></div>
+            <div class="wf-form-row"><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 手机号</div><div class="wf-input"><span style="color:#595959; border-right:1px solid #D9D9D9; padding-right:6px; margin-right:6px;">+852</span>请输入手机号</div></div><div class="wf-form-item"><div class="wf-form-label">邮箱</div><div class="wf-input">请输入邮箱</div></div></div>
+            <div class="wf-form-row"><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 所在地区</div><div class="wf-select">请选择国家/地区</div></div><div class="wf-form-item"><div class="wf-form-label">详细地址</div><div class="wf-input">请输入详细地址</div></div></div>
+            <div class="wf-form-item"><div class="wf-form-label">备注</div><div class="wf-textarea">请输入备注信息...</div></div>
+          </div></div>
+          <div class="wf-card"><div class="wf-card-head">身份认证（KYC）</div><div class="wf-card-body">
+            <div class="wf-form-row"><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 证件类型</div><div class="wf-select">请选择证件类型</div></div><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 证件号码</div><div class="wf-input">请输入证件号码</div></div></div>
+            <div class="wf-form-row"><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 姓名（与证件一致）</div><div class="wf-input">请输入证件姓名</div></div><div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 证件有效期</div><div class="wf-input">请选择日期</div></div></div>
+            <div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 证件照片</div><div style="display:flex; gap:8px;"><div class="wf-upload" style="flex:1;" onclick="alert('上传证件正面照片')"><div class="wf-upload-icon">📤</div>证件正面<div style="font-size:9px;color:#BFBFBF;">JPG/PNG ≤5MB</div></div><div class="wf-upload" style="flex:1;" onclick="alert('上传证件背面照片')"><div class="wf-upload-icon">📤</div>证件背面<div style="font-size:9px;color:#BFBFBF;">JPG/PNG ≤5MB</div></div><div class="wf-upload" style="flex:1;" onclick="alert('上传手持证件照')"><div class="wf-upload-icon">📤</div>手持证件照<div style="font-size:9px;color:#BFBFBF;">JPG/PNG ≤5MB</div></div></div></div>
+          </div></div>
+          <div class="wf-card"><div class="wf-card-head">企业信息 <span style="font-size:10px;color:#BFBFBF;font-weight:400;margin-left:6px;">选填 — 提交可获更高交易额度</span></div><div class="wf-card-body">
+            <div class="wf-alert wf-alert-info">💡 提交营业执照可获得更高的每日交易限额。</div>
+            <div class="wf-form-row"><div class="wf-form-item"><div class="wf-form-label">企业名称</div><div class="wf-input">请输入企业全称</div></div><div class="wf-form-item"><div class="wf-form-label">营业执照号</div><div class="wf-input">请输入营业执照号</div></div></div>
+            <div class="wf-form-item"><div class="wf-form-label">营业执照照片</div><div class="wf-upload" style="max-width:200px;" onclick="alert('上传营业执照')"><div class="wf-upload-icon">📤</div>点击上传<div style="font-size:9px;color:#BFBFBF;">JPG/PNG/PDF ≤10MB</div></div></div>
+          </div></div>
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px; padding-bottom:16px;">
+            <button class="wf-btn" onclick="alert('取消，返回商家列表')">取消</button>
+            <button class="wf-btn wf-btn-primary" onclick="showAddSuccess()">✅ 提交</button>
+          </div>
+        </div>
+        <div class="wf-page" id="addSuccessPage" style="display:none;">
+          <div class="wf-result" style="padding-top:60px;">
+            <div class="wf-result-icon">🎉</div>
+            <div class="wf-result-title">商家创建成功！</div>
+            <div class="wf-result-sub">商家 ID: 1006 | 状态: 使用 | 已自动绑定当前销售</div>
+            <div style="margin-top:20px; display:flex; gap:8px; justify-content:center;">
+              <button class="wf-btn" onclick="hideAddSuccess()">继续添加</button>
+              <button class="wf-btn wf-btn-primary" onclick="alert('跳转到商家详情页')">查看详情</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prd-spec">
+    <h3>📖 产品说明</h3>
+    <h4>页面概述</h4>
+    <p contenteditable="true">添加商家页面采用单页表单设计，一页展示全部录入字段（基本信息 + 身份认证 + 企业信息），便于运营/销售人员一目了然需要收集的完整信息。管理员和销售均可使用此功能。</p>
+    <h4>角色差异</h4>
+    <table>
+      <thead><tr><th>场景</th><th>行为</th></tr></thead>
+      <tbody>
+        <tr><td><strong>管理员添加</strong></td><td contenteditable="true">创建商家后，商家暂未绑定销售（所属销售为"未分配"）。管理员需在商家详情页手动分配销售。</td></tr>
+        <tr><td><strong>销售添加</strong></td><td contenteditable="true">创建商家后，系统<strong>自动将该商家绑定到当前销售名下</strong>。销售无需手动操作绑定。后续管理员可在商家详情页调整绑定关系。</td></tr>
+      </tbody>
+    </table>
+    <h4>表单分区说明</h4>
+    <ul>
+      <li contenteditable="true"><strong>基本信息区：</strong>商家类型（买家/卖家卡片选择）、商家名称、联系人、手机号、邮箱、所在地区、详细地址、备注</li>
+      <li contenteditable="true"><strong>身份认证区（KYC）：</strong>证件类型下拉、证件号码、证件姓名、有效期、证件照片上传（正面+背面+手持）</li>
+      <li contenteditable="true"><strong>企业信息区（选填）：</strong>企业名称、营业执照号、营业执照照片。填写后可获得更高交易额度</li>
+    </ul>
+    <h4>交互规则</h4>
+    <ul>
+      <li contenteditable="true">商家类型卡片点击切换选中状态，选中后有蓝色边框和背景高亮</li>
+      <li contenteditable="true">必填字段标红星，未填写时提交触发校验提示</li>
+      <li contenteditable="true">证件照片支持拖拽上传，上传后展示缩略图预览，可删除重新上传</li>
+      <li contenteditable="true">提交成功后展示结果页，包含商家 ID 和快捷操作按钮</li>
+      <li contenteditable="true">商家名称做唯一性校验，重复时前端实时提示</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== WEB原型: 销售OB绑定 ==================== -->
+<div class="page" id="page-web-sales">
+  <div class="section-header"><div class="section-icon" style="background:var(--blue-light);">🤝</div><h2>销售OB绑定</h2><span class="section-tag" style="background:var(--blue-light);color:var(--blue);">可交互原型</span></div>
+
+  <div class="wf-shell" id="wfSales">
+    <div class="wf-topbar">
+      <div class="wf-topbar-left">首页 / 销售管理 / <strong style="color:#262626;">销售分配</strong></div>
+      <div class="wf-topbar-right"><div class="wf-topbar-avatar">Q</div><span style="color:#595959;">乔谦</span></div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-sider">
+        <div class="wf-sider-logo"><span>FS</span> FoneSquare</div>
+        <div class="wf-menu-group">商家管理</div>
+        <div class="wf-menu-item">📑 商家列表</div>
+        <div class="wf-menu-item">➕ 添加商家</div>
+        <div class="wf-menu-group">销售管理</div>
+        <div class="wf-menu-item active">🤝 销售分配</div>
+      </div>
+      <div class="wf-content">
+        <div class="wf-page">
+          <div style="font-size:16px; font-weight:700; color:#262626; margin-bottom:12px;">销售分配总览</div>
+          <div style="display:flex; gap:12px; margin-bottom:12px;">
+            <div class="wf-card" style="flex:1; text-align:center; padding:12px;"><div class="wf-stat"><div class="wf-stat-val">86</div><div class="wf-stat-label">总商家数</div></div></div>
+            <div class="wf-card" style="flex:1; text-align:center; padding:12px;"><div class="wf-stat"><div class="wf-stat-val" style="color:var(--ant-success);">72</div><div class="wf-stat-label">已分配</div></div></div>
+            <div class="wf-card" style="flex:1; text-align:center; padding:12px;"><div class="wf-stat"><div class="wf-stat-val" style="color:var(--ant-error);">14</div><div class="wf-stat-label">未分配</div></div></div>
+            <div class="wf-card" style="flex:1; text-align:center; padding:12px;"><div class="wf-stat"><div class="wf-stat-val">5</div><div class="wf-stat-label">销售人数</div></div></div>
+          </div>
+          <div class="wf-card"><div class="wf-card-head"><span>⚠️ 未分配销售的商家</span><span style="font-size:10px;color:#BFBFBF;font-weight:400;">14个</span></div><table class="wf-table"><thead><tr><th>ID</th><th>商家名称</th><th>类型</th><th>创建时间</th><th>操作</th></tr></thead><tbody><tr><td>1003</td><td>SG Recycle Hub</td><td><span class="wf-tag wf-tag-cyan">买家</span></td><td>2026-04-15</td><td><button class="wf-btn wf-btn-primary wf-btn-sm" onclick="document.getElementById('assignModal').classList.add('visible')">分配销售</button></td></tr><tr><td>1008</td><td>MY Tech Parts</td><td><span class="wf-tag wf-tag-purple">卖家</span></td><td>2026-04-14</td><td><button class="wf-btn wf-btn-primary wf-btn-sm" onclick="document.getElementById('assignModal').classList.add('visible')">分配销售</button></td></tr><tr><td>1012</td><td>ID Phone Trader</td><td><span class="wf-tag wf-tag-cyan">买家</span></td><td>2026-04-13</td><td><button class="wf-btn wf-btn-primary wf-btn-sm" onclick="document.getElementById('assignModal').classList.add('visible')">分配销售</button></td></tr></tbody></table></div>
+          <div class="wf-card"><div class="wf-card-head">销售绑定分布</div><table class="wf-table"><thead><tr><th>销售</th><th>OB ID</th><th style="width:70px;">商家数</th><th style="width:70px;">使用中</th><th style="width:70px;">已停用</th><th>操作</th></tr></thead><tbody><tr><td style="font-weight:500;">张三</td><td>sales_zhangsan</td><td style="text-align:center;">18</td><td style="text-align:center;color:var(--ant-success);">16</td><td style="text-align:center;color:#8C8C8C;">2</td><td><button class="wf-btn-link" onclick="alert('查看张三的全部商家')">查看商家</button></td></tr><tr><td style="font-weight:500;">李四</td><td>sales_lisi</td><td style="text-align:center;">22</td><td style="text-align:center;color:var(--ant-success);">20</td><td style="text-align:center;color:#8C8C8C;">2</td><td><button class="wf-btn-link" onclick="alert('查看李四的全部商家')">查看商家</button></td></tr><tr><td style="font-weight:500;">王五</td><td>sales_wangwu</td><td style="text-align:center;">15</td><td style="text-align:center;color:var(--ant-success);">15</td><td style="text-align:center;color:#8C8C8C;">0</td><td><button class="wf-btn-link" onclick="alert('查看王五的全部商家')">查看商家</button></td></tr></tbody></table></div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-modal-overlay" id="assignModal">
+      <div class="wf-modal">
+        <div class="wf-modal-head">分配销售 <span class="wf-modal-close" onclick="document.getElementById('assignModal').classList.remove('visible')">✕</span></div>
+        <div class="wf-modal-body">
+          <div class="wf-form-item"><div class="wf-form-label">商家</div><div style="font-size:12px;color:#262626;padding:4px 0;">SG Recycle Hub (ID: 1003)</div></div>
+          <div class="wf-form-item"><div class="wf-form-label"><span class="req">*</span> 选择销售</div><div class="wf-select">请选择销售人员</div></div>
+        </div>
+        <div class="wf-modal-foot"><button class="wf-btn" onclick="document.getElementById('assignModal').classList.remove('visible')">取消</button><button class="wf-btn wf-btn-primary" onclick="document.getElementById('assignModal').classList.remove('visible');alert('分配成功')">确认分配</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prd-spec">
+    <h3>📖 产品说明</h3>
+    <h4>页面概述</h4>
+    <p contenteditable="true">销售分配总览页是管理员的全局视图，用于查看所有销售的商家绑定情况，快速定位未分配商家并进行分配。此页面仅管理员可见。</p>
+    <h4>页面结构</h4>
+    <ul>
+      <li contenteditable="true"><strong>统计卡片：</strong>顶部 4 个统计卡片展示总商家数、已分配数、未分配数、销售人数</li>
+      <li contenteditable="true"><strong>未分配商家表：</strong>展示所有未绑定销售的商家，每行可点击"分配销售"按钮弹出 Modal</li>
+      <li contenteditable="true"><strong>销售绑定分布表：</strong>展示每个销售的绑定商家数量、使用/停用分布，点击"查看商家"跳转到该销售的商家列表</li>
+    </ul>
+    <h4>绑定机制说明</h4>
+    <table>
+      <thead><tr><th>场景</th><th>行为</th></tr></thead>
+      <tbody>
+        <tr><td>销售添加商家</td><td contenteditable="true">商家自动绑定到该销售名下，不会出现在"未分配"列表中</td></tr>
+        <tr><td>管理员添加商家</td><td contenteditable="true">商家暂不绑定任何销售，出现在"未分配商家"列表中。管理员可在此页面或商家详情页分配</td></tr>
+        <tr><td>管理员更换销售</td><td contenteditable="true">通过商家详情页"销售绑定"Tab 操作。更换后原销售立即失去该商家数据权限</td></tr>
+      </tbody>
+    </table>
+    <h4>交互规则</h4>
+    <ul>
+      <li contenteditable="true">此页面仅管理员可见，销售角色左侧导航不展示"销售分配"入口</li>
+      <li contenteditable="true">"分配销售"Modal 中下拉列表展示所有 role=sales 的 OB 账号</li>
+      <li contenteditable="true">"查看商家"跳转到商家列表页，并自动填入该销售的筛选条件</li>
+      <li contenteditable="true">分配/更换操作均记入操作日志</li>
+    </ul>
+  </div>
+</div>
+
+</main>
+
+<script>
+var isEditing = false;
+
+function switchPage(pageId) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var page = document.getElementById(pageId);
+  if (page) page.classList.add('active');
+  var nav = document.querySelector('[data-page="' + pageId + '"]');
+  if (nav) nav.classList.add('active');
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.nav-item').forEach(function(item) {
+  item.addEventListener('click', function(e) { e.preventDefault(); var pageId = this.getAttribute('data-page'); if (pageId) switchPage(pageId); });
+});
+
+function toggleEditMode() {
+  isEditing = !isEditing;
+  if (isEditing) { enableEditing(); } else { disableEditing(); }
+}
+function enableEditing() {
+  isEditing = true;
+  document.body.classList.add('editing');
+  document.getElementById('editToggle').classList.add('active');
+  document.getElementById('editIcon').textContent = '👁️';
+  document.getElementById('editLabel').textContent = '预览';
+  document.getElementById('editToolbar').classList.add('visible');
+}
+function disableEditing() {
+  isEditing = false;
+  document.body.classList.remove('editing');
+  document.getElementById('editToggle').classList.remove('active');
+  document.getElementById('editIcon').textContent = '✏️';
+  document.getElementById('editLabel').textContent = '编辑';
+  document.getElementById('editToolbar').classList.remove('visible');
+}
+
+function switchDetailTab(idx) {
+  var tabs = document.querySelectorAll('#detailTabs .wf-tab');
+  var panels = document.querySelectorAll('#detailPanels .wf-tab-panel');
+  tabs.forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+  panels.forEach(function(p, i) { p.classList.toggle('active', i === idx); });
+}
+
+function showAddSuccess() {
+  document.getElementById('addFormPage').style.display = 'none';
+  document.getElementById('addSuccessPage').style.display = 'block';
+}
+function hideAddSuccess() {
+  document.getElementById('addFormPage').style.display = 'block';
+  document.getElementById('addSuccessPage').style.display = 'none';
+}
+
+function getCleanHTML() {
+  var wasEditing = isEditing;
+  if (isEditing) disableEditing();
+  var clone = document.documentElement.cloneNode(true);
+  clone.querySelector('body').classList.remove('editing');
+  clone.querySelectorAll('.row-actions, .table-delete-bar').forEach(function(el) { el.remove(); });
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  if (wasEditing) enableEditing();
+  return html;
+}
+
+async function saveToFile() {
+  var btn = document.getElementById('btnSave');
+  var orig = btn.textContent;
+  btn.textContent = '⏳ 保存中...';
+  btn.classList.add('saving');
+  try {
+    var html = getCleanHTML();
+    var res = await fetch('/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename: 'FoneSquare-Admin-PRD.html', html: html })
+    });
+    if (!res.ok) throw new Error('Server error');
+    btn.textContent = '✅ 已保存';
+    setTimeout(function() { btn.textContent = orig; btn.classList.remove('saving'); }, 1500);
+  } catch (e) {
+    btn.textContent = '❌ 失败';
+    btn.classList.remove('saving');
+    setTimeout(function() { btn.textContent = orig; }, 2000);
+    alert('保存失败：请确认使用 python3 prd-server.py 启动服务器');
+  }
+}
+
+function exportHTML() {
+  var html = getCleanHTML();
+  var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'FoneSquare-Admin-PRD.html';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#E8EAF6', primaryTextColor: '#283593', primaryBorderColor: '#9FA8DA',
+    lineColor: '#546E7A', secondaryColor: '#FFF3E0', tertiaryColor: '#E8F5E9',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif', fontSize: '13px'
+  },
+  flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true },
+  sequence: { useMaxWidth: true }
+});
+</script>
+</body></html>
