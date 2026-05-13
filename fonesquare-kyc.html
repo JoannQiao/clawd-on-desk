@@ -303,7 +303,7 @@ body{
 .sec-tag.req{background:#FEE2E2;color:#DC2626;}
 .sec-tag.opt{background:#E0F2FE;color:#0284C7;}
 .region-row{display:flex;gap:6px;margin-bottom:14px;}
-.region-sel{flex:1;padding:10px 8px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-sm);font-size:12px;color:var(--t1);cursor:pointer;text-align:center;font-weight:500;transition:all .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.region-sel{flex:1;padding:10px 12px;background:var(--bgi);border:1.5px solid var(--bd);border-radius:var(--r-sm);font-size:13px;color:var(--t1);cursor:pointer;text-align:left;font-weight:500;transition:all .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .region-sel:hover{border-color:var(--pri);}
 .region-sel.empty{color:var(--t3);}
 .id-type-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
@@ -565,12 +565,12 @@ body{
           <span class="sec-tag req">Required</span>
         </div>
         <div class="region-row" id="regionSummaryRow" onclick="openCascadePicker()" style="cursor:pointer;">
-          <div class="region-sel" id="regionPick">🇭🇰 Hong Kong</div>
-          <div class="region-sel empty" id="provincePick"></div>
-          <div class="region-sel empty" id="cityPick"></div>
+          <div class="region-sel" id="regionPick" style="flex:1;min-width:0;">🇭🇰 Hong Kong</div>
+          <div class="region-sel" id="provincePick" style="display:none;"></div>
+          <div class="region-sel" id="cityPick" style="display:none;"></div>
         </div>
 
-        <!-- Three-level cascade picker (single modal) -->
+        <!-- Multi-level cascade picker (single searchable modal) -->
         <div class="region-modal" id="regionModal" onclick="if(event.target===this)closeCascadePicker()">
           <div class="region-sheet">
             <div class="region-sheet-hdr">
@@ -621,10 +621,17 @@ body{
         </div>
         <div class="ocr-row">
           <div class="ocr-field">
-            <div class="of-label">Full Name</div>
-            <div class="of-val editable" contenteditable="true">Joann Qiao</div>
+            <div class="of-label">First Name</div>
+            <div class="of-val editable" contenteditable="true">Joann</div>
             <div class="of-edit">✏️ tap to edit</div>
           </div>
+          <div class="ocr-field">
+            <div class="of-label">Last Name</div>
+            <div class="of-val editable" contenteditable="true">Qiao</div>
+            <div class="of-edit">✏️ tap to edit</div>
+          </div>
+        </div>
+        <div class="ocr-row">
           <div class="ocr-field">
             <div class="of-label">ID Number</div>
             <div class="of-val editable" contenteditable="true">A123456(7)</div>
@@ -638,16 +645,6 @@ body{
           <span style="color:var(--t3);margin:0 4px;">—</span>
           <span class="df-val">2030-01-14</span>
           <span class="df-arrow">▾</span>
-        </div>
-
-        <div class="sec-hd" style="margin-top:16px;">
-          <span class="sec-icon">✉️</span>
-          <span class="sec-title">Contact Email</span>
-          <span class="sec-tag opt">Optional</span>
-        </div>
-        <div class="inp-wrap">
-          <span class="ico">✉️</span>
-          <input class="inp" type="email" placeholder="For order notifications">
         </div>
 
         <div class="sec-hd" style="margin-top:16px;">
@@ -695,7 +692,6 @@ body{
 
         <div style="margin-top:16px;padding-bottom:20px;">
           <button class="btn" onclick="completeProfile()" data-i18n="profile.submit">SUBMIT & CONTINUE</button>
-          <button class="btn ghost" onclick="goBack()" data-i18n="profile.skip">Skip for now →</button>
           <button class="btn ghost" onclick="go('kycDup')" style="margin-top:6px;color:#E89400;border-color:#F5D568;" data-i18n="profile.demoDup">🎬 Demo: Simulate duplicate identity</button>
         </div>
       </div>
@@ -768,7 +764,7 @@ body{
       <div style="width:100%;background:#EFF6FF;border:1.5px solid #93C5FD;border-radius:var(--r-md);padding:14px;margin-bottom:20px;">
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <span style="font-size:16px;flex-shrink:0;line-height:1;">ℹ️</span>
-          <div style="font-size:12px;color:#1E40AF;line-height:1.55;" data-i18n="kycDupConflict.infoNote">The verified account already has a login method of the same type (e.g., both use email). Please sign in directly with the verified account.</div>
+          <div style="font-size:12px;color:#1E40AF;line-height:1.55;" data-i18n="kycDupConflict.infoNote">The verified account already has a login method of the same type (e.g., you logged in with phone number A, but the verified account already has phone number B). Please sign in directly with the verified account. Your current account cannot replace the original login info.</div>
         </div>
       </div>
 
@@ -1580,15 +1576,29 @@ function renderCurrentList(q) {
   var html = '';
 
   if (cascadeLevel === 0) {
-    REGIONS.forEach(function(grp) {
-      var items = grp.items.filter(function(it) {
-        if (!q) return true;
-        return it.en.toLowerCase().indexOf(q) >= 0 || it.zh.indexOf(q) >= 0 ||
-               (it['zh-HK'] && it['zh-HK'].indexOf(q) >= 0) || it.code.toLowerCase().indexOf(q) >= 0;
-      });
-      if (!items.length) return;
-      html += '<div class="region-list-group"><div class="rlg-title">' + getGroupName(grp.group) + '</div>';
-      items.forEach(function(it) {
+    var allItems = [];
+    REGIONS.forEach(function(grp) { grp.items.forEach(function(it) { allItems.push(it); }); });
+    var filtered = allItems.filter(function(it) {
+      if (!q) return true;
+      return it.en.toLowerCase().indexOf(q) >= 0 || it.zh.indexOf(q) >= 0 ||
+             (it['zh-HK'] && it['zh-HK'].indexOf(q) >= 0) || it.code.toLowerCase().indexOf(q) >= 0;
+    });
+    var POPULAR_CODES = ['HK','MO','CN','TW','SG'];
+    var DEVICE_CODE = 'HK';
+    var deviceItem = [], popularItems = [], otherItems = [];
+    filtered.forEach(function(it) {
+      if (it.code === DEVICE_CODE) deviceItem.push(it);
+      else if (POPULAR_CODES.indexOf(it.code) >= 0) popularItems.push(it);
+      else otherItems.push(it);
+    });
+    otherItems.sort(function(a,b) { return getLocName(a).localeCompare(getLocName(b)); });
+    var sections = [];
+    if (deviceItem.length) sections.push({title: currentLocale === 'en' ? 'Current Location' : (currentLocale === 'zh-HK' ? '當前位置' : '当前位置'), items: deviceItem});
+    if (popularItems.length) sections.push({title: currentLocale === 'en' ? 'Popular' : (currentLocale === 'zh-HK' ? '常用地區' : '常用地区'), items: popularItems});
+    if (otherItems.length) sections.push({title: currentLocale === 'en' ? 'All Regions' : (currentLocale === 'zh-HK' ? '所有地區' : '所有地区'), items: otherItems});
+    sections.forEach(function(sec) {
+      html += '<div class="region-list-group"><div class="rlg-title">' + sec.title + '</div>';
+      sec.items.forEach(function(it) {
         var sel = it.code === selectedRegionCode ? ' selected' : '';
         html += '<div class="region-item' + sel + '" onclick="pickCountry(\'' + it.code + '\')">';
         html += '<span class="ri-flag">' + it.flag + '</span><span>' + getLocName(it) + '</span>';
@@ -1661,32 +1671,22 @@ function filterCascadeList(q) {
 /* ── Update summary row ── */
 function syncRegionSummary() {
   var rp = document.getElementById('regionPick');
-  var pp = document.getElementById('provincePick');
-  var cp = document.getElementById('cityPick');
   var r = findRegionByCode(selectedRegionCode);
-  if (r && rp) { rp.textContent = r.flag + ' ' + getLocName(r); rp.classList.remove('empty'); }
-  if (pp) {
-    if (selectedProvinceId) {
-      var provs = PROVINCES[selectedRegionCode] || [];
-      var prov = provs.filter(function(p){return p.id===selectedProvinceId;})[0];
-      pp.textContent = prov ? getLocName(prov) : '—';
-      pp.classList.remove('empty');
-    } else {
-      pp.textContent = t('profile.province');
-      pp.classList.add('empty');
-    }
+  if (!r || !rp) return;
+  var parts = [r.flag + ' ' + getLocName(r)];
+  if (selectedProvinceId) {
+    var provs = PROVINCES[selectedRegionCode] || [];
+    var prov = provs.filter(function(p){return p.id===selectedProvinceId;})[0];
+    if (prov) parts.push(getLocName(prov));
   }
-  if (cp) {
-    if (selectedCityName) {
-      var cities = CITIES[selectedProvinceId] || [];
-      var city = cities.filter(function(c){return c.en===selectedCityName||getLocName(c)===selectedCityName;})[0];
-      cp.textContent = city ? getLocName(city) : selectedCityName;
-      cp.classList.remove('empty');
-    } else {
-      cp.textContent = t('profile.city');
-      cp.classList.add('empty');
-    }
+  if (selectedCityName) {
+    var cities = CITIES[selectedProvinceId] || [];
+    var city = cities.filter(function(c){return c.en===selectedCityName||getLocName(c)===selectedCityName;})[0];
+    if (city) parts.push(getLocName(city));
+    else parts.push(selectedCityName);
   }
+  rp.textContent = parts.join(' › ');
+  rp.classList.remove('empty');
 }
 
 /* ── Selection handlers (stay in the same modal) ── */
@@ -1908,7 +1908,7 @@ myCenter: `【My Center — 个人中心】
    - 右侧：WhatsApp客服图标（绿色），点击唤起WhatsApp Business客服对话
 
 2. 个人信息卡片（红色渐变背景）
-   - 头像：取用户姓名首字母（如 Joann Qiao → "J"），MVP不支持上传头像
+   - 头像：取用户 First Name 首字母（如 First Name: Joann → "J"），MVP不支持上传头像
    - 姓名：取自OCR识别结果或注册手机号
    - 手机号：脱敏展示，如 +852 9123 ****
    - KYC状态角标：未认证（黄色⚠️）/ 已认证（绿色✅）/ 账号受限（红色🔒）
@@ -1965,7 +1965,8 @@ profile: `【Profile — 身份认证】
 
 ■ 页面结构
 1. 国家/地区（必填）
-   - 三级联动选择器：国家 → 省份/州 → 城市/区
+   - 单框多级联动选择器（支持搜索），有几级选几级，不固定三级
+   - 排序规则：① 置顶设备所在地国家 ② 常用地区（香港、澳门、中国大陆、台湾、新加坡）③ 其余按字母排序，无需按大洲分组
    - 选择地区后决定可用证件类型和合规要求
 
 2. 身份验证（必填）
@@ -1973,21 +1974,20 @@ profile: `【Profile — 身份认证】
    - 上传组件根据证件类型动态变化：
      · 港澳身份证 / 中国身份证：正面 + 反面分别上传
      · 护照：仅上传信息页
-   - OCR自动识别：姓名、证件号码
+   - OCR自动识别：姓名（First Name / Last Name 分别填入）、证件号码
    - OCR结果可直接编辑（contenteditable）
    - 证件有效期：日期范围选择器
 
-3. 联系邮箱（选填）
-   - 用于订单通知
-
-4. 企业信息（选填，默认折叠）
-   - 营业执照上传 + OCR自动识别
-   - 识别字段：证照类型、注册号、法人/董事、企业地址
+3. 企业信息（选填，默认折叠）
+   - 支持OCR自动识别的证件：营业执照（中国大陆）、商业登记证BR（香港）、公司注册证书CI（香港）
+     → OCR识别后自动填入企业名称、注册号、法人/董事、地址等字段，用户可编辑修正
+   - 不支持OCR的证件：其他国家/地区企业证照
+     → 仅支持图片上传，企业认证信息需手动填写（企业名称、注册号等为空白输入框）
+   - 判断逻辑：根据用户所选国家/地区自动切换（中国大陆、香港为OCR模式，其余为手动模式）
    - 执照有效期
 
-5. 操作按钮
+4. 操作按钮
    - SUBMIT & CONTINUE：提交后触发风控制裁名单校验，通过后返回个人中心
-   - Skip for now →：跳过认证，直接返回个人中心
 
 ■ 业务规则
 - OCR置信度 < 60% → 拒绝，提示重新上传
@@ -2004,8 +2004,7 @@ profile: `【Profile — 身份认证】
 - page_view: profile_kyc
 - click: id_type_{type}
 - click: upload_document
-- click: submit_profile（success/fail）
-- click: skip_profile`,
+- click: submit_profile（success/fail）`,
 
 orders: `【My Orders — 订单列表】
 
@@ -2256,6 +2255,13 @@ kycDupConflict: `【KYC 重复身份 — 登录方式类型冲突】
 ■ 触发条件
 用户在"重复身份检测"页点击"继续使用已认证账号"后，后端检测到已认证账号已有与当前账号相同类型的登录方式（如当前用邮箱注册，已认证账号也已绑定邮箱）。
 
+■ 特殊场景：当前登录方式原账号已有
+当前账号的登录方式（如手机号 A）与已认证账号绑定的同类型登录方式（手机号 B）不同，但类型相同（都是手机号）。
+示例：当前用手机号 +852 9111 登录 → 认证时发现证件已关联另一个账号，该账号绑定手机号 +852 9222。
+▸ 提示文案："该证件已关联已认证账号，该账号已有手机号登录方式。请直接登录已认证账号。"
+▸ 当前账号不可替换已认证账号的原有登录信息
+▸ 当前未认证账号不停用，用户可继续使用（但无法通过此证件完成认证）
+
 ■ 页面结构
 1. 头部图标 + 主标题：复用重复身份检测页标题
 2. 说明文案：告知已认证账号已有同类型登录方式，无需迁移
@@ -2270,13 +2276,14 @@ kycDupConflict: `【KYC 重复身份 — 登录方式类型冲突】
 ■ 业务规则
 - 不停用当前未认证账号（用户可继续使用）
 - 不执行任何登录方式迁移
+- 当前账号不可替换已认证账号原有的登录信息
 - 点击"前往登录" → 跳转至登录页
 - 点击"使用其他证件" → 返回身份认证页，更换证件信息
 
 ■ 冲突场景矩阵
 | 当前账号登录方式 | 已认证账号已有 | 结果 |
-| 手机号 | 手机号+邮箱 | 冲突 → 本页 |
-| 邮箱 | 手机号+邮箱 | 冲突 → 本页 |
+| 手机号 A | 手机号 B + 邮箱 | 冲突（同类型手机号）→ 本页 |
+| 邮箱 A | 手机号 + 邮箱 B | 冲突（同类型邮箱）→ 本页 |
 | 手机号 | 仅邮箱 | 无冲突 → 补全流程 |
 | 邮箱 | 仅手机号 | 无冲突 → 补全流程 |
 
@@ -2540,13 +2547,12 @@ en: {
   'profile.passportHint': 'Photo page with MRZ · JPG/PNG ≤10MB',
   'profile.ocrBanner': 'OCR Recognized',
   'profile.ocrBannerDesc': '— please review and correct if needed',
-  'profile.fullName': 'Full Name',
+  'profile.firstName': 'First Name',
+  'profile.lastName': 'Last Name',
   'profile.idNumber': 'ID Number',
   'profile.tapEdit': '✏️ tap to edit',
   'profile.validity': 'ID Validity Period',
-  'profile.contactEmail': 'Contact Email',
   'profile.optional': 'Optional',
-  'profile.emailPlaceholder': 'For order notifications',
   'profile.bizInfo': 'Business Information',
   'profile.bizGuideTitle': 'Fill in business info to unlock higher limits',
   'profile.bizGuideDesc': 'Enterprise accounts get higher daily purchase limits and priority support.',
@@ -2571,7 +2577,6 @@ en: {
   'profile.noCityData': 'No city data for this province',
   'profile.selectPlaceholder': 'Please select',
   'profile.submit': 'SUBMIT & CONTINUE',
-  'profile.skip': 'Skip for now →',
   'profile.demoDup': '🎬 Demo: Simulate duplicate identity',
   'kycDup.title': 'Identity Notice',
   'kycDup.headline': 'This ID is already associated with an account',
@@ -2583,9 +2588,9 @@ en: {
   'kycDup.cancelBtn': 'Use a different ID',
   'kycDupConflict.title': 'Identity Notice',
   'kycDupConflict.headline': 'This ID is already associated with an account',
-  'kycDupConflict.desc': 'For your security, each verified identity can belong to only one active account. The verified account already has the same type of login method, so no migration is needed.',
+  'kycDupConflict.desc': 'For your security, each verified identity can belong to only one active account. The verified account already has the same type of login method (e.g., both use phone number), so no migration is needed. Please sign in directly with the verified account.',
   'kycDupConflict.existingAcct': 'Existing verified account',
-  'kycDupConflict.infoNote': 'The verified account already has a login method of the same type (e.g., both use email). Please sign in directly with the verified account.',
+  'kycDupConflict.infoNote': 'The verified account already has a login method of the same type (e.g., you logged in with phone number A, but the verified account already has phone number B). Please sign in directly with the verified account. Your current account cannot replace the original login info.',
   'kycDupConflict.goLoginBtn': 'Go to Login',
   'kycDupConflict.cancelBtn': 'Use a different ID',
   'kycDupSup.title': 'Add Login Method',
@@ -2721,13 +2726,12 @@ zh: {
   'profile.passportHint': '含MRZ的信息页 · JPG/PNG ≤10MB',
   'profile.ocrBanner': 'OCR 已识别',
   'profile.ocrBannerDesc': '— 请检查并修正',
-  'profile.fullName': '姓名',
+  'profile.firstName': '名',
+  'profile.lastName': '姓',
   'profile.idNumber': '证件号码',
   'profile.tapEdit': '✏️ 点击编辑',
   'profile.validity': '证件有效期',
-  'profile.contactEmail': '联系邮箱',
   'profile.optional': '选填',
-  'profile.emailPlaceholder': '用于接收订单通知',
   'profile.bizInfo': '企业信息',
   'profile.bizGuideTitle': '填写企业信息，解锁更高购买额度',
   'profile.bizGuideDesc': '企业账户可享更高日购买限额与优先客服支持。',
@@ -2752,7 +2756,6 @@ zh: {
   'profile.noCityData': '该省份暂无城市数据',
   'profile.selectPlaceholder': '请选择',
   'profile.submit': '提交并继续',
-  'profile.skip': '暂时跳过 →',
   'profile.demoDup': '🎬 演示：模拟重复身份',
   'kycDup.title': '身份提示',
   'kycDup.headline': '该证件已关联已认证账号',
@@ -2764,9 +2767,9 @@ zh: {
   'kycDup.cancelBtn': '使用其他证件',
   'kycDupConflict.title': '身份提示',
   'kycDupConflict.headline': '该证件已关联已认证账号',
-  'kycDupConflict.desc': '为保障账户安全，同一认证身份仅可对应一个在用账号。已认证账号已有相同类型的登录方式，无需迁移。',
+  'kycDupConflict.desc': '为保障账户安全，同一证件仅可认证一个账号。已认证账号已有同类型登录方式（如都使用手机号），无需迁移。请直接登录已认证账号。',
   'kycDupConflict.existingAcct': '已认证账号',
-  'kycDupConflict.infoNote': '已认证账号已有与当前相同类型的登录方式（如都是邮箱），请直接使用已认证账号登录。',
+  'kycDupConflict.infoNote': '已认证账号已绑定同类型登录方式（如您当前用手机号 A 登录，但已认证账号已绑定手机号 B）。请直接登录已认证账号，当前账号不可替换原有登录信息。',
   'kycDupConflict.goLoginBtn': '前往登录',
   'kycDupConflict.cancelBtn': '使用其他证件',
   'kycDupSup.title': '补全登录方式',
@@ -2902,13 +2905,12 @@ zh: {
   'profile.passportHint': '含MRZ的資訊頁 · JPG/PNG ≤10MB',
   'profile.ocrBanner': 'OCR 已辨識',
   'profile.ocrBannerDesc': '— 請檢查並修正',
-  'profile.fullName': '姓名',
+  'profile.firstName': '名',
+  'profile.lastName': '姓',
   'profile.idNumber': '證件號碼',
   'profile.tapEdit': '✏️ 點擊編輯',
   'profile.validity': '證件有效期',
-  'profile.contactEmail': '聯繫信箱',
   'profile.optional': '選填',
-  'profile.emailPlaceholder': '用於接收訂單通知',
   'profile.bizInfo': '企業資訊',
   'profile.bizGuideTitle': '填寫企業資訊，解鎖更高購買額度',
   'profile.bizGuideDesc': '企業帳戶可享更高日購買限額與優先客服支援。',
@@ -2933,7 +2935,6 @@ zh: {
   'profile.noCityData': '該省份暫無城市資料',
   'profile.selectPlaceholder': '請選擇',
   'profile.submit': '提交並繼續',
-  'profile.skip': '暫時跳過 →',
   'profile.demoDup': '🎬 演示：模擬重複身份',
   'kycDup.title': '身份提示',
   'kycDup.headline': '該證件已關聯已認證帳號',
@@ -2945,9 +2946,9 @@ zh: {
   'kycDup.cancelBtn': '使用其他證件',
   'kycDupConflict.title': '身份提示',
   'kycDupConflict.headline': '該證件已關聯已認證帳號',
-  'kycDupConflict.desc': '為保障帳戶安全，同一認證身份僅可對應一個在用帳號。已認證帳號已有相同類型的登入方式，無需遷移。',
+  'kycDupConflict.desc': '為保障賬戶安全，同一證件僅可認證一個賬號。已認證賬號已有同類型登入方式（如都使用手機號），無需遷移。請直接登入已認證賬號。',
   'kycDupConflict.existingAcct': '已認證帳號',
-  'kycDupConflict.infoNote': '已認證帳號已有與目前相同類型的登入方式（如都是信箱），請直接使用已認證帳號登入。',
+  'kycDupConflict.infoNote': '已認證賬號已綁定同類型登入方式（如您當前用手機號 A 登入，但已認證賬號已綁定手機號 B）。請直接登入已認證賬號，當前賬號不可替換原有登入信息。',
   'kycDupConflict.goLoginBtn': '前往登入',
   'kycDupConflict.cancelBtn': '使用其他證件',
   'kycDupSup.title': '補全登入方式',
@@ -3101,10 +3102,10 @@ function applyLocale() {
   setText(qs('s-profile', 'h2 + p'), t('profile.desc'));
 
   var secTitles = qsa('s-profile', '.sec-title');
-  ['profile.region','profile.idVerify','profile.contactEmail','profile.bizInfo'].forEach(function(k, i) { if (secTitles[i]) setText(secTitles[i], t(k)); });
+  ['profile.region','profile.idVerify','profile.bizInfo'].forEach(function(k, i) { if (secTitles[i]) setText(secTitles[i], t(k)); });
 
   var secTags = qsa('s-profile', '.sec-tag');
-  ['profile.required','profile.required','profile.optional','profile.optional'].forEach(function(k, i) { if (secTags[i]) setText(secTags[i], t(k)); });
+  ['profile.required','profile.required','profile.optional'].forEach(function(k, i) { if (secTags[i]) setText(secTags[i], t(k)); });
 
   syncRegionSummary();
 
@@ -3128,16 +3129,13 @@ function applyLocale() {
   if (ocrPend) setHTML(ocrPend, '<span>⏳</span> ' + t('profile.bizOcrPending'));
 
   var ofLabels = qsa('s-profile', '.of-label');
-  ['profile.fullName','profile.idNumber','profile.licenseType','profile.regNumber','profile.legalRep','profile.bizAddress'].forEach(function(k, i) { if (ofLabels[i]) setText(ofLabels[i], t(k)); });
+  ['profile.firstName','profile.lastName','profile.idNumber','profile.licenseType','profile.regNumber','profile.legalRep','profile.bizAddress'].forEach(function(k, i) { if (ofLabels[i]) setText(ofLabels[i], t(k)); });
   qsa('s-profile', '.of-edit').forEach(function(el) { setText(el, t('profile.tapEdit')); });
   qsa('s-profile', '.of-val.placeholder').forEach(function(el) { setText(el, t('profile.autoDetect')); });
 
   var dateEmpties = qsa('s-profile', '.df-val.empty');
   if (dateEmpties[0]) setText(dateEmpties[0], t('profile.startDate'));
   if (dateEmpties[1]) setText(dateEmpties[1], t('profile.endDate'));
-
-  var emailInp = qs('s-profile', '.inp');
-  if (emailInp) emailInp.placeholder = t('profile.emailPlaceholder');
 
   var bizGuide = qs('s-profile', '.biz-guide');
   if (bizGuide) {
@@ -3150,7 +3148,6 @@ function applyLocale() {
 
   var profBtns = qsa('s-profile', '.btn');
   if (profBtns[0]) setText(profBtns[0], t('profile.submit'));
-  if (profBtns[1]) setText(profBtns[1], t('profile.skip'));
 
   // ── s-orders (我的订单) ──
   setText(qs('s-orders', '.hdr-title'), t('orders.title'));
