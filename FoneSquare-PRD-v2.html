@@ -346,12 +346,12 @@ body.editing .edit-mode-banner { display:block; }
     <a class="nav-item" data-page="page-ver-desc"><span class="nav-icon">📋</span> 版本说明</a>
     <a class="nav-item" data-page="page-solution"><span class="nav-icon">💡</span> 解决方案</a>
     <a class="nav-item" data-page="page-tracking"><span class="nav-icon">📊</span> 埋点需求</a>
-    <a class="nav-item active" data-page="page-other-req"><span class="nav-icon">📎</span> 其它需求</a>
+    <a class="nav-item" data-page="page-other-req"><span class="nav-icon">📎</span> 其它需求</a>
     <a class="nav-item" data-page="page-qa"><span class="nav-icon">❓</span> Q&amp;A</a>
   </div>
   <div class="nav-section">
     <div class="nav-section-title">APP原型</div>
-    <a class="nav-item" data-page="page-app-login"><span class="nav-icon">🔐</span> 登录/注册</a>
+    <a class="nav-item active" data-page="page-app-login"><span class="nav-icon">🔐</span> 登录/注册</a>
     <a class="nav-item" data-page="page-app-kyc"><span class="nav-icon">🛡️</span>身份认证/KYC</a>
     <!-- 方案A本期暂不实现，隐藏导航入口 -->
     <a class="nav-item" data-page="page-app-permission" style="display:none;"><span class="nav-icon">🔑</span> KYC账号合并（方案A）</a>
@@ -873,13 +873,13 @@ body.editing .edit-mode-banner { display:block; }
       
       <tr><td>下单按钮</td><td>❌ 引导登录</td><td>❌ 引导认证</td><td>✅ 正常下单</td><td style="position: relative;">❌ 禁止</td></tr>
       <tr><td>联系客服WhatsApp</td><td>❌ 引导登录</td><td>✅ 可联系</td><td>✅ 可联系</td><td style="position: relative;">✅ 可联系</td></tr>
-      <tr style="background:#F8FAFC;"><td><strong>提升路径</strong></td><td>→ 注册/登录</td><td>→ 完成KYC认证</td><td>→ 后台配置可提额</td><td style="position: relative;">→重新认证</td></tr>
+      <tr style="background:#F8FAFC;"><td><strong>提升路径</strong></td><td>→ 注册/登录</td><td>→ 完成KYC认证</td><td>→ 后台配置可提额</td><td style="position: relative;">→后台重新认证</td></tr>
     </tbody>
   </table>
 </div>
 
 <!-- ========== PAGE: 其它需求 ========== -->
-<div class="page active" id="page-other-req">
+<div class="page" id="page-other-req">
   <div class="section-header">
     <div class="section-icon" style="background:var(--orange-light);">📎</div>
     <h2>其它需求</h2>
@@ -1041,19 +1041,9 @@ body.editing .edit-mode-banner { display:block; }
         <td style="position: relative;">后续按当地法规要求增加本地语言版本</td>
       </tr>
 
-      <tr style="background:#f0f7ff;">
-        <td colspan="5" style="font-weight: 600; position: relative;">🔮 后续预留（本期不实现）</td>
-      </tr>
-      <tr>
-        <td>推送通知时间窗口</td>
-        <td colspan="3" style="text-align:center;color:#888;">—</td>
-        <td style="position: relative;">避免在用户当地 22:00–08:00 推送非紧急通知</td>
-      </tr>
-      <tr>
-        <td>客服工作时间展示</td>
-        <td colspan="3" style="text-align:center;color:#888;">—</td>
-        <td style="position: relative;">统一展示 "Mon–Fri 9:00–18:00 (Beijing Time)"</td>
-      </tr>
+      
+      
+      
       
       
     </tbody>
@@ -1072,7 +1062,7 @@ body.editing .edit-mode-banner { display:block; }
     <tbody>
       <tr><td>统一 UTC+8 存储</td><td style="position: relative;">所有时间戳字段（<code>created_at</code>、<code>updated_at</code>、<code>paid_at</code> 等）以 UTC+8 存入数据库</td></tr>
       <tr><td>纯日期字段例外</td><td style="position: relative;">证件有效期（<code>id_expiry_date</code>）、营业执照有效期等存为 <code>DATE</code> 类型，不带时区——这些是证件上的物理日期</td></tr>
-      <tr><td>API 返回格式</td><td style="position: relative;">所有接口时间字段统一 ISO 8601 格式并带偏移量：<code>2026-04-07T14:30:00+08:00</code>，前端据此做本地时区转换</td></tr>
+      
       <tr><td>登录附带设备时区</td><td style="position: relative;">前端登录时传入 <code>device_timezone</code>（IANA 格式，如 <code>Asia/Manila</code>），写入 <code>user_session</code> 表，用于推送静默计算和服务端按需转换</td></tr>
     </tbody>
   </table>
@@ -1102,7 +1092,7 @@ body.editing .edit-mode-banner { display:block; }
       
       
       
-      <tr><td>推送通知/提醒（本期暂无）</td><td>用户设备时区</td><td>—</td><td style="position: relative;">读取 <code>device_timezone</code>，避免在用户当地 22:00–08:00 推送非紧急通知</td></tr>
+      
     </tbody>
   </table>
 
@@ -1358,13 +1348,13 @@ body.editing .edit-mode-banner { display:block; }
       <tr><td>4. 邮箱和手机账号合并机制？身份认证阶段同名同 ID 是否自动合并？</td><td>选择方案C，不做账号合并，仅做未认证账号作废，信息填入同名账号下，做 OTP 验证。</td><td>纪子潇</td><td style="position: relative;">2026-04-15</td></tr>
       <tr><td>5. 登录注册在海外 APP 和拍机堂账户是否隔离？</td><td>账户需要隔离，信息存储国内服务器问题待法务评估。</td><td>纪子潇</td><td style="position: relative;">2026-04-15</td></tr>
       <tr><td>6. OCR 是否要采购专门的证件识别能力？个人证件几乎都能覆盖，但企业执照信息不太行，考虑企业证件用普通文本 OCR 准确度可能较差。<br><span style="font-size:11px;color:#888;">候选服务商：腾讯云 OCR、阿里云 OCR / 阿里云国际 eKYC、华为云 OCR（国际版）、百度智能云 OCR、Azure AI Document Intelligence（微软）、Google Cloud Document AI</span></td><td>待进一步调研效率、准确度后，业务走采购流程。</td><td>纪子潇</td><td style="position: relative;">2026-04-15</td></tr>
-      <tr><td>7. 风险校验是否增加周期性校验？</td><td>不做季度轮询校验，认证或后台编辑认证信息触发风控校验即可。</td><td>Nick</td><td style="position: relative;">2026-04-21</td></tr><tr><td>8 哈哈哈哈哈</td><td>—</td><td>—</td><td style="position: relative;">—</td></tr>
+      <tr><td>7. 风险校验是否增加周期性校验？</td><td>不做季度轮询校验，认证或后台编辑认证信息触发风控校验即可。</td><td>Nick</td><td style="position: relative;">2026-04-21</td></tr>
     </tbody>
   </table>
 </div>
 
 <!-- ========== PAGE: APP — 登录/注册 ========== -->
-<div class="page" id="page-app-login">
+<div class="page active" id="page-app-login">
   <div class="section-header">
     <div class="section-icon" style="background:var(--brand-light);">🔐</div>
     <h2>APP原型 — 登录/注册</h2>
